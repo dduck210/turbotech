@@ -28,7 +28,7 @@ class Mailer
 
         try {
             // Server settings
-            $mail->SMTPDebug = SMTP::DEBUG_SERVER;
+            $mail->SMTPDebug = SMTP::DEBUG_OFF;
             $mail->isSMTP();
             $mail->CharSet = 'utf-8';
             $mail->Host = Config::smtpHost();
@@ -48,7 +48,6 @@ class Mailer
             $mail->Body = $content;
 
             $mail->send();
-            echo 'Email đã được gửi!';
         } catch (Exception $e) {
             // Mirrors old behavior (`email/index.php:54-56`): swallow send
             // failures rather than surfacing a fatal error to the user.
