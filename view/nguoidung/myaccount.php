@@ -1,3 +1,9 @@
+<?php
+/**
+ * @var array       $list_mybill    Orders placed by the logged-in user (Codemoi\Model\Order::allByUser()).
+ * @var string|null $cancelMessage  Flash message set after a cancel-order attempt, if any.
+ */
+?>
 <!-- Breadcrumb -->
 <div class="border-b border-ink-200 bg-white">
     <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-3">

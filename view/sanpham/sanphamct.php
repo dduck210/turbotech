@@ -1,3 +1,9 @@
+<?php
+/**
+ * @var array $one_pro     Product row (Codemoi\Model\Product::one()).
+ * @var array $similar_pro Other products in the same category (Codemoi\Model\Product::similar()).
+ */
+?>
 <!-- Breadcrumb -->
 <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-4">
     <nav aria-label="Breadcrumb" class="text-sm text-ink-500">

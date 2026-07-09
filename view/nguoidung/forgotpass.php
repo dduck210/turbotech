@@ -1,3 +1,6 @@
+<?php
+/** @var array $error Validation errors keyed by field, e.g. $error['email']. */
+?>
 <!-- Breadcrumb -->
 <div class="border-b border-ink-200 bg-white">
     <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-3">

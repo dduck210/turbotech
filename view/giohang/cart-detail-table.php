@@ -2,9 +2,11 @@
 /**
  * Partial: renders a persisted order's cart lines as an HTML table.
  * Inlined from the old `cart_detail($listcart)` helper (`model/giohang.php`),
- * used by both `billconfirm.php` and `viewbill.php`. Expects `$cart_detail`
- * (array of associative rows from `Codemoi\Model\Order::items()`) to
- * already be in scope.
+ * used by both `billconfirm.php` and `viewbill.php` via `include` (so it
+ * shares the including file's local scope — `$cart_detail` is already
+ * defined there, extracted by `Codemoi\Core\View::render()`).
+ *
+ * @var array $cart_detail Persisted cart lines (Codemoi\Model\Order::items()).
  */
 $total_amount = 0;
 ?>

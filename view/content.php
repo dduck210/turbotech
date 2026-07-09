@@ -1,3 +1,10 @@
+<?php
+/**
+ * @var array $prohome    Full product listing (Codemoi\Model\Product::allHome()).
+ * @var array $list_topsp Featured products (Codemoi\Model\Product::featured()).
+ * @var array $list_bestsp Best-selling products (Codemoi\Model\Product::bestSellers()).
+ */
+?>
 <!-- HERO BANNER (was: slick .main-slider carousel -> now a static responsive grid, no JS needed) -->
 <section class="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
     <div class="grid grid-cols-1 gap-6 md:grid-cols-2">

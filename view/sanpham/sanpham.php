@@ -1,3 +1,11 @@
+<?php
+/**
+ * @var array  $listpro   Filtered product listing (Codemoi\Model\Product::search()).
+ * @var string $namecate  Selected category/brand name (Codemoi\Model\Category::name()).
+ * @var array  $listcate  All categories/brands (Codemoi\Model\Category::all()).
+ * @var array  $list_topsp Featured products for the sidebar (Codemoi\Model\Product::featured()).
+ */
+?>
 <!-- Breadcrumb -->
 <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-4">
     <nav aria-label="Breadcrumb" class="text-sm text-ink-500">

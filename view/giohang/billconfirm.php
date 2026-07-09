@@ -1,3 +1,9 @@
+<?php
+/**
+ * @var array|false $bill        Bill row (Codemoi\Model\Order::one()).
+ * @var array        $cart_detail Persisted cart lines (Codemoi\Model\Order::items()).
+ */
+?>
 <nav class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 pt-6" aria-label="Breadcrumb">
     <ol class="flex items-center gap-2 text-sm text-ink-500">
         <li><a href="index.php" class="hover:text-brand-600 transition-colors">Trang chủ</a></li>
