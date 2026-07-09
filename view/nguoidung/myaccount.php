@@ -67,9 +67,9 @@
                                                 </tr>
                                                 <?php 
                                                foreach($list_mybill as $bill) :
-                                                extract($bill);  
-                                                $stt = get_stt($status); 
-                                                $countpro = loadall_countcart($id_bill);
+                                                extract($bill);
+                                                $stt = \Codemoi\Model\Order::statusLabel($status);
+                                                $countpro = \Codemoi\Model\Order::itemCount($id_bill);
                                                 ?>
                                                 <tr>
                                                     <td><a class="account-order-id" href="#">UTP-<?= $id_bill ?></a></td>

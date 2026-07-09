@@ -34,7 +34,7 @@
                 <div class="col-lg-7 col-md-7">
                     <div class="sp-content">
                         <div class="sp-heading">
-                            <h5><a href="index.php?act=prodetail&idpro=<?php echo $pro['id_pro'] ?>">
+                            <h5><a href="index.php?act=prodetail&idpro=<?php echo $one_pro['id_pro'] ?>">
                                     <?= $one_pro['name_pro'] ?>
                                 </a></h5>
                             <span class="reference">Lượt xem: <?= $one_pro['view'] ?></span>

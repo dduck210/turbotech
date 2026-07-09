@@ -86,7 +86,7 @@
                  <div class="row">
                      <div class="col-12">
                          <div class="table-content table-responsive">
-                             <?php cart_detail($cart_detail); ?>
+                             <?php include __DIR__ . '/cart-detail-table.php'; ?>
                              <div class="wrap-btn-order mt-4">
                                  <a href="index.php?act=product" class="btn btn-secondary text-white">Xem thêm sản phẩm
                                      <i class="fa-solid fa-magnifying-glass"></i></a>

@@ -1,7 +1,7 @@
 <!-- Begin JB's Header Area -->
 <?php
-$count = countcart();
-$total_amount = total_amount();
+$count = \Codemoi\Model\Cart::count();
+$total_amount = \Codemoi\Model\Cart::total();
 
 ?>
 

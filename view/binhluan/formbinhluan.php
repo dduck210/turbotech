@@ -1,10 +1,11 @@
 <?php
 session_start();
-include "../../model/pdo.php";
-include "../../model/binhluan.php";
+require __DIR__ . '/../../vendor/autoload.php';
+
+use Codemoi\Model\Comment;
 
 $idpro = $_REQUEST['idpro'];
-$listcmt = loadall_comment($idpro);
+$listcmt = Comment::forProduct($idpro);
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -34,7 +35,7 @@ $listcmt = loadall_comment($idpro);
             if ($content == null) {
                 echo '<script>alert("không được để trống !")</script>';
             } else {
-                insert_comment($content, $id_user, $user_name, $full_name, $idpro, $comment_date);
+                Comment::create($content, $id_user, $user_name, $full_name, $idpro, $comment_date);
                 header("Location: " . $_SERVER['HTTP_REFERER']);
             }
         }

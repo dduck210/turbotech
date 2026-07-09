@@ -82,7 +82,69 @@
                      <div class="col-12">
                          <!-- <form action="index.php?act=bill" method="post"> -->
                          <div class="table-content table-responsive">
-                             <?php viewcart(0); ?>
+                             <?php
+                             // Inlined from the old `viewcart(0)` helper (`model/giohang.php`),
+                             // called here with removecol=0 (no remove column/button).
+                             $total_amount = 0;
+                             $i = 0;
+                             echo '
+ <table class="table">
+ <thead>
+<tr>
+ <th class="jb-product-thumbnail">Hình ảnh</th>
+ <th class="cart-product-name">Sản phẩm</th>
+ <th class="jb-product-price">Đơn giá</th>
+ <th class="jb-product-quantity">Số lượng</th>
+ <th class="jb-product-subtotal">Thành tiền</th>
+</tr>
+</thead>';
+                             foreach ($_SESSION['mycart'] as $cart) {
+                                 $img_pro = "admin/uploads/" . $cart[2];
+                                 $prodetail = "index.php?act=prodetail&idpro=" . $cart[0];
+                                 $quantity = $cart[4];
+                                 $total = $cart[3] * $cart[4];
+                                 $total_amount += $total;
+                                 echo '<tbody>
+    <tr>
+        <td class="jb-product-thumbnail"><a href="' . $prodetail . '"><img src="' . $img_pro . '" alt="Turbotech Product" width="80px"></img></a></td>
+        <td class="jb-product-name"><a href="' . $prodetail . '">' . $cart[1] . '</a></td>
+        <td class="jb-product-price"><span class="amount">' . number_format($cart[3]) . '₫</span></td>
+        <td class="quantity">
+        <div style="margin: 0 auto;width: 76px;">
+        <input type="number" style=" border: 1px solid #e5e5e5;  height: 46px;text-align: center; width: 48px; width: 48px;width: 3rem;background: #ffffff; "  value="' . $quantity . '" readonly />
+    </div>
+        </td>
+        <td class="product-subtotal"><span class="amount">' . number_format($total) . '₫</span></td>
+    </tr>
+</tbody>';
+                                 $i += 1;
+                             }
+                             $btn_update = '<a href="index.php?act=viewcart"><input type="button" class="button" value="Quay lại giỏ hàng"></a>';
+                             echo '
+ </table>
+</div>
+<div class="row">
+    <div class="col-12">
+        <div class="coupon-all">
+            <div class="coupon">
+            </div>
+            <div class="coupon2">
+            ' . $btn_update . '
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-5 ml-auto">
+        <div class="cart-page-total">
+            <h2>Tổng giỏ hàng</h2>
+            <ul>
+                <li>Tổng thành tiền <span>' . number_format($total_amount) . '₫</span></li>
+            </ul>
+        </div>
+    </div>
+</div>';
+                             ?>
                              <div class="wrap-btn-order mt-4">
                                  <input type="submit" name="orderconfirm" value="Xác nhận đặt hàng">
                              </div>

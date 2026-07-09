@@ -21,8 +21,6 @@
                         <?php if (!empty($_SESSION['mycart'])) {
                             $total_amount = 0;
                             $i = 0;
-                            $removepro = "index.php?act=removecart&idcart=" . $i;
-                            $prodetail = "index.php?act=prodetail&idpro=" . $cart[0];
                         ?>
                             <table class="table">
                                 <thead>
@@ -37,7 +35,10 @@
                                 </thead>
                                 <tbody>
                                     <?php foreach ($_SESSION['mycart'] as $key => $cart) {
-                                        $total_amount = $total_amount + $cart[5]; ?>
+                                        $total_amount = $total_amount + $cart[5];
+                                        $removepro = "index.php?act=removecart&idcart=" . $key;
+                                        $prodetail = "index.php?act=prodetail&idpro=" . $cart[0];
+                                    ?>
                                         <tr>
                                             <!-- <input type="hidden" id="code" value="<?= $key ?>"> -->
                                             <td class="jb-product-thumbnail"><a href="<?= $prodetail ?>"><img src="admin/uploads/<?= $cart[2] ?>" alt="Ultraphone Product" width="80px"></img></a></td>

@@ -3,7 +3,7 @@
     "type": "library",
     "autoload": {
         "psr-4": {
-            "84904\\Codemoi\\": "src/"
+            "Codemoi\\": "src/"
         }
     },
     "require": {}
