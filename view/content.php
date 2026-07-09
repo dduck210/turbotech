@@ -86,19 +86,22 @@
 <!-- PHẦN SẢN PHẨM TRANG HOME -->
 <section class="py-12 md:py-16">
     <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <!-- Tab nav (Bootstrap Tab JS from plugins.min.js still drives switching via data-bs-toggle="tab";
-             active-state colors respond purely to the ".active" class Bootstrap toggles, via the [&.active] variant below) -->
+        <!-- Tab nav: plain vanilla-JS click handler (home-tab-trigger/home-tab-panel, script at
+             the bottom of this file) — Bootstrap's data-bs-toggle="tab" data-api does NOT actually
+             fire in this theme's bundled plugins.min.js (verified: bootstrap object loads but the
+             Tab component's click delegation never toggles .active), so don't rely on it. Same
+             proven pattern as the account-page tabs in view/nguoidung/myaccount.php. -->
         <div class="mb-8 flex flex-wrap justify-center gap-3">
-            <a class="active inline-flex min-h-11 items-center justify-center rounded-full border border-ink-200 bg-white px-4 py-2.5 text-sm font-semibold text-ink-700 transition-colors hover:bg-ink-50 focus:outline-none focus:ring-2 focus:ring-brand-500 [&.active]:!border-brand-600 [&.active]:!bg-brand-600 [&.active]:!text-white"
-                data-bs-toggle="tab" href="#new-arrival"><span>Sản phẩm mới</span></a>
-            <a class="inline-flex min-h-11 items-center justify-center rounded-full border border-ink-200 bg-white px-4 py-2.5 text-sm font-semibold text-ink-700 transition-colors hover:bg-ink-50 focus:outline-none focus:ring-2 focus:ring-brand-500 [&.active]:!border-brand-600 [&.active]:!bg-brand-600 [&.active]:!text-white"
-                data-bs-toggle="tab" href="#bestseller"><span>Sản phẩm bán chạy</span></a>
-            <a class="inline-flex min-h-11 items-center justify-center rounded-full border border-ink-200 bg-white px-4 py-2.5 text-sm font-semibold text-ink-700 transition-colors hover:bg-ink-50 focus:outline-none focus:ring-2 focus:ring-brand-500 [&.active]:!border-brand-600 [&.active]:!bg-brand-600 [&.active]:!text-white"
-                data-bs-toggle="tab" href="#featured-products"><span>Sản phẩm nổi bật</span></a>
+            <a class="home-tab-trigger active inline-flex min-h-11 items-center justify-center rounded-full border border-ink-200 bg-white px-4 py-2.5 text-sm font-semibold text-ink-700 transition-colors hover:bg-ink-50 focus:outline-none focus:ring-2 focus:ring-brand-500 [&.active]:!border-brand-600 [&.active]:!bg-brand-600 [&.active]:!text-white"
+                data-tab-target="new-arrival" href="#new-arrival"><span>Sản phẩm mới</span></a>
+            <a class="home-tab-trigger inline-flex min-h-11 items-center justify-center rounded-full border border-ink-200 bg-white px-4 py-2.5 text-sm font-semibold text-ink-700 transition-colors hover:bg-ink-50 focus:outline-none focus:ring-2 focus:ring-brand-500 [&.active]:!border-brand-600 [&.active]:!bg-brand-600 [&.active]:!text-white"
+                data-tab-target="bestseller" href="#bestseller"><span>Sản phẩm bán chạy</span></a>
+            <a class="home-tab-trigger inline-flex min-h-11 items-center justify-center rounded-full border border-ink-200 bg-white px-4 py-2.5 text-sm font-semibold text-ink-700 transition-colors hover:bg-ink-50 focus:outline-none focus:ring-2 focus:ring-brand-500 [&.active]:!border-brand-600 [&.active]:!bg-brand-600 [&.active]:!text-white"
+                data-tab-target="featured-products" href="#featured-products"><span>Sản phẩm nổi bật</span></a>
         </div>
 
         <div class="tab-content">
-            <div id="new-arrival" class="tab-pane active hidden [&.active]:!block" role="tabpanel">
+            <div id="new-arrival" data-tab-panel class="tab-pane active hidden [&.active]:!block" role="tabpanel">
                 <div class="grid grid-cols-2 gap-6 sm:grid-cols-3 lg:grid-cols-4">
                     <!-- Phần show sản phẩm mới nhất -->
                     <?php
@@ -156,7 +159,7 @@
                     <!-- end phần show sản sản phẩm mới nhất -->
                 </div>
             </div>
-            <div id="bestseller" class="tab-pane hidden [&.active]:!block" role="tabpanel">
+            <div id="bestseller" data-tab-panel class="tab-pane hidden [&.active]:!block" role="tabpanel">
                 <div class="grid grid-cols-2 gap-6 sm:grid-cols-3 lg:grid-cols-4">
                     <!-- Sản phẩm bán chạy -->
                     <?php
@@ -215,7 +218,7 @@
             </div>
 
             <!-- show sản phẩm nổi bật -->
-            <div id="featured-products" class="tab-pane hidden [&.active]:!block" role="tabpanel">
+            <div id="featured-products" data-tab-panel class="tab-pane hidden [&.active]:!block" role="tabpanel">
                 <div class="grid grid-cols-2 gap-6 sm:grid-cols-3 lg:grid-cols-4">
                     <!-- Phần show sản phẩm nổi bật -->
                     <?php
@@ -313,3 +316,25 @@
     </div>
 </section>
 <!-- Tubotech Product With Two Columns Area End Here -->
+
+<script>
+    (function () {
+        var triggers = document.querySelectorAll('.home-tab-trigger');
+        var panels = document.querySelectorAll('[data-tab-panel]');
+
+        triggers.forEach(function (trigger) {
+            trigger.addEventListener('click', function (e) {
+                e.preventDefault();
+                var targetId = trigger.getAttribute('data-tab-target');
+
+                panels.forEach(function (panel) {
+                    panel.classList.toggle('active', panel.id === targetId);
+                });
+
+                triggers.forEach(function (t) {
+                    t.classList.toggle('active', t === trigger);
+                });
+            });
+        });
+    })();
+</script>

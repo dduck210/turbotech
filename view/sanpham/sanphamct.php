@@ -115,30 +115,31 @@
 <!-- End Product detail -->
 
 <!-- Description / Reviews tabs
-     Kept the Bootstrap-JS tab mechanism (data-bs-toggle="tab", ids #description/#reviews,
-     "tab-pane"/"active" classes — driven by bundled bootstrap JS in plugins.min.js). Show/hide is
-     Tailwind-only: base "hidden" + "[&.active]:!block" so a pane shows only once bootstrap's JS
-     adds "active" to it — no dependency on the removed main.css.
+     Plain vanilla-JS click handler (script at the bottom of this file) — Bootstrap's
+     data-bs-toggle="tab" data-api does NOT actually fire in this theme's bundled
+     plugins.min.js (verified: bootstrap object loads but the Tab component's click
+     delegation never toggles .active), so don't rely on it. Same proven pattern as
+     the account-page tabs in view/nguoidung/myaccount.php.
      Comment widget (view/binhluan/formbinhluan.php, owned by another agent) AJAX-load left untouched. -->
 <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-12 md:py-16">
     <div class="border-b border-ink-200 mb-6">
         <ul class="nav flex gap-2" role="tablist">
             <li role="presentation">
-                <a class="active inline-flex items-center gap-1.5 border-b-2 border-transparent px-4 py-2.5 text-sm font-semibold text-ink-500 transition-colors hover:text-brand-600 [&.active]:border-brand-600 [&.active]:text-brand-600"
-                    data-bs-toggle="tab" href="#description" role="tab" aria-controls="description">
+                <a class="detail-tab-trigger active inline-flex items-center gap-1.5 border-b-2 border-transparent px-4 py-2.5 text-sm font-semibold text-ink-500 transition-colors hover:text-brand-600 [&.active]:border-brand-600 [&.active]:text-brand-600"
+                    data-tab-target="description" href="#description" role="tab" aria-controls="description">
                     <span>Chi tiết</span>
                 </a>
             </li>
             <li role="presentation">
-                <a class="inline-flex items-center gap-1.5 border-b-2 border-transparent px-4 py-2.5 text-sm font-semibold text-ink-500 transition-colors hover:text-brand-600 [&.active]:border-brand-600 [&.active]:text-brand-600"
-                    data-bs-toggle="tab" href="#reviews" role="tab" aria-controls="reviews">
+                <a class="detail-tab-trigger inline-flex items-center gap-1.5 border-b-2 border-transparent px-4 py-2.5 text-sm font-semibold text-ink-500 transition-colors hover:text-brand-600 [&.active]:border-brand-600 [&.active]:text-brand-600"
+                    data-tab-target="reviews" href="#reviews" role="tab" aria-controls="reviews">
                     <span>Đánh giá</span>
                 </a>
             </li>
         </ul>
     </div>
     <div class="tab-content">
-        <div id="description" class="tab-pane active hidden [&.active]:!block" role="tabpanel">
+        <div id="description" data-tab-panel class="tab-pane active hidden [&.active]:!block" role="tabpanel">
             <div class="text-ink-700 leading-relaxed">
                 <p>
                     <strong class="text-lg text-ink-900">Thông số kỹ thuật:</strong><br>
@@ -147,7 +148,7 @@
             </div>
         </div>
 
-        <div id="reviews" class="tab-pane hidden [&.active]:!block" role="tabpanel">
+        <div id="reviews" data-tab-panel class="tab-pane hidden [&.active]:!block" role="tabpanel">
             <!-- jquery bình luận -->
             <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
             <script>
@@ -219,3 +220,25 @@
     </div>
 </div>
 <!-- End Similar products -->
+
+<script>
+    (function () {
+        var triggers = document.querySelectorAll('.detail-tab-trigger');
+        var panels = document.querySelectorAll('[data-tab-panel]');
+
+        triggers.forEach(function (trigger) {
+            trigger.addEventListener('click', function (e) {
+                e.preventDefault();
+                var targetId = trigger.getAttribute('data-tab-target');
+
+                panels.forEach(function (panel) {
+                    panel.classList.toggle('active', panel.id === targetId);
+                });
+
+                triggers.forEach(function (t) {
+                    t.classList.toggle('active', t === trigger);
+                });
+            });
+        });
+    })();
+</script>
