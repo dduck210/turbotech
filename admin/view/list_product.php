@@ -38,6 +38,7 @@
                                     <th>Tên sản phẩm</th>
                                     <th>Giá</th>
                                     <th>Giảm giá</th>
+                                    <th>Tồn kho</th>
                                     <th>Hình ảnh</th>
                                     <th>Mô tả ngắn</th>
                                     <th>Mô tả chi tiết</th>
@@ -53,6 +54,12 @@
                                         <td><?= $pro['name_pro'] ?></td>
                                         <td><?= number_format($pro['price']) ?></td>
                                         <td><?= $pro['discount'] ?>%</td>
+                                        <td><?php if ((int) $pro['stock'] <= 0) : ?>
+                                                <span class="badge badge-danger">Hết hàng</span>
+                                            <?php else : ?>
+                                                <?= $pro['stock'] ?>
+                                            <?php endif; ?>
+                                        </td>
                                         <td><img src="./uploads/<?= $pro['img_pro'] ?>" alt="No photo!" width="50px"></td>
                                         <td><?= $pro['short_des'] ?></td>
                                         <td><?= $pro['detail_des'] ?></td>

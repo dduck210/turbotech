@@ -51,6 +51,18 @@
                 <?php } ?>
             </div>
 
+            <div class="mb-4">
+                <?php if ((int) $one_pro['stock'] > 0) { ?>
+                    <span class="inline-flex items-center gap-1.5 rounded-full bg-green-50 px-3 py-1 text-xs font-medium text-green-700">
+                        <i class="fa-solid fa-circle-check" aria-hidden="true"></i> Còn hàng (<?= (int) $one_pro['stock'] ?> sản phẩm)
+                    </span>
+                <?php } else { ?>
+                    <span class="inline-flex items-center gap-1.5 rounded-full bg-red-50 px-3 py-1 text-xs font-medium text-red-700">
+                        <i class="fa-solid fa-circle-xmark" aria-hidden="true"></i> Hết hàng
+                    </span>
+                <?php } ?>
+            </div>
+
             <div class="text-ink-700 leading-relaxed mb-6">
                 <p><?= $one_pro['short_des'] ?></p>
             </div>
@@ -58,7 +70,10 @@
             <!-- Add to cart form: field names / values byte-identical to before.
                  Quantity stepper markup (cart-plus-minus / cart-plus-minus-box / dec /
                  inc / qtybutton classes, name="quatity") kept exactly — these are hooked by
-                 the vanilla-JS handler in src/js/main.js, only restyled visually. -->
+                 the vanilla-JS handler in src/js/main.js, only restyled visually.
+                 Hidden entirely (not just disabled) when out of stock, matching backend
+                 guard in CartController::add(). -->
+            <?php if ((int) $one_pro['stock'] > 0) { ?>
             <form action="index.php?act=addtocart" method="post" class="mb-6">
                 <div class="flex flex-wrap items-end gap-4 mb-5">
                     <div>
@@ -88,6 +103,12 @@
                     <li class="flex items-center gap-2"><i class="fas fa-sync-alt text-brand-600" aria-hidden="true"></i>Chế độ đổi trả trong vòng 12 tháng</li>
                 </ul>
             </form>
+            <?php } else { ?>
+            <button type="button" disabled
+                class="mb-6 inline-flex items-center justify-center gap-2 rounded-lg bg-ink-100 px-5 py-2.5 text-sm font-semibold text-ink-300 cursor-not-allowed">
+                Hết hàng
+            </button>
+            <?php } ?>
         </div>
     </div>
 </div>
@@ -155,12 +176,15 @@
     <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-6">
         <?php foreach ($similar_pro as $pro) { ?>
             <div class="rounded-2xl border border-ink-200 bg-white shadow-sm hover:shadow-md transition-shadow overflow-hidden">
-                <div class="aspect-square bg-ink-100 overflow-hidden">
+                <div class="relative aspect-square bg-ink-100 overflow-hidden">
                     <a href="index.php?act=prodetail&idpro=<?php echo $pro['id_pro']; ?>">
                         <img src="admin/uploads/<?php echo $pro['img_pro']; ?>"
                             alt="Ảnh sản phẩm <?= htmlspecialchars($pro['name_pro']) ?>"
                             class="h-full w-full object-cover">
                     </a>
+                    <?php if ((int) $pro['stock'] <= 0) { ?>
+                        <span class="absolute top-2 right-2 rounded-full bg-ink-900/80 text-white text-xs font-bold px-2 py-1">Hết hàng</span>
+                    <?php } ?>
                 </div>
                 <div class="p-4">
                     <h6 class="font-heading font-semibold text-ink-900 line-clamp-2 mb-2">
@@ -174,14 +198,21 @@
                             <?php echo number_format($pro['price']); ?>₫
                         </span>
                     </div>
-                    <form action="index.php?act=addtocart" method="post">
-                        <input type="hidden" name="id_pro" value="<?php echo $pro['id_pro'] ?>">
-                        <input type="hidden" name="name_pro" value="<?php echo $pro['name_pro'] ?>">
-                        <input type="hidden" name="img_pro" value="<?php echo $pro['img_pro'] ?>">
-                        <input type="hidden" name="price" value="<?php echo $pro['price'] ?>">
-                        <input type="submit" name="addtocart" value="Thêm vào giỏ"
-                            class="w-full inline-flex items-center justify-center gap-2 rounded-lg bg-brand-600 px-5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-brand-700 transition-colors focus:outline-none focus:ring-2 focus:ring-brand-500 focus:ring-offset-2 cursor-pointer">
-                    </form>
+                    <?php if ((int) $pro['stock'] > 0) { ?>
+                        <form action="index.php?act=addtocart" method="post">
+                            <input type="hidden" name="id_pro" value="<?php echo $pro['id_pro'] ?>">
+                            <input type="hidden" name="name_pro" value="<?php echo $pro['name_pro'] ?>">
+                            <input type="hidden" name="img_pro" value="<?php echo $pro['img_pro'] ?>">
+                            <input type="hidden" name="price" value="<?php echo $pro['price'] ?>">
+                            <input type="submit" name="addtocart" value="Thêm vào giỏ"
+                                class="w-full inline-flex items-center justify-center gap-2 rounded-lg bg-brand-600 px-5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-brand-700 transition-colors focus:outline-none focus:ring-2 focus:ring-brand-500 focus:ring-offset-2 cursor-pointer">
+                        </form>
+                    <?php } else { ?>
+                        <button type="button" disabled
+                            class="w-full inline-flex items-center justify-center gap-2 rounded-lg bg-ink-100 px-5 py-2.5 text-sm font-semibold text-ink-300 cursor-not-allowed">
+                            Hết hàng
+                        </button>
+                    <?php } ?>
                 </div>
             </div>
         <?php } ?>

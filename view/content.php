@@ -117,6 +117,9 @@
                             <span
                                 class="absolute top-2 left-2 rounded-full bg-red-600 px-2 py-1 text-xs font-bold text-white">-<?= $pro['discount'] ?>%</span>
                             <?php } ?>
+                            <?php if ((int) $pro['stock'] <= 0) { ?>
+                            <span class="absolute bottom-2 left-2 rounded-full bg-ink-900/80 px-2 py-1 text-xs font-bold text-white">Hết hàng</span>
+                            <?php } ?>
                         </div>
                         <div class="p-4">
                             <h6 class="mb-2">
@@ -132,6 +135,7 @@
                                 <span class="text-sm text-ink-300 line-through"><?= number_format($pro['price']) ?>₫</span>
                                 <?php } ?>
                             </div>
+                            <?php if ((int) $pro['stock'] > 0) { ?>
                             <form action="index.php?act=addtocart" method="post">
                                 <input type="hidden" name="id_pro" value="<?php echo $pro['id_pro'] ?>">
                                 <input type="hidden" name="name_pro" value="<?php echo $pro['name_pro'] ?>">
@@ -140,6 +144,12 @@
                                 <input type="submit" name="addtocart" value="Thêm vào giỏ"
                                     class="inline-flex w-full cursor-pointer items-center justify-center gap-2 rounded-lg bg-brand-600 px-5 py-2.5 text-sm font-semibold text-white shadow-sm transition-colors hover:bg-brand-700 focus:outline-none focus:ring-2 focus:ring-brand-500 focus:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50">
                             </form>
+                            <?php } else { ?>
+                            <button type="button" disabled
+                                class="inline-flex w-full items-center justify-center gap-2 rounded-lg bg-ink-100 px-5 py-2.5 text-sm font-semibold text-ink-300 cursor-not-allowed">
+                                Hết hàng
+                            </button>
+                            <?php } ?>
                         </div>
                     </div>
                     <?php   } ?>
@@ -164,6 +174,9 @@
                             <span
                                 class="absolute top-2 left-2 rounded-full bg-red-600 px-2 py-1 text-xs font-bold text-white">-<?= $pro['discount'] ?>%</span>
                             <?php } ?>
+                            <?php if ((int) $pro['stock'] <= 0) { ?>
+                            <span class="absolute bottom-2 left-2 rounded-full bg-ink-900/80 px-2 py-1 text-xs font-bold text-white">Hết hàng</span>
+                            <?php } ?>
                         </div>
                         <div class="p-4">
                             <h6 class="mb-2">
@@ -179,6 +192,7 @@
                                 <span class="text-sm text-ink-300 line-through"><?= number_format($pro['price']) ?>₫</span>
                                 <?php } ?>
                             </div>
+                            <?php if ((int) $pro['stock'] > 0) { ?>
                             <form action="index.php?act=addtocart" method="post">
                                 <input type="hidden" name="id_pro" value="<?php echo $pro['id_pro'] ?>">
                                 <input type="hidden" name="name_pro" value="<?php echo $pro['name_pro'] ?>">
@@ -187,6 +201,12 @@
                                 <input type="submit" name="addtocart" value="Thêm vào giỏ"
                                     class="inline-flex w-full cursor-pointer items-center justify-center gap-2 rounded-lg bg-brand-600 px-5 py-2.5 text-sm font-semibold text-white shadow-sm transition-colors hover:bg-brand-700 focus:outline-none focus:ring-2 focus:ring-brand-500 focus:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50">
                             </form>
+                            <?php } else { ?>
+                            <button type="button" disabled
+                                class="inline-flex w-full items-center justify-center gap-2 rounded-lg bg-ink-100 px-5 py-2.5 text-sm font-semibold text-ink-300 cursor-not-allowed">
+                                Hết hàng
+                            </button>
+                            <?php } ?>
                         </div>
                     </div>
                     <?php } ?>
@@ -214,6 +234,9 @@
                             <span
                                 class="absolute top-2 left-2 rounded-full bg-red-600 px-2 py-1 text-xs font-bold text-white">-<?= $pro['discount'] ?>%</span>
                             <?php } ?>
+                            <?php if ((int) $pro['stock'] <= 0) { ?>
+                            <span class="absolute bottom-2 left-2 rounded-full bg-ink-900/80 px-2 py-1 text-xs font-bold text-white">Hết hàng</span>
+                            <?php } ?>
                         </div>
                         <div class="p-4">
                             <h6 class="mb-2">
@@ -229,6 +252,7 @@
                                 <span class="text-sm text-ink-300 line-through"><?= number_format($pro['price']) ?>₫</span>
                                 <?php } ?>
                             </div>
+                            <?php if ((int) $pro['stock'] > 0) { ?>
                             <form action="index.php?act=addtocart" method="post">
                                 <input type="hidden" name="id_pro" value="<?php echo $pro['id_pro'] ?>">
                                 <input type="hidden" name="name_pro" value="<?php echo $pro['name_pro'] ?>">
@@ -237,6 +261,12 @@
                                 <input type="submit" name="addtocart" value="Thêm vào giỏ"
                                     class="inline-flex w-full cursor-pointer items-center justify-center gap-2 rounded-lg bg-brand-600 px-5 py-2.5 text-sm font-semibold text-white shadow-sm transition-colors hover:bg-brand-700 focus:outline-none focus:ring-2 focus:ring-brand-500 focus:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50">
                             </form>
+                            <?php } else { ?>
+                            <button type="button" disabled
+                                class="inline-flex w-full items-center justify-center gap-2 rounded-lg bg-ink-100 px-5 py-2.5 text-sm font-semibold text-ink-300 cursor-not-allowed">
+                                Hết hàng
+                            </button>
+                            <?php } ?>
                         </div>
                     </div>
                     <?php } ?>

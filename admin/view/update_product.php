@@ -47,6 +47,12 @@
                             </div>
                             <div class="form-row">
                                 <div class="form-group col-md-6">
+                                    <label for="formGroupExampleInput" class="font-lb">Số lượng tồn kho</label>
+                                    <input type="number" name="stock" min="0" class="form-control" placeholder="Nhập số lượng hàng tồn kho" value="<?= $stock ?>">
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group col-md-6">
                                     <label for="exampleFormControlSelect1" class="font-lb">Loại máy tính</label>
                                     <select class="form-control" name="idcate" id="exampleFormControlSelect1">
                                         <option value="0">Chọn loại</option>

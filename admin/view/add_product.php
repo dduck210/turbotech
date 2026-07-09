@@ -30,6 +30,10 @@
                 <input type="number" name="discount" min="1" max="100" class="form-control" placeholder="Nhập số % mà sản phẩm được giảm giá">
               </div>
               <div class="form-group mt-3">
+                <label for="formGroupExampleInput" class="font-lb">Số lượng tồn kho</label>
+                <input type="number" name="stock" min="0" class="form-control" placeholder="Nhập số lượng hàng tồn kho" value="0" required>
+              </div>
+              <div class="form-group mt-3">
                 <label for="formGroupExampleInput" class="font-lb">Mô tả ngắn</label>
                 <input type="text" name="short_des" class="form-control" placeholder="Mô tả tóm tắt sản phẩm">
               </div>

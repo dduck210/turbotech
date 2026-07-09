@@ -182,6 +182,7 @@ CREATE TABLE `product` (
   `short_des` text NOT NULL,
   `detail_des` text NOT NULL,
   `view` int(11) NOT NULL DEFAULT 0,
+  `stock` int(11) NOT NULL DEFAULT 20,
   `idcate` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 

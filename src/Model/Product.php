@@ -74,7 +74,9 @@ class Product
                 a.id_pro,
                 a.name_pro,
                 a.price,
+                a.discount,
                 a.img_pro,
+                a.stock,
                 COUNT(*) as total_sale
             FROM product a
             INNER JOIN cart b ON a.id_pro = b.id_pro
@@ -118,5 +120,29 @@ class Product
     {
         $sql = "UPDATE product SET view = view+1 WHERE id_pro = ?";
         Database::execute($sql, $id_pro);
+    }
+
+    /**
+     * Decrement stock by `$quantity`, but only if enough stock remains —
+     * the guard is baked into the WHERE clause (same pattern as
+     * `Order::cancel()`) so two concurrent purchases of the last unit can't
+     * both succeed and drive stock negative.
+     *
+     * @return bool True if stock was actually decremented.
+     */
+    public static function decrementStock($id_pro, $quantity): bool
+    {
+        $sql = "UPDATE product SET stock = stock - ? WHERE id_pro = ? AND stock >= ?";
+        return Database::execute($sql, $quantity, $id_pro, $quantity) > 0;
+    }
+
+    /**
+     * Whether at least `$quantity` units are currently in stock.
+     */
+    public static function hasStock($id_pro, $quantity = 1): bool
+    {
+        $sql = "SELECT stock FROM product WHERE id_pro = ?";
+        $row = Database::queryOne($sql, $id_pro);
+        return $row !== false && (int) $row['stock'] >= (int) $quantity;
     }
 }

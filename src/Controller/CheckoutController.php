@@ -6,6 +6,7 @@ use Codemoi\Core\Controller;
 use Codemoi\Model\Auth;
 use Codemoi\Model\Cart;
 use Codemoi\Model\Order;
+use Codemoi\Model\Product;
 use Codemoi\Model\User;
 
 /**
@@ -116,6 +117,7 @@ class CheckoutController extends Controller
 
             foreach (Cart::items() as $cart) {
                 Order::addItem($user['id_user'], $user['user_name'], $cart[0], $cart[2], $cart[1], $cart[3], $cart[4], $cart[5], $idbill);
+                Product::decrementStock($cart[0], $cart[4]);
             }
             Cart::clear();
         }
@@ -189,6 +191,7 @@ class CheckoutController extends Controller
 
             foreach (Cart::items() as $cart) {
                 Order::addItem($user['id_user'], $user['user_name'], $cart[0], $cart[2], $cart[1], $cart[3], $cart[4], $cart[5], $idbill);
+                Product::decrementStock($cart[0], $cart[4]);
             }
         }
         Cart::clear();

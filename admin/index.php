@@ -131,6 +131,7 @@ if (isset($_GET['act'])) {
                     $short_des = $_POST['short_des'];
                     $detail_des = $_POST['detail_des'];
                     $idcate = $_POST['idcate'];
+                    $stock = $_POST['stock'] ?? 0;
                     $img_pro = $_FILES['img_pro']['name'];
                     $target_dir = "./uploads/";
                     $target_file = $target_dir . basename($_FILES["img_pro"]["name"]);
@@ -143,10 +144,12 @@ if (isset($_GET['act'])) {
                         echo '<script>alert("Vui lòng nhập đầy đủ nội dung !")</script>';
                     } elseif ($price <= 0) {
                         echo '<script>alert("Giá nhập không đúng !")</script>';
+                    } elseif ($stock < 0) {
+                        echo '<script>alert("Số lượng tồn kho không đúng !")</script>';
                     } elseif (!in_array($extension, $allowed_extensions)) {
                         echo '<script>alert("File ảnh không phù hợp !")</script>';
                     } else {
-                        add_pro($name_pro, $price, $discount, $img_pro, $short_des, $detail_des, $idcate);
+                        add_pro($name_pro, $price, $discount, $img_pro, $short_des, $detail_des, $idcate, $stock);
                         echo '<script>alert("Thêm sản phẩm thành công !")</script>';
                     }
                 }
@@ -206,11 +209,12 @@ if (isset($_GET['act'])) {
                 $discount = $_POST['discount'];
                 $short_des = $_POST['short_des'];
                 $detail_des = $_POST['detail_des'];
+                $stock = $_POST['stock'] ?? 0;
                 $img_pro = $_FILES['img_pro']['name'];
                 $target_dir = "./uploads/";
                 $target_file = $target_dir . basename($_FILES["img_pro"]["name"]);
                 (move_uploaded_file($_FILES["img_pro"]["tmp_name"], $target_file));
-                update_pro($id_pro, $name_pro, $price, $discount, $short_des, $detail_des, $img_pro, $idcate);
+                update_pro($id_pro, $name_pro, $price, $discount, $short_des, $detail_des, $img_pro, $idcate, $stock);
                 echo '<script>alert("Cập nhật sản phẩm thành công!")</script>';
                 header('location:index.php?act=list_product');
             }

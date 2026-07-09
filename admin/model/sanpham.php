@@ -1,7 +1,7 @@
 <?php 
-function add_pro($name_pro, $price, $discount, $img_pro, $short_des,$detail_des, $idcate) {
-    $sql = "INSERT INTO product (name_pro, price, discount, img_pro, short_des, detail_des, idcate ) VALUES (?, ?, ?, ?, ?, ?, ?)";
-    pdo_execute($sql, $name_pro, $price, $discount, $img_pro, $short_des, $detail_des, $idcate);
+function add_pro($name_pro, $price, $discount, $img_pro, $short_des,$detail_des, $idcate, $stock = 0) {
+    $sql = "INSERT INTO product (name_pro, price, discount, img_pro, short_des, detail_des, idcate, stock) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+    pdo_execute($sql, $name_pro, $price, $discount, $img_pro, $short_des, $detail_des, $idcate, $stock);
 }
 function loadall_pro($idcate = 0)
 {
@@ -20,7 +20,7 @@ function loadone_pro($id_pro) {
     $pro = pdo_query_one($sql, $id_pro);
     return $pro;
 }
-function update_pro($id_pro, $name_pro, $price, $discount, $short_des, $detail_des, $img_pro, $idcate) {
+function update_pro($id_pro, $name_pro, $price, $discount, $short_des, $detail_des, $img_pro, $idcate, $stock = 0) {
         if($img_pro != '') {
         $sql = "UPDATE product SET
         name_pro = ?,
@@ -29,9 +29,10 @@ function update_pro($id_pro, $name_pro, $price, $discount, $short_des, $detail_d
         short_des = ?,
         detail_des = ?,
         img_pro = ?,
-        idcate = ?
+        idcate = ?,
+        stock = ?
         WHERE id_pro = ?";
-        pdo_execute($sql, $name_pro, $price, $discount, $short_des, $detail_des, $img_pro, $idcate, $id_pro);
+        pdo_execute($sql, $name_pro, $price, $discount, $short_des, $detail_des, $img_pro, $idcate, $stock, $id_pro);
         }
     else {
         $sql = "UPDATE product SET
@@ -40,9 +41,10 @@ function update_pro($id_pro, $name_pro, $price, $discount, $short_des, $detail_d
         discount = ?,
         short_des = ?,
         detail_des = ?,
-        idcate = ?
+        idcate = ?,
+        stock = ?
         WHERE id_pro = ?";
-        pdo_execute($sql, $name_pro, $price, $discount, $short_des, $detail_des, $idcate, $id_pro);
+        pdo_execute($sql, $name_pro, $price, $discount, $short_des, $detail_des, $idcate, $stock, $id_pro);
     }
 }
 function remove_pro($id_pro) {

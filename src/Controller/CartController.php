@@ -4,6 +4,7 @@ namespace Codemoi\Controller;
 
 use Codemoi\Core\Controller;
 use Codemoi\Model\Cart;
+use Codemoi\Model\Product;
 
 /**
  * Cart routes. Ported from `index.php` cases `'viewcart'`, `'edit'`,
@@ -43,7 +44,24 @@ class CartController extends Controller
             $quantity = (isset($_POST['quatity']) && $_POST['quatity'] >= 1) ? $_POST['quatity'] : 1;
 
             if ($id_pro !== null) {
-                Cart::add($id_pro, $name_pro, $img_pro, $price, $quantity);
+                // Guard against adding more than is actually in stock (also
+                // blocks POSTing straight to this route for an out-of-stock
+                // product, bypassing the disabled button in the UI) —
+                // account for however much of this product is already in
+                // the cart, since Cart::add() merges into that line.
+                $alreadyInCart = 0;
+                foreach (Cart::items() as $line) {
+                    if ($line[0] == $id_pro) {
+                        $alreadyInCart = $line[4];
+                        break;
+                    }
+                }
+
+                if (Product::hasStock($id_pro, $alreadyInCart + $quantity)) {
+                    Cart::add($id_pro, $name_pro, $img_pro, $price, $quantity);
+                } else {
+                    echo '<script>alert("Sản phẩm không đủ số lượng tồn kho!")</script>';
+                }
             }
 
             $this->redirect('index.php?act=viewcart');
