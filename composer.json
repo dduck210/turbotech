@@ -1,0 +1,10 @@
+{
+    "name": "84904/codemoi",
+    "type": "library",
+    "autoload": {
+        "psr-4": {
+            "84904\\Codemoi\\": "src/"
+        }
+    },
+    "require": {}
+}

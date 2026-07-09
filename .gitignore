@@ -1,0 +1,10 @@
+/vendor/
+Thumbs.db
+.DS_Store
+*.log
+
+# Claude Code tooling: keep project rules/agents/hooks/scripts, drop the generic skill
+# library (bulk, reusable across any project, not this project's business code)
+.claude/skills/
+.claude/agent-memory/
+.claude/hooks/.logs/
