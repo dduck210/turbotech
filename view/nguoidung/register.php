@@ -36,6 +36,18 @@
                         class="block w-full rounded-lg border border-ink-200 bg-white px-3.5 py-2.5 text-sm text-ink-900 placeholder:text-ink-300 focus:outline-none focus:ring-2 focus:ring-brand-500 focus:border-brand-500">
                 </div>
 
+                <div class="mb-4">
+                    <label for="address" class="block text-sm font-medium text-ink-700 mb-1.5">Địa chỉ nhận hàng</label>
+                    <input type="text" id="address" name="address" placeholder="Nhập địa chỉ nhận hàng" required
+                        class="block w-full rounded-lg border border-ink-200 bg-white px-3.5 py-2.5 text-sm text-ink-900 placeholder:text-ink-300 focus:outline-none focus:ring-2 focus:ring-brand-500 focus:border-brand-500">
+                </div>
+
+                <div class="mb-4">
+                    <label for="phone_user" class="block text-sm font-medium text-ink-700 mb-1.5">Số điện thoại</label>
+                    <input type="tel" id="phone_user" name="phone_user" placeholder="Nhập số điện thoại nhận hàng" required
+                        class="block w-full rounded-lg border border-ink-200 bg-white px-3.5 py-2.5 text-sm text-ink-900 placeholder:text-ink-300 focus:outline-none focus:ring-2 focus:ring-brand-500 focus:border-brand-500">
+                </div>
+
                 <div class="mb-6">
                     <label for="password" class="block text-sm font-medium text-ink-700 mb-1.5">Mật khẩu</label>
                     <input type="password" id="password" name="password" placeholder="Tạo mật khẩu của bạn" required
@@ -61,6 +73,8 @@
         var userName = document.getElementById('user_name').value;
         var fullName = document.getElementById('full_name').value;
         var email = document.getElementById('email_user').value;
+        var address = document.getElementById('address').value;
+        var phoneUser = document.getElementById('phone_user').value;
         var password = document.getElementById('password').value;
 
         if (userName.trim() == '') {
@@ -75,6 +89,16 @@
 
         if (email.trim() == '') {
             alert('Vui lòng nhập địa chỉ email');
+            return false;
+        }
+
+        if (address.trim() == '') {
+            alert('Vui lòng nhập địa chỉ nhận hàng');
+            return false;
+        }
+
+        if (phoneUser.trim() == '') {
+            alert('Vui lòng nhập số điện thoại');
             return false;
         }
 

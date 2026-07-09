@@ -20,8 +20,10 @@ class AuthController extends Controller
             $full_name = $_POST['full_name'] ?? '';
             $email_user = $_POST['email_user'] ?? '';
             $password = $_POST['password'] ?? '';
+            $address = $_POST['address'] ?? '';
+            $phone_user = $_POST['phone_user'] ?? '';
 
-            User::register($user_name, $full_name, $email_user, $password);
+            User::register($user_name, $full_name, $email_user, $password, $address, $phone_user);
             echo '<script>alert("Đăng ký tài khoản thành công! Vui lòng đăng nhập")</script>';
             // NOTE: old code's redirect target has a pre-existing typo
             // ('act-login' instead of 'act=login', `index.php:84`); the

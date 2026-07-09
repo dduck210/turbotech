@@ -11,13 +11,17 @@ use Codemoi\Core\Database;
 class User
 {
     /**
-     * Create a new user account.
-     * Mirrors old `register($user_name, $full_name, $email_user, $password)`.
+     * Create a new user account, including delivery address/phone so
+     * checkout can prefill them from the session immediately after login
+     * (`view/giohang/bill.php` already reads `$address`/`$phone_user` from
+     * `$_SESSION['user']` — this is the other half of that link).
+     * Mirrors old `register($user_name, $full_name, $email_user, $password)`,
+     * extended with `$address`/`$phone_user`.
      */
-    public static function register($user_name, $full_name, $email_user, $password): void
+    public static function register($user_name, $full_name, $email_user, $password, $address = '', $phone_user = ''): void
     {
-        $sql = "INSERT INTO user (user_name, full_name, email_user, password) VALUES (?, ?, ?, ?)";
-        Database::execute($sql, $user_name, $full_name, $email_user, $password);
+        $sql = "INSERT INTO user (user_name, full_name, email_user, password, address, phone_user) VALUES (?, ?, ?, ?, ?, ?)";
+        Database::execute($sql, $user_name, $full_name, $email_user, $password, $address, $phone_user);
     }
 
     /**
