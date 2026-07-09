@@ -85,6 +85,9 @@
                         <div id="account-orders" data-tab-panel role="tabpanel" aria-labelledby="account-orders-tab"
                             class="account-tab-panel hidden rounded-2xl border border-ink-200 bg-white shadow-sm p-6">
                             <h2 class="mb-4 font-heading text-lg font-semibold text-ink-900">Đơn hàng của tôi</h2>
+                            <?php if (!empty($cancelMessage)) : ?>
+                                <div class="mb-4 rounded-lg border border-ink-200 bg-ink-50 p-3 text-sm text-ink-700"><?= htmlspecialchars($cancelMessage) ?></div>
+                            <?php endif; ?>
                             <?php if (empty($list_mybill)) : ?>
                                 <div class="py-16 text-center">
                                     <i class="fa-solid fa-box-open text-5xl text-ink-300" aria-hidden="true"></i>
@@ -101,6 +104,7 @@
                                                 <th class="px-4 py-3 text-left font-semibold text-ink-700">Số lượng</th>
                                                 <th class="px-4 py-3 text-left font-semibold text-ink-700">Trạng thái</th>
                                                 <th class="px-4 py-3 text-left font-semibold text-ink-700">Tổng tiền</th>
+                                                <th class="px-4 py-3 text-left font-semibold text-ink-700">Hành động</th>
                                             </tr>
                                         </thead>
                                         <tbody class="divide-y divide-ink-200">
@@ -116,6 +120,20 @@
                                                     <td class="px-4 py-3 text-ink-700"><?= $countpro ?></td>
                                                     <td class="px-4 py-3 text-ink-700"><?= $stt ?></td>
                                                     <td class="px-4 py-3 font-medium text-ink-900"><?= number_format($total_amount) ?>₫</td>
+                                                    <td class="px-4 py-3">
+                                                        <?php if ((int) $status === 0) : ?>
+                                                            <form action="index.php?act=cancelorder" method="post"
+                                                                onsubmit="return confirm('Bạn chắc chắn muốn hủy đơn hàng UTP-<?= $id_bill ?>?')">
+                                                                <input type="hidden" name="id_bill" value="<?= $id_bill ?>">
+                                                                <button type="submit"
+                                                                    class="inline-flex items-center justify-center gap-1.5 rounded-lg border border-red-200 px-3 py-1.5 text-xs font-semibold text-red-600 hover:bg-red-50 focus:outline-none focus:ring-2 focus:ring-brand-500">
+                                                                    <i class="fa-solid fa-xmark" aria-hidden="true"></i> Hủy đơn
+                                                                </button>
+                                                            </form>
+                                                        <?php else : ?>
+                                                            <span class="text-xs text-ink-300">—</span>
+                                                        <?php endif; ?>
+                                                    </td>
                                                 </tr>
                                             <?php endforeach ?>
                                         </tbody>

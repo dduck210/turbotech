@@ -72,7 +72,35 @@ class AccountController extends Controller
         }
 
         $list_mybill = Order::allByUser($user['id_user']);
+        $cancelMessage = $_SESSION['cancelMessage'] ?? null;
+        unset($_SESSION['cancelMessage']);
 
-        $this->view('nguoidung/myaccount', ['list_mybill' => $list_mybill]);
+        $this->view('nguoidung/myaccount', [
+            'list_mybill' => $list_mybill,
+            'cancelMessage' => $cancelMessage,
+        ]);
+    }
+
+    /**
+     * Cancel an order placed by the currently logged-in user. Only orders
+     * still in the "Đơn hàng mới" (0) state can be cancelled — enforced in
+     * `Order::cancel()`'s WHERE clause, not just here, so this can't be
+     * bypassed by calling the route directly with a crafted `id_bill`.
+     */
+    public function cancelOrder(): void
+    {
+        if (!Auth::check()) {
+            $this->redirect('?act=login');
+        }
+
+        $user = Auth::user();
+        $id_bill = $_POST['id_bill'] ?? 0;
+
+        $cancelled = Order::cancel($id_bill, $user['id_user']);
+        $_SESSION['cancelMessage'] = $cancelled
+            ? 'Đã hủy đơn hàng thành công.'
+            : 'Không thể hủy đơn hàng này (đơn không tồn tại hoặc đã được xử lý).';
+
+        $this->redirect('?act=myaccount');
     }
 }

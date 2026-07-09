@@ -40,6 +40,7 @@ $router->add('forgotPass', [PasswordController::class, 'forgot']);
 $router->add('verification', [PasswordController::class, 'verification']);
 $router->add('changePass', [PasswordController::class, 'change']);
 $router->add('myaccount', [AccountController::class, 'index']);
+$router->add('cancelorder', [AccountController::class, 'cancelOrder']);
 $router->add('viewcart', [CartController::class, 'viewCart']);
 $router->add('edit', [CartController::class, 'edit']);
 $router->add('addtocart', [CartController::class, 'add']);

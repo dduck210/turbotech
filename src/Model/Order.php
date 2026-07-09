@@ -115,6 +115,22 @@ class Order
     }
 
     /**
+     * Cancel an order (status -> 4, "Đã hủy"), but only if it belongs to
+     * the requesting user AND is still in the "Đơn hàng mới" (0) state —
+     * both checks are baked into the WHERE clause so this is an atomic,
+     * ownership-safe operation (a tampered `id_bill` for someone else's
+     * order, or an order that's already being processed/shipped/cancelled,
+     * simply matches zero rows instead of silently succeeding).
+     *
+     * @return bool True if the order was actually cancelled.
+     */
+    public static function cancel($id_bill, $id_user): bool
+    {
+        $sql = "UPDATE bill SET status = 4 WHERE id_bill = ? AND id_user = ? AND status = 0";
+        return Database::execute($sql, $id_bill, $id_user) > 0;
+    }
+
+    /**
      * Human-readable label for a bill status code.
      * Mirrors old `get_stt($n)`.
      */
@@ -129,6 +145,8 @@ class Order
                 return "Đang giao hàng";
             case '3':
                 return "Đã giao hàng";
+            case '4':
+                return "Đã hủy";
             default:
                 return "Đơn hàng mới";
         }

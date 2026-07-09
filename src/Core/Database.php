@@ -98,20 +98,24 @@ class Database
     }
 
     /**
-     * Run an INSERT/UPDATE/DELETE statement.
-     * Mirrors old `pdo_execute()`.
+     * Run an INSERT/UPDATE/DELETE statement, returning the affected row
+     * count (useful for conditional UPDATEs where the caller needs to know
+     * whether a row actually matched, e.g. an ownership/status-guarded
+     * cancellation). Mirrors old `pdo_execute()`, extended with a return
+     * value — existing callers that ignore the return are unaffected.
      *
      * @param string $sql
      * @param mixed ...$args
-     * @return void
+     * @return int Number of affected rows.
      * @throws PDOException
      */
-    public static function execute(string $sql, ...$args): void
+    public static function execute(string $sql, ...$args): int
     {
         try {
             $conn = self::connection();
             $stmt = $conn->prepare($sql);
             $stmt->execute($args);
+            return $stmt->rowCount();
         } catch (PDOException $e) {
             throw $e;
         } finally {
