@@ -19,10 +19,18 @@
 
 <!-- Trang chi tiết tài khoản -->
 <main class="page-content bg-ink-50">
-    <form action="index.php?act=myaccount" method="post" enctype="multipart/form-data">
-        <? if (isset($_SESSION['user']) && is_array($_SESSION['user']))
-            extract($_SESSION['user']);
-        ?>
+    <?php if (isset($_SESSION['user']) && is_array($_SESSION['user'])) {
+        extract($_SESSION['user']);
+    } ?>
+    <!-- NOTE: intentionally no page-wide <form> here — it used to wrap this whole tab
+         area, and every per-order "Hủy đơn" <form> inside the Orders tab table ended up
+         nested inside it. Nested <form> elements are invalid HTML; the browser silently
+         drops the first nested <form> start tag (its inputs get swallowed into the outer
+         form) and its stray </form> end tag then force-closes the outer form early, so
+         only the FIRST cancellable order's button actually worked, and only inconsistently.
+         Each of "Thông tin tài khoản" / "Mật khẩu" below now has its OWN scoped <form>
+         instead (see #account-details / #account-password), so nothing here wraps the
+         Orders tab anymore. -->
         <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-12 md:py-16">
             <div class="grid grid-cols-1 gap-8 lg:grid-cols-4">
 
@@ -167,6 +175,7 @@
                         <!-- Account details -->
                         <div id="account-details" data-tab-panel role="tabpanel" aria-labelledby="account-details-tab"
                             class="account-tab-panel hidden rounded-2xl border border-ink-200 bg-white shadow-sm p-6">
+                            <form action="index.php?act=myaccount" method="post" enctype="multipart/form-data">
                             <div class="mb-6 text-center">
                                 <img src="uploads/<?= $_SESSION['user']['img_user'] ?>" alt="Avatar người dùng"
                                     class="mx-auto h-24 w-24 rounded-full border border-ink-200 object-cover">
@@ -234,11 +243,13 @@
                                     </button>
                                 </div>
                             </div>
+                            </form>
                         </div>
 
                         <!-- Password -->
                         <div id="account-password" data-tab-panel role="tabpanel" aria-labelledby="account-password-tab"
                             class="account-tab-panel hidden rounded-2xl border border-ink-200 bg-white shadow-sm p-6">
+                            <form action="index.php?act=myaccount" method="post">
                             <div class="space-y-4">
                                 <div>
                                     <label for="account-password-username" class="block text-sm font-medium text-ink-700 mb-1.5">Tên đăng nhập</label>
@@ -265,13 +276,13 @@
                                     </button>
                                 </div>
                             </div>
+                            </form>
                         </div>
 
                     </div>
                 </div>
             </div>
         </div>
-    </form>
 </main>
 
 <script>
