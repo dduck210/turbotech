@@ -1,272 +1,184 @@
-<!-- Phần mở đầu trang chi tiết sp -->
-<div class="breadcrumb-area">
-    <div class="container">
-        <div class="breadcrumb-content">
-            <ul>
-                <li><a href="index.php">Trang chủ</a></li>
-                <li class="active">Chi tiết sản phẩm</li>
-            </ul>
-        </div>
-    </div>
+<!-- Breadcrumb -->
+<div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-4">
+    <nav aria-label="Breadcrumb" class="text-sm text-ink-500">
+        <ol class="flex items-center gap-2">
+            <li><a href="index.php" class="hover:text-brand-600 transition-colors">Trang chủ</a></li>
+            <li aria-hidden="true">/</li>
+            <li class="text-ink-900 font-medium">Chi tiết sản phẩm</li>
+        </ol>
+    </nav>
 </div>
-<!-- end-->
+<!-- End Breadcrumb -->
 
-<!-- Phần show chi tiết sản phẩm -->
-<div class="sp-area">
-    <div class="container">
-        <div class="sp-nav">
-            <div class="row">
-                <div class="col-lg-5 col-md-5">
-                    <div class="sp-images">
-                        <div class="sp-largeimages sp-imagezoom">
-                            <div class="sp-singleimage">
-                                <img src="admin/uploads/<?= $one_pro['img_pro']; ?>" alt="UltraPhone Product">
+<!-- Product detail: image + info
+     Original image gallery used slick ("sp-largeimages"/"sp-thumbs") + lightGallery ("sp-imagezoom")
+     on a SINGLE repeated image (no real multi-image data) — per design-system's legacy-plugin
+     removal guidance, dropped the slider/lightbox plugin classes entirely and show one static image. -->
+<div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-12 md:py-16">
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12">
+
+        <!-- Image -->
+        <div class="rounded-2xl border border-ink-200 bg-white overflow-hidden">
+            <div class="aspect-square bg-ink-100 overflow-hidden">
+                <img src="admin/uploads/<?= $one_pro['img_pro']; ?>"
+                    alt="Ảnh sản phẩm <?= htmlspecialchars($one_pro['name_pro']) ?>"
+                    class="h-full w-full object-cover">
+            </div>
+        </div>
+
+        <!-- Info -->
+        <div>
+            <h1 class="font-heading text-2xl md:text-3xl font-bold text-ink-900 mb-2">
+                <a href="index.php?act=prodetail&idpro=<?php echo $one_pro['id_pro'] ?>"
+                    class="hover:text-brand-600 transition-colors"><?= $one_pro['name_pro'] ?></a>
+            </h1>
+            <p class="text-sm text-ink-500 mb-4">Lượt xem: <?= $one_pro['view'] ?></p>
+
+            <div class="mb-4">
+                <?php if ($one_pro['discount'] <= 0) { ?>
+                    <span class="text-2xl font-bold text-brand-600"><?= number_format($one_pro['price']) ?>₫</span>
+                <?php } else { ?>
+                    <span class="text-2xl font-bold text-brand-600">
+                        <?= number_format(($one_pro['price']) - (($one_pro['price']) * ($one_pro['discount']) / 100)) ?>₫
+                    </span>
+                    <span class="ml-2 text-ink-300 line-through"><?= number_format($one_pro['price']) ?>₫</span>
+                <?php } ?>
+            </div>
+
+            <div class="text-ink-700 leading-relaxed mb-6">
+                <p><?= $one_pro['short_des'] ?></p>
+            </div>
+
+            <!-- Add to cart form: field names / values byte-identical to before.
+                 Quantity stepper markup (cart-plus-minus / cart-plus-minus-box / dec /
+                 inc / qtybutton classes, name="quatity") kept exactly — these are hooked by
+                 the vanilla-JS handler in src/js/main.js, only restyled visually. -->
+            <form action="index.php?act=addtocart" method="post" class="mb-6">
+                <div class="flex flex-wrap items-end gap-4 mb-5">
+                    <div>
+                        <label for="quatity" class="block text-sm font-medium text-ink-700 mb-1.5">Số lượng</label>
+                        <div class="cart-plus-minus inline-flex items-stretch rounded-lg border border-ink-200 overflow-hidden">
+                            <input class="cart-plus-minus-box w-16 h-11 text-center text-sm text-ink-900 focus:outline-none"
+                                id="quatity" name="quatity" value="1" type="text">
+                            <div class="dec qtybutton flex items-center justify-center w-11 h-11 border-l border-ink-200 hover:bg-ink-50 cursor-pointer">
+                                <i class="fa fa-angle-down" aria-hidden="true"></i>
                             </div>
-                        </div>
-                        <div class="sp-thumbs">
-                            <div class="sp-singlethumb">
-                                <img src="admin/uploads/<?= $one_pro['img_pro']; ?>" alt="Ảnh sản phẩm">
+                            <div class="inc qtybutton flex items-center justify-center w-11 h-11 border-l border-ink-200 hover:bg-ink-50 cursor-pointer">
+                                <i class="fa fa-angle-up" aria-hidden="true"></i>
                             </div>
                         </div>
                     </div>
+                    <input type="hidden" name="id_pro" value="<?php echo $one_pro['id_pro'] ?>">
+                    <input type="hidden" name="name_pro" value="<?php echo $one_pro['name_pro'] ?>">
+                    <input type="hidden" name="img_pro" value="<?php echo $one_pro['img_pro'] ?>">
+                    <input type="hidden" name="price" value="<?php echo $one_pro['price'] ?>">
+                    <input type="submit" name="addtocart" value="Thêm giỏ hàng"
+                        class="inline-flex items-center justify-center gap-2 rounded-lg bg-brand-600 px-5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-brand-700 transition-colors focus:outline-none focus:ring-2 focus:ring-brand-500 focus:ring-offset-2 cursor-pointer">
                 </div>
-                <div class="col-lg-7 col-md-7">
-                    <div class="sp-content">
-                        <div class="sp-heading">
-                            <h5><a href="index.php?act=prodetail&idpro=<?php echo $one_pro['id_pro'] ?>">
-                                    <?= $one_pro['name_pro'] ?>
-                                </a></h5>
-                            <span class="reference">Lượt xem: <?= $one_pro['view'] ?></span>
-                        </div>
 
+                <ul class="space-y-2 text-sm text-ink-700">
+                    <li class="flex items-center gap-2"><i class="fas fa-check-square text-brand-600" aria-hidden="true"></i>Bảo hành chính hãng</li>
+                    <li class="flex items-center gap-2"><i class="fa fa-truck text-brand-600" aria-hidden="true"></i>Giao hàng nhanh chóng</li>
+                    <li class="flex items-center gap-2"><i class="fas fa-sync-alt text-brand-600" aria-hidden="true"></i>Chế độ đổi trả trong vòng 12 tháng</li>
+                </ul>
+            </form>
+        </div>
+    </div>
+</div>
+<!-- End Product detail -->
 
-                        <div class="price-box">
-                            <?php if ($one_pro['discount'] <= 0) { ?>
-                                <span class="new-price">
-                                    <?= number_format($one_pro['price']) ?>₫
-                                </span>
-                            <?php } else { ?>
-                                <span class="new-price">
-                                    <?= number_format(($one_pro['price']) - (($one_pro['price']) * ($one_pro['discount']) /
-                                        100)) ?>₫
-                                </span>
-                                <span class="old-price">
-                                    <?= number_format($one_pro['price']) ?>₫
-                                </span>
-                            <?php } ?>
+<!-- Description / Reviews tabs
+     Kept the Bootstrap-JS tab mechanism (data-bs-toggle="tab", ids #description/#reviews,
+     "tab-pane"/"active" classes — driven by bundled bootstrap JS in plugins.min.js). Show/hide is
+     Tailwind-only: base "hidden" + "[&.active]:!block" so a pane shows only once bootstrap's JS
+     adds "active" to it — no dependency on the removed main.css.
+     Comment widget (view/binhluan/formbinhluan.php, owned by another agent) AJAX-load left untouched. -->
+<div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-12 md:py-16">
+    <div class="border-b border-ink-200 mb-6">
+        <ul class="nav flex gap-2" role="tablist">
+            <li role="presentation">
+                <a class="active inline-flex items-center gap-1.5 border-b-2 border-transparent px-4 py-2.5 text-sm font-semibold text-ink-500 transition-colors hover:text-brand-600 [&.active]:border-brand-600 [&.active]:text-brand-600"
+                    data-bs-toggle="tab" href="#description" role="tab" aria-controls="description">
+                    <span>Chi tiết</span>
+                </a>
+            </li>
+            <li role="presentation">
+                <a class="inline-flex items-center gap-1.5 border-b-2 border-transparent px-4 py-2.5 text-sm font-semibold text-ink-500 transition-colors hover:text-brand-600 [&.active]:border-brand-600 [&.active]:text-brand-600"
+                    data-bs-toggle="tab" href="#reviews" role="tab" aria-controls="reviews">
+                    <span>Đánh giá</span>
+                </a>
+            </li>
+        </ul>
+    </div>
+    <div class="tab-content">
+        <div id="description" class="tab-pane active hidden [&.active]:!block" role="tabpanel">
+            <div class="text-ink-700 leading-relaxed">
+                <p>
+                    <strong class="text-lg text-ink-900">Thông số kỹ thuật:</strong><br>
+                    <?= $one_pro['detail_des'] ?>
+                </p>
+            </div>
+        </div>
 
+        <div id="reviews" class="tab-pane hidden [&.active]:!block" role="tabpanel">
+            <!-- jquery bình luận -->
+            <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+            <script>
+                $(document).ready(function() {
+                    $("#comment").load("./view/binhluan/formbinhluan.php", {
+                        idpro: <?= $one_pro['id_pro'] ?>,
+                    });
+                });
+            </script>
+            <div id="comment"></div>
+        </div>
+    </div>
+</div>
+<!-- End Description / Reviews tabs -->
 
-                        </div>
-                        <div class="short-desc">
-                            <p>
-                                <?= $one_pro['short_des'] ?>
-                            </p>
-                        </div>
-                        <form action="index.php?act=addtocart" method="post">
-                            <div class="quantity">
-                                <div class="flex-addtocart">
-                                    <label>Số lượng</label>
-                                    <div class="cart-plus-minus">
-                                        <input class="cart-plus-minus-box" name="quatity" value="1" type="text">
-                                        <div class="dec qtybutton"><i class="fa fa-angle-down"></i></div>
-                                        <div class="inc qtybutton"><i class="fa fa-angle-up"></i></div>
-                                    </div>
-                                    <div class="detail-addpro">
-                                        <input type="hidden" name="id_pro" value="<?php echo $one_pro['id_pro'] ?>">
-                                        <input type="hidden" name="name_pro" value="<?php echo $one_pro['name_pro'] ?>">
-                                        <input type="hidden" name="img_pro" value="<?php echo $one_pro['img_pro'] ?>">
-                                        <input type="hidden" name="price" value="<?php echo $one_pro['price'] ?>">
-                                        <input type="submit" name="addtocart" class="addtocart" value="Thêm giỏ hàng">
-                                    </div>
-                                </div>
-                            </div>
-
-
-                            <div class="block-reassurance">
-                                <ul>
-                                    <li><i class="fas fa-check-square"></i>Bảo hành chính hãng</li>
-                                    <li><i class="fa fa-truck"></i>Giao hàng nhanh chóng</li>
-                                    <li><i class="fas fa-sync-alt"></i>Chế độ đổi trả trong vòng 12 tháng</li>
-                                </ul>
-                            </div>
+<!-- Similar products
+     NOTE: the original file had TWO copies of this block — the first wrapped in a `hidden`
+     attribute and explicitly commented as dead ("hidden vì ko fix được nữa đành phải coi là thẻ
+     ảo" = kept only as a phantom tag, never rendered). That dead duplicate is removed here
+     (documented in report) — only the real, visible block remains. Carousel classes
+     ("jb-product_slider", slick-initialized) dropped per design-system guidance, replaced with a
+     responsive grid. Decorative non-functional wishlist/copy "#" links (no JS behavior, verified
+     against src/js/main.js) dropped as dead UI per YAGNI. -->
+<div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-12 md:py-16">
+    <h4 class="font-heading text-xl font-semibold text-ink-900 mb-6">Các sản phẩm cùng loại</h4>
+    <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-6">
+        <?php foreach ($similar_pro as $pro) { ?>
+            <div class="rounded-2xl border border-ink-200 bg-white shadow-sm hover:shadow-md transition-shadow overflow-hidden">
+                <div class="aspect-square bg-ink-100 overflow-hidden">
+                    <a href="index.php?act=prodetail&idpro=<?php echo $pro['id_pro']; ?>">
+                        <img src="admin/uploads/<?php echo $pro['img_pro']; ?>"
+                            alt="Ảnh sản phẩm <?= htmlspecialchars($pro['name_pro']) ?>"
+                            class="h-full w-full object-cover">
+                    </a>
+                </div>
+                <div class="p-4">
+                    <h6 class="font-heading font-semibold text-ink-900 line-clamp-2 mb-2">
+                        <a href="index.php?act=prodetail&idpro=<?php echo $pro['id_pro'] ?>"
+                            class="hover:text-brand-600 transition-colors">
+                            <?php echo $pro['name_pro']; ?>
+                        </a>
+                    </h6>
+                    <div class="mb-3">
+                        <span class="text-brand-600 font-bold">
+                            <?php echo number_format($pro['price']); ?>₫
+                        </span>
                     </div>
+                    <form action="index.php?act=addtocart" method="post">
+                        <input type="hidden" name="id_pro" value="<?php echo $pro['id_pro'] ?>">
+                        <input type="hidden" name="name_pro" value="<?php echo $pro['name_pro'] ?>">
+                        <input type="hidden" name="img_pro" value="<?php echo $pro['img_pro'] ?>">
+                        <input type="hidden" name="price" value="<?php echo $pro['price'] ?>">
+                        <input type="submit" name="addtocart" value="Thêm vào giỏ"
+                            class="w-full inline-flex items-center justify-center gap-2 rounded-lg bg-brand-600 px-5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-brand-700 transition-colors focus:outline-none focus:ring-2 focus:ring-brand-500 focus:ring-offset-2 cursor-pointer">
+                    </form>
                 </div>
             </div>
-        </div>
+        <?php } ?>
     </div>
 </div>
-<!-- end phần show chi tiết sản phẩm -->
-
-<!-- Phần mô tả chi tiết và đánh giá -->
-<div class="jb-product-tab_area sp-product-tab_area">
-    <div class="container">
-        <div class="row">
-            <div class="col-lg-12">
-                <div class="product-tab">
-                    <ul class="nav product-menu">
-                        <li><a class="active" data-bs-toggle="tab" href="#description"><span>Chi tiết</span></a>
-                        </li>
-                        <li><a data-bs-toggle="tab" href="#reviews"><span>Đánh giá</span></a></li>
-                    </ul>
-                </div>
-                <div class="tab-content jb-tab_content">
-                    <!-- Phần mô tả chỉ tiết -->
-                    <div id="description" class="tab-pane active show" role="tabpanel">
-                        <div class="product-description">
-                            <p class="short-desc"> <strong style="font-size: 20px; line-height: 2">Thông số kỹ
-                                    thuật:</strong> <br>
-                                <?= $one_pro['detail_des'] ?>
-                            </p>
-                        </div>
-                    </div>
-                    <!-- End phần mô tả chỉ tiết -->
-
-                    <!-- Phần đánh giá, bình luận -->
-                    <div id="reviews" class="tab-pane" role="tabpanel">
-                        <!-- jquery bình luận -->
-                        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
-                        <script>
-                            $(document).ready(function() {
-                                $("#comment").load("./view/binhluan/formbinhluan.php", {
-                                    idpro: <?= $one_pro['id_pro'] ?>,
-                                });
-                            });
-                        </script>
-                        <div id="comment"></div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-<!-- End phần mô tả chi tiết và đánh giá-->
-
-<!-- Phần các sản phẩm cùng loại nhưng hidden vì ko fix được nữa đành phải coi là thẻ ảo, phần div bên dưới mới là show ra =))))-->
-<div class="jb-product-slider_area sp-product-slider_area" hidden>
-    <div class="container">
-        <div class="row">
-            <div class="col-lg-12">
-                <div class="section_title-2">
-                    <h4>Các sản phẩm cùng loại</h4>
-                </div>
-            </div>
-            <div class="col-lg-12">
-                <div class="jb-product_slider">
-                    <?php foreach ($similar_pro as $pro) { ?>
-                        <!-- Sản phẩm -->
-                        <div class="jb-slide-item">
-                            <div class="jb-single_product">
-                                <div class="product-img">
-                                    <a href="index.php?act=prodetail&idpro=<?php echo $pro['id_pro']; ?>">
-                                        <img src="admin/uploads/<?php echo $pro['img_pro']; ?>" alt="UltraPhone Product">
-                                    </a>
-                                    <span class="sticker">New</span>
-                                </div>
-                                <div class="jb-product_content">
-                                    <div class="product-desc_info">
-                                        <h6><a class="product-name" href="index.php?act=prodetail&idpro=<?php echo $pro['id_pro'] ?>">
-                                                <?php echo $pro['name_pro']; ?>
-                                            </a></h6>
-                                        <div class="price-box">
-                                            <span class="new-price">
-                                                <?php echo number_format($pro['price']); ?>₫
-                                            </span>
-                                            <!-- <del class="new-price"><?php echo number_format($pro['price']); ?>₫</del> -->
-                                        </div>
-                                    </div>
-                                    <div class="actions-add">
-                                        <form action="index.php?act=addtocart" method="post">
-                                            <ul>
-                                                <li>
-                                                    <a class="jb-wishlist_link" href="#"><i class="fa fa-heart"></i></a>
-                                                </li>
-                                                <input type="hidden" name="id_pro" value="<?php echo $pro['id_pro'] ?>">
-                                                <input type="hidden" name="name_pro" value="<?php echo $pro['name_pro'] ?>">
-                                                <input type="hidden" name="img_pro" value="<?php echo $pro['img_pro'] ?>">
-                                                <input type="hidden" name="price" value="<?php echo $pro['price'] ?>">
-                                                <li>
-                                                    <input type="submit" class="addtocart" name="addtocart" value="Thêm vào giỏ">
-                                                </li>
-                                                <li>
-                                                    <a class="jb-sp_link" href="#"><i class="fa fa-copy"></i></a>
-                                                </li>
-                                            </ul>
-                                        </form>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    <?php } ?>
-                    <!-- End sản phẩm -->
-
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-<!-- End phần các sản phẩm cùng loại -->
-
-<!-- Phần các sản phẩm cùng loại -->
-<div class="jb-product-slider_area sp-product-slider_area">
-    <div class="container">
-        <div class="row">
-            <div class="col-lg-12">
-                <div class="section_title-2">
-                    <h4>Các sản phẩm cùng loại</h4>
-                </div>
-            </div>
-            <div class="col-lg-12">
-                <div class="jb-product_slider">
-                    <?php foreach ($similar_pro as $pro) { ?>
-                        <!-- Sản phẩm -->
-                        <div class="jb-slide-item">
-                            <div class="jb-single_product">
-                                <div class="product-img">
-                                    <a href="index.php?act=prodetail&idpro=<?php echo $pro['id_pro']; ?>">
-                                        <img src="admin/uploads/<?php echo $pro['img_pro']; ?>" alt="UltraPhone Product">
-                                    </a>
-                                    <span class="sticker">New</span>
-                                </div>
-                                <div class="jb-product_content">
-                                    <div class="product-desc_info">
-                                        <h6><a class="product-name" href="index.php?act=prodetail&idpro=<?php echo $pro['id_pro'] ?>">
-                                                <?php echo $pro['name_pro']; ?>
-                                            </a></h6>
-                                        <div class="price-box">
-                                            <span class="new-price">
-                                                <?php echo number_format($pro['price']); ?>₫
-                                            </span>
-                                            <!-- <del class="new-price"><?php echo number_format($pro['price']); ?>₫</del> -->
-                                        </div>
-                                    </div>
-                                    <div class="actions-add">
-                                        <form action="index.php?act=addtocart" method="post">
-                                            <ul>
-                                                <li>
-                                                    <a class="jb-wishlist_link" href="#"><i class="fa fa-heart"></i></a>
-                                                </li>
-                                                <input type="hidden" name="id_pro" value="<?php echo $pro['id_pro'] ?>">
-                                                <input type="hidden" name="name_pro" value="<?php echo $pro['name_pro'] ?>">
-                                                <input type="hidden" name="img_pro" value="<?php echo $pro['img_pro'] ?>">
-                                                <input type="hidden" name="price" value="<?php echo $pro['price'] ?>">
-                                                <li>
-                                                    <input type="submit" class="addtocart" name="addtocart" value="Thêm vào giỏ">
-                                                </li>
-                                                <li>
-                                                    <a class="jb-sp_link" href="#"><i class="fa fa-copy"></i></a>
-                                                </li>
-                                            </ul>
-                                        </form>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    <?php } ?>
-                    <!-- End sản phẩm -->
-
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-<!-- End phần các sản phẩm cùng loại -->
+<!-- End Similar products -->

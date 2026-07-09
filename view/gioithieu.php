@@ -1,21 +1,24 @@
-<div class="breadcrumb-area">
-    <div class="container">
-        <div class="breadcrumb-content">
-            <ul>
-                <li><a href="index.php">Trang chủ</a></li>
-                <li class="active">Giới thiệu</li>
-            </ul>
-        </div>
+<!-- Breadcrumb -->
+<div class="border-b border-ink-200 bg-white py-4">
+    <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        <ul class="flex items-center gap-2 text-sm text-ink-500">
+            <li><a class="hover:text-brand-600" href="index.php">Trang chủ</a></li>
+            <li aria-hidden="true">/</li>
+            <li class="font-medium text-ink-900">Giới thiệu</li>
+        </ul>
     </div>
 </div>
+<!-- Breadcrumb End Here -->
+
 <form action="index.php?act=introduce" method="post">
-    <div class="container" style="padding: 30px;">
-        <div style="text-align: center;">
-            <h2>Giới thiệu về Turbotech </h2>
+    <div class="mx-auto max-w-4xl px-4 py-12 sm:px-6 lg:px-8 md:py-16">
+        <div class="text-center">
+            <h2 class="font-heading text-2xl font-bold text-ink-900 sm:text-3xl">Giới thiệu về Turbotech</h2>
         </div>
-        <div>
-            <h5 style="color:#FF8C00; padding-top: 20px;">1/. Lịch Sử Hình Thành </h5>
-            <p style="padding-left: 30px; font-size:16px; line-height:26px;">
+
+        <div class="mt-8 rounded-2xl border border-ink-200 bg-white p-6 shadow-sm sm:p-8">
+            <h5 class="font-heading font-semibold text-brand-600">1/. Lịch Sử Hình Thành</h5>
+            <p class="mt-3 pl-4 text-base leading-relaxed text-ink-700">
                 - Trong kỷ nguyên số hóa mạnh mẽ hiện nay, Internet đã trở thành một phần không thể thiếu trong cuộc
                 sống. Người tiêu dùng ngày càng có xu hướng tìm kiếm, tham khảo thông tin và mua sắm trực tuyến, đặc
                 biệt là đối với các sản phẩm công nghệ có giá trị cao như Máy tính (PC) và Laptop.<br>
@@ -26,9 +29,10 @@
                 chất lượng hàng đầu. <br>
             </p>
         </div>
-        <div>
-            <h5 style="color:#FF8C00; padding-top: 20px;">2/. Tầm Nhìn </h5>
-            <p style="padding-left: 30px; font-size:16px; line-height:26px;">
+
+        <div class="mt-8 rounded-2xl border border-ink-200 bg-white p-6 shadow-sm sm:p-8">
+            <h5 class="font-heading font-semibold text-brand-600">2/. Tầm Nhìn</h5>
+            <p class="mt-3 pl-4 text-base leading-relaxed text-ink-700">
                 - Trở thành Website bán lẻ máy tính, laptop và linh kiện chính hãng có chất lượng sản phẩm và dịch vụ
                 hàng đầu trong nước.<br>
 
@@ -37,11 +41,10 @@
             </p>
         </div>
 
-        <div>
-            <h5 style="color:#FF8C00; padding-top: 20px;">4/. Lợi ích của website đối với người đang quan tâm đến các
-                sản phẩm linh kiện:</h5>
-            <p style="padding-left: 30px; font-size:16px; line-height:26px;">
-
+        <div class="mt-8 rounded-2xl border border-ink-200 bg-white p-6 shadow-sm sm:p-8">
+            <h5 class="font-heading font-semibold text-brand-600">4/. Lợi ích của website đối với người đang quan tâm
+                đến các sản phẩm linh kiện:</h5>
+            <p class="mt-3 pl-4 text-base leading-relaxed text-ink-700">
                 - Tạo ra một nguồn thông tin đáng tin cậy: Cung cấp đầy đủ, chính xác thông tin về các dòng máy, xu
                 hướng
                 - Tra cứu thông tin trực quan, dễ dàng: Khách hàng có thể nhanh chóng tham khảo mọi chi tiết về chiếc
@@ -54,8 +57,6 @@
                 hữu chiếc Laptop hay bộ PC ưng ý một cách dễ dàng, nhanh chóng ngay tại nhà, tiết kiệm công sức đi lại
                 so với việc phải tìm kiếm thủ công tại các cửa hàng truyền thống.<br>
             </p>
-
         </div>
     </div>
-
 </form>

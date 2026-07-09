@@ -1,401 +1,209 @@
-<!-- Begin JB's Breadcrumb Area -->
-<div class="breadcrumb-area">
-    <div class="container">
-        <div class="breadcrumb-content">
-            <ul>
-                <li><a href="index.php">Trang chủ</a></li>
-                <li><a href="index.php?act=product" style="color: #0d6efd;">Sản phẩm</a></li>
-            </ul>
-        </div>
-    </div>
+<!-- Breadcrumb -->
+<div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-4">
+    <nav aria-label="Breadcrumb" class="text-sm text-ink-500">
+        <ol class="flex items-center gap-2">
+            <li><a href="index.php" class="hover:text-brand-600 transition-colors">Trang chủ</a></li>
+            <li aria-hidden="true">/</li>
+            <li><a href="index.php?act=product" class="font-medium text-brand-600">Sản phẩm</a></li>
+        </ol>
+    </nav>
 </div>
-<!-- JB's Breadcrumb Area End Here -->
+<!-- End Breadcrumb -->
 
-<!-- Begin JB's Content Wrapper Area -->
-<div class="jb-content_wrapper">
-    <div class="container">
-        <div class="row">
-            <!-- Begin Sidebar Categories Area -->
-            <div class="col-lg-3 order-2 order-lg-1">
-                <div class="jb-sidebar-catagories_area">
-                    <div class="sidebar-checkbox first-child">
-                        <div class="sidebar-checkbox_title">
-                            <h5>Danh mục</h5>
-                        </div>
-                        <ul class="sidebar-checkbox_list">
-                            <?php
-                            foreach ($listcate as $cate) {
-                                extract($cate);
-                                $color = (isset($_GET['idcate']) && ($_GET['idcate']) == $id_cate) ? '#0d6efd' : '';
-                                $linkpro = "index.php?act=product&idcate=" . $id_cate;
-                                echo ' <li>
-                                        <a href="' . $linkpro . '" style="color:' . $color . ';"><i class="fa-sharp fa-solid fa-angles-right"></i> ' . $name_cate . '</a>
-                                      </li>';
-                            }
-                            ?>
-                        </ul>
-                    </div>
+<!-- Content Wrapper: sidebar (categories + recommended) + main (filter + product grid) -->
+<div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-12 md:py-16">
+    <div class="grid grid-cols-1 lg:grid-cols-[280px_1fr] gap-8">
 
-                    <!-- Begin JB's Sidebar Banner Area -->
-                    <div class="jb-sidebar_banner">
-                        <div class="banner-item">
-                            <a href="#">
-                                <img src="./src/image/shop/1.png" alt="Turbotech">
+        <!-- Sidebar: mobile shows after product grid (order-2), desktop shows first (lg:order-1) -->
+        <aside class="order-2 lg:order-1 space-y-6">
+
+            <!-- Categories -->
+            <div class="rounded-2xl border border-ink-200 bg-white p-5">
+                <h5 class="font-heading font-semibold text-ink-900 mb-4">Danh mục</h5>
+                <ul class="space-y-1">
+                    <?php foreach ($listcate as $cate) {
+                        extract($cate);
+                        $isActiveCate = (isset($_GET['idcate']) && ($_GET['idcate']) == $id_cate);
+                        $linkpro = "index.php?act=product&idcate=" . $id_cate;
+                        $cateLinkClass = $isActiveCate
+                            ? 'flex items-center gap-2 rounded-lg bg-brand-50 px-3 py-2 text-sm font-semibold text-brand-700'
+                            : 'flex items-center gap-2 rounded-lg px-3 py-2 text-sm text-ink-700 hover:bg-ink-50 hover:text-brand-600 transition-colors';
+                    ?>
+                        <li>
+                            <a href="<?= $linkpro ?>" class="<?= $cateLinkClass ?>">
+                                <i class="fa-sharp fa-solid fa-angles-right text-xs"></i> <?= $name_cate ?>
                             </a>
-                        </div>
-                    </div>
-                    <!-- JB's Sidebar Banner Area End Here -->
-                    <!-- Show sản phẩm được đề xuất -->
-                    <div class="row sidebar-list_product">
-                        <div class="col-lg-12">
-                            <div class="section_title-2">
-                                <h4>Được đề xuất</h4>
-                            </div>
-                            <div class="jb-list-product_slider">
-                                <!-- Begin JB's Slide Item Area -->
-                                <?php
-                                foreach ($list_topsp as $topsp) { ?>
-                                    <div class="jb-slide-item">
-                                        <div class="jb-single_product">
-                                            <div class="product-img">
-                                                <a href="index.php?act=prodetail&idpro=<?= $topsp['id_pro'] ?>">
-                                                    <img src="admin/uploads/<?= $topsp['img_pro'] ?>" alt="Ảnh sản phẩm">
-                                                </a>
-                                            </div>
-                                            <div class="jb-product_content">
-                                                <div class="product-desc_info">
-                                                    <div class="product-name">
-                                                        <h6>
-                                                            <a
-                                                                href="index.php?act=prodetail&idpro=<?= $topsp['id_pro'] ?>"><?= $topsp['name_pro'] ?></a>
-                                                        </h6>
+                        </li>
+                    <?php } ?>
+                </ul>
+            </div>
 
-                                                    </div>
-                                                    <div class="price-box">
-                                                        <?php if ($topsp['discount'] <= 0) { ?>
-                                                            <span
-                                                                class="new-price"><?= number_format($topsp['price']) ?>₫</span>
-                                                        <?php } else { ?>
-                                                            <span
-                                                                class="new-price"><?= number_format(($topsp['price']) - (($topsp['price']) * ($topsp['discount']) / 100)) ?>₫</span>
-                                                            <span
-                                                                class="old-price"><?= number_format($topsp['price']) ?>₫</span>
-                                                        <?php } ?>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>';
-                                <?php } ?>
+            <!-- Sidebar banner -->
+            <div class="rounded-2xl overflow-hidden border border-ink-200">
+                <a href="#">
+                    <img src="./src/image/shop/1.png" alt="Turbotech" class="w-full h-auto">
+                </a>
+            </div>
 
-                                <!-- JB's Slide Item Area End Here -->
+            <!-- Recommended products (was slick slider "jb-list-product_slider" — dropped per
+                 design-system's legacy-plugin removal guidance, replaced with a plain vertical list) -->
+            <div class="rounded-2xl border border-ink-200 bg-white p-5">
+                <h4 class="font-heading font-semibold text-ink-900 mb-4">Được đề xuất</h4>
+                <div class="space-y-4">
+                    <?php foreach ($list_topsp as $topsp) { ?>
+                        <div class="flex gap-3">
+                            <a href="index.php?act=prodetail&idpro=<?= $topsp['id_pro'] ?>"
+                                class="shrink-0 h-16 w-16 rounded-lg bg-ink-100 overflow-hidden">
+                                <img src="admin/uploads/<?= $topsp['img_pro'] ?>"
+                                    alt="Ảnh sản phẩm <?= htmlspecialchars($topsp['name_pro']) ?>"
+                                    class="h-full w-full object-cover">
+                            </a>
+                            <div class="min-w-0">
+                                <h6 class="text-sm font-medium text-ink-900 line-clamp-2">
+                                    <a href="index.php?act=prodetail&idpro=<?= $topsp['id_pro'] ?>"
+                                        class="hover:text-brand-600 transition-colors"><?= $topsp['name_pro'] ?></a>
+                                </h6>
+                                <div class="mt-1">
+                                    <?php if ($topsp['discount'] <= 0) { ?>
+                                        <span class="text-brand-600 font-bold text-sm"><?= number_format($topsp['price']) ?>₫</span>
+                                    <?php } else { ?>
+                                        <span class="text-brand-600 font-bold text-sm"><?= number_format(($topsp['price']) - (($topsp['price']) * ($topsp['discount']) / 100)) ?>₫</span>
+                                        <span class="text-ink-300 line-through text-xs ml-1"><?= number_format($topsp['price']) ?>₫</span>
+                                    <?php } ?>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                    <!-- JB's List Product Slider Area End Here -->
+                    <?php } ?>
                 </div>
             </div>
-            <!-- Sidebar Categories Area End Here -->
-            <!-- Begin Shopbar With Banner Area -->
-            <div class="col-lg-9 order-1 order-lg-2">
-                <div class="shopbar-with_banner">
-                    <div class="jb-sidebar_banner">
-                        <div class="banner-item">
-                            <a href="#">
-                                <img src="./src/image/shop/anhmoi1.png" style="height: 350px;" alt="Ultraphone Product">
-                            </a>
+        </aside>
+        <!-- End Sidebar -->
+
+        <!-- Main content -->
+        <div class="order-1 lg:order-2">
+
+            <!-- Top banner -->
+            <div class="rounded-2xl overflow-hidden border border-ink-200 mb-8">
+                <a href="#">
+                    <img src="./src/image/shop/anhmoi1.png" alt="Ultraphone Product"
+                        class="w-full h-[220px] md:h-[350px] object-cover">
+                </a>
+            </div>
+
+            <!-- Result count + filter bar
+                 Combined filter form: exact field names (kyw, idcate, min_price, max_price),
+                 value-repopulation logic and htmlspecialchars() escaping preserved byte-for-byte.
+                 Grid/list view toggle (Bootstrap tabs "grid-view"/"list-view") DROPPED per
+                 instructions — simplified to a single responsive grid (documented in report). -->
+            <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-3 mb-4">
+                <p class="text-sm text-ink-500">
+                    Hiện có <span class="font-semibold text-ink-900"><?php echo count($listpro); ?></span> sản phẩm.
+                </p>
+            </div>
+
+            <form action="index.php" method="get" class="rounded-2xl border border-ink-200 bg-white p-5 mb-8">
+                <input type="hidden" name="act" value="product">
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 items-end">
+                    <div>
+                        <label for="kyw" class="block text-sm font-medium text-ink-700 mb-1.5">Từ khóa</label>
+                        <input type="text" id="kyw" name="kyw" placeholder="Nhập tên sản phẩm..."
+                            value="<?= isset($_GET['kyw']) ? htmlspecialchars($_GET['kyw']) : '' ?>"
+                            class="block w-full rounded-lg border border-ink-200 bg-white px-3.5 py-2.5 text-sm text-ink-900 placeholder:text-ink-300 focus:outline-none focus:ring-2 focus:ring-brand-500 focus:border-brand-500">
+                    </div>
+                    <div>
+                        <label for="idcate" class="block text-sm font-medium text-ink-700 mb-1.5">Thương hiệu</label>
+                        <select id="idcate" name="idcate"
+                            class="block w-full rounded-lg border border-ink-200 bg-white px-3.5 py-2.5 text-sm text-ink-900 focus:outline-none focus:ring-2 focus:ring-brand-500 focus:border-brand-500">
+                            <option value="0">Tất cả thương hiệu</option>
+                            <?php foreach ($listcate as $cate) { ?>
+                                <option value="<?= $cate['id_cate'] ?>"
+                                    <?= (isset($_GET['idcate']) && $_GET['idcate'] == $cate['id_cate']) ? 'selected' : '' ?>>
+                                    <?= $cate['name_cate'] ?>
+                                </option>
+                            <?php } ?>
+                        </select>
+                    </div>
+                    <div>
+                        <label for="min_price" class="block text-sm font-medium text-ink-700 mb-1.5">Giá từ</label>
+                        <input type="number" id="min_price" name="min_price" min="0" placeholder="Giá từ"
+                            value="<?= isset($_GET['min_price']) ? htmlspecialchars($_GET['min_price']) : '' ?>"
+                            class="block w-full rounded-lg border border-ink-200 bg-white px-3.5 py-2.5 text-sm text-ink-900 placeholder:text-ink-300 focus:outline-none focus:ring-2 focus:ring-brand-500 focus:border-brand-500">
+                    </div>
+                    <div>
+                        <label for="max_price" class="block text-sm font-medium text-ink-700 mb-1.5">Đến giá</label>
+                        <div class="flex gap-2">
+                            <input type="number" id="max_price" name="max_price" min="0" placeholder="Đến giá"
+                                value="<?= isset($_GET['max_price']) ? htmlspecialchars($_GET['max_price']) : '' ?>"
+                                class="block w-full rounded-lg border border-ink-200 bg-white px-3.5 py-2.5 text-sm text-ink-900 placeholder:text-ink-300 focus:outline-none focus:ring-2 focus:ring-brand-500 focus:border-brand-500">
+                            <input type="submit" name="btn-search" value="Tìm kiếm"
+                                class="inline-flex items-center justify-center gap-2 rounded-lg bg-brand-600 px-5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-brand-700 transition-colors focus:outline-none focus:ring-2 focus:ring-brand-500 focus:ring-offset-2 whitespace-nowrap cursor-pointer">
                         </div>
                     </div>
-                    <!-- Begin Shop Topbar Area -->
-                    <div class="shop-topbar">
-                        <div class="shopbar-inner">
-                            <div class="product-view-mode">
-                                <ul class="nav shop-item-filter-list" role="tablist">
-                                    <li class="active" role="presentation"><a aria-selected="true" class="active show"
-                                            data-bs-toggle="tab" role="tab" aria-controls="grid-view"
-                                            href="#grid-view"><i class="fa fa-th"></i></a></li>
-                                    <li role="presentation"><a data-bs-toggle="tab" role="tab" aria-controls="list-view"
-                                            href="#list-view"><i class="fa fa-th-list"></i></a></li>
-                                </ul>
-                            </div>
+                </div>
+            </form>
 
-                            <div class="toolbar-amount">
-                                <span>Hiện có
-                                    <?php echo count($listpro); ?> sản phẩm.
+            <!-- Empty state: same empty($listpro) trigger condition, restyled per design-system recipe -->
+            <?php if (empty($listpro)) { ?>
+                <div class="rounded-2xl border border-ink-200 bg-white py-16 text-center mb-8">
+                    <i class="fa-solid fa-face-sad-tear text-5xl text-ink-300" aria-hidden="true"></i>
+                    <h1 class="mt-4 font-heading text-xl font-semibold text-ink-900">Không tìm thấy sản phẩm phù hợp</h1>
+                    <p class="mt-2 text-sm text-ink-500 max-w-md mx-auto">
+                        Không tồn tại sản phẩm trùng khớp với từ khóa bạn nhập, vui lòng tìm kiếm sản phẩm khác.
+                    </p>
+                </div>
+            <?php } ?>
+
+            <!-- Product grid (product-card recipe) -->
+            <div class="grid grid-cols-2 md:grid-cols-3 gap-4 md:gap-6">
+                <?php foreach ($listpro as $pro) { ?>
+                    <div class="rounded-2xl border border-ink-200 bg-white shadow-sm hover:shadow-md transition-shadow overflow-hidden">
+                        <div class="relative aspect-square bg-ink-100 overflow-hidden">
+                            <a href="index.php?act=prodetail&idpro=<?php echo $pro['id_pro'] ?>">
+                                <img src="admin/uploads/<?php echo $pro['img_pro'] ?>"
+                                    alt="Ảnh sản phẩm <?= htmlspecialchars($pro['name_pro']) ?>"
+                                    class="h-full w-full object-cover">
+                            </a>
+                            <?php if ($pro['discount'] > 0) { ?>
+                                <span class="absolute top-2 left-2 rounded-full bg-red-600 text-white text-xs font-bold px-2 py-1">
+                                    -<?= $pro['discount'] ?>%
                                 </span>
-                            </div>
-
+                            <?php } ?>
                         </div>
-                        <div class="product-select-box">
-                            <div class="product-short">
-                                <form action="index.php" method="get" class="jb-filter_form">
-                                    <input type="hidden" name="act" value="product">
-                                    <input type="text" class="ip-search" name="kyw" placeholder="Nhập tên sản phẩm..."
-                                        value="<?= isset($_GET['kyw']) ? htmlspecialchars($_GET['kyw']) : '' ?>">
-                                    <select class="ip-search" name="idcate">
-                                        <option value="0">Tất cả thương hiệu</option>
-                                        <?php foreach ($listcate as $cate) { ?>
-                                            <option value="<?= $cate['id_cate'] ?>"
-                                                <?= (isset($_GET['idcate']) && $_GET['idcate'] == $cate['id_cate']) ? 'selected' : '' ?>>
-                                                <?= $cate['name_cate'] ?>
-                                            </option>
-                                        <?php } ?>
-                                    </select>
-                                    <input type="number" class="ip-search" name="min_price" min="0" placeholder="Giá từ"
-                                        value="<?= isset($_GET['min_price']) ? htmlspecialchars($_GET['min_price']) : '' ?>">
-                                    <input type="number" class="ip-search" name="max_price" min="0" placeholder="Đến giá"
-                                        value="<?= isset($_GET['max_price']) ? htmlspecialchars($_GET['max_price']) : '' ?>">
-                                    <input type="submit" name="btn-search" class="btn-search" value="Tìm kiếm">
-                                </form>
+                        <div class="p-4">
+                            <h6 class="font-heading font-semibold text-ink-900 line-clamp-2 mb-2">
+                                <a href="index.php?act=prodetail&idpro=<?php echo $pro['id_pro'] ?>"
+                                    class="hover:text-brand-600 transition-colors">
+                                    <?php echo $pro['name_pro'] ?>
+                                </a>
+                            </h6>
+                            <div class="mb-3">
+                                <?php if ($pro['discount'] <= 0) { ?>
+                                    <span class="text-brand-600 font-bold">
+                                        <?= number_format($pro['price']) ?>₫
+                                    </span>
+                                <?php } else { ?>
+                                    <span class="text-brand-600 font-bold">
+                                        <?= number_format(($pro['price']) - (($pro['price']) * ($pro['discount']) / 100)) ?>₫
+                                    </span>
+                                    <span class="text-ink-300 line-through text-sm ml-1">
+                                        <?= number_format($pro['price']) ?>₫
+                                    </span>
+                                <?php } ?>
                             </div>
-                        </div>
-                    </div>
-                    <!-- Shop Topbar Area End Here -->
-                    <!-- Vùng hiển thị sản phẩm -->
-                    <div class="shop-products-wrapper">
-                        <div class="tab-content">
-                            <div id="grid-view" class="tab-pane fade active show shop-products_grid" role="tabpanel">
-                                <div class="row">
-                                    <?php if (empty($listpro)) { ?>
-                                        <div class="no-found">
-                                            <div class="img-no-found">
-                                                <img src="./src/image/error/no-product.png" alt="Ảnh báo lỗi">
-                                            </div>
-                                            <h1 class="noresult">Oops...không tồn tại sản phẩm trùng khớp với từ khóa bạn
-                                                nhập, vui
-                                                lòng tìm kiếm sản phẩm khác <i class="fa-solid fa-face-sad-tear"></i></h1>
-
-                                        </div>
-                                    <?php } ?>
-                                    <?php foreach ($listpro as $pro) { ?>
-                                        <!-- extract($pro);
-                                        $linkdetail = "./index.php?act=prodetail&idpro=" . $id_pro;
-                                        $img_home = "./admin/uploads/" . $img_pro; -->
-                                        <div class="col-lg-4 col-md-4 col-sm-6">
-                                            <div class="jb-slide-item">
-                                                <div class="jb-single_product">
-                                                    <div class="product-img">
-                                                        <a
-                                                            href="index.php?act=prodetail&idpro=<?php echo $pro['id_pro'] ?>">
-                                                            <img src="admin/uploads/<?php echo $pro['img_pro'] ?>"
-                                                                alt="Ảnh sản phẩm">
-                                                        </a>
-                                                        <span class="sticker">Mới</span>
-                                                        <?php if ($pro['discount'] <= 0) { ?>
-                                                            <span></span>
-                                                        <?php } else { ?>
-                                                            <span class="sticker-2">-<?= $pro['discount'] ?>%</span>
-                                                        <?php } ?>
-
-                                                    </div>
-                                                    <div class="jb-product_content">
-                                                        <div class="product-desc_info">
-                                                            <h6><a class="product-name"
-                                                                    href="index.php?act=prodetail&idpro=<?php echo $pro['id_pro'] ?>">
-                                                                    <?php echo $pro['name_pro'] ?>
-                                                                </a>
-                                                            </h6>
-                                                            <div class="price-box">
-                                                                <?php if ($pro['discount'] <= 0) { ?>
-                                                                    <span class="new-price">
-                                                                        <?= number_format($pro['price']) ?>₫
-                                                                    </span>
-                                                                <?php } else { ?>
-                                                                    <span class="new-price">
-                                                                        <?= number_format(($pro['price']) - (($pro['price']) * ($pro['discount']) / 100))
-                                                                        ?>₫
-                                                                    </span>
-                                                                    <span class="old-price">
-                                                                        <?= number_format($pro['price']) ?>₫
-                                                                    </span>
-                                                                <?php } ?>
-
-
-                                                            </div>
-                                                        </div>
-                                                        <div class="actions-add">
-                                                            <form action="index.php?act=addtocart" method="post">
-                                                                <ul>
-
-                                                                    <input type="hidden" name="id_pro"
-                                                                        value="<?php echo $pro['id_pro'] ?>">
-                                                                    <input type="hidden" name="name_pro"
-                                                                        value="<?php echo $pro['name_pro'] ?>">
-                                                                    <input type="hidden" name="img_pro"
-                                                                        value="<?php echo $pro['img_pro'] ?>">
-                                                                    <input type="hidden" name="price"
-                                                                        value="<?php echo $pro['price'] ?>">
-                                                                    <li>
-                                                                        <input type="submit" class="addtocart"
-                                                                            name="addtocart" value="Thêm vào giỏ">
-                                                                    </li>
-
-                                                                </ul>
-                                                            </form>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    <?php } ?>
-
-
-                                    <!-- JB's Slide Item Area End Here -->
-                                </div>
-                                <!-- <div class="row">
-                                    <div class="col-lg-12">
-                                        <div class="paginatoin-area">
-                                            <div class="row">
-                                                <div class="col-lg-6 col-md-6 col-sm-6">
-                                                    <div class="product-select-box">
-                                                        <div class="product-short">
-                                                            <p>Hiển thị</p>
-                                                            <select class="nice-select">
-                                                                <option value="5">5</option>
-                                                                <option value="10">10</option>
-                                                                <option value="15">15</option>
-                                                                <option value="20">20</option>
-                                                                <option value="25">25</option>
-                                                            </select>
-                                                            <span>mỗi trang</span>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="col-lg-6 col-md-6 col-sm-6">
-                                                    <ul class="pagination-box">
-                                                        <li><a href="#" class="Previous"><i class="fa fa-chevron-left"></i>
-                                                                Trang trước</a>
-                                                        </li>
-                                                        <li class="active"><a href="#">1</a></li>
-                                                        <li><a href="#">2</a></li>
-                                                        <li><a href="#">3</a></li>
-                                                        <li>
-                                                            <a href="#" class="Next"> Trang sau <i class="fa fa-chevron-right"></i></a>
-                                                        </li>
-                                                    </ul>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div> -->
-                            </div>
-                            <div id="list-view" class="tab-pane fade shop-product-list_view" role="tabpanel">
-                                <div class="row g-0">
-                                    <div class="col-lg-12">
-                                        <?php
-                                        foreach ($listpro as $pro) { ?>
-                                            <div class="row g-0 jb-slide-item">
-                                                <div class="col-lg-4 col-md-4 jb-single_product">
-                                                    <div class="product-img">
-                                                        <a href="index.php?act=prodetail&idpro=<?= $pro['id_pro'] ?>">
-                                                            <img src="admin/uploads/<?= $pro['img_pro'] ?>"
-                                                                alt="Ảnh sản phẩm">
-                                                        </a>
-                                                    </div>
-                                                </div>
-                                                <div class="col-lg-8 col-md-8">
-                                                    <div class="jb-product_content">
-                                                        <div class="product-desc_info">
-                                                            <h6><a class="product-name"
-                                                                    href="index.php?act=prodetail&idpro=<?= $pro['id_pro'] ?>"><?= $pro['name_pro'] ?></a>
-                                                            </h6>
-                                                            <!-- <div class="rating-box">
-                                                                <ul>
-                                                                    <li><i class="fa fa-star"></i></li>
-                                                                    <li><i class="fa fa-star"></i></li>
-                                                                    <li><i class="fa fa-star"></i></li>
-                                                                    <li><i class="fa fa-star"></i></li>
-                                                                    <li><i class="fa fa-star"></i></li>
-                                                                </ul>
-                                                            </div> -->
-                                                            <div class="product-desc">
-                                                                <p><?= $pro['short_des'] ?></p>
-                                                            </div>
-                                                            <div class="price-box">
-                                                                <?php if ($pro['discount'] <= 0) { ?>
-                                                                    <span
-                                                                        class="new-price"><?= number_format($pro['price']) ?>₫</span>
-                                                                <?php } else { ?>
-                                                                    <span
-                                                                        class="new-price"><?= number_format(($pro['price']) - (($pro['price']) * ($pro['discount']) / 100)) ?>₫</span>
-                                                                    <span
-                                                                        class="old-price"><?= number_format($pro['price']) ?>₫</span>
-                                                                <?php } ?>
-                                                            </div>
-                                                        </div>
-                                                        <div class="actions-add-2">
-                                                            <form action="index.php?act=addtocart" method="post">
-                                                                <ul>
-                                                                    <!-- <li>
-                                                                        <a class="jb-wishlist_link" href="#"><i class="fa fa-heart"></i></a>
-                                                                    </li> -->
-                                                                    <input type="hidden" name="id_pro"
-                                                                        value="<?php echo $pro['id_pro'] ?>">
-                                                                    <input type="hidden" name="name_pro"
-                                                                        value="<?php echo $pro['name_pro'] ?>">
-                                                                    <input type="hidden" name="img_pro"
-                                                                        value="<?php echo $pro['img_pro'] ?>">
-                                                                    <input type="hidden" name="price"
-                                                                        value="<?php echo $pro['price'] ?>">
-                                                                    <li>
-                                                                        <input type="submit" class="addtocart"
-                                                                            name="addtocart" value="Thêm vào giỏ">
-                                                                    </li>
-                                                                    <!-- <li>
-                                                                        <a class="jb-sp_link" href="#"><i class="fa fa-copy"></i></a>
-                                                                    </li> -->
-                                                                </ul>
-                                                            </form>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        <?php } ?>
-
-                                    </div>
-                                    <!-- <div class="col-lg-12">
-                                        <div class="paginatoin-area">
-                                            <div class="row">
-                                                <div class="col-lg-6 col-md-6 col-sm-6">
-                                                    <div class="product-select-box">
-                                                        <div class="product-short">
-                                                            <p>Hiển thị</p>
-                                                            <select class="nice-select">
-                                                                <option value="5">5</option>
-                                                                <option value="10">10</option>
-                                                                <option value="15">15</option>
-                                                                <option value="20">20</option>
-                                                                <option value="25">25</option>
-                                                            </select>
-                                                            <span>mỗi trang</span>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="col-lg-6 col-md-6 col-sm-6">
-                                                    <ul class="pagination-box">
-                                                        <li><a href="#" class="Previous"><i class="fa fa-chevron-left"></i>
-                                                                Trang sau</a>
-                                                        </li>
-                                                        <li class="active"><a href="#">1</a></li>
-                                                        <li><a href="#">2</a></li>
-                                                        <li><a href="#">3</a></li>
-                                                        <li>
-                                                            <a href="#" class="Next"> Trang trước <i class="fa fa-chevron-right"></i></a>
-                                                        </li>
-                                                    </ul>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div> -->
-                                </div>
-                            </div>
+                            <form action="index.php?act=addtocart" method="post">
+                                <input type="hidden" name="id_pro" value="<?php echo $pro['id_pro'] ?>">
+                                <input type="hidden" name="name_pro" value="<?php echo $pro['name_pro'] ?>">
+                                <input type="hidden" name="img_pro" value="<?php echo $pro['img_pro'] ?>">
+                                <input type="hidden" name="price" value="<?php echo $pro['price'] ?>">
+                                <input type="submit" name="addtocart" value="Thêm vào giỏ"
+                                    class="w-full inline-flex items-center justify-center gap-2 rounded-lg bg-brand-600 px-5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-brand-700 transition-colors focus:outline-none focus:ring-2 focus:ring-brand-500 focus:ring-offset-2 cursor-pointer">
+                            </form>
                         </div>
                     </div>
-                    <!-- End vùng hiển thị sản phẩm-->
-                </div>
+                <?php } ?>
             </div>
-            <!-- Shopbar With Banner Area End Here -->
         </div>
+        <!-- End Main content -->
     </div>
 </div>
-<!-- JB's Content Wrapper Area End Here -->
+<!-- End Content Wrapper -->

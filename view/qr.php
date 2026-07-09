@@ -15,300 +15,21 @@ if (isset($_SESSION['pay'])) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Thanh toán chuyển khoản - Turbotech</title>
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Manrope:wght@600;700;800&display=swap"
+        rel="stylesheet" />
+    <link rel="stylesheet" type="text/css" media="screen" href="../src/css/tailwind.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-    * {
-        margin: 0;
-        padding: 0;
-        box-sizing: border-box;
-    }
-
-    body {
-        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-        min-height: 100vh;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        padding: 20px;
-    }
-
-    .payment-container {
-        background: white;
-        border-radius: 20px;
-        box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
-        overflow: hidden;
-        max-width: 900px;
-        width: 100%;
-    }
-
-    .payment-header {
-        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-        color: white;
-        padding: 40px 30px;
-        text-align: center;
-    }
-
-    .payment-header h1 {
-        font-size: 2.5rem;
-        font-weight: 700;
-        margin-bottom: 10px;
-        text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    }
-
-    .payment-header p {
-        font-size: 1.1rem;
-        opacity: 0.95;
-        margin: 0;
-    }
-
-    .payment-content {
-        padding: 40px 30px;
-    }
-
-    .row-content {
-        display: grid;
-        grid-template-columns: 1fr 1fr;
-        gap: 40px;
-        align-items: center;
-    }
-
-    .qr-section {
-        text-align: center;
-    }
-
-    .qr-box {
-        background: #f8f9fa;
-        padding: 30px;
-        border-radius: 15px;
-        border: 2px solid #e9ecef;
-        transition: all 0.3s ease;
-    }
-
-    .qr-box:hover {
-        border-color: #667eea;
-        box-shadow: 0 10px 30px rgba(102, 126, 234, 0.15);
-    }
-
-    .qr-box img {
-        width: 250px;
-        height: 250px;
-        border-radius: 10px;
-        margin-bottom: 20px;
-    }
-
-    .qr-label {
-        color: #667eea;
-        font-weight: 600;
-        font-size: 0.95rem;
-        text-transform: uppercase;
-        letter-spacing: 1px;
-        margin-bottom: 15px;
-    }
-
-    .qr-hint {
-        color: #6c757d;
-        font-size: 0.9rem;
-        margin-top: 15px;
-    }
-
-    .bank-info {
-        display: flex;
-        flex-direction: column;
-        gap: 20px;
-    }
-
-    .info-item {
-        background: #f8f9fa;
-        padding: 20px;
-        border-radius: 12px;
-        border-left: 4px solid #667eea;
-        transition: all 0.3s ease;
-    }
-
-    .info-item:hover {
-        background: #e7f3ff;
-        box-shadow: 0 5px 15px rgba(102, 126, 234, 0.1);
-    }
-
-    .info-label {
-        font-size: 0.85rem;
-        color: #6c757d;
-        text-transform: uppercase;
-        letter-spacing: 0.5px;
-        font-weight: 600;
-        margin-bottom: 8px;
-        display: block;
-    }
-
-    .info-value {
-        font-size: 1.2rem;
-        font-weight: 700;
-        color: #212529;
-        word-break: break-all;
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        gap: 10px;
-    }
-
-    .copy-btn {
-        background: #667eea;
-        color: white;
-        border: none;
-        padding: 8px 12px;
-        border-radius: 6px;
-        cursor: pointer;
-        font-size: 0.9rem;
-        transition: all 0.3s ease;
-        display: flex;
-        align-items: center;
-        gap: 5px;
-        white-space: nowrap;
-    }
-
-    .copy-btn:hover {
-        background: #764ba2;
-        transform: translateY(-2px);
-        box-shadow: 0 5px 15px rgba(102, 126, 234, 0.3);
-    }
-
-    .copy-btn:active {
-        transform: translateY(0);
-    }
-
-    .icon-bank {
-        color: #667eea;
-        font-size: 1.8rem;
-        margin-bottom: 10px;
-    }
-
-    .amount-highlight {
-        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-        color: white;
-        padding: 25px;
-        border-radius: 12px;
-        text-align: center;
-    }
-
-    .amount-label {
-        font-size: 0.9rem;
-        opacity: 0.9;
-        text-transform: uppercase;
-        letter-spacing: 0.5px;
-        margin-bottom: 10px;
-    }
-
-    .amount-value {
-        font-size: 2.2rem;
-        font-weight: 700;
-    }
-
-    .payment-footer {
-        background: #f8f9fa;
-        padding: 30px;
-        border-top: 1px solid #e9ecef;
-        display: flex;
-        gap: 15px;
-        justify-content: center;
-        flex-wrap: wrap;
-    }
-
-    .btn-action {
-        padding: 12px 30px;
-        border: none;
-        border-radius: 8px;
-        font-weight: 600;
-        font-size: 1rem;
-        cursor: pointer;
-        transition: all 0.3s ease;
-        display: flex;
-        align-items: center;
-        gap: 8px;
-        text-decoration: none;
-    }
-
-    .btn-success {
-        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-        color: white;
-    }
-
-    .btn-success:hover {
-        transform: translateY(-3px);
-        box-shadow: 0 10px 30px rgba(102, 126, 234, 0.3);
-        color: white;
-    }
-
-    .btn-secondary-custom {
-        background: #e9ecef;
-        color: #212529;
-    }
-
-    .btn-secondary-custom:hover {
-        background: #dee2e6;
-        color: #212529;
-    }
-
-    .success-badge {
-        display: inline-block;
-        background: #28a745;
-        color: white;
-        padding: 8px 16px;
-        border-radius: 20px;
-        font-size: 0.9rem;
-        font-weight: 600;
-        margin-top: 15px;
-    }
-
-    .note-box {
-        background: #fff3cd;
-        border: 1px solid #ffc107;
-        border-radius: 10px;
-        padding: 15px;
-        margin-top: 20px;
-        color: #856404;
-    }
-
-    .note-box i {
-        margin-right: 10px;
-        color: #ff9800;
-    }
-
-    @media (max-width: 768px) {
-        .row-content {
-            grid-template-columns: 1fr;
-            gap: 30px;
-        }
-
-        .payment-header h1 {
-            font-size: 2rem;
-        }
-
-        .qr-box img {
-            width: 200px;
-            height: 200px;
-        }
-
-        .payment-content {
-            padding: 25px 20px;
-        }
-
-        .payment-footer {
-            flex-direction: column;
-        }
-
-        .btn-action {
-            width: 100%;
-            justify-content: center;
-        }
-    }
-
+    /* Needed only because copyToClipboard()/showCopyFeedback() below create
+       this toast element dynamically via JS (className set at runtime), so
+       it can't be styled with static Tailwind utility classes. */
     .copy-feedback {
         position: fixed;
         top: 20px;
         right: 20px;
-        background: #28a745;
+        background: #16a34a;
         color: white;
         padding: 15px 25px;
         border-radius: 8px;
@@ -347,79 +68,90 @@ if (isset($_SESSION['pay'])) {
     </style>
 </head>
 
-<body>
-    <div class="payment-container">
+<body class="min-h-screen bg-ink-50 font-sans text-ink-900 antialiased flex items-center justify-center p-4 sm:p-6">
+    <div class="w-full max-w-3xl overflow-hidden rounded-2xl border border-ink-200 bg-white shadow-sm">
         <!-- Header -->
-        <div class="payment-header">
-            <h1><i class="fas fa-university"></i> Thanh Toán Chuyển Khoản</h1>
-            <p>Vui lòng chuyển khoản theo thông tin bên dưới</p>
+        <div class="bg-brand-600 px-6 py-10 text-center text-white">
+            <h1 class="font-heading text-2xl md:text-3xl font-bold">
+                <i class="fas fa-university" aria-hidden="true"></i> Thanh Toán Chuyển Khoản
+            </h1>
+            <p class="mt-2 text-sm text-brand-50">Vui lòng chuyển khoản theo thông tin bên dưới</p>
         </div>
 
         <!-- Content -->
-        <div class="payment-content">
-            <div class="row-content">
+        <div class="p-6 md:p-10">
+            <div class="grid grid-cols-1 gap-8 md:grid-cols-2 items-start">
                 <!-- QR Code Section -->
-                <div class="qr-section">
-                    <div class="qr-box">
-                        <div class="qr-label">
-                            <i class="fas fa-qrcode"></i> Mã QR Chuyển Khoản
+                <div class="text-center">
+                    <div class="rounded-xl border border-ink-200 bg-ink-50 p-6">
+                        <div class="mb-4 text-xs font-semibold uppercase tracking-wide text-brand-600">
+                            <i class="fas fa-qrcode" aria-hidden="true"></i> Mã QR Chuyển Khoản
                         </div>
-                        <img src="../src/image/qr_code/qrne.jpg" alt="QR Code Chuyển Khoản" />
-                        <div class="qr-hint">
-                            <i class="fas fa-mobile-alt"></i> Quét mã QR bằng ứng dụng ngân hàng
+                        <img src="../src/image/qr_code/qrne.jpg" alt="QR Code Chuyển Khoản"
+                            class="mx-auto h-56 w-56 rounded-lg object-cover" />
+                        <div class="mt-4 text-sm text-ink-500">
+                            <i class="fas fa-mobile-alt" aria-hidden="true"></i> Quét mã QR bằng ứng dụng ngân hàng
                         </div>
                     </div>
                 </div>
 
                 <!-- Bank Info Section -->
-                <div class="bank-info">
+                <div class="flex flex-col gap-4">
                     <!-- Bank Name -->
-                    <div class="info-item">
-                        <span class="info-label"><i class="fas fa-university"></i> Ngân Hàng</span>
-                        <div class="info-value">
-                            <span>BIDV (Ngân hàng Đầu tư và Phát triển Việt Nam)</span>
-                        </div>
+                    <div class="rounded-xl border-l-4 border-brand-600 bg-ink-50 p-4">
+                        <span class="mb-2 block text-xs font-semibold uppercase tracking-wide text-ink-500">
+                            <i class="fas fa-university" aria-hidden="true"></i> Ngân Hàng
+                        </span>
+                        <div class="font-semibold text-ink-900">BIDV (Ngân hàng Đầu tư và Phát triển Việt Nam)</div>
                     </div>
 
                     <!-- Account Number -->
-                    <div class="info-item">
-                        <span class="info-label"><i class="fas fa-credit-card"></i> Số Tài Khoản</span>
-                        <div class="info-value">
-                            <span id="accountNumber">1234567890</span>
-                            <button class="copy-btn" onclick="copyToClipboard('accountNumber')">
-                                <i class="fas fa-copy"></i> Copy
+                    <div class="rounded-xl border-l-4 border-brand-600 bg-ink-50 p-4">
+                        <span class="mb-2 block text-xs font-semibold uppercase tracking-wide text-ink-500">
+                            <i class="fas fa-credit-card" aria-hidden="true"></i> Số Tài Khoản
+                        </span>
+                        <div class="flex items-center justify-between gap-2">
+                            <span id="accountNumber" class="font-bold text-ink-900">1234567890</span>
+                            <button type="button" class="copy-btn inline-flex items-center gap-1.5 rounded-lg bg-brand-600 px-3 py-2 text-xs font-semibold text-white hover:bg-brand-700 transition-colors focus:outline-none focus:ring-2 focus:ring-brand-500 focus:ring-offset-2"
+                                onclick="copyToClipboard('accountNumber')">
+                                <i class="fas fa-copy" aria-hidden="true"></i> Copy
                             </button>
                         </div>
                     </div>
 
                     <!-- Account Holder -->
-                    <div class="info-item">
-                        <span class="info-label"><i class="fas fa-user"></i> Chủ Tài Khoản</span>
-                        <div class="info-value">
-                            <span>TURBOTECH VIETNAM</span>
-                        </div>
+                    <div class="rounded-xl border-l-4 border-brand-600 bg-ink-50 p-4">
+                        <span class="mb-2 block text-xs font-semibold uppercase tracking-wide text-ink-500">
+                            <i class="fas fa-user" aria-hidden="true"></i> Chủ Tài Khoản
+                        </span>
+                        <div class="font-semibold text-ink-900">TURBOTECH VIETNAM</div>
                     </div>
 
                     <!-- Transfer Content -->
-                    <div class="info-item">
-                        <span class="info-label"><i class="fas fa-comment"></i> Nội Dung Chuyển</span>
-                        <div class="info-value">
-                            <span id="transferContent">UTP-<?= $bill_code ?></span>
-                            <button class="copy-btn" onclick="copyToClipboard('transferContent')">
-                                <i class="fas fa-copy"></i> Copy
+                    <div class="rounded-xl border-l-4 border-brand-600 bg-ink-50 p-4">
+                        <span class="mb-2 block text-xs font-semibold uppercase tracking-wide text-ink-500">
+                            <i class="fas fa-comment" aria-hidden="true"></i> Nội Dung Chuyển
+                        </span>
+                        <div class="flex items-center justify-between gap-2">
+                            <span id="transferContent" class="font-bold text-ink-900">UTP-<?= $bill_code ?></span>
+                            <button type="button" class="copy-btn inline-flex items-center gap-1.5 rounded-lg bg-brand-600 px-3 py-2 text-xs font-semibold text-white hover:bg-brand-700 transition-colors focus:outline-none focus:ring-2 focus:ring-brand-500 focus:ring-offset-2"
+                                onclick="copyToClipboard('transferContent')">
+                                <i class="fas fa-copy" aria-hidden="true"></i> Copy
                             </button>
                         </div>
                     </div>
 
                     <!-- Amount -->
-                    <div class="amount-highlight">
-                        <div class="amount-label"><i class="fas fa-money-bill-wave"></i> Số Tiền Cần Thanh Toán</div>
-                        <div class="amount-value" id="amountValue"><?= number_format($amount) ?>₫</div>
+                    <div class="rounded-xl bg-brand-600 p-6 text-center text-white">
+                        <div class="mb-2 text-xs font-semibold uppercase tracking-wide text-brand-50">
+                            <i class="fas fa-money-bill-wave" aria-hidden="true"></i> Số Tiền Cần Thanh Toán
+                        </div>
+                        <div class="text-2xl md:text-3xl font-bold" id="amountValue"><?= number_format($amount) ?>₫</div>
                     </div>
 
                     <!-- Note -->
-                    <div class="note-box">
-                        <i class="fas fa-info-circle"></i>
+                    <div class="rounded-lg border border-amber-300 bg-amber-50 p-4 text-sm text-amber-800">
+                        <i class="fas fa-info-circle" aria-hidden="true"></i>
                         <strong>Lưu ý:</strong> Hãy nhập chính xác nội dung chuyển khoản để xác nhận đơn hàng của bạn
                     </div>
                 </div>
@@ -427,12 +159,14 @@ if (isset($_SESSION['pay'])) {
         </div>
 
         <!-- Footer -->
-        <div class="payment-footer">
-            <a href="../index.php?act=billconfirm" class="btn-action btn-success">
-                <i class="fas fa-check-circle"></i> Đã Chuyển Khoản
+        <div class="flex flex-wrap justify-center gap-3 border-t border-ink-200 bg-ink-50 p-6">
+            <a href="../index.php?act=billconfirm"
+                class="inline-flex items-center justify-center gap-2 rounded-lg bg-brand-600 px-5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-brand-700 transition-colors focus:outline-none focus:ring-2 focus:ring-brand-500 focus:ring-offset-2">
+                <i class="fas fa-check-circle" aria-hidden="true"></i> Đã Chuyển Khoản
             </a>
-            <a href="../index.php?act=viewcart" class="btn-action btn-secondary-custom">
-                <i class="fas fa-arrow-left"></i> Quay Lại Giỏ Hàng
+            <a href="../index.php?act=viewcart"
+                class="inline-flex items-center justify-center gap-2 rounded-lg border border-ink-200 bg-white px-5 py-2.5 text-sm font-semibold text-ink-900 hover:bg-ink-50 transition-colors focus:outline-none focus:ring-2 focus:ring-brand-500">
+                <i class="fas fa-arrow-left" aria-hidden="true"></i> Quay Lại Giỏ Hàng
             </a>
         </div>
     </div>
@@ -449,11 +183,11 @@ if (isset($_SESSION['pay'])) {
 
             // Add animation
             const btn = event.target.closest('.copy-btn');
-            btn.style.background = '#28a745';
+            btn.style.background = '#16a34a';
             btn.innerHTML = '<i class="fas fa-check"></i> Đã copy!';
 
             setTimeout(() => {
-                btn.style.background = '#667eea';
+                btn.style.background = '';
                 btn.innerHTML = '<i class="fas fa-copy"></i> Copy';
             }, 2000);
         }).catch(err => {
@@ -478,8 +212,6 @@ if (isset($_SESSION['pay'])) {
         console.log('Trang thanh toán đã tải thành công');
     });
     </script>
-
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
 </body>
 
 </html>

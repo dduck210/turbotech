@@ -28,9 +28,9 @@ class PasswordController extends Controller
             $checkuser = User::checkPass($name, $email);
 
             if (is_array($checkuser)) {
-                $thongbao = '<p class="text-success"> Mật khẩu của tài khoản "' . $name . '" là: <span class="fw-bold">' . $checkuser['password'] . '</span></p>';
+                $thongbao = '<p class="text-green-600"> Mật khẩu của tài khoản "' . $name . '" là: <span class="font-bold">' . $checkuser['password'] . '</span></p>';
             } else {
-                $thongbao = '<p class="text-danger fw-bold">Tài khoản hoặc Email không tồn tại! Vui lòng kiểm tra lại</p>';
+                $thongbao = '<p class="text-red-600 font-bold">Tài khoản hoặc Email không tồn tại! Vui lòng kiểm tra lại</p>';
             }
         }
 

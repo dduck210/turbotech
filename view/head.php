@@ -7,42 +7,18 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <title>Turbotech</title>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <link rel="stylesheet" type="text/css" media="screen" href="./src/css/plugins.min.css" />
-    <link rel="stylesheet" type="text/css" media="screen" href="./src/css/main.css" />
-    <link rel="stylesheet" type="text/css" media="screen" href="./src/css/footer.css" />
-    <link rel="stylesheet" type="text/css" media="screen" href="./src/css/dropdown.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Manrope:wght@600;700;800&display=swap"
+        rel="stylesheet" />
+    <link rel="stylesheet" type="text/css" media="screen" href="./src/css/tailwind.css" />
     <link rel="shortcut icon" type="./src/imagex-icon" href="./src/image/menu/logo/logo3.png" />
-    <style type="text/css">
-    .error {
-        margin-top: 6px;
-        margin-bottom: 0;
-        color: #fff;
-        background-color: #D65C4F;
-        display: table;
-        padding: 5px 8px;
-        font-size: 11px;
-        font-weight: 600;
-        line-height: 14px;
-    }
-
-    .green {
-        margin-top: 6px;
-        margin-bottom: 0;
-        color: #fff;
-        background-color: green;
-        display: table;
-        padding: 5px 8px;
-        font-size: 11px;
-        font-weight: 600;
-        line-height: 14px;
-    }
-    </style>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css"
         integrity="sha512-xh6O/CkQoPOWDdYTDqeRdPCVd1SpvCA9XXcUnZS2FmJNp1coAFzvtCN9BmamE+4aHK8yyUHUSCcJHgXloTyT2A=="
         crossorigin="anonymous" referrerpolicy="no-referrer" />
 </head>
 
-<body>
+<body class="overflow-x-hidden">
     <!-- Begin JB's Body Wrapper Area -->
     <div class="wrapper">
         <!-- Begin Loading Area -->

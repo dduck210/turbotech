@@ -1,266 +1,253 @@
-<!-- Begin JB's Header Area -->
 <?php
 $count = \Codemoi\Model\Cart::count();
 $total_amount = \Codemoi\Model\Cart::total();
-
 ?>
 
-<header>
-    <!-- Begin Header Top Area -->
-    <div class="header-top_area bg--white_smoke">
-        <div class="container">
-            <div class="row">
-                <!-- Begin Header Information Area -->
-                <div class="col-lg-3 col-md-6 col-sm-4">
-                    <div class="header-info_area">
-                        <span>Chào mừng đến với Turbotech</span>
-                    </div>
-                </div>
-                <!-- Header Information Area End Here -->
-                <!-- Begin Header Top Right Area -->
-                <div class="col-lg-9 col-md-6 col-sm-8">
-                    <div class="ht-right">
-                        <div class="ht-menu">
-                            <ul class="hmenu">
-                                <!-- <li>
-                                    <a href="index.php?act=account"><i class="fa-solid fa-user"></i>Tài khoản</a>
-                                </li> -->
-                                <div class="dropdown">
-                                    <?php if (!isset($_SESSION['user'])) { ?>
-                                    <a href="#" class="dropbtn"><i class="fa-solid fa-user"></i> Tài khoản</a>
-                                    <?php  } else { ?>
-                                    <a href="#" class="dropbtn">
-                                        <?php if (isset($_SESSION['user']['img_user']) && $_SESSION['user']['img_user'] != '') { ?>
-                                        <img src="uploads/<?= $_SESSION['user']['img_user'] ?>"
-                                            style="width: 20px; height: 20px; border-radius: 100%;">
-                                        <?php } else { ?>
-                                        <i class="fa-solid fa-user"></i>
-                                        <?php } ?>
-                                        <?= $_SESSION['user']['full_name'] ?></a>
-                                    <?php } ?>
-                                    <div class="dropdown-content">
-                                        <?php if (!isset($_SESSION['user'])) { ?>
-                                        <a href="index.php?act=login"><i class="fa-solid fa-right-to-bracket"></i> Đăng
-                                            nhập</a>
-                                        <?php } else if (isset($_SESSION['user']) && $_SESSION['user']['role'] == 1) { ?>
-                                        <a href="./admin/index.php">Vào trang Admin <i
-                                                class="fa-solid fa-gears"></i></a>
-                                        <a href="index.php?act=myaccount">Thông tin tài khoản <i
-                                                class="fa-solid fa-circle-info"></i></a>
-                                        <a href="index.php?act=logout"
-                                            onclick="return confirm('Bạn chắc chắc muốn đăng xuất tài khoản?')">Đăng
-                                            xuất <i class="fa-solid fa-right-from-bracket"></i></a>
-                                    </div>
-                                    <?php } else { ?>
-                                    <a href="index.php?act=myaccount">Thông tin tài khoản <i
-                                            class="fa-solid fa-circle-info"></i></a>
-                                    <a href="index.php?act=logout"
-                                        onclick="return confirm('Bạn chắc chắc muốn đăng xuất tài khoản?')">Đăng xuất <i
-                                            class="fa-solid fa-right-from-bracket"></i></a>
-                                </div>
-                                <?php } ?>
+<header class="sticky top-0 z-40 border-b border-ink-200 bg-white/90 backdrop-blur">
+    <div class="mx-auto max-w-7xl px-3 sm:px-6 lg:px-8">
+        <div class="flex h-16 items-center justify-between gap-1 sm:gap-3">
+            <!-- Logo -->
+            <a href="index.php" class="flex shrink-0 items-center gap-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-brand-500">
+                <img src="./src/image/menu/logo/logo4.png" alt="Logo Turbotech" class="h-8 w-auto sm:h-10" />
+            </a>
 
-                        </div>
+            <!-- Desktop nav -->
+            <nav class="hidden items-center gap-1 lg:flex">
+                <a href="index.php"
+                    class="rounded-lg px-3 py-2 text-sm font-medium text-ink-700 transition-colors hover:bg-ink-50 hover:text-brand-600 focus:outline-none focus:ring-2 focus:ring-brand-500">Trang
+                    chủ</a>
 
-                        <!-- Begin Currency Area -->
-
-                        <!-- Currency Area End Here -->
-                        <!-- Begin Language Area -->
-
-                        <!-- Language Area End Here -->
-                        </ul>
-                    </div>
-                </div>
-            </div>
-            <!-- Header Top Right Area End Here -->
-        </div>
-    </div>
-    </div>
-    <!-- Header Top Area End Here -->
-    <!-- Begin Header Middle Area -->
-    <div class="header-middle_area">
-        <div class="container">
-            <div class="row">
-                <!-- Begin Header Middle Logo Area -->
-                <div class="col-lg-4 col-md-4 col-sm-6 col-6 order-1 order-lg-1 order-sm-1">
-                    <div class="hm-logo">
-                        <a href="index.php">
-                            <img src="./src/image/menu/logo/logo4.png" width="50px" alt="Logo Turbotech" />
-                        </a>
-                    </div>
-                </div>
-                <!-- Header Middle Logo Area End Here -->
-                <!-- Begin Header Middle Menu Area -->
-                <div class="col-lg-6 position-static order-lg-2 d-none d-lg-block">
-                    <div class="hm-menu">
-                        <nav>
-                            <ul>
-                                <li class="dropdown-holder">
-                                    <a href="index.php">Trang chủ</a>
-                                    <!-- Begin Header Middle Dropdwon Area -->
-
-                                    <!-- Header Middle Dropdwon Area End Here -->
-                                </li>
-                                <li>
-                                    <a href="index.php?act=product">Sản phẩm<i class="fa-solid fa-chevron-down"></i></a>
-                                    <!-- Begin Header Middle Dropdwon Area -->
-                                    <ul class="hm-dropdown">
-                                        <?php
-                                        foreach ($listcate as $cate) {
-                                            extract($cate);
-                                            $linkpro = "index.php?act=product&idcate=" . $id_cate;
-                                            echo ' <li>
-                                                    <a href="' . $linkpro . '">' . $name_cate . '<i class="fa fa-chevron-down"></i></a>
-                                                   </li>';
-                                        }
-                                        ?>
-                                    </ul>
-                                </li>
-                                <li>
-                                    <a href="index.php?act=introduce">Giới thiệu</a>
-                                </li>
-                                <li>
-                                    <a href="index.php?act=contact">Liên hệ</a>
-                                </li>
-                                <li>
-                                    <a href="index.php?act=question">Hỏi đáp</a>
-                                </li>
-                            </ul>
-                        </nav>
-                    </div>
-                </div>
-
-                <div class="col-lg-2 col-md-3 col-sm-6 col-6 order-1 order-lg-3 order-sm-1">
-                    <div class="hm-minicart_area">
-                        <ul>
-                            <li>
-                                <a href="index.php?act=viewcart">
-                                    <div class="minicart-icon">
-                                        <i class="fa fa-shopping-cart"></i>
-                                        <span class="item-count"><?= $count ?></span>
-                                    </div>
-                                    <div class="minicart-text"><span>Giỏ hàng</span></div>
-                                    <div class="item_total"><span><?= number_format($total_amount) ?>₫</span></div>
-                                </a>
-                                <ul class="minicart-body">
-                                    <?php if (empty($_SESSION['mycart'])) {
-                                        $emptypro = "Bạn chưa thêm sản phẩm nào vào giỏ hàng !";  ?>
-                                    <div class="mt-5">
-                                        <p class="text-danger fw-bold" style="font-size: 15px;"><?= $emptypro ?></p>
-                                    </div>
-
-                                    <?php } else {
-                                        foreach ($_SESSION['mycart'] as $cart) {  ?>
-                                    <li class="minicart-item_area">
-                                        <div class="minicart-single_item">
-                                            <div class="minicart-img">
-                                                <a href="index.php?act=prodetail&idpro=<?= $cart[0] ?>">
-                                                    <img src="admin/uploads/<?= $cart[2] ?>" alt="UltraPhone Product"
-                                                        width="50px" ; />
-                                                </a>
-                                                <span class="product-quantity"><?= $cart[4] ?>x</span>
-                                            </div>
-                                            <div class="minicart-content">
-                                                <div class="product-name">
-                                                    <h6>
-                                                        <a href="index.php?act=prodetail&idpro=<?= $cart[0] ?>">
-                                                            <?= $cart[1] ?>
-                                                        </a>
-                                                    </h6>
-                                                </div>
-                                                <div class="price-box">
-                                                    <span class="new-price"> <?= number_format($cart[3]) ?>₫</span>
-                                                </div>
-                                                <!-- <div class="attributes_content">
-                                                    <span>Dimension: 40x60cm</span>
-                                                </div> -->
-                                            </div>
-                                        </div>
-                                    </li>
-                                    <?php }
-                                    }  ?>
-                                    <li>
-
-                                        <div class="price_content">
-                                            <div class="cart-subtotals">
-                                                <div class="cart-total subtotal-list">
-                                                    <span class="label">Tổng tiền</span>
-                                                    <span class="value"><?= number_format($total_amount) ?>₫</span>
-                                                </div>
-                                            </div>
-                                            <div class="minicart-button">
-                                                <a class="jb-btn jb-btn_fullwidth" href="index.php?act=viewcart">Xem giỏ
-                                                    hàng</a>
-                                            </div>
-                                        </div>
-                                    </li>
-                                </ul>
-                            </li>
-                        </ul>
-                    </div>
-                    <!-- Begin JB's Offcanvas Area -->
-                    <a href="#" class="menu-btn color--white">
-                        <i class="fa fa-bars"></i>
+                <div class="group relative">
+                    <a href="index.php?act=product"
+                        class="inline-flex items-center gap-1 rounded-lg px-3 py-2 text-sm font-medium text-ink-700 transition-colors hover:bg-ink-50 hover:text-brand-600 focus:outline-none focus:ring-2 focus:ring-brand-500">
+                        Sản phẩm
+                        <i class="fa-solid fa-chevron-down text-xs"></i>
                     </a>
-                    <!-- JB's Offcanvas Area End Here -->
+                    <div
+                        class="invisible absolute left-0 top-full z-50 w-56 rounded-xl border border-ink-200 bg-white py-2 opacity-0 shadow-lg transition-all group-hover:visible group-hover:opacity-100">
+                        <?php
+                        foreach ($listcate as $cate) {
+                            extract($cate);
+                            $linkpro = "index.php?act=product&idcate=" . $id_cate;
+                            echo '<a href="' . $linkpro . '" class="block px-4 py-2 text-sm text-ink-700 hover:bg-ink-50 hover:text-brand-600 focus:outline-none focus:ring-2 focus:ring-brand-500">' . $name_cate . '</a>';
+                        }
+                        ?>
+                    </div>
                 </div>
-                <!-- Header Middle Minicart Area End Here -->
+
+                <a href="index.php?act=introduce"
+                    class="rounded-lg px-3 py-2 text-sm font-medium text-ink-700 transition-colors hover:bg-ink-50 hover:text-brand-600 focus:outline-none focus:ring-2 focus:ring-brand-500">Giới
+                    thiệu</a>
+                <a href="index.php?act=contact"
+                    class="rounded-lg px-3 py-2 text-sm font-medium text-ink-700 transition-colors hover:bg-ink-50 hover:text-brand-600 focus:outline-none focus:ring-2 focus:ring-brand-500">Liên
+                    hệ</a>
+                <a href="index.php?act=question"
+                    class="rounded-lg px-3 py-2 text-sm font-medium text-ink-700 transition-colors hover:bg-ink-50 hover:text-brand-600 focus:outline-none focus:ring-2 focus:ring-brand-500">Hỏi
+                    đáp</a>
+            </nav>
+
+            <!-- Desktop search -->
+            <form action="index.php" method="get" class="hidden max-w-sm flex-1 md:flex">
+                <input type="hidden" name="act" value="product">
+                <label for="header-search" class="sr-only">Tìm kiếm sản phẩm</label>
+                <div class="relative w-full">
+                    <input id="header-search" name="kyw" type="text" required
+                        placeholder="Nhập từ khóa tìm kiếm ..."
+                        class="block w-full rounded-full border border-ink-200 bg-ink-50 py-2.5 pl-4 pr-11 text-sm text-ink-900 placeholder:text-ink-300 focus:border-brand-500 focus:bg-white focus:outline-none focus:ring-2 focus:ring-brand-500" />
+                    <button type="submit" name="btn_search" aria-label="Tìm kiếm"
+                        class="absolute right-1 top-1/2 flex h-9 w-9 -translate-y-1/2 items-center justify-center rounded-full text-ink-500 transition-colors hover:bg-ink-100 hover:text-brand-600 focus:outline-none focus:ring-2 focus:ring-brand-500">
+                        <i class="fa-solid fa-magnifying-glass"></i>
+                    </button>
+                </div>
+            </form>
+
+            <!-- Right icons -->
+            <div class="flex shrink-0 items-center gap-0.5 sm:gap-1">
+                <!-- Cart -->
+                <div class="group relative">
+                    <a href="index.php?act=viewcart" aria-label="Giỏ hàng"
+                        class="relative flex h-11 w-11 items-center justify-center rounded-full text-ink-700 transition-colors hover:bg-ink-100 focus:outline-none focus:ring-2 focus:ring-brand-500">
+                        <i class="fa-solid fa-cart-shopping text-lg"></i>
+                        <span
+                            class="absolute right-0.5 top-0.5 inline-flex h-5 w-5 items-center justify-center rounded-full bg-brand-600 text-[11px] font-bold text-white"><?= $count ?></span>
+                    </a>
+                    <div
+                        class="invisible absolute right-0 top-full z-50 w-80 rounded-xl border border-ink-200 bg-white opacity-0 shadow-lg transition-all group-hover:visible group-hover:opacity-100">
+                        <?php if (empty($_SESSION['mycart'])) { ?>
+                        <p class="p-6 text-center text-sm text-ink-500">Bạn chưa thêm sản phẩm nào vào giỏ hàng !</p>
+                        <?php } else { ?>
+                        <ul class="max-h-80 divide-y divide-ink-100 overflow-y-auto">
+                            <?php foreach ($_SESSION['mycart'] as $cart) { ?>
+                            <li class="flex gap-3 p-3">
+                                <a href="index.php?act=prodetail&idpro=<?= $cart[0] ?>"
+                                    class="relative h-14 w-14 shrink-0 overflow-hidden rounded-lg bg-ink-100">
+                                    <img src="admin/uploads/<?= $cart[2] ?>" alt="<?= $cart[1] ?>"
+                                        class="h-full w-full object-cover" />
+                                    <span
+                                        class="absolute bottom-0 right-0 rounded-tl-md bg-ink-900/80 px-1 text-[10px] font-semibold text-white"><?= $cart[4] ?>x</span>
+                                </a>
+                                <div class="min-w-0 flex-1">
+                                    <a href="index.php?act=prodetail&idpro=<?= $cart[0] ?>"
+                                        class="line-clamp-2 text-sm font-medium text-ink-900 hover:text-brand-600 focus:outline-none focus:ring-2 focus:ring-brand-500"><?= $cart[1] ?></a>
+                                    <p class="mt-1 text-sm font-semibold text-brand-600"><?= number_format($cart[3]) ?>₫</p>
+                                </div>
+                            </li>
+                            <?php } ?>
+                        </ul>
+                        <div class="border-t border-ink-200 p-4">
+                            <div class="flex items-center justify-between text-sm font-semibold text-ink-900">
+                                <span>Tổng tiền</span>
+                                <span class="text-brand-600"><?= number_format($total_amount) ?>₫</span>
+                            </div>
+                            <a href="index.php?act=viewcart"
+                                class="mt-3 inline-flex w-full items-center justify-center gap-2 rounded-lg bg-brand-600 px-5 py-2.5 text-sm font-semibold text-white shadow-sm transition-colors hover:bg-brand-700 focus:outline-none focus:ring-2 focus:ring-brand-500 focus:ring-offset-2">Xem
+                                giỏ hàng</a>
+                        </div>
+                        <?php } ?>
+                    </div>
+                </div>
+
+                <!-- Account (hidden on the narrowest screens to avoid crowding the header;
+                     reachable via the mobile menu drawer instead — see #mobile-menu below) -->
+                <div class="group relative hidden sm:block">
+                    <?php if (!isset($_SESSION['user'])) { ?>
+                    <a href="#"
+                        class="flex h-11 items-center gap-2 rounded-full px-3 text-sm font-medium text-ink-700 transition-colors hover:bg-ink-100 focus:outline-none focus:ring-2 focus:ring-brand-500">
+                        <i class="fa-solid fa-user text-lg"></i>
+                        <span class="hidden sm:inline">Tài khoản</span>
+                    </a>
+                    <?php } else { ?>
+                    <a href="#"
+                        class="flex h-11 items-center gap-2 rounded-full px-3 text-sm font-medium text-ink-700 transition-colors hover:bg-ink-100 focus:outline-none focus:ring-2 focus:ring-brand-500">
+                        <?php if (isset($_SESSION['user']['img_user']) && $_SESSION['user']['img_user'] != '') { ?>
+                        <img src="uploads/<?= $_SESSION['user']['img_user'] ?>" alt=""
+                            class="h-7 w-7 rounded-full object-cover" />
+                        <?php } else { ?>
+                        <i class="fa-solid fa-user text-lg"></i>
+                        <?php } ?>
+                        <span class="hidden max-w-[8rem] truncate sm:inline"><?= $_SESSION['user']['full_name'] ?></span>
+                    </a>
+                    <?php } ?>
+                    <div
+                        class="invisible absolute right-0 top-full z-50 w-56 rounded-xl border border-ink-200 bg-white py-2 opacity-0 shadow-lg transition-all group-hover:visible group-hover:opacity-100">
+                        <?php if (!isset($_SESSION['user'])) { ?>
+                        <a href="index.php?act=login"
+                            class="flex items-center gap-2 px-4 py-2 text-sm text-ink-700 hover:bg-ink-50 hover:text-brand-600 focus:outline-none focus:ring-2 focus:ring-brand-500"><i
+                                class="fa-solid fa-right-to-bracket w-4"></i> Đăng nhập</a>
+                        <?php } else if ($_SESSION['user']['role'] == 1) { ?>
+                        <a href="./admin/index.php"
+                            class="flex items-center gap-2 px-4 py-2 text-sm text-ink-700 hover:bg-ink-50 hover:text-brand-600 focus:outline-none focus:ring-2 focus:ring-brand-500"><i
+                                class="fa-solid fa-gears w-4"></i> Vào trang Admin</a>
+                        <a href="index.php?act=myaccount"
+                            class="flex items-center gap-2 px-4 py-2 text-sm text-ink-700 hover:bg-ink-50 hover:text-brand-600 focus:outline-none focus:ring-2 focus:ring-brand-500"><i
+                                class="fa-solid fa-circle-info w-4"></i> Thông tin tài khoản</a>
+                        <a href="index.php?act=logout"
+                            onclick="return confirm('Bạn chắc chắc muốn đăng xuất tài khoản?')"
+                            class="flex items-center gap-2 px-4 py-2 text-sm text-ink-700 hover:bg-ink-50 hover:text-brand-600 focus:outline-none focus:ring-2 focus:ring-brand-500"><i
+                                class="fa-solid fa-right-from-bracket w-4"></i> Đăng xuất</a>
+                        <?php } else { ?>
+                        <a href="index.php?act=myaccount"
+                            class="flex items-center gap-2 px-4 py-2 text-sm text-ink-700 hover:bg-ink-50 hover:text-brand-600 focus:outline-none focus:ring-2 focus:ring-brand-500"><i
+                                class="fa-solid fa-circle-info w-4"></i> Thông tin tài khoản</a>
+                        <a href="index.php?act=logout"
+                            onclick="return confirm('Bạn chắc chắc muốn đăng xuất tài khoản?')"
+                            class="flex items-center gap-2 px-4 py-2 text-sm text-ink-700 hover:bg-ink-50 hover:text-brand-600 focus:outline-none focus:ring-2 focus:ring-brand-500"><i
+                                class="fa-solid fa-right-from-bracket w-4"></i> Đăng xuất</a>
+                        <?php } ?>
+                    </div>
+                </div>
+
+                <!-- Mobile menu toggle -->
+                <button type="button" id="mobile-menu-btn" aria-label="Mở menu" aria-expanded="false"
+                    aria-controls="mobile-menu"
+                    class="flex h-11 w-11 items-center justify-center rounded-full text-ink-700 transition-colors hover:bg-ink-100 focus:outline-none focus:ring-2 focus:ring-brand-500 lg:hidden">
+                    <i class="fa-solid fa-bars text-lg"></i>
+                </button>
             </div>
         </div>
+
+        <!-- Mobile search -->
+        <form action="index.php" method="get" class="pb-3 md:hidden">
+            <input type="hidden" name="act" value="product">
+            <label for="header-search-mobile" class="sr-only">Tìm kiếm sản phẩm</label>
+            <div class="relative w-full">
+                <input id="header-search-mobile" name="kyw" type="text" required
+                    placeholder="Nhập từ khóa tìm kiếm ..."
+                    class="block w-full rounded-full border border-ink-200 bg-ink-50 py-2.5 pl-4 pr-11 text-sm text-ink-900 placeholder:text-ink-300 focus:border-brand-500 focus:bg-white focus:outline-none focus:ring-2 focus:ring-brand-500" />
+                <button type="submit" name="btn_search" aria-label="Tìm kiếm"
+                    class="absolute right-1 top-1/2 flex h-9 w-9 -translate-y-1/2 items-center justify-center rounded-full text-ink-500 transition-colors hover:bg-ink-100 hover:text-brand-600 focus:outline-none focus:ring-2 focus:ring-brand-500">
+                    <i class="fa-solid fa-magnifying-glass"></i>
+                </button>
+            </div>
+        </form>
     </div>
 
-    <!-- Begin Header Bottom Area -->
-    <div class="header-bottom_area d-none d-lg-block">
-        <div class="container">
-            <div class="row">
-                <!-- Begin JB's Category Menu Area -->
-                <div class="col-lg-3 col-md-4">
-                    <div class="category-menu category-menu-hidden">
-                        <div class="category-heading">
-                            <h2 class="categories-toggle">
-                                <span>Hiển thị theo loại</span>
-                            </h2>
-                        </div>
+    <!-- Mobile nav -->
+    <nav id="mobile-menu" class="hidden border-t border-ink-200 bg-white lg:hidden">
+        <div class="mx-auto max-w-7xl space-y-1 px-4 py-4 sm:px-6">
+            <a href="index.php"
+                class="block rounded-lg px-3 py-2.5 text-sm font-medium text-ink-700 hover:bg-ink-50 focus:outline-none focus:ring-2 focus:ring-brand-500">Trang
+                chủ</a>
+            <details class="group/cate rounded-lg">
+                <summary
+                    class="flex cursor-pointer list-none items-center justify-between rounded-lg px-3 py-2.5 text-sm font-medium text-ink-700 hover:bg-ink-50 focus:outline-none focus:ring-2 focus:ring-brand-500">
+                    <span>Sản phẩm</span>
+                    <i class="fa-solid fa-chevron-down text-xs transition-transform group-open/cate:rotate-180"></i>
+                </summary>
+                <div class="ml-3 mt-1 space-y-1 border-l border-ink-200 pl-3">
+                    <?php
+                    foreach ($listcate as $cate) {
+                        extract($cate);
+                        $linkpro = "index.php?act=product&idcate=" . $id_cate;
+                        echo '<a href="' . $linkpro . '" class="block rounded-lg px-3 py-2 text-sm text-ink-700 hover:bg-ink-50 hover:text-brand-600 focus:outline-none focus:ring-2 focus:ring-brand-500">' . $name_cate . '</a>';
+                    }
+                    ?>
+                </div>
+            </details>
+            <a href="index.php?act=introduce"
+                class="block rounded-lg px-3 py-2.5 text-sm font-medium text-ink-700 hover:bg-ink-50 focus:outline-none focus:ring-2 focus:ring-brand-500">Giới
+                thiệu</a>
+            <a href="index.php?act=contact"
+                class="block rounded-lg px-3 py-2.5 text-sm font-medium text-ink-700 hover:bg-ink-50 focus:outline-none focus:ring-2 focus:ring-brand-500">Liên
+                hệ</a>
+            <a href="index.php?act=question"
+                class="block rounded-lg px-3 py-2.5 text-sm font-medium text-ink-700 hover:bg-ink-50 focus:outline-none focus:ring-2 focus:ring-brand-500">Hỏi
+                đáp</a>
 
-                        <!-- show danh sách danh mục -->
-                        <div id="cate-toggle" class="category-menu-list">
-                            <ul>
-                                <?php
-                                foreach ($listcate as $cate) {
-                                    extract($cate);
-                                    $linkpro = "index.php?act=product&idcate=" . $id_cate;
-                                    echo '<li class="right-menu">
-                       <a href="' . $linkpro . '">' . $name_cate . '</a>
-                   </li>';
-                                }
-                                ?>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-                <!-- JB's Category Menu Area End Here -->
-                <!-- Begin Header Search Area -->
-                <div class="col-xl-7 col-lg-6 col-md-5">
-                    <div class="header-search_area">
-                        <form action="index.php" method="get" class="header-search_box">
-                            <input type="hidden" name="act" value="product">
-                            <input class="jb-search_input" name="kyw" type="text"
-                                placeholder="Nhập từ khóa tìm kiếm ..." required />
-                            <button class="jb-search_btn" name="btn_search" type="submit">
-                                <i class="fa fa-search"></i>
-                            </button>
-                        </form>
-                    </div>
-                </div>
-                <!-- Header Search Area End Herer -->
-                <!-- Begin Header Contact Information Area -->
-                <div class="col-xl-2 col-lg-3 col-md-3">
-                    <div class="contact-info">
-                        <a href="tel://+84923969020"><i class="fa fa-phone-volume"></i> 0987651234 </a>
-                    </div>
-                </div>
-                <!-- Header Contact Information Area End Here -->
+            <!-- Account links (sm:hidden — the top-level account icon takes over from the
+                 sm breakpoint up) -->
+            <div class="mt-2 space-y-1 border-t border-ink-200 pt-2 sm:hidden">
+                <?php if (!isset($_SESSION['user'])) { ?>
+                <a href="index.php?act=login"
+                    class="flex items-center gap-2 rounded-lg px-3 py-2.5 text-sm font-medium text-ink-700 hover:bg-ink-50 focus:outline-none focus:ring-2 focus:ring-brand-500"><i
+                        class="fa-solid fa-right-to-bracket w-4"></i> Đăng nhập</a>
+                <?php } else { ?>
+                <?php if ($_SESSION['user']['role'] == 1) { ?>
+                <a href="./admin/index.php"
+                    class="flex items-center gap-2 rounded-lg px-3 py-2.5 text-sm font-medium text-ink-700 hover:bg-ink-50 focus:outline-none focus:ring-2 focus:ring-brand-500"><i
+                        class="fa-solid fa-gears w-4"></i> Vào trang Admin</a>
+                <?php } ?>
+                <a href="index.php?act=myaccount"
+                    class="flex items-center gap-2 rounded-lg px-3 py-2.5 text-sm font-medium text-ink-700 hover:bg-ink-50 focus:outline-none focus:ring-2 focus:ring-brand-500"><i
+                        class="fa-solid fa-circle-info w-4"></i> Thông tin tài khoản (<?= $_SESSION['user']['full_name'] ?>)</a>
+                <a href="index.php?act=logout"
+                    onclick="return confirm('Bạn chắc chắc muốn đăng xuất tài khoản?')"
+                    class="flex items-center gap-2 rounded-lg px-3 py-2.5 text-sm font-medium text-ink-700 hover:bg-ink-50 focus:outline-none focus:ring-2 focus:ring-brand-500"><i
+                        class="fa-solid fa-right-from-bracket w-4"></i> Đăng xuất</a>
+                <?php } ?>
             </div>
         </div>
-    </div>
+    </nav>
 </header>
+
+<script>
+    (function () {
+        var btn = document.getElementById('mobile-menu-btn');
+        var menu = document.getElementById('mobile-menu');
+        if (!btn || !menu) return;
+        btn.addEventListener('click', function () {
+            var isNowHidden = menu.classList.toggle('hidden');
+            btn.setAttribute('aria-expanded', String(!isNowHidden));
+        });
+    })();
+</script>
