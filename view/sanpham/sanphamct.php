@@ -16,7 +16,6 @@
     <div class="container">
         <div class="sp-nav">
             <div class="row">
-                <?php extract($one_pro); ?>
                 <div class="col-lg-5 col-md-5">
                     <div class="sp-images">
                         <div class="sp-largeimages sp-imagezoom">
