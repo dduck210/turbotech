@@ -279,24 +279,38 @@
         var triggers = document.querySelectorAll('[data-tab-target]');
         var panels = document.querySelectorAll('[data-tab-panel]');
 
+        function activateTab(targetId) {
+            var trigger = document.querySelector('[data-tab-target="' + targetId + '"]');
+            if (!trigger) return;
+
+            panels.forEach(function (panel) {
+                panel.classList.toggle('hidden', panel.id !== targetId);
+            });
+
+            triggers.forEach(function (t) {
+                var isActive = t === trigger;
+                t.setAttribute('aria-selected', isActive ? 'true' : 'false');
+                t.classList.toggle('text-brand-600', isActive);
+                t.classList.toggle('bg-brand-50', isActive);
+                t.classList.toggle('text-ink-700', !isActive);
+            });
+        }
+
         triggers.forEach(function (trigger) {
             trigger.addEventListener('click', function (e) {
                 e.preventDefault();
-                var targetId = trigger.getAttribute('data-tab-target');
-
-                panels.forEach(function (panel) {
-                    panel.classList.toggle('hidden', panel.id !== targetId);
-                });
-
-                triggers.forEach(function (t) {
-                    var isActive = t === trigger;
-                    t.setAttribute('aria-selected', isActive ? 'true' : 'false');
-                    t.classList.toggle('text-brand-600', isActive);
-                    t.classList.toggle('bg-brand-50', isActive);
-                    t.classList.toggle('text-ink-700', !isActive);
-                });
+                activateTab(trigger.getAttribute('data-tab-target'));
             });
         });
+
+        // Reopen whichever tab the URL hash points to (e.g. after a
+        // redirect-driven action like cancelling an order, which lands back
+        // here as `?act=myaccount#account-orders`) — otherwise a fresh page
+        // load always falls back to the first ("Bảng điều khiển") tab, even
+        // when the user was just doing something on a different tab.
+        if (window.location.hash) {
+            activateTab(window.location.hash.substring(1));
+        }
     })();
 </script>
 <!-- JB's Page Content Area End Here -->

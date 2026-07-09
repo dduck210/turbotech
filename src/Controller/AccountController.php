@@ -101,6 +101,9 @@ class AccountController extends Controller
             ? 'Đã hủy đơn hàng thành công.'
             : 'Không thể hủy đơn hàng này (đơn không tồn tại hoặc đã được xử lý).';
 
-        $this->redirect('?act=myaccount');
+        // #account-orders so the page reopens on the Orders tab instead of
+        // resetting to the dashboard — see the hash-handling script in
+        // view/nguoidung/myaccount.php.
+        $this->redirect('?act=myaccount#account-orders');
     }
 }
