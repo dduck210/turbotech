@@ -18,10 +18,6 @@ use Codemoi\Model\Category;
 session_start();
 ob_start();
 
-// PHPMailer wrapper (`Mailer` class, global namespace) — still required the
-// same way as before; Phase 05 namespaces it.
-require __DIR__ . '/email/index.php';
-
 // kiểm tra session my cart đã tồn tại là 1 mảng chưa, nếu chưa thì khởi tạo 1 mảng mới
 Cart::items();
 

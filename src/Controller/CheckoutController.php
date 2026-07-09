@@ -110,7 +110,7 @@ class CheckoutController extends Controller
                             ";
             $content .= "Chào mừng đến với  <a href='http://localhost/duan1-turbotech/index.php'>UltraPhone! </a>";
 
-            $mail = new \Mailer();
+            $mail = new \Codemoi\Mail\Mailer();
             $mail->sendMail($title, $content, $email);
             $_SESSION['mail'] = $email;
 
@@ -141,23 +141,24 @@ class CheckoutController extends Controller
     /**
      * Near-duplicate of `confirm()` used for direct `?act=viewbill` visits.
      * The old code referenced `$full_name`/`$address`/`$phone`/`$email`/
-     * `$payment` here while they were commented-out `$_POST` reads
-     * (`index.php:392-396`) — a latent bug flagged in the plan's Open
-     * Questions. In the real browser flow (POST billconfirm -> redirect to
-     * `?act=viewbill`), the cart is already empty by the time this runs, so
-     * `$total_amount > 0` is false and the buggy `Order::create()` call is
-     * never reached. We default these to null (instead of leaving them
-     * undefined) purely to avoid emitting PHP warnings if this path is ever
-     * hit directly — the resulting values passed to `Order::create()` are
-     * identical (null either way).
+     * `$payment` here while the `$_POST` reads that fed them were commented
+     * out (`index.php:392-396`) — a latent bug (Phase 05 fix, was flagged in
+     * the plan's Open Questions). Reading them from `$_POST` the same way
+     * `confirm()` does is clearly the original intent. In the real browser
+     * flow (POST billconfirm -> redirect to `?act=viewbill`), the redirect is
+     * a plain GET with no form body, so these all read as empty strings and
+     * the cart is already empty (`$total_amount > 0` is false) — same
+     * behavior as before for that path. This only changes behavior for the
+     * previously-buggy scenario where `?act=viewbill` is hit directly with
+     * POST data present and a non-empty cart.
      */
     public function viewbill(): void
     {
-        $full_name = null;
-        $address = null;
-        $phone = null;
-        $email = null;
-        $payment = null;
+        $full_name = $_POST['full_name'] ?? '';
+        $address = $_POST['address'] ?? '';
+        $phone = $_POST['phone'] ?? '';
+        $email = $_POST['email'] ?? '';
+        $payment = $_POST['payment'] ?? null;
         $bill_code = null;
         $idbill = $_SESSION['idbill'] ?? null;
         $total_amount = null;

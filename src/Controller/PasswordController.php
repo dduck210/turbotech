@@ -60,7 +60,7 @@ class PasswordController extends Controller
                 $content = "<p>Xin chào, chúng tôi đã nhận được yêu cầu đặt lại mật khẩu Turbotech của bạn.<br>
                             Nhập mã sau đây để đặt lại mật khẩu: <span style='color: black; font-weight: 600'>" . $code . "</span></p>";
 
-                $mail = new \Mailer();
+                $mail = new \Codemoi\Mail\Mailer();
                 $mail->sendMail($title, $content, $email);
 
                 $_SESSION['mail'] = $email;

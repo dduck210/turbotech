@@ -5,7 +5,7 @@
 - Payment poller: `model/atm.php` (standalone script) + `model/function.php`. QR view: `view/qr.php`.
 
 ## Overview
-- **Priority:** P2. **Status:** pending.
+- **Priority:** P2. **Status:** completed.
 - Finish the concerns deferred from Phase 04: move cart-rendering HTML into a view partial, namespace
   the Mailer, and settle the payment poller (`atm.php`) + QR flow. App already fully MVC after Phase 04;
   this is polish, each change independently testable.
@@ -45,11 +45,29 @@
 5. Lint everything; re-run the Phase 04 route checklist (cart/checkout pages especially).
 
 ## Todo List
-- [ ] `_cart-table.php` partial + 3 views wired
-- [ ] `src/Mail/Mailer.php` + call sites updated + test send
-- [ ] `atm.php` repointed & runs
-- [ ] `email/index.php` + `model/function.php` deleted, no dangling refs
-- [ ] Lint + cart/checkout route recheck
+- [x] `_cart-table.php` partial + 3 views wired — already done in Phase 04 as
+      `view/giohang/cart-detail-table.php`, included from `billconfirm.php`/
+      `viewbill.php`; `bill.php`/`viewcart.php` keep their own inline
+      markup (never called the removed `viewcart()`/`cart_detail()` helpers).
+      Verified `src/Model/Cart.php` has no echo/HTML.
+- [x] `src/Mail/Mailer.php` + call sites updated + test send — SMTP creds
+      externalized to `Core\Config`; call sites in `CheckoutController`/
+      `PasswordController` updated; forgotPass + cash-checkout flows both
+      exercised live, Mailer reaches `sendMail()` without a fatal error.
+- [x] `atm.php` repointed & runs — now uses `Core\Database` + `Model\Payment`;
+      ran via `php.exe`, completes without fatal (external API returned 404,
+      pre-existing/unrelated to the port).
+- [x] `email/index.php` + `model/function.php` (+ `model/pdo.php`, unused
+      after repoint) deleted, no dangling refs (grep-verified).
+- [x] Lint + cart/checkout route recheck — all changed files lint clean;
+      home/product/login/checkout (cash + bank-transfer)/viewbill routes
+      re-verified live.
+
+Also fixed the `viewbill()` undefined-variable bug (was flagged as an Open
+Question): now reads `$full_name`/`$address`/`$phone`/`$email`/`$payment`
+from `$_POST` like `confirm()` does. Verified via direct `?act=viewbill` POST
+with a non-empty cart — order row created with correct POST-sourced fields
+(see Next Steps for a related pre-existing issue this surfaced).
 
 ## Success Criteria
 - `grep -rn "echo" src/Model/` shows no HTML output; cart pages render identically to pre-refactor.
@@ -68,8 +86,20 @@
 - SMTP creds currently hard-coded in `email/index.php` (`:27-28`) — carry over as-is (out of scope to
   externalize; note for user). Keep bound params in `Model\Payment`.
 
-## Open Question (flag to user)
-- SMTP credentials are committed in source. Externalize to `Core\Config`/env now, or leave (out of scope)?
+## Open Question (resolved)
+- SMTP credentials externalized to `Core\Config` (constants) per user decision. Still committed in
+  source as literal values (matches legacy behavior) — moving to env vars is a further follow-up,
+  not done here.
 
 ## Next Steps
 - Client refactor complete. Phase 06 (admin) optional.
+- **Newly discovered, pre-existing, out-of-scope bug:** `viewbill()`'s own internal order-creation
+  branch (`if ($total_amount > 0) { Order::create(...); redirect('?act=viewbill'); }`) redirects
+  (and exits) *before* reaching `Cart::clear()` later in the method. If `?act=viewbill` is hit
+  directly with a logged-in user and a non-empty cart, the self-redirect loops back into the same
+  branch on the next request — and since that next request has no `$_POST` data, `$payment` is
+  `null`, which now hits `bill.payment NOT NULL` and throws an uncaught `PDOException`. This bug
+  predates this phase (in the old code `$payment` was *always* null here, so it crashed even sooner,
+  on the very first hit); the Phase 05 `$_POST` fix does not introduce it and does not change behavior
+  for the real `confirm()`→`viewbill()` flow (cart already empty by then). Flagging for a future fix
+  (e.g. move `Cart::clear()` before the redirect, or don't self-redirect at all).
