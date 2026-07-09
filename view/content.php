@@ -92,16 +92,16 @@
              Tab component's click delegation never toggles .active), so don't rely on it. Same
              proven pattern as the account-page tabs in view/nguoidung/myaccount.php. -->
         <div class="mb-8 flex flex-wrap justify-center gap-3">
-            <a class="home-tab-trigger active inline-flex min-h-11 items-center justify-center rounded-full border border-ink-200 bg-white px-4 py-2.5 text-sm font-semibold text-ink-700 transition-colors hover:bg-ink-50 focus:outline-none focus:ring-2 focus:ring-brand-500 [&.active]:!border-brand-600 [&.active]:!bg-brand-600 [&.active]:!text-white"
+            <a class="home-tab-trigger active inline-flex min-h-11 items-center justify-center rounded-full border border-ink-200 bg-white px-4 py-2.5 text-sm font-semibold text-ink-700 transition-colors hover:bg-ink-50 focus:outline-none focus:ring-2 focus:ring-brand-500 [&.active]:border-brand-600! [&.active]:bg-brand-600! [&.active]:text-white!"
                 data-tab-target="new-arrival" href="#new-arrival"><span>Sản phẩm mới</span></a>
-            <a class="home-tab-trigger inline-flex min-h-11 items-center justify-center rounded-full border border-ink-200 bg-white px-4 py-2.5 text-sm font-semibold text-ink-700 transition-colors hover:bg-ink-50 focus:outline-none focus:ring-2 focus:ring-brand-500 [&.active]:!border-brand-600 [&.active]:!bg-brand-600 [&.active]:!text-white"
+            <a class="home-tab-trigger inline-flex min-h-11 items-center justify-center rounded-full border border-ink-200 bg-white px-4 py-2.5 text-sm font-semibold text-ink-700 transition-colors hover:bg-ink-50 focus:outline-none focus:ring-2 focus:ring-brand-500 [&.active]:border-brand-600! [&.active]:bg-brand-600! [&.active]:text-white!"
                 data-tab-target="bestseller" href="#bestseller"><span>Sản phẩm bán chạy</span></a>
-            <a class="home-tab-trigger inline-flex min-h-11 items-center justify-center rounded-full border border-ink-200 bg-white px-4 py-2.5 text-sm font-semibold text-ink-700 transition-colors hover:bg-ink-50 focus:outline-none focus:ring-2 focus:ring-brand-500 [&.active]:!border-brand-600 [&.active]:!bg-brand-600 [&.active]:!text-white"
+            <a class="home-tab-trigger inline-flex min-h-11 items-center justify-center rounded-full border border-ink-200 bg-white px-4 py-2.5 text-sm font-semibold text-ink-700 transition-colors hover:bg-ink-50 focus:outline-none focus:ring-2 focus:ring-brand-500 [&.active]:border-brand-600! [&.active]:bg-brand-600! [&.active]:text-white!"
                 data-tab-target="featured-products" href="#featured-products"><span>Sản phẩm nổi bật</span></a>
         </div>
 
         <div class="tab-content">
-            <div id="new-arrival" data-tab-panel class="tab-pane active hidden [&.active]:!block" role="tabpanel">
+            <div id="new-arrival" data-tab-panel class="tab-pane active hidden [&.active]:block!" role="tabpanel">
                 <div class="grid grid-cols-2 gap-6 sm:grid-cols-3 lg:grid-cols-4">
                     <!-- Phần show sản phẩm mới nhất -->
                     <?php
@@ -159,7 +159,7 @@
                     <!-- end phần show sản sản phẩm mới nhất -->
                 </div>
             </div>
-            <div id="bestseller" data-tab-panel class="tab-pane hidden [&.active]:!block" role="tabpanel">
+            <div id="bestseller" data-tab-panel class="tab-pane hidden [&.active]:block!" role="tabpanel">
                 <div class="grid grid-cols-2 gap-6 sm:grid-cols-3 lg:grid-cols-4">
                     <!-- Sản phẩm bán chạy -->
                     <?php
@@ -218,7 +218,7 @@
             </div>
 
             <!-- show sản phẩm nổi bật -->
-            <div id="featured-products" data-tab-panel class="tab-pane hidden [&.active]:!block" role="tabpanel">
+            <div id="featured-products" data-tab-panel class="tab-pane hidden [&.active]:block!" role="tabpanel">
                 <div class="grid grid-cols-2 gap-6 sm:grid-cols-3 lg:grid-cols-4">
                     <!-- Phần show sản phẩm nổi bật -->
                     <?php

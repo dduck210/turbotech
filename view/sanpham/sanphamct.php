@@ -139,7 +139,7 @@
         </ul>
     </div>
     <div class="tab-content">
-        <div id="description" data-tab-panel class="tab-pane active hidden [&.active]:!block" role="tabpanel">
+        <div id="description" data-tab-panel class="tab-pane active hidden [&.active]:block!" role="tabpanel">
             <div class="text-ink-700 leading-relaxed">
                 <p>
                     <strong class="text-lg text-ink-900">Thông số kỹ thuật:</strong><br>
@@ -148,7 +148,7 @@
             </div>
         </div>
 
-        <div id="reviews" data-tab-panel class="tab-pane hidden [&.active]:!block" role="tabpanel">
+        <div id="reviews" data-tab-panel class="tab-pane hidden [&.active]:block!" role="tabpanel">
             <!-- jquery bình luận -->
             <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
             <script>
