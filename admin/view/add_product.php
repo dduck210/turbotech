@@ -42,6 +42,12 @@
                     <input type="number" name="stock" min="0" class="w-full px-4 py-2 border border-slate-200 rounded-lg focus:ring-2 focus:ring-brand-500 focus:border-brand-500 transition-colors" placeholder="Số lượng" value="0" required>
                 </div>
 
+                <!-- Thông báo hết hàng -->
+                <div>
+                    <label class="block text-sm font-medium text-slate-700 mb-2">Thông báo hết hàng</label>
+                    <input type="text" name="stock_message" maxlength="255" class="w-full px-4 py-2 border border-slate-200 rounded-lg focus:ring-2 focus:ring-brand-500 focus:border-brand-500 transition-colors" placeholder="Để trống sẽ hiện: Hết hàng">
+                </div>
+
                 <!-- Loại máy tính -->
                 <div>
                     <label class="block text-sm font-medium text-slate-700 mb-2">Loại sản phẩm</label>

@@ -1,7 +1,8 @@
-<?php 
-function add_pro($name_pro, $price, $discount, $img_pro, $short_des,$detail_des, $idcate, $stock = 0) {
-    $sql = "INSERT INTO product (name_pro, price, discount, img_pro, short_des, detail_des, idcate, stock) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
-    pdo_execute($sql, $name_pro, $price, $discount, $img_pro, $short_des, $detail_des, $idcate, $stock);
+<?php
+function add_pro(string $name_pro, string $price, string $discount, string $img_pro, string $short_des, string $detail_des, int $idcate, int $stock = 0, ?string $stock_message = null)
+{
+    $sql = "INSERT INTO product (name_pro, price, discount, img_pro, short_des, detail_des, idcate, stock, stock_message) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
+    pdo_execute($sql, $name_pro, $price, $discount, $img_pro, $short_des, $detail_des, $idcate, $stock, $stock_message);
 }
 function loadall_pro($idcate = 0)
 {
@@ -15,13 +16,15 @@ function loadall_pro($idcate = 0)
     $listpro = pdo_query($sql, ...$args);
     return $listpro;
 }
-function loadone_pro($id_pro) {
+function loadone_pro(int $id_pro)
+{
     $sql = "SELECT * FROM product WHERE id_pro = ?";
     $pro = pdo_query_one($sql, $id_pro);
     return $pro;
 }
-function update_pro($id_pro, $name_pro, $price, $discount, $short_des, $detail_des, $img_pro, $idcate, $stock = 0) {
-        if($img_pro != '') {
+function update_pro(int $id_pro, string $name_pro, string $price, string $discount, string $short_des, string $detail_des, string $img_pro, int $idcate, int $stock = 0, ?string $stock_message = null)
+{
+    if ($img_pro != '') {
         $sql = "UPDATE product SET
         name_pro = ?,
         price = ?,
@@ -30,11 +33,11 @@ function update_pro($id_pro, $name_pro, $price, $discount, $short_des, $detail_d
         detail_des = ?,
         img_pro = ?,
         idcate = ?,
-        stock = ?
+        stock = ?,
+        stock_message = ?
         WHERE id_pro = ?";
-        pdo_execute($sql, $name_pro, $price, $discount, $short_des, $detail_des, $img_pro, $idcate, $stock, $id_pro);
-        }
-    else {
+        pdo_execute($sql, $name_pro, $price, $discount, $short_des, $detail_des, $img_pro, $idcate, $stock, $stock_message, $id_pro);
+    } else {
         $sql = "UPDATE product SET
         name_pro = ?,
         price = ?,
@@ -42,16 +45,18 @@ function update_pro($id_pro, $name_pro, $price, $discount, $short_des, $detail_d
         short_des = ?,
         detail_des = ?,
         idcate = ?,
-        stock = ?
+        stock = ?,
+        stock_message = ?
         WHERE id_pro = ?";
-        pdo_execute($sql, $name_pro, $price, $discount, $short_des, $detail_des, $idcate, $stock, $id_pro);
+        pdo_execute($sql, $name_pro, $price, $discount, $short_des, $detail_des, $idcate, $stock, $stock_message, $id_pro);
     }
 }
-function remove_pro($id_pro) {
+function remove_pro(int $id_pro)
+{
     $sql = "DELETE FROM product WHERE id_pro = ?";
     pdo_execute($sql, $id_pro);
 }
-function filter_by_cate($id_pro, $idcate)
+function filter_by_cate(int $id_pro, int $idcate)
 {
     $sql = "SELECT * FROM product WHERE idcate = ? AND id_pro <> ?";
     $listpro = pdo_query($sql, $idcate, $id_pro);
@@ -62,4 +67,3 @@ function filter_by_cate($id_pro, $idcate)
 //     $listpro = pdo_query($sql);
 //     return $listpro;
 // }
-?>

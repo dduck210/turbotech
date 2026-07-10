@@ -58,7 +58,7 @@
                     </span>
                 <?php } else { ?>
                     <span class="inline-flex items-center gap-1.5 rounded-full bg-red-50 px-3 py-1 text-xs font-medium text-red-700">
-                        <i class="fa-solid fa-circle-xmark" aria-hidden="true"></i> Hết hàng
+                        <i class="fa-solid fa-circle-xmark" aria-hidden="true"></i> <?= htmlspecialchars($one_pro['stock_message'] ?: 'Hết hàng') ?>
                     </span>
                 <?php } ?>
             </div>
@@ -106,7 +106,7 @@
             <?php } else { ?>
             <button type="button" disabled
                 class="mb-6 inline-flex items-center justify-center gap-2 rounded-lg bg-ink-100 px-5 py-2.5 text-sm font-semibold text-ink-300 cursor-not-allowed">
-                Hết hàng
+                <?= htmlspecialchars($one_pro['stock_message'] ?: 'Hết hàng') ?>
             </button>
             <?php } ?>
         </div>
@@ -184,7 +184,7 @@
                             class="h-full w-full object-cover">
                     </a>
                     <?php if ((int) $pro['stock'] <= 0) { ?>
-                        <span class="absolute top-2 right-2 rounded-full bg-ink-900/80 text-white text-xs font-bold px-2 py-1">Hết hàng</span>
+                        <span class="absolute top-2 right-2 rounded-full bg-ink-900/80 text-white text-xs font-bold px-2 py-1"><?= htmlspecialchars($pro['stock_message'] ?: 'Hết hàng') ?></span>
                     <?php } ?>
                 </div>
                 <div class="p-4">
@@ -211,7 +211,7 @@
                     <?php } else { ?>
                         <button type="button" disabled
                             class="w-full inline-flex items-center justify-center gap-2 rounded-lg bg-ink-100 px-5 py-2.5 text-sm font-semibold text-ink-300 cursor-not-allowed">
-                            Hết hàng
+                            <?= htmlspecialchars($pro['stock_message'] ?: 'Hết hàng') ?>
                         </button>
                     <?php } ?>
                 </div>

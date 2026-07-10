@@ -26,7 +26,7 @@ class Product
      *
      * @return array|false
      */
-    public static function one($id_pro)
+    public static function one(int $id_pro)
     {
         $sql = "SELECT * FROM product WHERE id_pro = ?";
         return Database::queryOne($sql, $id_pro);
@@ -77,6 +77,7 @@ class Product
                 a.discount,
                 a.img_pro,
                 a.stock,
+                a.stock_message,
                 COUNT(*) as total_sale
             FROM product a
             INNER JOIN cart b ON a.id_pro = b.id_pro
@@ -86,7 +87,8 @@ class Product
                 a.id_pro,
                 a.name_pro,
                 a.price,
-                a.img_pro
+                a.img_pro,
+                a.stock_message
             ORDER BY total_sale DESC";
 
         return Database::query($sql);
@@ -106,7 +108,7 @@ class Product
      * Other products in the same category, excluding the current one.
      * Mirrors old `similar_pro($id_pro, $idcate)`.
      */
-    public static function similar($id_pro, $idcate): array
+    public static function similar(int $id_pro, int $idcate): array
     {
         $sql = "SELECT * FROM product WHERE idcate = ? AND id_pro <> ?";
         return Database::query($sql, $idcate, $id_pro);
@@ -116,7 +118,7 @@ class Product
      * Increment the view counter for a product.
      * Mirrors old `updateview($a)`.
      */
-    public static function incrementView($id_pro): void
+    public static function incrementView(int $id_pro): void
     {
         $sql = "UPDATE product SET view = view+1 WHERE id_pro = ?";
         Database::execute($sql, $id_pro);
@@ -130,7 +132,7 @@ class Product
      *
      * @return bool True if stock was actually decremented.
      */
-    public static function decrementStock($id_pro, $quantity): bool
+    public static function decrementStock(int $id_pro, int $quantity): bool
     {
         $sql = "UPDATE product SET stock = stock - ? WHERE id_pro = ? AND stock >= ?";
         return Database::execute($sql, $quantity, $id_pro, $quantity) > 0;
@@ -139,7 +141,7 @@ class Product
     /**
      * Whether at least `$quantity` units are currently in stock.
      */
-    public static function hasStock($id_pro, $quantity = 1): bool
+    public static function hasStock(int $id_pro, int $quantity = 1): bool
     {
         $sql = "SELECT stock FROM product WHERE id_pro = ?";
         $row = Database::queryOne($sql, $id_pro);

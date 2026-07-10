@@ -132,6 +132,7 @@ if (isset($_GET['act'])) {
                     $detail_des = $_POST['detail_des'];
                     $idcate = $_POST['idcate'];
                     $stock = $_POST['stock'] ?? 0;
+                    $stock_message = trim($_POST['stock_message'] ?? '') ?: null;
                     $img_pro = $_FILES['img_pro']['name'];
                     $target_dir = "./uploads/";
                     $target_file = $target_dir . basename($_FILES["img_pro"]["name"]);
@@ -149,7 +150,7 @@ if (isset($_GET['act'])) {
                     } elseif (!in_array($extension, $allowed_extensions)) {
                         echo '<script>document.addEventListener("DOMContentLoaded",()=>Swal.fire({toast:true,position:"top-end",icon:"error",title:"File ảnh không phù hợp !",showConfirmButton:false,timer:3000}));</script>';
                     } else {
-                        add_pro($name_pro, $price, $discount, $img_pro, $short_des, $detail_des, $idcate, $stock);
+                        add_pro($name_pro, $price, $discount, $img_pro, $short_des, $detail_des, $idcate, $stock, $stock_message);
                         echo '<script>document.addEventListener("DOMContentLoaded",()=>Swal.fire({toast:true,position:"top-end",icon:"success",title:"Thêm sản phẩm thành công !",showConfirmButton:false,timer:3000}));</script>';
                     }
                 }
@@ -210,11 +211,12 @@ if (isset($_GET['act'])) {
                 $short_des = $_POST['short_des'];
                 $detail_des = $_POST['detail_des'];
                 $stock = $_POST['stock'] ?? 0;
+                $stock_message = trim($_POST['stock_message'] ?? '') ?: null;
                 $img_pro = $_FILES['img_pro']['name'];
                 $target_dir = "./uploads/";
                 $target_file = $target_dir . basename($_FILES["img_pro"]["name"]);
                 (move_uploaded_file($_FILES["img_pro"]["tmp_name"], $target_file));
-                update_pro($id_pro, $name_pro, $price, $discount, $short_des, $detail_des, $img_pro, $idcate, $stock);
+                update_pro($id_pro, $name_pro, $price, $discount, $short_des, $detail_des, $img_pro, $idcate, $stock, $stock_message);
                 echo '<script>document.addEventListener("DOMContentLoaded",()=>Swal.fire({toast:true,position:"top-end",icon:"success",title:"Cập nhật sản phẩm thành công!",showConfirmButton:false,timer:3000}));</script>';
                 header('location:index.php?act=list_product');
             }

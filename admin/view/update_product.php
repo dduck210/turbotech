@@ -44,6 +44,10 @@
                                     <label for="formGroupExampleInput" class="block text-sm font-medium text-slate-700 mb-1">Số lượng tồn kho</label>
                                     <input type="number" name="stock" min="0" class="w-full rounded-lg border border-slate-200 px-4 py-2 focus:ring-2 focus:ring-brand-500 outline-none transition-all" placeholder="Nhập số lượng hàng tồn kho" value="<?= $stock ?>">
                                 </div>
+                                <div class="mb-4">
+                                    <label for="formGroupExampleInput" class="block text-sm font-medium text-slate-700 mb-1">Thông báo hết hàng</label>
+                                    <input type="text" name="stock_message" maxlength="255" class="w-full rounded-lg border border-slate-200 px-4 py-2 focus:ring-2 focus:ring-brand-500 outline-none transition-all" placeholder="Để trống sẽ hiện: Hết hàng" value="<?= htmlspecialchars($stock_message ?? '') ?>">
+                                </div>
                             </div>
                             <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                                 <div class="mb-4">

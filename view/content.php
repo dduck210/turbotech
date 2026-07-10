@@ -121,7 +121,7 @@
                                 class="absolute top-2 left-2 rounded-full bg-red-600 px-2 py-1 text-xs font-bold text-white">-<?= $pro['discount'] ?>%</span>
                             <?php } ?>
                             <?php if ((int) $pro['stock'] <= 0) { ?>
-                            <span class="absolute bottom-2 left-2 rounded-full bg-ink-900/80 px-2 py-1 text-xs font-bold text-white">Hết hàng</span>
+                            <span class="absolute bottom-2 left-2 rounded-full bg-ink-900/80 px-2 py-1 text-xs font-bold text-white"><?= htmlspecialchars($pro['stock_message'] ?: 'Hết hàng') ?></span>
                             <?php } ?>
                         </div>
                         <div class="p-4">
@@ -150,7 +150,7 @@
                             <?php } else { ?>
                             <button type="button" disabled
                                 class="inline-flex w-full items-center justify-center gap-2 rounded-lg bg-ink-100 px-5 py-2.5 text-sm font-semibold text-ink-300 cursor-not-allowed">
-                                Hết hàng
+                                <?= htmlspecialchars($pro['stock_message'] ?: 'Hết hàng') ?>
                             </button>
                             <?php } ?>
                         </div>
@@ -178,7 +178,7 @@
                                 class="absolute top-2 left-2 rounded-full bg-red-600 px-2 py-1 text-xs font-bold text-white">-<?= $pro['discount'] ?>%</span>
                             <?php } ?>
                             <?php if ((int) $pro['stock'] <= 0) { ?>
-                            <span class="absolute bottom-2 left-2 rounded-full bg-ink-900/80 px-2 py-1 text-xs font-bold text-white">Hết hàng</span>
+                            <span class="absolute bottom-2 left-2 rounded-full bg-ink-900/80 px-2 py-1 text-xs font-bold text-white"><?= htmlspecialchars($pro['stock_message'] ?: 'Hết hàng') ?></span>
                             <?php } ?>
                         </div>
                         <div class="p-4">
@@ -207,7 +207,7 @@
                             <?php } else { ?>
                             <button type="button" disabled
                                 class="inline-flex w-full items-center justify-center gap-2 rounded-lg bg-ink-100 px-5 py-2.5 text-sm font-semibold text-ink-300 cursor-not-allowed">
-                                Hết hàng
+                                <?= htmlspecialchars($pro['stock_message'] ?: 'Hết hàng') ?>
                             </button>
                             <?php } ?>
                         </div>
@@ -238,7 +238,7 @@
                                 class="absolute top-2 left-2 rounded-full bg-red-600 px-2 py-1 text-xs font-bold text-white">-<?= $pro['discount'] ?>%</span>
                             <?php } ?>
                             <?php if ((int) $pro['stock'] <= 0) { ?>
-                            <span class="absolute bottom-2 left-2 rounded-full bg-ink-900/80 px-2 py-1 text-xs font-bold text-white">Hết hàng</span>
+                            <span class="absolute bottom-2 left-2 rounded-full bg-ink-900/80 px-2 py-1 text-xs font-bold text-white"><?= htmlspecialchars($pro['stock_message'] ?: 'Hết hàng') ?></span>
                             <?php } ?>
                         </div>
                         <div class="p-4">
@@ -267,7 +267,7 @@
                             <?php } else { ?>
                             <button type="button" disabled
                                 class="inline-flex w-full items-center justify-center gap-2 rounded-lg bg-ink-100 px-5 py-2.5 text-sm font-semibold text-ink-300 cursor-not-allowed">
-                                Hết hàng
+                                <?= htmlspecialchars($pro['stock_message'] ?: 'Hết hàng') ?>
                             </button>
                             <?php } ?>
                         </div>
