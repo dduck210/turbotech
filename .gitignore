@@ -7,9 +7,5 @@ Thumbs.db
 # Local secrets (SMTP credentials, etc.) — never commit, see .env.example
 /.env
 
-# Claude Code tooling: keep project rules/agents/hooks/scripts, drop the generic skill
-# library (bulk, reusable across any project, not this project's business code)
-.claude/skills/
-.claude/agent-memory/
-.claude/hooks/.logs/
-.claude/scheduled_tasks.lock
+# Claude Code tooling
+.claude/

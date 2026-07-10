@@ -1,2 +1,0 @@
-{"ts":"2026-05-14T12:19:48.353Z","hook":"session-init","event":"SessionStart","tool":"","target":"","note":"startup","dur":637,"status":"ok","exit":0,"error":""}
-{"ts":"2026-05-14T12:19:48.737Z","hook":"usage-quota-cache-refresh","event":"SessionStart","tool":"","target":"","note":"fetched","dur":1038,"status":"ok","exit":0,"error":""}
