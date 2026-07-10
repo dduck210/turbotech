@@ -153,7 +153,7 @@ $qrImageUrl = Payment::vietQrUrl((int) $amount, (string) $bill_code);
                             <span class="pointer-events-none absolute -bottom-1 -left-1 h-6 w-6 rounded-bl-xl border-b-2 border-l-2 border-brand-500"></span>
                             <span class="pointer-events-none absolute -bottom-1 -right-1 h-6 w-6 rounded-br-xl border-b-2 border-r-2 border-brand-500"></span>
                             <img src="<?= htmlspecialchars($qrImageUrl ?? '') ?>" alt="QR Code Chuyển Khoản"
-                                class="mx-auto h-56 w-56 rounded-lg object-cover" loading="lazy" />
+                                class="mx-auto h-64 w-auto rounded-lg object-contain" loading="lazy" />
                         </div>
                         <div class="mt-4 flex items-center justify-center gap-1.5 text-sm text-ink-500">
                             <i class="fas fa-mobile-alt" aria-hidden="true"></i> Quét mã QR bằng ứng dụng ngân hàng bất kỳ
