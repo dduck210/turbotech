@@ -40,14 +40,28 @@ class User
     }
 
     /**
-     * Whether a username or email is already taken — the `user` table has
-     * no unique constraint on either column, so without this check
-     * register() would silently create duplicate accounts.
+     * Which of username/email/phone (if any) is already taken — the `user`
+     * table has no unique constraint on any of the three, so without this
+     * check register() would silently create duplicate accounts. Checked
+     * one at a time (rather than a single OR query returning a bool) so the
+     * caller can give a specific "your phone number is already registered"
+     * message instead of a generic one.
+     *
+     * @return string|null 'phone', 'email', 'username', or null when none match.
      */
-    public static function existsByUsernameOrEmail(string $user_name, string $email_user): bool
+    public static function findDuplicateField(string $user_name, string $email_user, string $phone_user): ?string
     {
-        $sql = "SELECT 1 FROM user WHERE user_name = ? OR email_user = ? LIMIT 1";
-        return Database::queryOne($sql, $user_name, $email_user) !== false;
+        if ($phone_user !== '' && Database::queryOne("SELECT 1 FROM user WHERE phone_user = ? LIMIT 1", $phone_user) !== false) {
+            return 'phone';
+        }
+        if (Database::queryOne("SELECT 1 FROM user WHERE email_user = ? LIMIT 1", $email_user) !== false) {
+            return 'email';
+        }
+        if (Database::queryOne("SELECT 1 FROM user WHERE user_name = ? LIMIT 1", $user_name) !== false) {
+            return 'username';
+        }
+
+        return null;
     }
 
     /**

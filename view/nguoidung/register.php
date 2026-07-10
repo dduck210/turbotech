@@ -18,6 +18,15 @@
             <form id="registrationForm" action="index.php?act=register" method="post" data-validate novalidate>
                 <h1 class="mb-6 text-center font-heading text-2xl font-bold text-ink-900">Đăng ký tài khoản</h1>
 
+                <?php if (isset($duplicateField) && in_array($duplicateField, ['phone', 'email'], true)) : ?>
+                    <div class="mb-4 rounded-lg border border-amber-200 bg-amber-50 p-3.5 text-sm text-amber-800">
+                        <?= $duplicateField === 'phone' ? 'Số điện thoại' : 'Địa chỉ email' ?> này đã được đăng ký tài khoản.
+                        Nếu đây là tài khoản của bạn, hãy
+                        <a href="index.php?act=mk" class="font-semibold text-brand-700 underline hover:text-brand-800">lấy lại mật khẩu</a>
+                        thay vì đăng ký lại.
+                    </div>
+                <?php endif; ?>
+
                 <div class="mb-4">
                     <label for="user_name" class="block text-sm font-medium text-ink-700 mb-1.5">Tên đăng nhập</label>
                     <input type="text" id="user_name" name="user_name" placeholder="Tạo tên đăng nhập của bạn"

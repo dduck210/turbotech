@@ -29,7 +29,15 @@ class AuthController extends Controller
             $error = $this->validateRegistration($user_name, $full_name, $email_user, $password, $province, $ward, $address_detail, $phone_user);
             $address = $address_detail !== '' ? "{$address_detail}, {$ward}, {$province}" : '';
 
-            if ($error === null) {
+            // Checked after the format checks (so "invalid phone" still wins
+            // over "phone taken") but before insert. Phone/email duplicates
+            // get their own inline banner with a "Quên mật khẩu?" link
+            // instead of a plain alert(), since that's almost always someone
+            // who already has an account and typed the wrong username —
+            // an alert can't offer a clickable way out, a rendered link can.
+            $duplicateField = $error === null ? User::findDuplicateField($user_name, $email_user, $phone_user) : null;
+
+            if ($error === null && $duplicateField === null) {
                 User::register($user_name, $full_name, $email_user, $password, $address, $phone_user, $sex);
                 echo '<script>alert("Đăng ký tài khoản thành công! Vui lòng đăng nhập")</script>';
                 // NOTE: old code's redirect target has a pre-existing typo
@@ -39,7 +47,14 @@ class AuthController extends Controller
                 $this->redirect('index.php?act-login');
             }
 
-            echo '<script>alert(' . json_encode($error) . ')</script>';
+            if ($duplicateField === 'username') {
+                echo '<script>alert("Tên đăng nhập này đã được sử dụng, vui lòng chọn tên khác")</script>';
+            } elseif ($error !== null) {
+                echo '<script>alert(' . json_encode($error) . ')</script>';
+            }
+
+            $this->view('nguoidung/register', ['duplicateField' => $duplicateField]);
+            return;
         }
 
         $this->view('nguoidung/register');
@@ -85,9 +100,6 @@ class AuthController extends Controller
         }
         if (!preg_match('/^(\+?84|0)\d{9,10}$/', $phone_user)) {
             return 'Số điện thoại không hợp lệ';
-        }
-        if (User::existsByUsernameOrEmail($user_name, $email_user)) {
-            return 'Tên đăng nhập hoặc email đã được sử dụng';
         }
 
         return null;
