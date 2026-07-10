@@ -53,6 +53,7 @@
 <script src="./src/js/ajax-mail.js"></script>
 <script src="./src/js/main.js"></script>
 <script src="./src/js/form-validate.js"></script>
+<script src="./src/js/address-select.js"></script>
 </body>
 
 </html>

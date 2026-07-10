@@ -40,9 +40,27 @@
                 </div>
 
                 <div class="mb-4">
-                    <label for="address" class="block text-sm font-medium text-ink-700 mb-1.5">Địa chỉ nhận hàng</label>
-                    <input type="text" id="address" name="address" placeholder="Nhập địa chỉ nhận hàng"
-                        data-rules="required|min:5|max:255"
+                    <label for="province" class="block text-sm font-medium text-ink-700 mb-1.5">Tỉnh/Thành phố</label>
+                    <select id="province" name="province" data-address-province
+                        data-rules="required" data-msg-required="Vui lòng chọn tỉnh/thành phố"
+                        class="block w-full rounded-lg border border-ink-200 bg-white px-3.5 py-2.5 text-sm text-ink-900 focus:outline-none focus:ring-2 focus:ring-brand-500 focus:border-brand-500">
+                        <option value="">Đang tải danh sách...</option>
+                    </select>
+                </div>
+
+                <div class="mb-4">
+                    <label for="ward" class="block text-sm font-medium text-ink-700 mb-1.5">Xã/Phường</label>
+                    <select id="ward" name="ward" data-address-ward
+                        data-rules="required" data-msg-required="Vui lòng chọn xã/phường"
+                        class="block w-full rounded-lg border border-ink-200 bg-white px-3.5 py-2.5 text-sm text-ink-900 focus:outline-none focus:ring-2 focus:ring-brand-500 focus:border-brand-500" disabled>
+                        <option value="">Chọn tỉnh/thành phố trước</option>
+                    </select>
+                </div>
+
+                <div class="mb-4">
+                    <label for="address_detail" class="block text-sm font-medium text-ink-700 mb-1.5">Địa chỉ chi tiết</label>
+                    <input type="text" id="address_detail" name="address_detail" placeholder="Số nhà, tên đường..."
+                        data-rules="required|min:3|max:255"
                         class="block w-full rounded-lg border border-ink-200 bg-white px-3.5 py-2.5 text-sm text-ink-900 placeholder:text-ink-300 focus:outline-none focus:ring-2 focus:ring-brand-500 focus:border-brand-500">
                 </div>
 

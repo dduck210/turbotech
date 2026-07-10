@@ -20,10 +20,13 @@ class AuthController extends Controller
             $full_name = trim($_POST['full_name'] ?? '');
             $email_user = trim($_POST['email_user'] ?? '');
             $password = $_POST['password'] ?? '';
-            $address = trim($_POST['address'] ?? '');
+            $province = trim($_POST['province'] ?? '');
+            $ward = trim($_POST['ward'] ?? '');
+            $address_detail = trim($_POST['address_detail'] ?? '');
             $phone_user = trim($_POST['phone_user'] ?? '');
 
-            $error = $this->validateRegistration($user_name, $full_name, $email_user, $password, $address, $phone_user);
+            $error = $this->validateRegistration($user_name, $full_name, $email_user, $password, $province, $ward, $address_detail, $phone_user);
+            $address = $address_detail !== '' ? "{$address_detail}, {$ward}, {$province}" : '';
 
             if ($error === null) {
                 User::register($user_name, $full_name, $email_user, $password, $address, $phone_user);
@@ -53,7 +56,9 @@ class AuthController extends Controller
         string $full_name,
         string $email_user,
         string $password,
-        string $address,
+        string $province,
+        string $ward,
+        string $address_detail,
         string $phone_user
     ): ?string {
         if ($user_name === '' || strlen($user_name) < 3) {
@@ -68,8 +73,14 @@ class AuthController extends Controller
         if (strlen($password) < 6) {
             return 'Mật khẩu phải có ít nhất 6 ký tự';
         }
-        if ($address === '' || strlen($address) < 5) {
-            return 'Vui lòng nhập địa chỉ nhận hàng hợp lệ';
+        if ($province === '') {
+            return 'Vui lòng chọn tỉnh/thành phố';
+        }
+        if ($ward === '') {
+            return 'Vui lòng chọn xã/phường';
+        }
+        if ($address_detail === '' || strlen($address_detail) < 3) {
+            return 'Vui lòng nhập địa chỉ chi tiết hợp lệ';
         }
         if (!preg_match('/^(\+?84|0)\d{9,10}$/', $phone_user)) {
             return 'Số điện thoại không hợp lệ';
