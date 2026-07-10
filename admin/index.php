@@ -38,16 +38,16 @@ if (isset($_GET['act'])) {
                     $user_name = $_POST['user_name'];
                     $password = $_POST['password'];
                     if ($user_name == null || $password == null) {
-                        echo '<script>alert("Điền đầy đủ thông tin !")</script>';
+                        echo '<script>document.addEventListener("DOMContentLoaded",()=>Swal.fire({toast:true,position:"top-end",icon:"error",title:"Điền đầy đủ thông tin !",showConfirmButton:false,timer:3000}));</script>';
                     } else {
                         $check = check_user_admin($user_name, $password);
                         if (is_array($check)) {
                             $_SESSION['admin'] = $check;
-                            echo '<script>alert("Đăng nhập thành công!")</script>';
+                            echo '<script>document.addEventListener("DOMContentLoaded",()=>Swal.fire({toast:true,position:"top-end",icon:"success",title:"Đăng nhập thành công!",showConfirmButton:false,timer:3000}));</script>';
                             // sleep(10);
                             header('Location: index.php');
                         } else {
-                            echo '<script>alert("Tài khoản sai hoặc không tồn tại!")</script>';
+                            echo '<script>document.addEventListener("DOMContentLoaded",()=>Swal.fire({toast:true,position:"top-end",icon:"error",title:"Tài khoản sai hoặc không tồn tại!",showConfirmButton:false,timer:3000}));</script>';
                         }
                     }
                 }
@@ -55,16 +55,16 @@ if (isset($_GET['act'])) {
             }
             break;
 
-            // CONTROLLER LOẠI:
+        // CONTROLLER LOẠI:
         case "add_category":
             if (isset($_SESSION['admin'])) {
                 if (isset($_POST['btn_add']) && ($_POST['btn_add'])) {
                     $name_cate = $_POST['name_cate'];
                     if ($name_cate == null) {
-                        echo '<script>alert("Vui lòng nhập đầy đủ !")</script>';
+                        echo '<script>document.addEventListener("DOMContentLoaded",()=>Swal.fire({toast:true,position:"top-end",icon:"error",title:"Vui lòng nhập đầy đủ !",showConfirmButton:false,timer:3000}));</script>';
                     } else {
                         them_loai($name_cate);
-                        echo '<script>alert("Thêm loại thành công!")</script>';
+                        echo '<script>document.addEventListener("DOMContentLoaded",()=>Swal.fire({toast:true,position:"top-end",icon:"success",title:"Thêm loại thành công!",showConfirmButton:false,timer:3000}));</script>';
                     }
                 }
                 render('add_category');
@@ -107,7 +107,7 @@ if (isset($_GET['act'])) {
                 $id_cate = $_POST['id_cate'];
                 $name_cate = $_POST['name_cate'];
                 capnhat_loai($id_cate, $name_cate);
-                echo '<script>alert("Cập nhật loại thành công!")</script>';
+                echo '<script>document.addEventListener("DOMContentLoaded",()=>Swal.fire({toast:true,position:"top-end",icon:"success",title:"Cập nhật loại thành công!",showConfirmButton:false,timer:3000}));</script>';
             }
             header('location:index.php?act=list_category');
             break;
@@ -119,7 +119,7 @@ if (isset($_GET['act'])) {
             header('location:index.php?act=list_category');
             break;
 
-            // CONTROLLER SẢN PHẨM:
+        // CONTROLLER SẢN PHẨM:
         case "add_product":
 
             if (isset($_SESSION['admin'])) {
@@ -141,16 +141,16 @@ if (isset($_GET['act'])) {
 
                     (move_uploaded_file($_FILES["img_pro"]["tmp_name"], $target_file));
                     if ($name_pro == null || $price == null || $short_des == null || $idcate == null) {
-                        echo '<script>alert("Vui lòng nhập đầy đủ nội dung !")</script>';
+                        echo '<script>document.addEventListener("DOMContentLoaded",()=>Swal.fire({toast:true,position:"top-end",icon:"error",title:"Vui lòng nhập đầy đủ nội dung !",showConfirmButton:false,timer:3000}));</script>';
                     } elseif ($price <= 0) {
-                        echo '<script>alert("Giá nhập không đúng !")</script>';
+                        echo '<script>document.addEventListener("DOMContentLoaded",()=>Swal.fire({toast:true,position:"top-end",icon:"error",title:"Giá nhập không đúng !",showConfirmButton:false,timer:3000}));</script>';
                     } elseif ($stock < 0) {
-                        echo '<script>alert("Số lượng tồn kho không đúng !")</script>';
+                        echo '<script>document.addEventListener("DOMContentLoaded",()=>Swal.fire({toast:true,position:"top-end",icon:"error",title:"Số lượng tồn kho không đúng !",showConfirmButton:false,timer:3000}));</script>';
                     } elseif (!in_array($extension, $allowed_extensions)) {
-                        echo '<script>alert("File ảnh không phù hợp !")</script>';
+                        echo '<script>document.addEventListener("DOMContentLoaded",()=>Swal.fire({toast:true,position:"top-end",icon:"error",title:"File ảnh không phù hợp !",showConfirmButton:false,timer:3000}));</script>';
                     } else {
                         add_pro($name_pro, $price, $discount, $img_pro, $short_des, $detail_des, $idcate, $stock);
-                        echo '<script>alert("Thêm sản phẩm thành công !")</script>';
+                        echo '<script>document.addEventListener("DOMContentLoaded",()=>Swal.fire({toast:true,position:"top-end",icon:"success",title:"Thêm sản phẩm thành công !",showConfirmButton:false,timer:3000}));</script>';
                     }
                 }
                 $ds_loai = loadall_loai();
@@ -175,7 +175,7 @@ if (isset($_GET['act'])) {
                 $listpro = loadall_pro($idcate);
                 render(
                     "list_product",
-                    ['ds_loai' => $ds_loai, 'listpro' => $listpro]
+                    ['ds_loai' => $ds_loai, 'listpro' => $listpro, 'idcate' => $idcate]
                 );
             } else {
                 header("location: index.php?act=login");
@@ -215,7 +215,7 @@ if (isset($_GET['act'])) {
                 $target_file = $target_dir . basename($_FILES["img_pro"]["name"]);
                 (move_uploaded_file($_FILES["img_pro"]["tmp_name"], $target_file));
                 update_pro($id_pro, $name_pro, $price, $discount, $short_des, $detail_des, $img_pro, $idcate, $stock);
-                echo '<script>alert("Cập nhật sản phẩm thành công!")</script>';
+                echo '<script>document.addEventListener("DOMContentLoaded",()=>Swal.fire({toast:true,position:"top-end",icon:"success",title:"Cập nhật sản phẩm thành công!",showConfirmButton:false,timer:3000}));</script>';
                 header('location:index.php?act=list_product');
             }
             break;
@@ -227,8 +227,8 @@ if (isset($_GET['act'])) {
             header('location:index.php?act=list_product');
             break;
 
-            // CONTROLLER NGƯỜI DÙNG: 
-            // danh sách người dùng
+        // CONTROLLER NGƯỜI DÙNG: 
+        // danh sách người dùng
         case 'list_user':
 
             if (isset($_SESSION['admin'])) {
@@ -242,7 +242,7 @@ if (isset($_GET['act'])) {
             }
 
             break;
-            // chỉnh sửa user
+        // chỉnh sửa user
         case 'edit_user':
 
             if (isset($_SESSION['admin'])) {
@@ -268,11 +268,11 @@ if (isset($_GET['act'])) {
                 $password = $_POST['password'];
                 $role = $_POST['role'];
                 update_user($id_user, $user_name, $full_name, $email_user, $password, $role);
-                echo '<script>alert("Cập nhật tài khoản thành công!")</script>';
+                echo '<script>document.addEventListener("DOMContentLoaded",()=>Swal.fire({toast:true,position:"top-end",icon:"success",title:"Cập nhật tài khoản thành công!",showConfirmButton:false,timer:3000}));</script>';
             }
             header('location: index.php?act=list_user');
             break;
-            // Xóa người dùng
+        // Xóa người dùng
         case "delete_usser":
             if (isset($_GET['id_user']) && ($_GET['id_user'] > 0)) {
                 $id_user = $_GET['id_user'];
@@ -281,9 +281,9 @@ if (isset($_GET['act'])) {
             header('location:index.php?act=list_user');
             break;
 
-            //CONTROLLER HÓA ĐƠN
+        //CONTROLLER HÓA ĐƠN
 
-            // show all bill
+        // show all bill
         case 'list_bill':
 
             if (isset($_SESSION['admin'])) {
@@ -297,15 +297,15 @@ if (isset($_GET['act'])) {
             }
 
             break;
-            //     xóa bill: 
-            // case 'removebill':
-            //     if (isset($_GET['idbill']) && ($_GET['idbill'])) {
-            //         $idbill = $_GET['idbill'];
-            //         remove_bill($idbill);
-            //     }
-            //     $listbill = loadall_bill(0);
-            //     include "view/hoadon/list.php";
-            //     break;
+        //     xóa bill: 
+        // case 'removebill':
+        //     if (isset($_GET['idbill']) && ($_GET['idbill'])) {
+        //         $idbill = $_GET['idbill'];
+        //         remove_bill($idbill);
+        //     }
+        //     $listbill = loadall_bill(0);
+        //     include "view/hoadon/list.php";
+        //     break;
         case 'edit_bill':
             if (isset($_SESSION['admin'])) {
                 if (isset($_GET['idbill']) && ($_GET['idbill']) > 0) {
@@ -330,7 +330,7 @@ if (isset($_GET['act'])) {
                     $status_pay = 1;
                 }
                 update_bill($id_bill, $status, $status_pay);
-                echo '<script>alert("Cập nhật đơn hàng thành công!")</script>';
+                echo '<script>document.addEventListener("DOMContentLoaded",()=>Swal.fire({toast:true,position:"top-end",icon:"success",title:"Cập nhật đơn hàng thành công!",showConfirmButton:false,timer:3000}));</script>';
                 header('location:index.php?act=list_bill');
             }
             break;
@@ -349,8 +349,8 @@ if (isset($_GET['act'])) {
             }
 
             break;
-            //CONTROLLER BÌNH LUẬN
-            //show list: 
+        //CONTROLLER BÌNH LUẬN
+        //show list: 
         case 'list_cmt':
             if (isset($_SESSION['admin'])) {
                 $listcmt = loadall_cmt();
@@ -363,7 +363,7 @@ if (isset($_GET['act'])) {
             }
 
             break;
-            //xóa bì-nh luận: 
+        //xóa bì-nh luận: 
         case 'delete_cmt':
             if (isset($_GET['idcmt']) && ($_GET['idcmt']) > 0) {
                 $id_cmt = $_GET['idcmt'];
@@ -372,8 +372,8 @@ if (isset($_GET['act'])) {
             header('location: index.php?act=list_cmt');
             break;
 
-            //CONTROLLER THỐNG KÊ
-            //list thống kê: 
+        //CONTROLLER THỐNG KÊ
+        //list thống kê: 
         case 'list_statis':
             if (isset($_SESSION['admin'])) {
                 $liststatis = loadall_statis();
@@ -386,7 +386,7 @@ if (isset($_GET['act'])) {
             }
 
             break;
-            // Danh sách hỏi đáp
+        // Danh sách hỏi đáp
         case 'list_ques':
             if (isset($_SESSION['admin'])) {
                 $listques = question();
@@ -397,9 +397,9 @@ if (isset($_GET['act'])) {
             } else {
                 header("location: index.php?act=login");
             }
-        break;
-           //xóa hỏi đáp: 
-           case 'delete_ques':
+            break;
+        //xóa hỏi đáp: 
+        case 'delete_ques':
             if (isset($_GET['id_ques']) && ($_GET['id_ques']) > 0) {
                 $id_ques = $_GET['id_ques'];
                 delete_ques($id_ques);
@@ -423,3 +423,4 @@ if (isset($_GET['act'])) {
     }
     // render('dashboard');
 }
+

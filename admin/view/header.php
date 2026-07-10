@@ -1,30 +1,36 @@
 <!DOCTYPE html>
-<html lang="en">
-
+<html lang="vi">
 <head>
-
     <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="description" content="">
-    <meta name="author" content="">
+    <title>Turbotech Admin - Premium Dashboard</title>
+    <link rel="shortcut icon" type="image/x-icon" href="view/assets/img/logoadmin.png" />
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- FontAwesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
 
-    <title>Turbotech Admin - Dashboard</title>
-    <link rel="shortcut icon" type="imagex-icon" href="view/assets/img/logoadmin.png" />
-    <!-- Custom fonts for this template-->
-    <link href="view/assets/css/all.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css"
-        integrity="sha512-MV7K8+y+gLIBoVD59lQIYicR65iaqukzvf/nwasF0nqhPay5w/9lJmVM2hMDcnK1OnMGCdVK+iQrJ7lzPJQd1w=="
-        crossorigin="anonymous" referrerpolicy="no-referrer" />
-    <link
-        href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
-        rel="stylesheet">
+    <!-- Tailwind CSS: precompiled via standalone CLI (src/css/admin-tailwind-input.css),
+         replacing the @tailwindcss/browser CDN runtime compiler — faster, no external
+         network dependency at page-load time. Rebuild after changing any admin/view/*.php
+         class names: tailwindcss.exe -i src/css/admin-tailwind-input.css -o admin/view/assets/css/tailwind.css -m -->
+    <link rel="stylesheet" href="view/assets/css/tailwind.css" />
 
-    <!-- Custom styles for this template-->
-    <link href="view/assets/css/sb-admin-2.min.css" rel="stylesheet">
-    <link rel="stylesheet" type="text/css" href="view/assets/css/jquery.dataTables.css">
-    <script type="text/javascript" charset="utf8" src="view/assets/js/jquery-1.7.1.min.js"></script>
+    <!-- SweetAlert2 -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="//cdn.ckeditor.com/4.20.0/standard/ckeditor.js"></script>
-    <script type="text/javascript" src="view/assets/js/Chart.min.js"></script>
-    <script type="text/javascript" src="view/assets/js/jquery.min.js"></script>
 </head>
+<body class="bg-slate-50 text-slate-800 font-sans">
+    <div class="flex h-screen overflow-hidden">
+        <?php include_once "nav.php"; ?>
+        <!-- Main Content Wrapper -->
+        <div class="flex-1 flex flex-col overflow-hidden">
+            <?php include_once "topbar.php"; ?>
+            <!-- Main Scrollable Content -->
+            <main class="flex-1 overflow-y-auto bg-slate-50/50 p-4 md:p-6 lg:p-8">
+                <div class="mx-auto max-w-7xl">

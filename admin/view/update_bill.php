@@ -1,47 +1,43 @@
-<?php include_once "header.php" ?>
+﻿<?php include_once "header.php" ?>
+<?php /** @var array $one_bill */ ?>
 
-<body id="page-top">
-    <!-- Page Wrapper -->
-    <div id="wrapper">
-        <!-- Sidebar -->
-        <?php include_once "nav.php" ?>
-        <!-- Begin Page Content -->
-        <div class="container-fluid">
+
             <?php
             if (is_array($one_bill)) {
                 extract($one_bill);
             }
             ?>
-            <div class="card shadow mb-4">
-                <div class="card-header py-3">
-                    <h6 class="m-0 font-weight-bold text-primary">Cập nhật hóa đơn</h6>
-                </div>
-                <div class="card-body">
+            <div class="mb-8 flex items-center justify-between">
+    <h1 class="text-3xl font-bold text-slate-800">Cập nhật hóa đơn</h1>
+</div>
+
+<div class="bg-white rounded-xl shadow-sm hover:shadow-md transition-shadow duration-300 overflow-hidden mb-6">
+    <div class="p-6">
                     <div class="form-addcate">
                         <form action="./index.php?act=update_bill" method="post">
-                            <div class="form-group mt-3">
-                                <label for="formGroupExampleInput" class="font-lb">Mã hóa đơn</label>
-                                <input type="text" name="id_bill" class="form-control" value="<?= $id_bill ?>" disabled>
+                            <div class="mb-4">
+                                <label for="formGroupExampleInput" class="block text-sm font-medium text-slate-700 mb-1">Mã hóa đơn</label>
+                                <input type="text" name="id_bill" class="w-full rounded-lg border border-slate-200 px-4 py-2 focus:ring-2 focus:ring-brand-500 outline-none transition-all bg-slate-50" value="<?= $id_bill ?>" disabled>
                             </div>
-                            <div class="form-group mt-3">
-                                <label for="formGroupExampleInput" class="font-lb">Người đặt</label>
-                                <input type="text" name="user_name" class="form-control" placeholder="Mã sản phẩm" value="<?= $user_name ?>" disabled>
+                            <div class="mb-4">
+                                <label for="formGroupExampleInput" class="block text-sm font-medium text-slate-700 mb-1">Người đặt</label>
+                                <input type="text" name="user_name" class="w-full rounded-lg border border-slate-200 px-4 py-2 focus:ring-2 focus:ring-brand-500 outline-none transition-all bg-slate-50" placeholder="Mã sản phẩm" value="<?= $user_name ?>" disabled>
                             </div>
-                            <div class="form-group mt-3">
-                                <label for="formGroupExampleInput" class="font-lb">Địa chỉ nhận hàng</label>
-                                <input type="text" name="user_name" class="form-control" placeholder="Mã sản phẩm" value="<?= $address ?>" disabled>
+                            <div class="mb-4">
+                                <label for="formGroupExampleInput" class="block text-sm font-medium text-slate-700 mb-1">Địa chỉ nhận hàng</label>
+                                <input type="text" name="user_name" class="w-full rounded-lg border border-slate-200 px-4 py-2 focus:ring-2 focus:ring-brand-500 outline-none transition-all bg-slate-50" placeholder="Mã sản phẩm" value="<?= $address ?>" disabled>
                             </div>
-                            <div class="form-group mt-3">
-                                <label for="formGroupExampleInput" class="font-lb">Ngày đặt</label>
-                                <input type="text" name="order_date" class="form-control" placeholder="Ngày đặt hàng" value="<?= $order_date ?>" disabled>
+                            <div class="mb-4">
+                                <label for="formGroupExampleInput" class="block text-sm font-medium text-slate-700 mb-1">Ngày đặt</label>
+                                <input type="text" name="order_date" class="w-full rounded-lg border border-slate-200 px-4 py-2 focus:ring-2 focus:ring-brand-500 outline-none transition-all bg-slate-50" placeholder="Ngày đặt hàng" value="<?= $order_date ?>" disabled>
                             </div>
-                            <div class="form-group mt-3">
-                                <label for="formGroupExampleInput" class="font-lb">Thành tiền</label>
-                                <input type="text" name="total_amount" class="form-control" placeholder="Tổng thành tiền sản phẩm" value="<?= number_format($total_amount) ?>" disabled>
+                            <div class="mb-4">
+                                <label for="formGroupExampleInput" class="block text-sm font-medium text-slate-700 mb-1">Thành tiền</label>
+                                <input type="text" name="total_amount" class="w-full rounded-lg border border-slate-200 px-4 py-2 focus:ring-2 focus:ring-brand-500 outline-none transition-all bg-slate-50" placeholder="Tổng thành tiền sản phẩm" value="<?= number_format($total_amount) ?>" disabled>
                             </div>
-                            <div class="form-group mt-3">
-                                <label for="formGroupExampleInput" class="font-lb">Phương thức thanh toán</label>
-                                <input type="text" name="payment" class="form-control" placeholder="Phương thức thanh toán" value="<?php if ($payment == 1) {
+                            <div class="mb-4">
+                                <label for="formGroupExampleInput" class="block text-sm font-medium text-slate-700 mb-1">Phương thức thanh toán</label>
+                                <input type="text" name="payment" class="w-full rounded-lg border border-slate-200 px-4 py-2 focus:ring-2 focus:ring-brand-500 outline-none transition-all bg-slate-50" placeholder="Phương thức thanh toán" value="<?php if ($payment == 1) {
                                                                                                                                         echo "Thanh toán khi nhận hàng";
                                                                                                                                     } else if ($payment == 2) {
                                                                                                                                         echo "Chuyển khoản ngân hàng";
@@ -51,17 +47,17 @@
                                                                                                                                         echo "Không tìm thấy phương thức thanh toán";
                                                                                                                                     }  ?>" disabled>
                             </div>
-                            <div class="form-group mt-3">
-                                <label for="formGroupExampleInput" class="font-lb">Thanh toán</label>
-                                <select required class="form-control" name="status_pay" id="">
+                            <div class="mb-4">
+                                <label for="formGroupExampleInput" class="block text-sm font-medium text-slate-700 mb-1">Thanh toán</label>
+                                <select required class="w-full rounded-lg border border-slate-200 px-4 py-2 focus:ring-2 focus:ring-brand-500 outline-none transition-all bg-white" name="status_pay" id="">
                                     <option value="0" <?= $status_pay == 0 ? "selected" : "" ?>>Chưa thanh toán</option>
                                     <option value="1" <?= $status_pay == 1 ? "selected" : "" ?>>Đã thanh toán</option>
 
                                 </select>
                             </div>
-                            <div class="form-group mt-3">
-                                <label for="formGroupExampleInput" class="font-lb">Trạng thái</label>
-                                <select required class="form-control" name="status" id="">
+                            <div class="mb-4">
+                                <label for="formGroupExampleInput" class="block text-sm font-medium text-slate-700 mb-1">Trạng thái</label>
+                                <select required class="w-full rounded-lg border border-slate-200 px-4 py-2 focus:ring-2 focus:ring-brand-500 outline-none transition-all bg-white" name="status" id="">
                                     <option value="0" <?= $status == 0 ? "selected" : "" ?>>Đơn hàng mới</option>
                                     <option value="1" <?= $status == 1 ? "selected" : "" ?>>Đang xử lý</option>
                                     <option value="2" <?= $status == 2 ? "selected" : "" ?>>Đang giao hàng</option>
@@ -71,48 +67,48 @@
                                 </select>
                             </div>
 
-                            <div class="wrap-btn">
-                                <input type="hidden" name="id_bill" class="form-control" value="<?= $id_bill ?>">
-                                <input type="submit" name="btn_update" class="btn btn-success mt-3" value="Cập nhật">
-                                <input type="reset" class="btn btn-danger mt-3" value="Nhập lại">
+                            <div class="wrap-btn mt-4">
+                                <input type="hidden" name="id_bill" value="<?= $id_bill ?>">
+                                <input type="submit" name="btn_update" class="bg-brand-600 hover:bg-brand-700 text-white font-medium rounded-lg px-4 py-2 transition-colors inline-block" value="Cập nhật">
+                                <input type="reset" class="bg-red-500 hover:bg-red-600 text-white rounded-lg px-3 py-1.5 inline-block ml-2" value="Nhập lại">
                             </div>
                         </form>
                     </div>
-                    <div class="card-header py-3">
-                        <h6 class="m-0 font-weight-bold text-primary">Sản phẩm</h6>
-                    </div>
-                    <div class="table-content table-responsive">
-                        <table class="table">
-                            <thead>
-                                <tr>
-                                    <th class="jb-product-thumbnail">Hình ảnh</th>
-                                    <th class="cart-product-name">Sản phẩm</th>
-                                    <th class="jb-product-price">Đơn giá</th>
-                                    <th class="jb-product-quantity">Số lượng</th>
-                                    <th class="jb-product-subtotal">Thành tiền</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <?php $id = $_GET['idbill'];
-                                $bill = load_cart_all($id);
-                                // var_dump($bill);
-                                foreach ($bill as $value) {
-                                ?>
-                                    <tr>
-                                        <td class="jb-product-thumbnail"><img src="../admin/uploads/<?= $value['img_pro'] ?>" alt="Ultraphone Product" width="80px"></img></td>
-                                        <td class="jb-product-name"><a href=""><?= $value['name_pro'] ?></a></td>
-                                        <td class="jb-product-price"><span class="amount"><?= $value['price_pro'] ?> ₫</span></td>
-                                        <td class="quantity"><?= $value['quantity'] ?></td>
-                                        <td class="product-subtotal"><span class="amount"><?= $value['total_amount'] ?>₫</span></td>
-                                    </tr>
-                                <?php } ?>
-                            </tbody>
-                        </table>
-                    </div>
                 </div>
             </div>
-            <!-- /.container-fluid -->
+            <div class="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden mb-6">
+                <div class="px-6 py-4 border-b border-slate-200 bg-slate-50/50 font-semibold text-slate-800">
+                    <h6 class="m-0">Sản phẩm</h6>
+                </div>
+                <div class="p-6 overflow-x-auto">
+                    <table class="w-full text-left text-sm text-slate-600">
+                        <thead class="bg-slate-50 text-slate-700 uppercase text-xs font-semibold">
+                            <tr>
+                                <th class="px-4 py-3">Hình ảnh</th>
+                                <th class="px-4 py-3">Sản phẩm</th>
+                                <th class="px-4 py-3">Đơn giá</th>
+                                <th class="px-4 py-3">Số lượng</th>
+                                <th class="px-4 py-3">Thành tiền</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <?php $id = $_GET['idbill'];
+                            $bill = load_cart_all($id);
+                            // var_dump($bill);
+                            foreach ($bill as $value) {
+                            ?>
+                                <tr class="border-b border-slate-100 hover:bg-slate-50 transition-colors">
+                                    <td class="px-4 py-3"><img src="../admin/uploads/<?= $value['img_pro'] ?>" alt="Ultraphone Product" width="80px"></img></td>
+                                    <td class="px-4 py-3"><a href="" class="text-brand-600 hover:text-brand-700"><?= $value['name_pro'] ?></a></td>
+                                    <td class="px-4 py-3"><span class="amount"><?= $value['price_pro'] ?> ₫</span></td>
+                                    <td class="px-4 py-3 quantity"><?= $value['quantity'] ?></td>
+                                    <td class="px-4 py-3 product-subtotal"><span class="amount text-emerald-600 font-medium"><?= $value['total_amount'] ?>₫</span></td>
+                                </tr>
+                            <?php } ?>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
 
-        </div>
-        <!-- End of Main Content -->
+
         <?php include_once "footer.php" ?>

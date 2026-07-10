@@ -1,0 +1,46 @@
+@import "tailwindcss";
+
+/*
+ * Turbotech Admin design tokens. Matches the tokens already established in
+ * admin/view/header.php and admin/view/login.php's Tailwind Play-CDN
+ * @theme blocks (Inter/Outfit, brand blue scale) — this file replaces the
+ * CDN runtime compiler with a standalone-CLI-compiled stylesheet, same
+ * approach as src/css/tailwind-input.css for the client storefront.
+ */
+@theme {
+    --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+    --font-heading: "Outfit", ui-sans-serif, system-ui, sans-serif;
+
+    --color-brand-50: #eff6ff;
+    --color-brand-100: #dbeafe;
+    --color-brand-500: #3b82f6;
+    --color-brand-600: #2563eb;
+    --color-brand-700: #1d4ed8;
+    --color-brand-900: #1e3a8a;
+}
+
+body {
+    font-family: var(--font-sans);
+}
+
+h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-heading);
+}
+
+::-webkit-scrollbar { width: 6px; height: 6px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { @apply bg-slate-300 rounded-full; }
+::-webkit-scrollbar-thumb:hover { @apply bg-slate-400; }
+
+/* Hide the CKEditor 4 security warning banner (kept from the previous
+   CDN-era <style> block in header.php). */
+.cke_notifications_area { display: none !important; }
+
+/* Login page decorative blurred background shapes (kept from login.php). */
+.bg-shape {
+    position: absolute;
+    filter: blur(80px);
+    z-index: -1;
+    border-radius: 50%;
+    opacity: 0.6;
+}
