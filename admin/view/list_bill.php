@@ -1,47 +1,40 @@
     <?php include_once "header.php" ?>
+<?php /** @var array $listbill */ ?>
 
-    <body id="page-top">
-        <!-- Page Wrapper -->
-        <div id="wrapper">
-            <!-- Sidebar -->
-            <?php include_once "nav.php" ?>
-            <!-- Begin Page Content -->
-            <div class="container-fluid">
-                <div class="card shadow mb-4">
-                    <div class="card-header py-3">
-                        <h6 class="m-0 font-weight-bold text-primary">Quản Lý Hóa Đơn</h6>
-                    </div>
 
-                    <div class="card-body">
-                        <div class="table-responsive">
-                            <table class="table table-bordered table-hover" id="table1">
+                <div class="mb-8 flex items-center justify-between">
+    <h1 class="text-3xl font-bold text-slate-800">Quản Lý Hóa Đơn</h1>
+</div>
+
+<div class="bg-white rounded-xl shadow-sm hover:shadow-md transition-shadow duration-300 overflow-hidden mb-6">
+    <div class="p-6">
+                        <div class="overflow-x-auto">
+                            <table class="w-full text-left border-collapse" id="table1">
                                 <thead>
-                                    <tr>
-                                        <th>STT</th>
-                                        <!-- <th scope="col">Mã Bill</th> -->
-                                        <th scope="col">Người đặt</th>
-                                        <th scope="col">Thành tiền</th>
-                                        <th scope="col">Phương thức thanh toán</th>
-                                        <th scope="col">Trạng thái thanh toán</th>
-                                        <th scope="col">Trạng thái đơn hàng</th>
-                                        <th scope="col">Ngày đặt</th>
-                                        <th scope="col">Thao tác</th>
+                                    <tr class="bg-slate-50 border-y border-slate-100 text-slate-600 text-sm font-semibold tracking-wide uppercase">
+                                        <th class="px-4 py-4">STT</th>
+                                        <th scope="col" class="px-4 py-4">Người đặt</th>
+                                        <th scope="col" class="px-4 py-4">Thành tiền</th>
+                                        <th scope="col" class="px-4 py-4">Phương thức thanh toán</th>
+                                        <th scope="col" class="px-4 py-4 text-center">Trạng thái thanh toán</th>
+                                        <th scope="col" class="px-4 py-4 text-center">Trạng thái đơn hàng</th>
+                                        <th scope="col" class="px-4 py-4">Ngày đặt</th>
+                                        <th scope="col" class="px-4 py-4 text-center">Thao tác</th>
                                     </tr>
                                 </thead>
-                                
-                                <tbody>
+
+                                <tbody class="divide-y divide-slate-100">
                                     <?php $i = 1;
                                     foreach ($listbill as $bill) :
                                         extract($bill);
-                                        $user_detail = '' . $bill['user_name'] . '<br>' . $bill['full_name'] . '<br> ' . $bill['email'] . '<br> ' . $bill['address'] . '<br>0' . $bill['phone'] . '<br> 
+                                        $user_detail = '' . $bill['user_name'] . '<br>' . $bill['full_name'] . '<br> ' . $bill['email'] . '<br> ' . $bill['address'] . '<br>0' . $bill['phone'] . '<br>
                                         </td>'
                                     ?>
-                                        <tr>
-                                            <td><?= $i ?></td>
-                                            <!-- <td><?= $bill['id_bill'] ?></td> -->
-                                            <td><?= $bill['full_name'] ?></td>
-                                            <td><?= number_format($bill['total_amount']) ?></td>
-                                            <td><?php if ($bill['payment'] == 1) {
+                                        <tr class="hover:bg-slate-50 transition-colors">
+                                            <td class="px-4 py-4 text-slate-500 font-medium">#<?= $i ?></td>
+                                            <td class="px-4 py-4 font-medium text-slate-800"><?= $bill['full_name'] ?></td>
+                                            <td class="px-4 py-4 font-semibold text-brand-600"><?= number_format($bill['total_amount']) ?> ₫</td>
+                                            <td class="px-4 py-4"><?php if ($bill['payment'] == 1) {
                                                     echo "Thanh toán khi nhận hàng";
                                                 } else if ($bill['payment'] == 2) {
                                                     echo "Chuyển khoản ngân hàng";
@@ -50,33 +43,33 @@
                                                 } else {
                                                     echo "Không tìm thấy phương thức thanh toán";
                                                 }  ?></td>
-                                            <td><?php if ($bill['status_pay'] == 0) {
-                                                    echo "<span class='badge badge-warning'>Chưa thanh toán</span>";
+                                            <td class="px-4 py-4 text-center"><?php if ($bill['status_pay'] == 0) {
+                                                    echo "<span class='inline-flex items-center justify-center px-2.5 py-1 text-xs font-bold rounded-full bg-amber-100 text-amber-700'>Chưa thanh toán</span>";
                                                 } else if ($bill['status_pay'] == 1) {
-                                                    echo "<span class='badge badge-success'>Đã thanh toán</span>";
+                                                    echo "<span class='inline-flex items-center justify-center px-2.5 py-1 text-xs font-bold rounded-full bg-emerald-100 text-emerald-700'>Đã thanh toán</span>";
                                                 } else {
                                                     echo "Không tìm thấy phương thức thanh toán";
                                                 }  ?></td>
-                                            <td><?php if ($bill['status'] == 0) {
-                                                    echo "<span class='badge badge-info'>Đơn hàng mới</span>";
+                                            <td class="px-4 py-4 text-center"><?php if ($bill['status'] == 0) {
+                                                    echo "<span class='inline-flex items-center justify-center px-2.5 py-1 text-xs font-bold rounded-full bg-cyan-100 text-cyan-700'>Đơn hàng mới</span>";
                                                 } else if ($bill['status'] == 1) {
-                                                    echo "<span class='badge badge-warning'>Đang xử lý</span>";
+                                                    echo "<span class='inline-flex items-center justify-center px-2.5 py-1 text-xs font-bold rounded-full bg-amber-100 text-amber-700'>Đang xử lý</span>";
                                                 } else if ($bill['status'] == 2) {
-                                                    echo "<span class='badge badge-primary'>Đang giao hàng</span>";
+                                                    echo "<span class='inline-flex items-center justify-center px-2.5 py-1 text-xs font-bold rounded-full bg-brand-100 text-brand-700'>Đang giao hàng</span>";
                                                 } else if ($bill['status'] == 3) {
-                                                    echo "<span class='badge badge-success'>Đã giao hàng</span>";
+                                                    echo "<span class='inline-flex items-center justify-center px-2.5 py-1 text-xs font-bold rounded-full bg-emerald-100 text-emerald-700'>Đã giao hàng</span>";
                                                 } elseif ($bill['status'] == 4) {
-                                                    echo "<span class='badge badge-danger'>Đã hủy</span>";
+                                                    echo "<span class='inline-flex items-center justify-center px-2.5 py-1 text-xs font-bold rounded-full bg-red-100 text-red-600'>Đã hủy</span>";
                                                 } else {
                                                     echo "Lỗi trạng thái";
                                                 } ?></td>
-                                            <td><span class="badge badge-dark"><?= $bill['order_date'] ?></span></td>
+                                            <td class="px-4 py-4 text-slate-500"><?= $bill['order_date'] ?></td>
 
-                                            <td class="text-center">
-                                                <a type="button" href="index.php?act=edit_bill&idbill=<?= $bill['id_bill'] ?>" class="btn btn-warning"><i class="fas fa-edit"></i>
-                                                </a>
-                                                <a href="index.php?act=billdetail&idbill=<?= $bill['id_bill'] ?>" class="btn btn-success"><i class="fa-solid fa-circle-info"></i> </a>
-                                                <!-- <button onClick="window.print()" class="btn btn-danger"><i class="fa-solid fa-print"></i></button> -->
+                                            <td class="px-4 py-4 text-center">
+                                                <div class="flex items-center justify-center gap-2">
+                                                    <a href="index.php?act=edit_bill&idbill=<?= $bill['id_bill'] ?>" class="p-2 text-yellow-600 bg-yellow-50 rounded-lg hover:bg-yellow-100 transition-colors" title="Sửa"><i class="fas fa-edit"></i></a>
+                                                    <a href="index.php?act=billdetail&idbill=<?= $bill['id_bill'] ?>" class="p-2 text-emerald-600 bg-emerald-50 rounded-lg hover:bg-emerald-100 transition-colors" title="Chi tiết"><i class="fa-solid fa-circle-info"></i></a>
+                                                </div>
                                             </td>
                                         </tr>
                                     <?php $i++;
@@ -86,15 +79,20 @@
                         </div>
                     </div>
                 </div>
-
-            </div>
-            <!-- /.container-fluid -->
-
-        </div>
         <script>
             $(document).ready(function() {
-                $('#table1').DataTable();
+                $('#table1').DataTable({
+                    "language": {
+                        "url": "//cdn.datatables.net/plug-ins/1.13.6/i18n/vi.json"
+                    },
+                    "dom": '<"flex flex-col md:flex-row justify-between items-center mb-4"lf>rt<"flex flex-col md:flex-row justify-between items-center mt-4"ip>',
+                });
+
+                setTimeout(function() {
+                    $('.dataTables_length select').addClass('px-3 py-1 border border-slate-200 rounded-lg focus:ring-2 focus:ring-brand-500 mx-2');
+                    $('.dataTables_filter input').addClass('px-4 py-2 border border-slate-200 rounded-lg focus:ring-2 focus:ring-brand-500 ml-2');
+                }, 100);
             });
         </script>
-        <!-- End of Main Content -->
+
         <?php include_once "footer.php" ?>

@@ -1,48 +1,43 @@
 <?php include_once "header.php" ?>
+<?php /** @var array $listuser */ ?>
 
-<body id="page-top">
-    <!-- Page Wrapper -->
-    <div id="wrapper">
-        <!-- Sidebar -->
-        <?php include_once "nav.php" ?>
-        <!-- Begin Page Content -->
-        <div class="container-fluid">
-            <div class="card shadow mb-4">
-                <div class="card-header py-3">
-                    <h6 class="m-0 font-weight-bold text-primary">Quản Lý Người Dùng</h6>
-                </div>
-                <div class="card-body">
-                    <div class="table-responsive">
-                        <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+
+<div class="mb-8 flex items-center justify-between">
+    <h1 class="text-3xl font-bold text-slate-800">Quản Lý Người Dùng</h1>
+</div>
+
+<div class="bg-white rounded-xl shadow-sm hover:shadow-md transition-shadow duration-300 overflow-hidden mb-6">
+    <div class="p-6">
+                    <div class="overflow-x-auto">
+                        <table class="w-full text-left border-collapse" id="dataTable" width="100%" cellspacing="0">
                             <thead>
-                                <tr>
-                                    <th>Mã User</th>
-                                    <th>Tên đăng nhập</th>
-                                    <th>Họ tên</th>
-                                    <th>Email</th>
-                                    <th>Vai trò</th>
-                                    <!-- <th>Ngày đăng ký</th>
-                            <th>Lần đăng nhập cuối</th> -->
-                                    <th>Thao tác</th>
+                                <tr class="bg-slate-50 border-y border-slate-100 text-slate-600 text-sm font-semibold tracking-wide uppercase">
+                                    <th class="px-4 py-4">Mã User</th>
+                                    <th class="px-4 py-4">Tên đăng nhập</th>
+                                    <th class="px-4 py-4">Họ tên</th>
+                                    <th class="px-4 py-4">Email</th>
+                                    <th class="px-4 py-4 text-center">Vai trò</th>
+                                    <th class="px-4 py-4 text-center">Thao tác</th>
                                 </tr>
                             </thead>
-                            
-                            <tbody>
+
+                            <tbody class="divide-y divide-slate-100">
                                 <?php foreach ($listuser as $user) : ?>
-                                    <tr>
-                                        <td><?= $user['id_user'] ?></td>
-                                        <td><?= $user['user_name'] ?></td>
-                                        <td><?= $user['full_name'] ?></td>
-                                        <td><?= $user['email_user'] ?></td>
-                                        <td><?php if ($user['role'] == 1) {
-                                                echo "<span class='badge badge-danger'>Admin</span>";
+                                    <tr class="hover:bg-slate-50 transition-colors">
+                                        <td class="px-4 py-4 text-slate-500 font-medium">#<?= $user['id_user'] ?></td>
+                                        <td class="px-4 py-4 font-medium text-slate-800"><?= $user['user_name'] ?></td>
+                                        <td class="px-4 py-4"><?= $user['full_name'] ?></td>
+                                        <td class="px-4 py-4"><?= $user['email_user'] ?></td>
+                                        <td class="px-4 py-4 text-center"><?php if ($user['role'] == 1) {
+                                                echo "<span class='inline-flex items-center justify-center px-2.5 py-1 text-xs font-bold rounded-full bg-red-100 text-red-600'>Admin</span>";
                                             } else {
-                                                echo "<span class='badge badge-success'>Thành Viên</span>
-                                            ";
+                                                echo "<span class='inline-flex items-center justify-center px-2.5 py-1 text-xs font-bold rounded-full bg-emerald-100 text-emerald-700'>Thành Viên</span>";
                                             } ?></td>
-                                        <td class="text-center">
-                                            <a href="./index.php?act=edit_user&id_user=<?= $user['id_user'] ?>" class="btn btn-warning"><i class="fa-solid fa-pen-to-square"></i> Sửa</a>
-                                            <a href="./index.php?act=delete_usser&id_user=<?= $user['id_user'] ?>" class="btn btn-danger" onclick="return confirm('Bạn có chắc chắn muốn xóa không?')"><i class="fa-solid fa-trash"></i> Xóa</a>
+                                        <td class="px-4 py-4 text-center">
+                                            <div class="flex items-center justify-center gap-2">
+                                                <a href="./index.php?act=edit_user&id_user=<?= $user['id_user'] ?>" class="p-2 text-yellow-600 bg-yellow-50 rounded-lg hover:bg-yellow-100 transition-colors" title="Sửa"><i class="fa-solid fa-pen-to-square"></i></a>
+                                                <a href="./index.php?act=delete_usser&id_user=<?= $user['id_user'] ?>" class="p-2 text-red-600 bg-red-50 rounded-lg hover:bg-red-100 transition-colors" onclick="return confirm('Bạn có chắc chắn muốn xóa không?')" title="Xóa"><i class="fa-solid fa-trash"></i></a>
+                                            </div>
                                         </td>
                                     </tr>
                                 <?php endforeach ?>
@@ -51,15 +46,20 @@
                     </div>
                 </div>
             </div>
-
-        </div>
-        <!-- /.container-fluid -->
-
-    </div>
     <script>
         $(document).ready(function() {
-            $('#dataTable').DataTable();
+            $('#dataTable').DataTable({
+                "language": {
+                    "url": "//cdn.datatables.net/plug-ins/1.13.6/i18n/vi.json"
+                },
+                "dom": '<"flex flex-col md:flex-row justify-between items-center mb-4"lf>rt<"flex flex-col md:flex-row justify-between items-center mt-4"ip>',
+            });
+
+            setTimeout(function() {
+                $('.dataTables_length select').addClass('px-3 py-1 border border-slate-200 rounded-lg focus:ring-2 focus:ring-brand-500 mx-2');
+                $('.dataTables_filter input').addClass('px-4 py-2 border border-slate-200 rounded-lg focus:ring-2 focus:ring-brand-500 ml-2');
+            }, 100);
         });
     </script>
-    <!-- End of Main Content -->
+
     <?php include_once "footer.php" ?>
