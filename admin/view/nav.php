@@ -19,6 +19,13 @@ function nav_icon_class(bool $active): string
         ? 'w-6 text-center text-brand-500 transition-colors'
         : 'w-6 text-center text-slate-400 group-hover:text-white transition-colors';
 }
+
+function nav_submenu_toggle_class(bool $active): string
+{
+    return $active
+        ? 'px-3 py-2.5 rounded-lg bg-slate-800 text-white transition-colors flex items-center justify-between cursor-pointer group'
+        : 'px-3 py-2.5 rounded-lg hover:bg-slate-800 text-slate-300 transition-colors flex items-center justify-between cursor-pointer group';
+}
 ?>
 <div id="mobile-sidebar-backdrop" class="hidden fixed inset-0 bg-slate-900/50 z-30 md:hidden"></div>
 <aside id="mobile-sidebar-nav" class="w-64 bg-slate-900 text-slate-300 shrink-0 hidden md:flex flex-col shadow-2xl fixed inset-y-0 left-0 z-40 md:relative md:inset-auto md:z-20">
@@ -42,7 +49,7 @@ function nav_icon_class(bool $active): string
 
         <!-- Products -->
         <div class="space-y-1">
-            <div class="<?= $productsActive ? 'px-3 py-2.5 rounded-lg bg-slate-800 text-white transition-colors flex items-center justify-between cursor-pointer group' : 'px-3 py-2.5 rounded-lg hover:bg-slate-800 text-slate-300 transition-colors flex items-center justify-between cursor-pointer group' ?>" onclick="toggleSubmenu('submenu-products')">
+            <div class="<?= nav_submenu_toggle_class($productsActive) ?>" onclick="toggleSubmenu('submenu-products')">
                 <div class="flex items-center">
                     <i class="fas fa-box <?= nav_icon_class($productsActive) ?>"></i>
                     <span class="ml-3 font-medium">Sản Phẩm</span>
@@ -61,7 +68,7 @@ function nav_icon_class(bool $active): string
 
         <!-- Categories -->
         <div class="space-y-1">
-            <div class="<?= $categoriesActive ? 'px-3 py-2.5 rounded-lg bg-slate-800 text-white transition-colors flex items-center justify-between cursor-pointer group' : 'px-3 py-2.5 rounded-lg hover:bg-slate-800 text-slate-300 transition-colors flex items-center justify-between cursor-pointer group' ?>" onclick="toggleSubmenu('submenu-categories')">
+            <div class="<?= nav_submenu_toggle_class($categoriesActive) ?>" onclick="toggleSubmenu('submenu-categories')">
                 <div class="flex items-center">
                     <i class="fas fa-tags <?= nav_icon_class($categoriesActive) ?>"></i>
                     <span class="ml-3 font-medium">Danh Mục</span>
