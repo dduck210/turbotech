@@ -56,20 +56,31 @@ class CheckoutController extends Controller
 
             $user = Auth::user();
             $bill_code = substr(str_shuffle("123456789"), 0, 5);
-            $full_name = $_POST['full_name'] ?? '';
-            $address = $_POST['address'] ?? '';
-            $phone = $_POST['phone'] ?? '';
-            $email = $_POST['email'] ?? '';
+            $full_name = trim($_POST['full_name'] ?? '');
+            $province = trim($_POST['province'] ?? '');
+            $ward = trim($_POST['ward'] ?? '');
+            $address_detail = trim($_POST['address_detail'] ?? '');
+            $address = $address_detail !== '' ? "{$address_detail}, {$ward}, {$province}" : '';
+            $phone = trim($_POST['phone'] ?? '');
+            $email = trim($_POST['email'] ?? '');
             $payment = $_POST['payment'] ?? null;
             $order_date = date('Y/m/d h:i:s', time());
             $check_error = 0;
 
-            if (self::validateMobile($phone) == 0) {
+            // NOTE: the old code checked validateMobile($phone) twice in a
+            // row (the first check's error message even said "Email không
+            // hợp lệ!") instead of ever actually validating the email —
+            // fixed to check each field once, for real.
+            if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
                 $_SESSION['errorMessage'] = "Email không hợp lệ !";
                 $check_error = 1;
             }
             if (self::validateMobile($phone) == 0) {
                 $_SESSION['errorMessage'] = "Số điện thoại không đúng định dạng !";
+                $check_error = 1;
+            }
+            if ($province === '' || $ward === '' || $address_detail === '') {
+                $_SESSION['errorMessage'] = "Vui lòng nhập đầy đủ địa chỉ nhận hàng !";
                 $check_error = 1;
             }
 
@@ -171,7 +182,10 @@ class CheckoutController extends Controller
     public function viewbill(): void
     {
         $full_name = $_POST['full_name'] ?? '';
-        $address = $_POST['address'] ?? '';
+        $province = $_POST['province'] ?? '';
+        $ward = $_POST['ward'] ?? '';
+        $address_detail = $_POST['address_detail'] ?? '';
+        $address = $address_detail !== '' ? "{$address_detail}, {$ward}, {$province}" : '';
         $phone = $_POST['phone'] ?? '';
         $email = $_POST['email'] ?? '';
         $payment = $_POST['payment'] ?? null;

@@ -10,7 +10,7 @@
     <h1 class="font-heading text-2xl md:text-3xl font-bold text-ink-900 mb-6">Thông tin đặt hàng</h1>
 
     <!-- thông tin đặt hàng -->
-    <form action="index.php?act=billconfirm" method="post">
+    <form action="index.php?act=billconfirm" method="post" data-validate novalidate>
         <?php if (isset($_SESSION['user'])) {
             extract($_SESSION['user']); ?>
         <div class="mb-6 rounded-2xl border border-ink-200 bg-white p-6 shadow-sm">
@@ -23,22 +23,43 @@
                 </div>
                 <div>
                     <label for="bill-full-name" class="block text-sm font-medium text-ink-700 mb-1.5">Họ tên người đặt</label>
-                    <input id="bill-full-name" name="full_name" type="text" placeholder="Nhập họ tên người nhận" value="<?= $full_name ?>" required
+                    <input id="bill-full-name" name="full_name" type="text" placeholder="Nhập họ tên người nhận" value="<?= $full_name ?>"
+                        data-rules="required|min:2|max:100"
                         class="block w-full rounded-lg border border-ink-200 bg-white px-3.5 py-2.5 text-sm text-ink-900 placeholder:text-ink-300 focus:outline-none focus:ring-2 focus:ring-brand-500 focus:border-brand-500" />
                 </div>
                 <div>
-                    <label for="bill-address" class="block text-sm font-medium text-ink-700 mb-1.5">Địa chỉ</label>
-                    <input id="bill-address" name="address" type="text" placeholder="Nhập địa chỉ nhận hàng" value="<?= $address ?>" required
+                    <label for="bill-province" class="block text-sm font-medium text-ink-700 mb-1.5">Tỉnh/Thành phố</label>
+                    <select id="bill-province" name="province" data-address-province
+                        data-existing-address="<?= htmlspecialchars($address ?? '') ?>"
+                        data-rules="required" data-msg-required="Vui lòng chọn tỉnh/thành phố"
+                        class="block w-full rounded-lg border border-ink-200 bg-white px-3.5 py-2.5 text-sm text-ink-900 focus:outline-none focus:ring-2 focus:ring-brand-500 focus:border-brand-500">
+                        <option value="">Đang tải danh sách...</option>
+                    </select>
+                </div>
+                <div>
+                    <label for="bill-ward" class="block text-sm font-medium text-ink-700 mb-1.5">Xã/Phường</label>
+                    <select id="bill-ward" name="ward" data-address-ward
+                        data-rules="required" data-msg-required="Vui lòng chọn xã/phường"
+                        class="block w-full rounded-lg border border-ink-200 bg-white px-3.5 py-2.5 text-sm text-ink-900 focus:outline-none focus:ring-2 focus:ring-brand-500 focus:border-brand-500" disabled>
+                        <option value="">Chọn tỉnh/thành phố trước</option>
+                    </select>
+                </div>
+                <div>
+                    <label for="bill-address-detail" class="block text-sm font-medium text-ink-700 mb-1.5">Địa chỉ chi tiết</label>
+                    <input id="bill-address-detail" name="address_detail" type="text" data-address-detail placeholder="Số nhà, tên đường..."
+                        data-rules="required|min:3|max:255"
                         class="block w-full rounded-lg border border-ink-200 bg-white px-3.5 py-2.5 text-sm text-ink-900 placeholder:text-ink-300 focus:outline-none focus:ring-2 focus:ring-brand-500 focus:border-brand-500" />
                 </div>
                 <div>
                     <label for="bill-email" class="block text-sm font-medium text-ink-700 mb-1.5">Email</label>
-                    <input id="bill-email" name="email" type="email" placeholder="Nhập email người nhận" value="<?= $email_user ?>" required
+                    <input id="bill-email" name="email" type="email" placeholder="Nhập email người nhận" value="<?= $email_user ?>"
+                        data-rules="required|email"
                         class="block w-full rounded-lg border border-ink-200 bg-white px-3.5 py-2.5 text-sm text-ink-900 placeholder:text-ink-300 focus:outline-none focus:ring-2 focus:ring-brand-500 focus:border-brand-500" />
                 </div>
                 <div>
                     <label for="bill-phone" class="block text-sm font-medium text-ink-700 mb-1.5">Điện thoại</label>
-                    <input id="bill-phone" name="phone" type="text" placeholder="Nhập số điện thoại người nhận" value="<?= $phone_user ?>" required
+                    <input id="bill-phone" name="phone" type="text" placeholder="Nhập số điện thoại người nhận" value="<?= $phone_user ?>"
+                        data-rules="required|phone"
                         class="block w-full rounded-lg border border-ink-200 bg-white px-3.5 py-2.5 text-sm text-ink-900 placeholder:text-ink-300 focus:outline-none focus:ring-2 focus:ring-brand-500 focus:border-brand-500" />
                 </div>
                 <?php if (isset($_COOKIE['error'])) : ?>
@@ -52,11 +73,11 @@
         <div class="mb-6 rounded-2xl border border-ink-200 bg-white p-6 shadow-sm">
             <h2 class="font-heading text-lg font-semibold text-ink-900 mb-4">Phương thức thanh toán</h2>
             <div class="flex flex-col sm:flex-row gap-3">
-                <label class="flex flex-1 min-h-[44px] items-center gap-3 rounded-lg border border-ink-200 px-4 py-3 cursor-pointer hover:bg-ink-50 has-[:checked]:border-brand-500 has-[:checked]:bg-brand-50 transition-colors">
+                <label class="flex flex-1 min-h-11 items-center gap-3 rounded-lg border border-ink-200 px-4 py-3 cursor-pointer hover:bg-ink-50 has-checked:border-brand-500 has-checked:bg-brand-50 transition-colors">
                     <input class="h-4 w-4 text-brand-600 focus:ring-2 focus:ring-brand-500" type="radio" name="payment" id="inlineRadio1" value="1" checked>
                     <span class="text-sm font-medium text-ink-900">Thanh toán khi nhận hàng</span>
                 </label>
-                <label class="flex flex-1 min-h-[44px] items-center gap-3 rounded-lg border border-ink-200 px-4 py-3 cursor-pointer hover:bg-ink-50 has-[:checked]:border-brand-500 has-[:checked]:bg-brand-50 transition-colors">
+                <label class="flex flex-1 min-h-11 items-center gap-3 rounded-lg border border-ink-200 px-4 py-3 cursor-pointer hover:bg-ink-50 has-checked:border-brand-500 has-checked:bg-brand-50 transition-colors">
                     <input class="h-4 w-4 text-brand-600 focus:ring-2 focus:ring-brand-500" type="radio" name="payment" id="inlineRadio2" value="2">
                     <span class="text-sm font-medium text-ink-900">Chuyển khoản ngân hàng</span>
                 </label>
