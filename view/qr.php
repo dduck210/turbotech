@@ -7,13 +7,20 @@ use Codemoi\Model\Payment;
 
 $_SESSION['check'] = 1;
 
-if (isset($_SESSION['pay'])) {
-    $amount = $_SESSION['pay'][1];
-    $bill_code = $_SESSION['pay'][2];
-    $payment = $_SESSION['pay'][0];
-    $transferContent = Payment::transferMemo((string) $bill_code);
-    $qrImageUrl = Payment::vietQrUrl((int) $amount, (string) $bill_code);
+// Only reachable mid-checkout via CheckoutController's redirect, which
+// always sets $_SESSION['pay'] first. Visiting this URL directly (no
+// active payment) used to fall through with $amount/$bill_code undefined,
+// dumping raw PHP warnings into the markup instead of a real page.
+if (!isset($_SESSION['pay'])) {
+    header('Location: ../index.php?act=viewcart');
+    exit;
 }
+
+$amount = $_SESSION['pay'][1];
+$bill_code = $_SESSION['pay'][2];
+$payment = $_SESSION['pay'][0];
+$transferContent = Payment::transferMemo((string) $bill_code);
+$qrImageUrl = Payment::vietQrUrl((int) $amount, (string) $bill_code);
 ?>
 <!DOCTYPE html>
 <html lang="vi">
@@ -29,49 +36,49 @@ if (isset($_SESSION['pay'])) {
     <link rel="stylesheet" type="text/css" media="screen" href="../src/css/tailwind.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-    /* Needed only because copyToClipboard()/showCopyFeedback() below create
+        /* Needed only because copyToClipboard()/showCopyFeedback() below create
        this toast element dynamically via JS (className set at runtime), so
        it can't be styled with static Tailwind utility classes. */
-    .copy-feedback {
-        position: fixed;
-        top: 20px;
-        right: 20px;
-        background: #16a34a;
-        color: white;
-        padding: 15px 25px;
-        border-radius: 8px;
-        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-        animation: slideIn 0.3s ease;
-        z-index: 1000;
-    }
-
-    @keyframes slideIn {
-        from {
-            transform: translateX(400px);
-            opacity: 0;
+        .copy-feedback {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: #16a34a;
+            color: white;
+            padding: 15px 25px;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+            animation: slideIn 0.3s ease;
+            z-index: 1000;
         }
 
-        to {
-            transform: translateX(0);
-            opacity: 1;
-        }
-    }
+        @keyframes slideIn {
+            from {
+                transform: translateX(400px);
+                opacity: 0;
+            }
 
-    @keyframes slideOut {
-        from {
-            transform: translateX(0);
-            opacity: 1;
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
         }
 
-        to {
-            transform: translateX(400px);
-            opacity: 0;
-        }
-    }
+        @keyframes slideOut {
+            from {
+                transform: translateX(0);
+                opacity: 1;
+            }
 
-    .copy-feedback.hide {
-        animation: slideOut 0.3s ease;
-    }
+            to {
+                transform: translateX(400px);
+                opacity: 0;
+            }
+        }
+
+        .copy-feedback.hide {
+            animation: slideOut 0.3s ease;
+        }
     </style>
 </head>
 
@@ -179,45 +186,45 @@ if (isset($_SESSION['pay'])) {
     </div>
 
     <script>
-    function copyToClipboard(elementId) {
-        const element = document.getElementById(elementId);
-        const text = element.textContent.trim();
+        function copyToClipboard(elementId) {
+            const element = document.getElementById(elementId);
+            const text = element.textContent.trim();
 
-        // Copy to clipboard
-        navigator.clipboard.writeText(text).then(() => {
-            // Show feedback
-            showCopyFeedback();
+            // Copy to clipboard
+            navigator.clipboard.writeText(text).then(() => {
+                // Show feedback
+                showCopyFeedback();
 
-            // Add animation
-            const btn = event.target.closest('.copy-btn');
-            btn.style.background = '#16a34a';
-            btn.innerHTML = '<i class="fas fa-check"></i> Đã copy!';
+                // Add animation
+                const btn = event.target.closest('.copy-btn');
+                btn.style.background = '#16a34a';
+                btn.innerHTML = '<i class="fas fa-check"></i> Đã copy!';
+
+                setTimeout(() => {
+                    btn.style.background = '';
+                    btn.innerHTML = '<i class="fas fa-copy"></i> Copy';
+                }, 2000);
+            }).catch(err => {
+                alert('Lỗi: Không thể copy!');
+            });
+        }
+
+        function showCopyFeedback() {
+            const feedback = document.createElement('div');
+            feedback.className = 'copy-feedback';
+            feedback.innerHTML = '<i class="fas fa-check-circle"></i> Đã copy vào bộ nhớ!';
+            document.body.appendChild(feedback);
 
             setTimeout(() => {
-                btn.style.background = '';
-                btn.innerHTML = '<i class="fas fa-copy"></i> Copy';
+                feedback.classList.add('hide');
+                setTimeout(() => feedback.remove(), 300);
             }, 2000);
-        }).catch(err => {
-            alert('Lỗi: Không thể copy!');
+        }
+
+        // Auto copy bill code on load
+        window.addEventListener('load', () => {
+            console.log('Trang thanh toán đã tải thành công');
         });
-    }
-
-    function showCopyFeedback() {
-        const feedback = document.createElement('div');
-        feedback.className = 'copy-feedback';
-        feedback.innerHTML = '<i class="fas fa-check-circle"></i> Đã copy vào bộ nhớ!';
-        document.body.appendChild(feedback);
-
-        setTimeout(() => {
-            feedback.classList.add('hide');
-            setTimeout(() => feedback.remove(), 300);
-        }, 2000);
-    }
-
-    // Auto copy bill code on load
-    window.addEventListener('load', () => {
-        console.log('Trang thanh toán đã tải thành công');
-    });
     </script>
 </body>
 
