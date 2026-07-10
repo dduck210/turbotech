@@ -65,15 +65,17 @@ class User
     }
 
     /**
-     * Look up a user by username + email (forgot-password flow).
-     * Mirrors old `check_pass($name, $email)`.
+     * Look up a user by email OR phone number (forgot-password flow) — lets
+     * someone recover their account with whichever detail they remember.
+     * The reset code is still always sent to the account's email, since
+     * that's the only delivery channel actually wired up (no SMS gateway).
      *
      * @return array|false
      */
-    public static function checkPass(string $name, string $email)
+    public static function findByEmailOrPhone(string $identifier)
     {
-        $sql = "SELECT * FROM user WHERE user_name = ? AND email_user = ?";
-        return Database::queryOne($sql, $name, $email);
+        $sql = "SELECT * FROM user WHERE email_user = ? OR phone_user = ?";
+        return Database::queryOne($sql, $identifier, $identifier);
     }
 
     /**

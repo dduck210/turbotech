@@ -6,70 +6,56 @@ use Codemoi\Core\Controller;
 use Codemoi\Model\User;
 
 /**
- * Forgot-password flows. Ported from `index.php` cases `'mk'`, `'usermk'`,
+ * Forgot-password flow. Ported from `index.php` cases `'mk'`, `'usermk'`,
  * `'forgotPass'`, `'verification'`, `'changePass'` (`index.php:113-174`).
+ *
+ * Originally two separate, confusing paths: one emailed a 6-digit code
+ * (`forgotPass`), the other looked the account up by username+email and
+ * printed the PLAINTEXT PASSWORD directly on the page (`usermk`) — a real
+ * security smell, since anyone who guessed/knew a username+email pair (not
+ * even the password) could read the actual password back. Consolidated
+ * into one flow: recover by email OR phone number, code always emailed
+ * (the only channel actually wired up — no SMS gateway account exists).
  */
 class PasswordController extends Controller
 {
-    /** Cách thức lấy lại mật khẩu (static links, no data). */
-    public function methods(): void
+    /**
+     * Look up the account by email or phone, then email it a reset code.
+     * `act=mk` — same route the rest of the app already links to
+     * ("Quên mật khẩu?" on login, "lấy lại mật khẩu" on register).
+     */
+    public function forgotPassword(): void
     {
-        $this->view('nguoidung/cachthuclaymk');
-    }
+        $error = null;
 
-    /** Lấy lại mật khẩu qua user_name + email. `index.php:118-130`. */
-    public function byNameEmail(): void
-    {
-        $thongbao = '';
+        if (isset($_POST['btn_forgot']) && $_POST['btn_forgot']) {
+            $identifier = trim($_POST['identifier'] ?? '');
 
-        if (isset($_POST['mk2']) && $_POST['mk2']) {
-            $name = $_POST['user_name'] ?? '';
-            $email = $_POST['email'] ?? '';
-            $checkuser = User::checkPass($name, $email);
-
-            if (is_array($checkuser)) {
-                $thongbao = '<p class="text-green-600"> Mật khẩu của tài khoản "' . $name . '" là: <span class="font-bold">' . $checkuser['password'] . '</span></p>';
+            if ($identifier === '') {
+                $error = 'Vui lòng nhập email hoặc số điện thoại';
             } else {
-                $thongbao = '<p class="text-red-600 font-bold">Tài khoản hoặc Email không tồn tại! Vui lòng kiểm tra lại</p>';
+                $account = User::findByEmailOrPhone($identifier);
+
+                if (!is_array($account)) {
+                    $error = 'Không tìm thấy tài khoản với email hoặc số điện thoại này';
+                } else {
+                    $email = $account['email_user'];
+                    $code = substr((string) rand(0, 999999), 0, 6);
+                    $title = "Tìm lại mật khẩu của bạn";
+                    $content = "<p>Xin chào, chúng tôi đã nhận được yêu cầu đặt lại mật khẩu Turbotech của bạn.<br>
+                                Nhập mã sau đây để đặt lại mật khẩu: <span style='color: black; font-weight: 600'>" . $code . "</span></p>";
+
+                    $mail = new \Codemoi\Mail\Mailer();
+                    $mail->sendMail($title, $content, $email);
+
+                    $_SESSION['mail'] = $email;
+                    $_SESSION['code'] = $code;
+                    $this->redirect('index.php?act=verification');
+                }
             }
         }
 
-        $this->view('nguoidung/laymk2', ['thongbao' => $thongbao]);
-    }
-
-    /** Gửi mã xác nhận qua email. `index.php:132-152`. */
-    public function forgot(): void
-    {
-        $error = [];
-
-        if (isset($_POST['btn_forgotPass'])) {
-            $email = $_POST['email'] ?? '';
-
-            if ($email == "") {
-                $error['email'] = 'Không để trống Email!';
-            }
-
-            if (empty($error)) {
-                // Kept for parity with the old call graph; the model no
-                // longer echoes on "not found" (that side effect was
-                // dropped in Phase 02 — see `Model\User::byEmail` docblock).
-                User::byEmail($email);
-
-                $code = substr((string) rand(0, 999999), 0, 6);
-                $title = "Tìm lại mật khẩu của bạn";
-                $content = "<p>Xin chào, chúng tôi đã nhận được yêu cầu đặt lại mật khẩu Turbotech của bạn.<br>
-                            Nhập mã sau đây để đặt lại mật khẩu: <span style='color: black; font-weight: 600'>" . $code . "</span></p>";
-
-                $mail = new \Codemoi\Mail\Mailer();
-                $mail->sendMail($title, $content, $email);
-
-                $_SESSION['mail'] = $email;
-                $_SESSION['code'] = $code;
-                $this->redirect('index.php?act=verification');
-            }
-        }
-
-        $this->view('nguoidung/forgotpass', ['error' => $error]);
+        $this->view('nguoidung/cachthuclaymk', ['error' => $error]);
     }
 
     /** Nhập mã xác nhận. The template handles its own POST check inline
