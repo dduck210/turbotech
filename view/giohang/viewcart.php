@@ -124,6 +124,18 @@
             type: "POST",
             data: 'quantity=' + quantity + '&code=' + code,
             success: function(data, status) {
+                // The response is a full page (index.php wraps every route
+                // in header/footer HTML), so the actual result is pulled
+                // out of an HTML-comment marker rather than parsed as JSON.
+                var match = /<!--CART_EDIT_RESULT:(.*?):END-->/.exec(data);
+                if (match) {
+                    try {
+                        var result = JSON.parse(match[1]);
+                        if (result.success === false && result.message) {
+                            alert(result.message);
+                        }
+                    } catch (e) {}
+                }
                 location.reload();
             },
             error: function() {

@@ -81,6 +81,20 @@ class CheckoutController extends Controller
                 $this->redirect('?act=viewcart');
             }
 
+            // Re-check stock right before the order is actually created —
+            // it was already checked when each line was added to the cart,
+            // but stock could have run out since then (e.g. another
+            // customer bought the last units while this one was still
+            // browsing). Without this, decrementStock()'s own guard below
+            // would silently no-op while the order still gets created for
+            // more units than are actually in stock.
+            foreach (Cart::items() as $cart) {
+                if (!Product::hasStock($cart[0], $cart[4])) {
+                    $_SESSION['errorMessage'] = "Sản phẩm \"{$cart[1]}\" không đủ số lượng tồn kho, vui lòng cập nhật giỏ hàng!";
+                    $this->redirect('?act=viewcart');
+                }
+            }
+
             $idbill = Order::create(
                 $bill_code,
                 $user['id_user'],
@@ -173,6 +187,13 @@ class CheckoutController extends Controller
             $total_amount = Cart::total();
 
             if ($total_amount > 0) {
+                foreach (Cart::items() as $cart) {
+                    if (!Product::hasStock($cart[0], $cart[4])) {
+                        $_SESSION['errorMessage'] = "Sản phẩm \"{$cart[1]}\" không đủ số lượng tồn kho, vui lòng cập nhật giỏ hàng!";
+                        $this->redirect('?act=viewcart');
+                    }
+                }
+
                 $idbill = Order::create(
                     $bill_code,
                     $user['id_user'],
@@ -215,7 +236,7 @@ class CheckoutController extends Controller
     }
 
     /** Mirrors old inline `function validate_mobile($mobile)` (`index.php:306-309`). */
-    private static function validateMobile($mobile): int
+    private static function validateMobile(string $mobile): int
     {
         return preg_match('/^[0-9]{10}+$/', (string) $mobile);
     }
