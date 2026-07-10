@@ -79,17 +79,42 @@ $qrImageUrl = Payment::vietQrUrl((int) $amount, (string) $bill_code);
         .copy-feedback.hide {
             animation: slideOut 0.3s ease;
         }
+
+        /* Entrance animation for the payment card — pure CSS so it plays
+           immediately on page load with no JS/FOUC dependency. */
+        @keyframes cardEnter {
+            from {
+                opacity: 0;
+                transform: translateY(12px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .payment-card {
+            animation: cardEnter 0.45s cubic-bezier(0.16, 1, 0.3, 1);
+        }
     </style>
 </head>
 
-<body class="min-h-screen bg-ink-50 font-sans text-ink-900 antialiased flex items-center justify-center p-4 sm:p-6">
-    <div class="w-full max-w-3xl overflow-hidden rounded-2xl border border-ink-200 bg-white shadow-sm">
+<body class="min-h-screen bg-linear-to-b from-ink-50 to-ink-100 font-sans text-ink-900 antialiased flex items-center justify-center p-4 sm:p-6">
+    <div class="payment-card w-full max-w-3xl overflow-hidden rounded-2xl border border-ink-200 bg-white shadow-xl shadow-ink-900/5">
         <!-- Header -->
-        <div class="bg-brand-600 px-6 py-10 text-center text-white">
-            <h1 class="font-heading text-2xl md:text-3xl font-bold">
-                <i class="fas fa-university" aria-hidden="true"></i> Thanh Toán Chuyển Khoản
-            </h1>
-            <p class="mt-2 text-sm text-brand-50">Vui lòng chuyển khoản theo thông tin bên dưới</p>
+        <div class="relative overflow-hidden bg-linear-to-br from-brand-600 to-brand-700 px-6 py-8 text-center text-white">
+            <div class="pointer-events-none absolute -right-10 -top-10 h-40 w-40 rounded-full bg-white/10"></div>
+            <div class="pointer-events-none absolute -bottom-16 -left-10 h-40 w-40 rounded-full bg-white/5"></div>
+            <div class="relative">
+                <h1 class="font-heading text-2xl md:text-3xl font-bold">
+                    <i class="fas fa-university" aria-hidden="true"></i> Thanh Toán Chuyển Khoản
+                </h1>
+                <p class="mt-2 text-sm text-brand-50">Vui lòng chuyển khoản theo thông tin bên dưới</p>
+                <div class="mt-4 inline-flex items-center gap-1.5 rounded-full bg-white/15 px-3.5 py-1.5 text-xs font-semibold tracking-wide backdrop-blur-sm">
+                    <i class="fas fa-receipt" aria-hidden="true"></i> Mã đơn hàng UTP-<?= htmlspecialchars($bill_code) ?>
+                </div>
+            </div>
         </div>
 
         <!-- Content -->
@@ -97,76 +122,80 @@ $qrImageUrl = Payment::vietQrUrl((int) $amount, (string) $bill_code);
             <div class="grid grid-cols-1 gap-8 md:grid-cols-2 items-start">
                 <!-- QR Code Section -->
                 <div class="text-center">
-                    <div class="rounded-xl border border-ink-200 bg-ink-50 p-6">
+                    <div class="rounded-2xl border border-ink-200 bg-white p-6 shadow-sm transition-shadow hover:shadow-md">
                         <div class="mb-4 text-xs font-semibold uppercase tracking-wide text-brand-600">
                             <i class="fas fa-qrcode" aria-hidden="true"></i> Mã QR Chuyển Khoản
                         </div>
-                        <img src="<?= htmlspecialchars($qrImageUrl ?? '') ?>" alt="QR Code Chuyển Khoản"
-                            class="mx-auto h-56 w-56 rounded-lg object-cover" />
-                        <div class="mt-4 text-sm text-ink-500">
-                            <i class="fas fa-mobile-alt" aria-hidden="true"></i> Quét mã QR bằng ứng dụng ngân hàng
+                        <div class="mx-auto w-fit rounded-xl bg-ink-50 p-3 ring-1 ring-ink-100">
+                            <img src="<?= htmlspecialchars($qrImageUrl ?? '') ?>" alt="QR Code Chuyển Khoản"
+                                class="mx-auto h-56 w-56 rounded-lg object-cover" loading="lazy" />
+                        </div>
+                        <div class="mt-4 flex items-center justify-center gap-1.5 text-sm text-ink-500">
+                            <i class="fas fa-mobile-alt" aria-hidden="true"></i> Quét mã QR bằng ứng dụng ngân hàng bất kỳ
                         </div>
                     </div>
                 </div>
 
                 <!-- Bank Info Section -->
                 <div class="flex flex-col gap-4">
-                    <!-- Bank Name -->
-                    <div class="rounded-xl border-l-4 border-brand-600 bg-ink-50 p-4">
-                        <span class="mb-2 block text-xs font-semibold uppercase tracking-wide text-ink-500">
-                            <i class="fas fa-university" aria-hidden="true"></i> Ngân Hàng
-                        </span>
-                        <div class="font-semibold text-ink-900"><?= htmlspecialchars(strtoupper(Config::bankCode())) ?></div>
-                    </div>
-
-                    <!-- Account Number -->
-                    <div class="rounded-xl border-l-4 border-brand-600 bg-ink-50 p-4">
-                        <span class="mb-2 block text-xs font-semibold uppercase tracking-wide text-ink-500">
-                            <i class="fas fa-credit-card" aria-hidden="true"></i> Số Tài Khoản
-                        </span>
-                        <div class="flex items-center justify-between gap-2">
-                            <span id="accountNumber" class="font-bold text-ink-900"><?= htmlspecialchars(Config::bankAccountNo()) ?></span>
-                            <button type="button" class="copy-btn inline-flex items-center gap-1.5 rounded-lg bg-brand-600 px-3 py-2 text-xs font-semibold text-white hover:bg-brand-700 transition-colors focus:outline-none focus:ring-2 focus:ring-brand-500 focus:ring-offset-2"
-                                onclick="copyToClipboard('accountNumber')">
-                                <i class="fas fa-copy" aria-hidden="true"></i> Copy
-                            </button>
+                    <div class="divide-y divide-ink-100 overflow-hidden rounded-2xl border border-ink-200 bg-white shadow-sm">
+                        <!-- Bank Name -->
+                        <div class="px-4 py-3">
+                            <span class="flex items-center gap-1.5 text-xs font-medium uppercase tracking-wide text-ink-400">
+                                <i class="fas fa-university w-4 text-center text-brand-500" aria-hidden="true"></i> Ngân hàng
+                            </span>
+                            <div class="mt-1 font-semibold text-ink-900"><?= htmlspecialchars(strtoupper(Config::bankCode())) ?></div>
                         </div>
-                    </div>
 
-                    <!-- Account Holder -->
-                    <div class="rounded-xl border-l-4 border-brand-600 bg-ink-50 p-4">
-                        <span class="mb-2 block text-xs font-semibold uppercase tracking-wide text-ink-500">
-                            <i class="fas fa-user" aria-hidden="true"></i> Chủ Tài Khoản
-                        </span>
-                        <div class="font-semibold text-ink-900"><?= htmlspecialchars(Config::bankAccountName()) ?></div>
-                    </div>
+                        <!-- Account Number -->
+                        <div class="px-4 py-3">
+                            <span class="flex items-center gap-1.5 text-xs font-medium uppercase tracking-wide text-ink-400">
+                                <i class="fas fa-credit-card w-4 text-center text-brand-500" aria-hidden="true"></i> Số tài khoản
+                            </span>
+                            <div class="mt-1 flex items-center justify-between gap-2">
+                                <span id="accountNumber" class="font-semibold text-ink-900"><?= htmlspecialchars(Config::bankAccountNo()) ?></span>
+                                <button type="button" class="copy-btn shrink-0 rounded-md p-1.5 text-ink-400 transition-colors hover:bg-brand-50 hover:text-brand-600 focus:outline-none focus:ring-2 focus:ring-brand-500"
+                                    onclick="copyToClipboard('accountNumber')" title="Sao chép" aria-label="Sao chép số tài khoản">
+                                    <i class="fas fa-copy" aria-hidden="true"></i>
+                                </button>
+                            </div>
+                        </div>
 
-                    <!-- Transfer Content -->
-                    <div class="rounded-xl border-l-4 border-brand-600 bg-ink-50 p-4">
-                        <span class="mb-2 block text-xs font-semibold uppercase tracking-wide text-ink-500">
-                            <i class="fas fa-comment" aria-hidden="true"></i> Nội Dung Chuyển
-                        </span>
-                        <div class="flex items-center justify-between gap-2">
-                            <span id="transferContent" class="font-bold text-ink-900"><?= htmlspecialchars($transferContent ?? '') ?></span>
-                            <button type="button" class="copy-btn inline-flex items-center gap-1.5 rounded-lg bg-brand-600 px-3 py-2 text-xs font-semibold text-white hover:bg-brand-700 transition-colors focus:outline-none focus:ring-2 focus:ring-brand-500 focus:ring-offset-2"
-                                onclick="copyToClipboard('transferContent')">
-                                <i class="fas fa-copy" aria-hidden="true"></i> Copy
-                            </button>
+                        <!-- Account Holder -->
+                        <div class="px-4 py-3">
+                            <span class="flex items-center gap-1.5 text-xs font-medium uppercase tracking-wide text-ink-400">
+                                <i class="fas fa-user w-4 text-center text-brand-500" aria-hidden="true"></i> Chủ tài khoản
+                            </span>
+                            <div class="mt-1 font-semibold text-ink-900"><?= htmlspecialchars(Config::bankAccountName()) ?></div>
+                        </div>
+
+                        <!-- Transfer Content -->
+                        <div class="px-4 py-3">
+                            <span class="flex items-center gap-1.5 text-xs font-medium uppercase tracking-wide text-ink-400">
+                                <i class="fas fa-comment w-4 text-center text-brand-500" aria-hidden="true"></i> Nội dung chuyển khoản
+                            </span>
+                            <div class="mt-1 flex items-center justify-between gap-2">
+                                <span id="transferContent" class="font-semibold text-ink-900"><?= htmlspecialchars($transferContent ?? '') ?></span>
+                                <button type="button" class="copy-btn shrink-0 rounded-md p-1.5 text-ink-400 transition-colors hover:bg-brand-50 hover:text-brand-600 focus:outline-none focus:ring-2 focus:ring-brand-500"
+                                    onclick="copyToClipboard('transferContent')" title="Sao chép" aria-label="Sao chép nội dung chuyển khoản">
+                                    <i class="fas fa-copy" aria-hidden="true"></i>
+                                </button>
+                            </div>
                         </div>
                     </div>
 
                     <!-- Amount -->
-                    <div class="rounded-xl bg-brand-600 p-6 text-center text-white">
+                    <div class="rounded-2xl bg-linear-to-br from-brand-600 to-brand-700 p-6 text-center text-white shadow-sm">
                         <div class="mb-2 text-xs font-semibold uppercase tracking-wide text-brand-50">
                             <i class="fas fa-money-bill-wave" aria-hidden="true"></i> Số Tiền Cần Thanh Toán
                         </div>
-                        <div class="text-2xl md:text-3xl font-bold" id="amountValue"><?= number_format($amount) ?>₫</div>
+                        <div class="text-3xl font-bold tracking-tight" id="amountValue"><?= number_format($amount) ?>₫</div>
                     </div>
 
                     <!-- Note -->
-                    <div class="rounded-lg border border-amber-300 bg-amber-50 p-4 text-sm text-amber-800">
-                        <i class="fas fa-info-circle" aria-hidden="true"></i>
-                        <strong>Lưu ý:</strong> Hãy nhập chính xác nội dung chuyển khoản để xác nhận đơn hàng của bạn
+                    <div class="flex items-start gap-2.5 rounded-xl border border-amber-200 bg-amber-50 p-4 text-sm text-amber-800">
+                        <i class="fas fa-info-circle mt-0.5 shrink-0" aria-hidden="true"></i>
+                        <span><strong>Lưu ý:</strong> Hãy nhập chính xác nội dung chuyển khoản để xác nhận đơn hàng của bạn</span>
                     </div>
                 </div>
             </div>
@@ -175,11 +204,11 @@ $qrImageUrl = Payment::vietQrUrl((int) $amount, (string) $bill_code);
         <!-- Footer -->
         <div class="flex flex-wrap justify-center gap-3 border-t border-ink-200 bg-ink-50 p-6">
             <a href="../index.php?act=billconfirm"
-                class="inline-flex items-center justify-center gap-2 rounded-lg bg-brand-600 px-5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-brand-700 transition-colors focus:outline-none focus:ring-2 focus:ring-brand-500 focus:ring-offset-2">
+                class="inline-flex items-center justify-center gap-2 rounded-lg bg-brand-600 px-5 py-2.5 text-sm font-semibold text-white shadow-sm transition-all hover:bg-brand-700 hover:shadow-md active:scale-[0.98] focus:outline-none focus:ring-2 focus:ring-brand-500 focus:ring-offset-2">
                 <i class="fas fa-check-circle" aria-hidden="true"></i> Đã Chuyển Khoản
             </a>
             <a href="../index.php?act=viewcart"
-                class="inline-flex items-center justify-center gap-2 rounded-lg border border-ink-200 bg-white px-5 py-2.5 text-sm font-semibold text-ink-900 hover:bg-ink-50 transition-colors focus:outline-none focus:ring-2 focus:ring-brand-500">
+                class="inline-flex items-center justify-center gap-2 rounded-lg border border-ink-200 bg-white px-5 py-2.5 text-sm font-semibold text-ink-900 transition-all hover:bg-ink-50 hover:shadow-sm active:scale-[0.98] focus:outline-none focus:ring-2 focus:ring-brand-500">
                 <i class="fas fa-arrow-left" aria-hidden="true"></i> Quay Lại Giỏ Hàng
             </a>
         </div>
