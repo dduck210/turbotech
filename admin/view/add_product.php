@@ -10,7 +10,7 @@
         <h6 class="m-0 font-bold text-brand-600">Thông tin sản phẩm mới</h6>
     </div>
     <div class="p-6">
-        <form action="index.php?act=add_product" method="post" enctype="multipart/form-data">
+        <form action="index.php?act=add_product" method="post" enctype="multipart/form-data" data-validate novalidate>
             <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
                 <!-- Mã sản phẩm -->
                 <div>
@@ -21,37 +21,37 @@
                 <!-- Tên sản phẩm -->
                 <div>
                     <label class="block text-sm font-medium text-slate-700 mb-2">Tên sản phẩm</label>
-                    <input type="text" name="name_pro" class="w-full px-4 py-2 border border-slate-200 rounded-lg focus:ring-2 focus:ring-brand-500 focus:border-brand-500 transition-colors" placeholder="Tên sản phẩm">
+                    <input type="text" name="name_pro" data-rules="required|min:2|max:255" class="w-full px-4 py-2 border border-slate-200 rounded-lg focus:ring-2 focus:ring-brand-500 focus:border-brand-500 transition-colors" placeholder="Tên sản phẩm">
                 </div>
 
                 <!-- Giá -->
                 <div>
                     <label class="block text-sm font-medium text-slate-700 mb-2">Giá (₫)</label>
-                    <input type="number" name="price" class="w-full px-4 py-2 border border-slate-200 rounded-lg focus:ring-2 focus:ring-brand-500 focus:border-brand-500 transition-colors" placeholder="Giá sản phẩm">
+                    <input type="number" name="price" data-rules="required|number|minval:1" class="w-full px-4 py-2 border border-slate-200 rounded-lg focus:ring-2 focus:ring-brand-500 focus:border-brand-500 transition-colors" placeholder="Giá sản phẩm">
                 </div>
 
                 <!-- Giảm giá -->
                 <div>
                     <label class="block text-sm font-medium text-slate-700 mb-2">Giảm giá (%)</label>
-                    <input type="number" name="discount" min="1" max="100" class="w-full px-4 py-2 border border-slate-200 rounded-lg focus:ring-2 focus:ring-brand-500 focus:border-brand-500 transition-colors" placeholder="Nhập số % giảm giá">
+                    <input type="number" name="discount" min="1" max="100" data-rules="number|minval:0" class="w-full px-4 py-2 border border-slate-200 rounded-lg focus:ring-2 focus:ring-brand-500 focus:border-brand-500 transition-colors" placeholder="Nhập số % giảm giá">
                 </div>
 
                 <!-- Số lượng tồn kho -->
                 <div>
                     <label class="block text-sm font-medium text-slate-700 mb-2">Số lượng tồn kho</label>
-                    <input type="number" name="stock" min="0" class="w-full px-4 py-2 border border-slate-200 rounded-lg focus:ring-2 focus:ring-brand-500 focus:border-brand-500 transition-colors" placeholder="Số lượng" value="0" required>
+                    <input type="number" name="stock" min="0" data-rules="required|number|minval:0" class="w-full px-4 py-2 border border-slate-200 rounded-lg focus:ring-2 focus:ring-brand-500 focus:border-brand-500 transition-colors" placeholder="Số lượng" value="0">
                 </div>
 
                 <!-- Thông báo hết hàng -->
                 <div>
                     <label class="block text-sm font-medium text-slate-700 mb-2">Thông báo hết hàng</label>
-                    <input type="text" name="stock_message" maxlength="255" class="w-full px-4 py-2 border border-slate-200 rounded-lg focus:ring-2 focus:ring-brand-500 focus:border-brand-500 transition-colors" placeholder="Để trống sẽ hiện: Hết hàng">
+                    <input type="text" name="stock_message" maxlength="255" data-rules="max:255" class="w-full px-4 py-2 border border-slate-200 rounded-lg focus:ring-2 focus:ring-brand-500 focus:border-brand-500 transition-colors" placeholder="Để trống sẽ hiện: Hết hàng">
                 </div>
 
                 <!-- Loại máy tính -->
                 <div>
                     <label class="block text-sm font-medium text-slate-700 mb-2">Loại sản phẩm</label>
-                    <select name="idcate" class="w-full px-4 py-2 border border-slate-200 rounded-lg focus:ring-2 focus:ring-brand-500 focus:border-brand-500 transition-colors bg-white">
+                    <select name="idcate" data-rules="minval:1" data-msg-minval="Vui lòng chọn loại sản phẩm" class="w-full px-4 py-2 border border-slate-200 rounded-lg focus:ring-2 focus:ring-brand-500 focus:border-brand-500 transition-colors bg-white">
                         <option value="0">Chọn loại</option>
                         <?php
                         foreach ($ds_loai as $loai) {
@@ -61,17 +61,17 @@
                         ?>
                     </select>
                 </div>
-                
+
                 <!-- Hình ảnh -->
                 <div class="md:col-span-2">
                     <label class="block text-sm font-medium text-slate-700 mb-2">Hình ảnh</label>
-                    <input type="file" name="img_pro" class="w-full px-4 py-2 border border-slate-200 rounded-lg focus:ring-2 focus:ring-brand-500 focus:border-brand-500 transition-colors file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-brand-50 file:text-brand-700 hover:file:bg-brand-100">
+                    <input type="file" name="img_pro" data-rules="required" data-msg-required="Vui lòng chọn ảnh sản phẩm" class="w-full px-4 py-2 border border-slate-200 rounded-lg focus:ring-2 focus:ring-brand-500 focus:border-brand-500 transition-colors file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-brand-50 file:text-brand-700 hover:file:bg-brand-100">
                 </div>
 
                 <!-- Mô tả ngắn -->
                 <div class="md:col-span-2">
                     <label class="block text-sm font-medium text-slate-700 mb-2">Mô tả ngắn</label>
-                    <input type="text" name="short_des" class="w-full px-4 py-2 border border-slate-200 rounded-lg focus:ring-2 focus:ring-brand-500 focus:border-brand-500 transition-colors" placeholder="Mô tả tóm tắt sản phẩm">
+                    <input type="text" name="short_des" data-rules="required|min:5|max:500" class="w-full px-4 py-2 border border-slate-200 rounded-lg focus:ring-2 focus:ring-brand-500 focus:border-brand-500 transition-colors" placeholder="Mô tả tóm tắt sản phẩm">
                 </div>
 
                 <!-- Mô tả chi tiết -->

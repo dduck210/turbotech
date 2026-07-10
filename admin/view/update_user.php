@@ -8,7 +8,7 @@
         </div>
         <div class="p-6">
           <div class="form-addcate">
-            <form action="index.php?act=update_user" method="post">
+            <form action="index.php?act=update_user" method="post" data-validate novalidate>
               <?php
               /** @var array $user */
               if (is_array($user))
@@ -20,19 +20,19 @@
               </div>
               <div class="mb-4">
                 <label for="formGroupExampleInput" class="block text-sm font-medium text-slate-700 mb-1">Tên đăng nhập</label>
-                <input type="text" name="user_name" class="w-full rounded-lg border border-slate-200 px-4 py-2 focus:ring-2 focus:ring-brand-500 outline-none transition-all" placeholder="Nhập tên dùng để đăng nhập" value="<?= $user_name ?>">
+                <input type="text" name="user_name" data-rules="required|min:3|max:50" class="w-full rounded-lg border border-slate-200 px-4 py-2 focus:ring-2 focus:ring-brand-500 outline-none transition-all" placeholder="Nhập tên dùng để đăng nhập" value="<?= $user_name ?>">
               </div>
               <div class="mb-4">
                 <label for="formGroupExampleInput" class="block text-sm font-medium text-slate-700 mb-1">Họ tên</label>
-                <input type="text" name="full_name" class="w-full rounded-lg border border-slate-200 px-4 py-2 focus:ring-2 focus:ring-brand-500 outline-none transition-all" placeholder="Nhập họ và tên người dùng" value="<?= $full_name ?>">
+                <input type="text" name="full_name" data-rules="required|min:2|max:100" class="w-full rounded-lg border border-slate-200 px-4 py-2 focus:ring-2 focus:ring-brand-500 outline-none transition-all" placeholder="Nhập họ và tên người dùng" value="<?= $full_name ?>">
               </div>
               <div class="mb-4">
                 <label for="formGroupExampleInput" class="block text-sm font-medium text-slate-700 mb-1">Email</label>
-                <input type="email" name="email_user" class="w-full rounded-lg border border-slate-200 px-4 py-2 focus:ring-2 focus:ring-brand-500 outline-none transition-all" placeholder="Nhập email người dùng" value="<?= $email_user ?>">
+                <input type="email" name="email_user" data-rules="required|email" class="w-full rounded-lg border border-slate-200 px-4 py-2 focus:ring-2 focus:ring-brand-500 outline-none transition-all" placeholder="Nhập email người dùng" value="<?= $email_user ?>">
               </div>
               <div class="mb-4">
                 <label for="formGroupExampleInput" class="block text-sm font-medium text-slate-700 mb-1">Mật khẩu</label>
-                <input type="text" name="password" class="w-full rounded-lg border border-slate-200 px-4 py-2 focus:ring-2 focus:ring-brand-500 outline-none transition-all" placeholder="Nhập mật khẩu muốn thay đổi" value="<?= $password ?>">
+                <input type="text" name="password" data-rules="required|min:6" class="w-full rounded-lg border border-slate-200 px-4 py-2 focus:ring-2 focus:ring-brand-500 outline-none transition-all" placeholder="Nhập mật khẩu muốn thay đổi" value="<?= $password ?>">
               </div>
 
               <div class="mb-4">

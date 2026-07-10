@@ -18,13 +18,14 @@
 <div class="bg-ink-50">
     <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-12 md:py-16">
         <div class="mx-auto max-w-md rounded-2xl border border-ink-200 bg-white shadow-sm p-6 sm:p-8">
-            <form action="index.php?act=forgotPass" method="post">
+            <form action="index.php?act=forgotPass" method="post" data-validate novalidate>
                 <h1 class="mb-2 text-center font-heading text-2xl font-bold text-ink-900">Tìm lại mật khẩu</h1>
                 <p class="mb-6 text-center text-sm text-ink-500">Chúng tôi sẽ gửi mã xác nhận đến email đã đăng ký của bạn.</p>
 
                 <div class="mb-6">
                     <label for="forgotpass-email" class="block text-sm font-medium text-ink-700 mb-1.5">Email</label>
                     <input type="email" id="forgotpass-email" name="email" placeholder="Nhập địa chỉ email đăng ký"
+                        data-rules="required|email"
                         class="block w-full rounded-lg border border-ink-200 bg-white px-3.5 py-2.5 text-sm text-ink-900 placeholder:text-ink-300 focus:outline-none focus:ring-2 focus:ring-brand-500 focus:border-brand-500">
                     <?php if (isset($error['email'])) : ?>
                         <p class="mt-1.5 text-sm text-red-600"><?php echo $error['email']; ?></p>

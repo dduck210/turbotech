@@ -175,7 +175,7 @@
                         <!-- Account details -->
                         <div id="account-details" data-tab-panel role="tabpanel" aria-labelledby="account-details-tab"
                             class="account-tab-panel hidden rounded-2xl border border-ink-200 bg-white shadow-sm p-6">
-                            <form action="index.php?act=myaccount" method="post" enctype="multipart/form-data">
+                            <form action="index.php?act=myaccount" method="post" enctype="multipart/form-data" data-validate novalidate>
                             <div class="mb-6 text-center">
                                 <img src="uploads/<?= $_SESSION['user']['img_user'] ?>" alt="Avatar người dùng"
                                     class="mx-auto h-24 w-24 rounded-full border border-ink-200 object-cover">
@@ -200,6 +200,7 @@
                                     <label for="account-details-fullname" class="block text-sm font-medium text-ink-700 mb-1.5">Họ và tên</label>
                                     <input type="text" name="full_name" id="account-details-fullname" value="<?= $_SESSION['user']['full_name'] ?>"
                                         placeholder="Nhập họ tên của bạn"
+                                        data-rules="required|min:2|max:100"
                                         class="block w-full rounded-lg border border-ink-200 bg-white px-3.5 py-2.5 text-sm text-ink-900 placeholder:text-ink-300 focus:outline-none focus:ring-2 focus:ring-brand-500 focus:border-brand-500">
                                 </div>
 
@@ -218,6 +219,7 @@
                                     <label for="account-details-email" class="block text-sm font-medium text-ink-700 mb-1.5">Email</label>
                                     <input type="email" name="email_user" id="account-details-email" value="<?= $_SESSION['user']['email_user'] ?>"
                                         placeholder="Nhập địa chỉ email của bạn"
+                                        data-rules="required|email"
                                         class="block w-full rounded-lg border border-ink-200 bg-white px-3.5 py-2.5 text-sm text-ink-900 placeholder:text-ink-300 focus:outline-none focus:ring-2 focus:ring-brand-500 focus:border-brand-500">
                                 </div>
 
@@ -225,6 +227,7 @@
                                     <label for="account-details-address" class="block text-sm font-medium text-ink-700 mb-1.5">Địa chỉ</label>
                                     <input type="text" name="address" id="account-details-address" value="<?= $_SESSION['user']['address'] ?>"
                                         placeholder="Nhập địa chỉ nhận hàng của bạn"
+                                        data-rules="required|min:5|max:255"
                                         class="block w-full rounded-lg border border-ink-200 bg-white px-3.5 py-2.5 text-sm text-ink-900 placeholder:text-ink-300 focus:outline-none focus:ring-2 focus:ring-brand-500 focus:border-brand-500">
                                 </div>
 
@@ -232,6 +235,7 @@
                                     <label for="account-details-phone" class="block text-sm font-medium text-ink-700 mb-1.5">Số điện thoại</label>
                                     <input type="text" name="phone_user" id="account-details-phone" value="<?= $_SESSION['user']['phone_user'] ?>"
                                         placeholder="Nhập số điện thoại nhận hàng của bạn"
+                                        data-rules="required|phone"
                                         class="block w-full rounded-lg border border-ink-200 bg-white px-3.5 py-2.5 text-sm text-ink-900 placeholder:text-ink-300 focus:outline-none focus:ring-2 focus:ring-brand-500 focus:border-brand-500">
                                 </div>
 
@@ -249,7 +253,7 @@
                         <!-- Password -->
                         <div id="account-password" data-tab-panel role="tabpanel" aria-labelledby="account-password-tab"
                             class="account-tab-panel hidden rounded-2xl border border-ink-200 bg-white shadow-sm p-6">
-                            <form action="index.php?act=myaccount" method="post">
+                            <form action="index.php?act=myaccount" method="post" data-validate novalidate>
                             <div class="space-y-4">
                                 <div>
                                     <label for="account-password-username" class="block text-sm font-medium text-ink-700 mb-1.5">Tên đăng nhập</label>
@@ -260,11 +264,13 @@
                                 <div>
                                     <label for="account-password-newpass" class="block text-sm font-medium text-ink-700 mb-1.5">Mật khẩu mới</label>
                                     <input type="password" id="account-password-newpass" name="newpass" placeholder="Nhập mật khẩu mới"
+                                        data-rules="required|min:6"
                                         class="block w-full rounded-lg border border-ink-200 bg-white px-3.5 py-2.5 text-sm text-ink-900 placeholder:text-ink-300 focus:outline-none focus:ring-2 focus:ring-brand-500 focus:border-brand-500">
                                 </div>
                                 <div>
                                     <label for="account-password-confpass" class="block text-sm font-medium text-ink-700 mb-1.5">Xác nhận mật khẩu mới</label>
                                     <input type="password" id="account-password-confpass" name="repass" placeholder="Nhập lại mật khẩu mới"
+                                        data-rules="required|match:newpass" data-msg-match="Mật khẩu xác nhận không khớp"
                                         class="block w-full rounded-lg border border-ink-200 bg-white px-3.5 py-2.5 text-sm text-ink-900 placeholder:text-ink-300 focus:outline-none focus:ring-2 focus:ring-brand-500 focus:border-brand-500">
                                 </div>
 

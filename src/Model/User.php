@@ -18,7 +18,7 @@ class User
      * Mirrors old `register($user_name, $full_name, $email_user, $password)`,
      * extended with `$address`/`$phone_user`.
      */
-    public static function register($user_name, $full_name, $email_user, $password, $address = '', $phone_user = ''): void
+    public static function register(string $user_name, string $full_name, string $email_user, string $password, string $address = '', string $phone_user = ''): void
     {
         $sql = "INSERT INTO user (user_name, full_name, email_user, password, address, phone_user) VALUES (?, ?, ?, ?, ?, ?)";
         Database::execute($sql, $user_name, $full_name, $email_user, $password, $address, $phone_user);
@@ -30,10 +30,21 @@ class User
      *
      * @return array|false
      */
-    public static function check($user_name, $password)
+    public static function check(string $user_name, string $password)
     {
         $sql = "SELECT * FROM user WHERE ((user_name = ?) OR (email_user = ?)) AND password = ?";
         return Database::queryOne($sql, $user_name, $user_name, $password);
+    }
+
+    /**
+     * Whether a username or email is already taken — the `user` table has
+     * no unique constraint on either column, so without this check
+     * register() would silently create duplicate accounts.
+     */
+    public static function existsByUsernameOrEmail(string $user_name, string $email_user): bool
+    {
+        $sql = "SELECT 1 FROM user WHERE user_name = ? OR email_user = ? LIMIT 1";
+        return Database::queryOne($sql, $user_name, $email_user) !== false;
     }
 
     /**
@@ -42,7 +53,7 @@ class User
      *
      * @return array|false
      */
-    public static function checkPass($name, $email)
+    public static function checkPass(string $name, string $email)
     {
         $sql = "SELECT * FROM user WHERE user_name = ? AND email_user = ?";
         return Database::queryOne($sql, $name, $email);
@@ -55,7 +66,7 @@ class User
      *
      * @return array|false
      */
-    public static function byEmail($email)
+    public static function byEmail(string $email)
     {
         $sql = "SELECT * FROM user where email_user = ?";
         return Database::queryOne($sql, $email);
@@ -65,7 +76,7 @@ class User
      * Update a user's password directly (account settings flow).
      * Mirrors old `updatePass($user_name, $password)`.
      */
-    public static function updatePassword($user_name, $password): void
+    public static function updatePassword(string $user_name, string $password): void
     {
         $sql = "UPDATE `user` SET password = ? WHERE user_name = ?";
         Database::execute($sql, $password, $user_name);
@@ -75,7 +86,7 @@ class User
      * Reset a user's password by email (forgot-password flow).
      * Mirrors old `forgetPass($password, $email)`.
      */
-    public static function resetPassword($password, $email): void
+    public static function resetPassword(string $password, string $email): void
     {
         $sql = "UPDATE user SET password = ? WHERE email_user = ?";
         Database::execute($sql, $password, $email);
@@ -85,7 +96,7 @@ class User
      * Update profile fields; conditionally updates the avatar image.
      * Mirrors old `update_user(...)`.
      */
-    public static function update($id_user, $img_user, $full_name, $sex, $email_user, $address, $phone_user): void
+    public static function update(int $id_user, string $img_user, string $full_name, int $sex, string $email_user, string $address, string $phone_user): void
     {
         if ($img_user != '') {
             $sql = "UPDATE user SET

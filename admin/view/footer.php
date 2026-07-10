@@ -10,6 +10,9 @@
         </div> <!-- End Main Content Wrapper -->
     </div> <!-- End h-screen flex -->
     
+    <!-- Shared form-validation engine (same file used by the client storefront) -->
+    <script src="../src/js/form-validate.js"></script>
+
     <!-- Scripts for interactivity (DataTables, Dropdowns, etc.) -->
     <script>
         // Toggle submenus in sidebar (smooth grid-template-rows animation)

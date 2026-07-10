@@ -16,23 +16,69 @@ class AuthController extends Controller
     public function register(): void
     {
         if (isset($_POST['btn_register']) && $_POST['btn_register']) {
-            $user_name = $_POST['user_name'] ?? '';
-            $full_name = $_POST['full_name'] ?? '';
-            $email_user = $_POST['email_user'] ?? '';
+            $user_name = trim($_POST['user_name'] ?? '');
+            $full_name = trim($_POST['full_name'] ?? '');
+            $email_user = trim($_POST['email_user'] ?? '');
             $password = $_POST['password'] ?? '';
-            $address = $_POST['address'] ?? '';
-            $phone_user = $_POST['phone_user'] ?? '';
+            $address = trim($_POST['address'] ?? '');
+            $phone_user = trim($_POST['phone_user'] ?? '');
 
-            User::register($user_name, $full_name, $email_user, $password, $address, $phone_user);
-            echo '<script>alert("Đăng ký tài khoản thành công! Vui lòng đăng nhập")</script>';
-            // NOTE: old code's redirect target has a pre-existing typo
-            // ('act-login' instead of 'act=login', `index.php:84`); the
-            // browser discards the buffered body below on redirect either
-            // way, so we stop here instead of also re-rendering the form.
-            $this->redirect('index.php?act-login');
+            $error = $this->validateRegistration($user_name, $full_name, $email_user, $password, $address, $phone_user);
+
+            if ($error === null) {
+                User::register($user_name, $full_name, $email_user, $password, $address, $phone_user);
+                echo '<script>alert("Đăng ký tài khoản thành công! Vui lòng đăng nhập")</script>';
+                // NOTE: old code's redirect target has a pre-existing typo
+                // ('act-login' instead of 'act=login', `index.php:84`); the
+                // browser discards the buffered body below on redirect either
+                // way, so we stop here instead of also re-rendering the form.
+                $this->redirect('index.php?act-login');
+            }
+
+            echo '<script>alert(' . json_encode($error) . ')</script>';
         }
 
         $this->view('nguoidung/register');
+    }
+
+    /**
+     * Server-side mirror of the data-rules checks in view/nguoidung/register.php
+     * (src/js/form-validate.js) — a request that skips or tampers with the
+     * client-side JS must still be rejected here.
+     *
+     * @return string|null The first validation error message, or null if valid.
+     */
+    private function validateRegistration(
+        string $user_name,
+        string $full_name,
+        string $email_user,
+        string $password,
+        string $address,
+        string $phone_user
+    ): ?string {
+        if ($user_name === '' || strlen($user_name) < 3) {
+            return 'Tên đăng nhập phải có ít nhất 3 ký tự';
+        }
+        if ($full_name === '' || strlen($full_name) < 2) {
+            return 'Vui lòng nhập họ tên hợp lệ';
+        }
+        if ($email_user === '' || !filter_var($email_user, FILTER_VALIDATE_EMAIL)) {
+            return 'Địa chỉ email không hợp lệ';
+        }
+        if (strlen($password) < 6) {
+            return 'Mật khẩu phải có ít nhất 6 ký tự';
+        }
+        if ($address === '' || strlen($address) < 5) {
+            return 'Vui lòng nhập địa chỉ nhận hàng hợp lệ';
+        }
+        if (!preg_match('/^(\+?84|0)\d{9,10}$/', $phone_user)) {
+            return 'Số điện thoại không hợp lệ';
+        }
+        if (User::existsByUsernameOrEmail($user_name, $email_user)) {
+            return 'Tên đăng nhập hoặc email đã được sử dụng';
+        }
+
+        return null;
     }
 
     public function login(): void

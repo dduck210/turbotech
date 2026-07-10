@@ -105,7 +105,13 @@ if (isset($_GET['act'])) {
         case "update_category":
             if (isset($_POST['btn_update']) && ($_POST['btn_update'])) {
                 $id_cate = $_POST['id_cate'];
-                $name_cate = $_POST['name_cate'];
+                $name_cate = trim($_POST['name_cate']);
+                if ($name_cate === '') {
+                    echo '<script>document.addEventListener("DOMContentLoaded",()=>Swal.fire({toast:true,position:"top-end",icon:"error",title:"Vui lòng nhập tên loại !",showConfirmButton:false,timer:3000}));</script>';
+                    $one_loai = loadone_loai($id_cate);
+                    render('update_category', ['one_loai' => $one_loai]);
+                    break;
+                }
                 capnhat_loai($id_cate, $name_cate);
                 echo '<script>document.addEventListener("DOMContentLoaded",()=>Swal.fire({toast:true,position:"top-end",icon:"success",title:"Cập nhật loại thành công!",showConfirmButton:false,timer:3000}));</script>';
             }
@@ -264,11 +270,27 @@ if (isset($_GET['act'])) {
         case 'update_user':
             if (isset($_POST['btn_update']) && ($_POST['btn_update'])) {
                 $id_user = $_POST['id_user'];
-                $user_name = $_POST['user_name'];
-                $full_name = $_POST['full_name'];
-                $email_user = $_POST['email_user'];
+                $user_name = trim($_POST['user_name']);
+                $full_name = trim($_POST['full_name']);
+                $email_user = trim($_POST['email_user']);
                 $password = $_POST['password'];
                 $role = $_POST['role'];
+                if ($user_name === '' || $full_name === '') {
+                    echo '<script>document.addEventListener("DOMContentLoaded",()=>Swal.fire({toast:true,position:"top-end",icon:"error",title:"Vui lòng nhập đầy đủ nội dung !",showConfirmButton:false,timer:3000}));</script>';
+                    $user = loadone_user($id_user);
+                    render('update_user', ['user' => $user]);
+                    break;
+                } elseif (!filter_var($email_user, FILTER_VALIDATE_EMAIL)) {
+                    echo '<script>document.addEventListener("DOMContentLoaded",()=>Swal.fire({toast:true,position:"top-end",icon:"error",title:"Email không hợp lệ !",showConfirmButton:false,timer:3000}));</script>';
+                    $user = loadone_user($id_user);
+                    render('update_user', ['user' => $user]);
+                    break;
+                } elseif (strlen($password) < 6) {
+                    echo '<script>document.addEventListener("DOMContentLoaded",()=>Swal.fire({toast:true,position:"top-end",icon:"error",title:"Mật khẩu phải có ít nhất 6 ký tự !",showConfirmButton:false,timer:3000}));</script>';
+                    $user = loadone_user($id_user);
+                    render('update_user', ['user' => $user]);
+                    break;
+                }
                 update_user($id_user, $user_name, $full_name, $email_user, $password, $role);
                 echo '<script>document.addEventListener("DOMContentLoaded",()=>Swal.fire({toast:true,position:"top-end",icon:"success",title:"Cập nhật tài khoản thành công!",showConfirmButton:false,timer:3000}));</script>';
             }

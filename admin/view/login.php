@@ -40,15 +40,15 @@
                         <p class="text-slate-500">Chào mừng trở lại Turbotech!</p>
                     </div>
 
-                    <form class="space-y-6" action="index.php?act=login" method="post">
+                    <form class="space-y-6" action="index.php?act=login" method="post" data-validate novalidate>
                         <div>
                             <label class="block text-sm font-medium text-slate-700 mb-2">Tài khoản</label>
-                            <input type="text" name="user_name" placeholder="Nhập tài khoản" class="w-full rounded-xl border border-slate-200 px-5 py-3 focus:ring-2 focus:ring-brand-500 focus:border-brand-500 outline-none transition-all bg-slate-50 focus:bg-white text-slate-800" required>
+                            <input type="text" name="user_name" placeholder="Nhập tài khoản" data-rules="required" class="w-full rounded-xl border border-slate-200 px-5 py-3 focus:ring-2 focus:ring-brand-500 focus:border-brand-500 outline-none transition-all bg-slate-50 focus:bg-white text-slate-800">
                         </div>
-                        
+
                         <div>
                             <label class="block text-sm font-medium text-slate-700 mb-2">Mật khẩu</label>
-                            <input type="password" name="password" placeholder="Nhập mật khẩu" class="w-full rounded-xl border border-slate-200 px-5 py-3 focus:ring-2 focus:ring-brand-500 focus:border-brand-500 outline-none transition-all bg-slate-50 focus:bg-white text-slate-800" required>
+                            <input type="password" name="password" placeholder="Nhập mật khẩu" data-rules="required" class="w-full rounded-xl border border-slate-200 px-5 py-3 focus:ring-2 focus:ring-brand-500 focus:border-brand-500 outline-none transition-all bg-slate-50 focus:bg-white text-slate-800">
                         </div>
 
                         <input type="submit" name="btn_login" value="Đăng nhập" class="w-full bg-slate-900 hover:bg-brand-600 text-white font-semibold rounded-xl px-4 py-3.5 mt-4 transition-all active:scale-[0.98] cursor-pointer shadow-lg shadow-slate-900/20 hover:shadow-brand-500/30">
@@ -69,5 +69,6 @@
             &copy; 2026 Turbotech Admin. Premium Access.
         </div>
     </div>
+    <script src="../src/js/form-validate.js"></script>
 </body>
 </html>

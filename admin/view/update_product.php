@@ -18,7 +18,7 @@
                 ?>
                 <div class="p-6">
                     <div class="form-addcate">
-                        <form action="./index.php?act=update_product" method="post" enctype="multipart/form-data">
+                        <form action="./index.php?act=update_product" method="post" enctype="multipart/form-data" data-validate novalidate>
                             <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                                 <div class="mb-4">
                                     <label for="formGroupExampleInput" class="block text-sm font-medium text-slate-700 mb-1">Mã sản phẩm</label>
@@ -26,33 +26,33 @@
                                 </div>
                                 <div class="mb-4">
                                     <label for="formGroupExampleInput" class="block text-sm font-medium text-slate-700 mb-1">Tên sản phẩm</label>
-                                    <input type="text" name="name_pro" class="w-full rounded-lg border border-slate-200 px-4 py-2 focus:ring-2 focus:ring-brand-500 outline-none transition-all" placeholder="Tên sản phẩm" value="<?= $name_pro ?>">
+                                    <input type="text" name="name_pro" data-rules="required|min:2|max:255" class="w-full rounded-lg border border-slate-200 px-4 py-2 focus:ring-2 focus:ring-brand-500 outline-none transition-all" placeholder="Tên sản phẩm" value="<?= $name_pro ?>">
                                 </div>
                             </div>
                             <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                                 <div class="mb-4">
                                     <label for="formGroupExampleInput" class="block text-sm font-medium text-slate-700 mb-1">Giá</label>
-                                    <input type="text" name="price" class="w-full rounded-lg border border-slate-200 px-4 py-2 focus:ring-2 focus:ring-brand-500 outline-none transition-all" placeholder="Giá sản phẩm" value="<?= $price ?>">
+                                    <input type="text" name="price" data-rules="required|number|minval:1" class="w-full rounded-lg border border-slate-200 px-4 py-2 focus:ring-2 focus:ring-brand-500 outline-none transition-all" placeholder="Giá sản phẩm" value="<?= $price ?>">
                                 </div>
                                 <div class="mb-4">
                                     <label for="formGroupExampleInput" class="block text-sm font-medium text-slate-700 mb-1">Giảm giá</label>
-                                    <input type="text" name="discount" class="w-full rounded-lg border border-slate-200 px-4 py-2 focus:ring-2 focus:ring-brand-500 outline-none transition-all" placeholder="Nhập số % mà sản phẩm được giảm giá" value="<?= $discount ?>">
+                                    <input type="text" name="discount" data-rules="number|minval:0" class="w-full rounded-lg border border-slate-200 px-4 py-2 focus:ring-2 focus:ring-brand-500 outline-none transition-all" placeholder="Nhập số % mà sản phẩm được giảm giá" value="<?= $discount ?>">
                                 </div>
                             </div>
                             <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                                 <div class="mb-4">
                                     <label for="formGroupExampleInput" class="block text-sm font-medium text-slate-700 mb-1">Số lượng tồn kho</label>
-                                    <input type="number" name="stock" min="0" class="w-full rounded-lg border border-slate-200 px-4 py-2 focus:ring-2 focus:ring-brand-500 outline-none transition-all" placeholder="Nhập số lượng hàng tồn kho" value="<?= $stock ?>">
+                                    <input type="number" name="stock" min="0" data-rules="required|number|minval:0" class="w-full rounded-lg border border-slate-200 px-4 py-2 focus:ring-2 focus:ring-brand-500 outline-none transition-all" placeholder="Nhập số lượng hàng tồn kho" value="<?= $stock ?>">
                                 </div>
                                 <div class="mb-4">
                                     <label for="formGroupExampleInput" class="block text-sm font-medium text-slate-700 mb-1">Thông báo hết hàng</label>
-                                    <input type="text" name="stock_message" maxlength="255" class="w-full rounded-lg border border-slate-200 px-4 py-2 focus:ring-2 focus:ring-brand-500 outline-none transition-all" placeholder="Để trống sẽ hiện: Hết hàng" value="<?= htmlspecialchars($stock_message ?? '') ?>">
+                                    <input type="text" name="stock_message" maxlength="255" data-rules="max:255" class="w-full rounded-lg border border-slate-200 px-4 py-2 focus:ring-2 focus:ring-brand-500 outline-none transition-all" placeholder="Để trống sẽ hiện: Hết hàng" value="<?= htmlspecialchars($stock_message ?? '') ?>">
                                 </div>
                             </div>
                             <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                                 <div class="mb-4">
                                     <label for="exampleFormControlSelect1" class="block text-sm font-medium text-slate-700 mb-1">Loại máy tính</label>
-                                    <select class="w-full rounded-lg border border-slate-200 px-4 py-2 focus:ring-2 focus:ring-brand-500 outline-none transition-all bg-white" name="idcate" id="exampleFormControlSelect1">
+                                    <select class="w-full rounded-lg border border-slate-200 px-4 py-2 focus:ring-2 focus:ring-brand-500 outline-none transition-all bg-white" name="idcate" id="exampleFormControlSelect1" data-rules="minval:1" data-msg-minval="Vui lòng chọn loại sản phẩm">
                                         <option value="0">Chọn loại</option>
                                         <?php
                                         foreach ($ds_loai as $loai) {
@@ -76,7 +76,7 @@
 
                             <div class="mb-4 mt-3">
                                 <label for="formGroupExampleInput" class="block text-sm font-medium text-slate-700 mb-1">Mô tả ngắn</label>
-                                <input type="text" name="short_des" class="w-full rounded-lg border border-slate-200 px-4 py-2 focus:ring-2 focus:ring-brand-500 outline-none transition-all" placeholder="Mô tả tóm tắt sản phẩm" value="<?= $short_des ?>">
+                                <input type="text" name="short_des" data-rules="required|min:5|max:500" class="w-full rounded-lg border border-slate-200 px-4 py-2 focus:ring-2 focus:ring-brand-500 outline-none transition-all" placeholder="Mô tả tóm tắt sản phẩm" value="<?= $short_des ?>">
                             </div>
                             <div class="mb-4 mt-3">
                                 <label for="comment" class="block text-sm font-medium text-slate-700 mb-1">Mô tả chi tiết</label>

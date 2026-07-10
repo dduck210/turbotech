@@ -52,6 +52,7 @@
 <script src="./src/js/plugins.min.js"></script>
 <script src="./src/js/ajax-mail.js"></script>
 <script src="./src/js/main.js"></script>
+<script src="./src/js/form-validate.js"></script>
 </body>
 
 </html>

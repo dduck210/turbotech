@@ -21,12 +21,13 @@
         <?php endif; ?>
 
         <div class="mx-auto max-w-md rounded-2xl border border-ink-200 bg-white shadow-sm p-6 sm:p-8">
-            <form action="index.php?act=login" method="post">
+            <form action="index.php?act=login" method="post" data-validate novalidate>
                 <h1 class="mb-6 text-center font-heading text-2xl font-bold text-ink-900">Đăng nhập tài khoản</h1>
 
                 <div class="mb-4">
                     <label for="login-user-name" class="block text-sm font-medium text-ink-700 mb-1.5">Tài khoản</label>
                     <input type="text" id="login-user-name" name="user_name" placeholder="Nhập tên tài khoản hoặc địa chỉ email của bạn"
+                        data-rules="required"
                         class="block w-full rounded-lg border border-ink-200 bg-white px-3.5 py-2.5 text-sm text-ink-900 placeholder:text-ink-300 focus:outline-none focus:ring-2 focus:ring-brand-500 focus:border-brand-500">
                 </div>
 
@@ -34,6 +35,7 @@
                     <label for="login-password" class="block text-sm font-medium text-ink-700 mb-1.5">Mật khẩu</label>
                     <div class="relative">
                         <input type="password" id="login-password" name="password" placeholder="Nhập mật khẩu của bạn"
+                            data-rules="required"
                             class="block w-full rounded-lg border border-ink-200 bg-white px-3.5 py-2.5 pr-11 text-sm text-ink-900 placeholder:text-ink-300 focus:outline-none focus:ring-2 focus:ring-brand-500 focus:border-brand-500">
                         <button type="button" id="login-password-toggle" aria-label="Hiện/ẩn mật khẩu"
                             class="absolute inset-y-0 right-0 flex h-11 w-11 items-center justify-center text-ink-500 hover:text-ink-900 focus:outline-none focus:ring-2 focus:ring-brand-500 rounded-lg">

@@ -14,32 +14,36 @@
     <div class="flex justify-center">
         <div class="w-full lg:w-3/4">
             <!-- form liên hệ-->
-            <form action="index.php?act=contact" method="post" class="rounded-2xl border border-ink-200 bg-white p-6 shadow-sm sm:p-8">
+            <form action="index.php?act=contact" method="post" data-validate novalidate class="rounded-2xl border border-ink-200 bg-white p-6 shadow-sm sm:p-8">
                 <h2 class="text-center font-heading text-2xl font-bold text-ink-900">Liên hệ Turbotech</h2>
                 <div class="mt-6 grid grid-cols-1 gap-5">
                     <div>
                         <label for="lienhe-name" class="mb-1.5 block text-sm font-medium text-ink-700">Họ và tên</label>
                         <input type="text" id="lienhe-name" name="name"
+                            data-rules="required|min:2|max:100"
                             class="block w-full rounded-lg border border-ink-200 bg-white px-3.5 py-2.5 text-sm text-ink-900 placeholder:text-ink-300 focus:outline-none focus:ring-2 focus:ring-brand-500 focus:border-brand-500"
-                            placeholder="Nhập họ và tên của bạn" required>
+                            placeholder="Nhập họ và tên của bạn">
                     </div>
                     <div>
                         <label for="lienhe-email" class="mb-1.5 block text-sm font-medium text-ink-700">Email</label>
                         <input type="email" id="lienhe-email" name="email"
+                            data-rules="required|email"
                             class="block w-full rounded-lg border border-ink-200 bg-white px-3.5 py-2.5 text-sm text-ink-900 placeholder:text-ink-300 focus:outline-none focus:ring-2 focus:ring-brand-500 focus:border-brand-500"
-                            placeholder="Nhập  địa chỉ email của bạn" required>
+                            placeholder="Nhập  địa chỉ email của bạn">
                     </div>
                     <div>
                         <label for="lienhe-phone" class="mb-1.5 block text-sm font-medium text-ink-700">Số điện thoại</label>
                         <input type="text" id="lienhe-phone" name="phone"
+                            data-rules="required|phone"
                             class="block w-full rounded-lg border border-ink-200 bg-white px-3.5 py-2.5 text-sm text-ink-900 placeholder:text-ink-300 focus:outline-none focus:ring-2 focus:ring-brand-500 focus:border-brand-500"
-                            placeholder="Nhập số điện thoại của bạn" required>
+                            placeholder="Nhập số điện thoại của bạn">
                     </div>
                     <div>
                         <label for="lienhe-content" class="mb-1.5 block text-sm font-medium text-ink-700">Vấn đề</label>
                         <textarea id="lienhe-content" name="contennt" rows="5"
+                            data-rules="required|min:10"
                             class="block w-full rounded-lg border border-ink-200 bg-white px-3.5 py-2.5 text-sm text-ink-900 placeholder:text-ink-300 focus:outline-none focus:ring-2 focus:ring-brand-500 focus:border-brand-500"
-                            placeholder="Nhập câu hỏi của bạn..." required></textarea>
+                            placeholder="Nhập câu hỏi của bạn..."></textarea>
                     </div>
                     <div class="flex justify-center sm:justify-end">
                         <input type="submit" name="btn_contact" value="Gửi"
