@@ -5,6 +5,7 @@ namespace Codemoi\Controller;
 use Codemoi\Core\Controller;
 use Codemoi\Model\Auth;
 use Codemoi\Model\Cart;
+use Codemoi\Model\Coupon;
 use Codemoi\Model\Order;
 use Codemoi\Model\Product;
 use Codemoi\Model\User;
@@ -28,12 +29,98 @@ class CheckoutController extends Controller
             unset($_SESSION['errorMessage']);
         }
 
-        $this->view('giohang/bill');
+        // Re-validate the session's applied coupon against the current
+        // cart on every page load, so a stale/expired code (or one that no
+        // longer matches the cart contents) is silently dropped instead of
+        // showing a discount that `confirm()` won't actually honor.
+        $coupon = $this->resolveCoupon(Cart::total());
+
+        $this->view('giohang/bill', [
+            'couponCode' => $coupon['code'],
+            'couponDiscount' => $coupon['discount'],
+        ]);
     }
 
     public function pay(): void
     {
         $this->view('qr');
+    }
+
+    /**
+     * AJAX coupon-code apply on the billing page. Same full-page-wrapped
+     * response constraint as CartController::edit() — result is pulled out
+     * of an HTML-comment marker instead of parsed as JSON. Storing the
+     * applied coupon in the session (rather than a hidden form field) means
+     * the discount actually charged at `confirm()` can never be tampered
+     * with by the client; it's always the last coupon this same session
+     * successfully validated.
+     */
+    public function applyCoupon(): void
+    {
+        $code = trim($_POST['coupon_code'] ?? '');
+        $total = Cart::total();
+
+        if ($code === '') {
+            unset($_SESSION['coupon']);
+            echo '<!--COUPON_RESULT:' . json_encode(['success' => false, 'message' => 'Vui lòng nhập mã giảm giá.']) . ':END-->';
+            return;
+        }
+
+        $validation = Coupon::validateForCart($code, Cart::items(), $total);
+
+        if (!$validation['ok']) {
+            unset($_SESSION['coupon']);
+            echo '<!--COUPON_RESULT:' . json_encode(['success' => false, 'message' => $validation['message']]) . ':END-->';
+            return;
+        }
+
+        $_SESSION['coupon'] = [
+            'code' => $validation['coupon']['code'],
+            'id_coupon' => (int) $validation['coupon']['id_coupon'],
+        ];
+
+        echo '<!--COUPON_RESULT:' . json_encode([
+            'success' => true,
+            'message' => $validation['message'],
+            'code' => $validation['coupon']['code'],
+            'discount' => $validation['discount'],
+            'total' => $total - $validation['discount'],
+        ]) . ':END-->';
+    }
+
+    public function removeCoupon(): void
+    {
+        unset($_SESSION['coupon']);
+        echo '<!--COUPON_RESULT:' . json_encode(['success' => true, 'total' => Cart::total()]) . ':END-->';
+    }
+
+    /**
+     * Re-validate the session's applied coupon (if any) against the
+     * current cart at the moment of order creation — the coupon could have
+     * expired, hit its usage limit, or the cart contents could have
+     * changed since it was applied — and return the discount to actually
+     * charge. Never trusts a discount amount computed earlier.
+     *
+     * @return array{code: string|null, discount: int, id_coupon: int|null}
+     */
+    private function resolveCoupon(int $orderTotal): array
+    {
+        if (!isset($_SESSION['coupon']['code'])) {
+            return ['code' => null, 'discount' => 0, 'id_coupon' => null];
+        }
+
+        $validation = Coupon::validateForCart($_SESSION['coupon']['code'], Cart::items(), $orderTotal);
+
+        if (!$validation['ok']) {
+            unset($_SESSION['coupon']);
+            return ['code' => null, 'discount' => 0, 'id_coupon' => null];
+        }
+
+        return [
+            'code' => $validation['coupon']['code'],
+            'discount' => $validation['discount'],
+            'id_coupon' => (int) $validation['coupon']['id_coupon'],
+        ];
     }
 
     /**
@@ -106,6 +193,9 @@ class CheckoutController extends Controller
                 }
             }
 
+            $coupon = $this->resolveCoupon($total_amount);
+            $total_amount = $total_amount - $coupon['discount'];
+
             $idbill = Order::create(
                 $bill_code,
                 $user['id_user'],
@@ -116,9 +206,16 @@ class CheckoutController extends Controller
                 $email,
                 $payment,
                 $order_date,
-                $total_amount
+                $total_amount,
+                $coupon['code'],
+                $coupon['discount']
             );
             $_SESSION['idbill'] = $idbill;
+
+            if ($coupon['id_coupon'] !== null) {
+                Coupon::incrementUsage($coupon['id_coupon']);
+            }
+            unset($_SESSION['coupon']);
 
             // Kept for parity with the old call graph (return value unused
             // even in the legacy code); model dropped the "not found" echo.
@@ -208,6 +305,9 @@ class CheckoutController extends Controller
                     }
                 }
 
+                $coupon = $this->resolveCoupon($total_amount);
+                $total_amount = $total_amount - $coupon['discount'];
+
                 $idbill = Order::create(
                     $bill_code,
                     $user['id_user'],
@@ -218,9 +318,17 @@ class CheckoutController extends Controller
                     $email,
                     $payment,
                     $order_date,
-                    $total_amount
+                    $total_amount,
+                    $coupon['code'],
+                    $coupon['discount']
                 );
                 $_SESSION['idbill'] = $idbill;
+
+                if ($coupon['id_coupon'] !== null) {
+                    Coupon::incrementUsage($coupon['id_coupon']);
+                }
+                unset($_SESSION['coupon']);
+
                 $this->redirect('?act=viewbill');
             }
 

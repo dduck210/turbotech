@@ -148,9 +148,37 @@
         <div class="mt-8 flex justify-end">
             <div class="w-full md:w-96 rounded-2xl border border-ink-200 bg-white p-6 shadow-sm">
                 <h2 class="font-heading text-lg font-semibold text-ink-900 mb-4">Tổng giỏ hàng</h2>
-                <div class="flex items-center justify-between text-sm text-ink-700 mb-6">
-                    <span>Tổng thành tiền</span>
-                    <span class="text-lg font-bold text-brand-600"><?= number_format($total_amount) ?> ₫</span>
+
+                <div class="mb-4">
+                    <label for="coupon-code" class="block text-sm font-medium text-ink-700 mb-1.5">Mã giảm giá</label>
+                    <div class="flex gap-2">
+                        <input type="text" id="coupon-code" placeholder="Nhập mã giảm giá"
+                            value="<?= htmlspecialchars($couponCode ?? '') ?>"
+                            class="block w-full rounded-lg border border-ink-200 bg-white px-3.5 py-2.5 text-sm text-ink-900 placeholder:text-ink-300 focus:outline-none focus:ring-2 focus:ring-brand-500 focus:border-brand-500 uppercase" />
+                        <button type="button" id="coupon-apply-btn"
+                            class="shrink-0 rounded-lg bg-ink-900 px-4 py-2.5 text-sm font-semibold text-white hover:bg-ink-800 transition-colors focus:outline-none focus:ring-2 focus:ring-brand-500">
+                            Áp dụng
+                        </button>
+                    </div>
+                    <p id="coupon-message" class="mt-1.5 text-xs <?= $couponCode ? 'text-emerald-600' : 'hidden' ?>">
+                        <?php if ($couponCode) : ?>
+                            Đã áp dụng mã <?= htmlspecialchars($couponCode) ?>
+                            <button type="button" id="coupon-remove-btn" class="ml-1 font-semibold text-red-600 underline">Xóa mã</button>
+                        <?php endif; ?>
+                    </p>
+                </div>
+
+                <div class="flex items-center justify-between text-sm text-ink-700 mb-1">
+                    <span>Tạm tính</span>
+                    <span id="coupon-subtotal" class="font-semibold text-ink-900"><?= number_format($total_amount) ?> ₫</span>
+                </div>
+                <div id="coupon-discount-row" class="flex items-center justify-between text-sm text-emerald-600 mb-1 <?= $couponDiscount > 0 ? '' : 'hidden' ?>">
+                    <span>Giảm giá</span>
+                    <span id="coupon-discount-value">-<?= number_format($couponDiscount) ?> ₫</span>
+                </div>
+                <div class="flex items-center justify-between text-sm text-ink-700 mb-6 border-t border-ink-100 pt-3">
+                    <span>Tổng thanh toán</span>
+                    <span id="coupon-total" class="text-lg font-bold text-brand-600"><?= number_format($total_amount - $couponDiscount) ?> ₫</span>
                 </div>
                 <input type="submit" name="orderconfirm" value="Xác nhận đặt hàng"
                     class="inline-flex w-full items-center justify-center gap-2 rounded-lg bg-brand-600 px-5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-brand-700 transition-colors focus:outline-none focus:ring-2 focus:ring-brand-500 focus:ring-offset-2 cursor-pointer" />
@@ -158,3 +186,70 @@
         </div>
     </form>
 </div>
+
+<script>
+(function () {
+    var subtotal = <?= (int) $total_amount ?>;
+
+    function formatVnd(n) {
+        // Comma thousands-separator to match PHP's number_format() used
+        // everywhere else on this page (not toLocaleString('vi-VN'), which
+        // uses periods and would look inconsistent after an AJAX update).
+        return Number(n).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',') + ' ₫';
+    }
+
+    function bindRemoveCoupon() {
+        var btn = document.getElementById('coupon-remove-btn');
+        if (!btn) return;
+        btn.addEventListener('click', function () {
+            $.ajax({
+                url: '?act=removecoupon',
+                type: 'POST',
+                success: function (data) {
+                    var match = /<!--COUPON_RESULT:(.*?):END-->/.exec(data);
+                    if (!match) return;
+                    document.getElementById('coupon-code').value = '';
+                    var msgEl = document.getElementById('coupon-message');
+                    msgEl.className = 'mt-1.5 text-xs hidden';
+                    msgEl.innerHTML = '';
+                    document.getElementById('coupon-discount-row').classList.add('hidden');
+                    document.getElementById('coupon-total').textContent = formatVnd(subtotal);
+                }
+            });
+        });
+    }
+
+    document.getElementById('coupon-apply-btn')?.addEventListener('click', function () {
+        var code = document.getElementById('coupon-code').value.trim();
+        $.ajax({
+            url: '?act=applycoupon',
+            type: 'POST',
+            data: { coupon_code: code },
+            success: function (data) {
+                var match = /<!--COUPON_RESULT:(.*?):END-->/.exec(data);
+                if (!match) return;
+                var result = JSON.parse(match[1]);
+                var msgEl = document.getElementById('coupon-message');
+
+                if (result.success) {
+                    msgEl.className = 'mt-1.5 text-xs text-emerald-600';
+                    msgEl.innerHTML = 'Đã áp dụng mã ' + result.code +
+                        ' <button type="button" id="coupon-remove-btn" class="ml-1 font-semibold text-red-600 underline">Xóa mã</button>';
+                    document.getElementById('coupon-discount-row').classList.remove('hidden');
+                    document.getElementById('coupon-discount-value').textContent = '-' + formatVnd(result.discount);
+                    document.getElementById('coupon-total').textContent = formatVnd(result.total);
+                    bindRemoveCoupon();
+                } else {
+                    msgEl.className = 'mt-1.5 text-xs text-red-600';
+                    msgEl.textContent = result.message;
+                }
+            },
+            error: function () {
+                alert('Không thể áp dụng mã giảm giá, vui lòng thử lại!');
+            }
+        });
+    });
+
+    bindRemoveCoupon();
+})();
+</script>

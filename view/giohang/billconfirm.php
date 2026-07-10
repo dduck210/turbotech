@@ -33,6 +33,12 @@
                 <dt class="text-ink-500">Thời gian đặt hàng</dt>
                 <dd class="font-semibold text-ink-900"><?= $order_date ?></dd>
             </div>
+            <?php if (!empty($coupon_code)) : ?>
+            <div class="flex items-center justify-between">
+                <dt class="text-ink-500">Mã giảm giá</dt>
+                <dd class="font-semibold text-emerald-600"><?= htmlspecialchars($coupon_code) ?> (-<?= number_format($discount_amount) ?>₫)</dd>
+            </div>
+            <?php endif; ?>
             <div class="flex items-center justify-between">
                 <dt class="text-ink-500">Tổng thành tiền</dt>
                 <dd class="font-semibold text-ink-900"><?= number_format($total_amount) ?>₫</dd>
@@ -84,7 +90,7 @@
         <!-- phương thức thanh toán -->
         <div class="mb-6 rounded-2xl border border-ink-200 bg-white p-6 shadow-sm">
             <h2 class="font-heading text-lg font-semibold text-ink-900 mb-4">Phương thức thanh toán</h2>
-            <label class="flex min-h-[44px] items-center gap-3 rounded-lg border border-ink-200 px-4 py-3">
+            <label class="flex min-h-11 items-center gap-3 rounded-lg border border-ink-200 px-4 py-3">
                 <input class="h-4 w-4 text-brand-600 focus:ring-2 focus:ring-brand-500" type="radio" name="payment" id="inlineRadio1" checked>
                 <span class="text-sm font-semibold text-brand-600">
                     <?php if ($payment == 1) {

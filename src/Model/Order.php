@@ -24,9 +24,11 @@ class Order
         string $email,
         string $payment,
         string $order_date,
-        string $total_amount
+        string $total_amount,
+        ?string $coupon_code = null,
+        int $discount_amount = 0
     ): string {
-        $sql = "INSERT INTO bill(bill_code,id_user, user_name, full_name, address, phone, email, payment, order_date, total_amount) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        $sql = "INSERT INTO bill(bill_code,id_user, user_name, full_name, address, phone, email, payment, order_date, total_amount, coupon_code, discount_amount) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
         return Database::executeReturnId(
             $sql,
             $bill_code,
@@ -38,7 +40,9 @@ class Order
             $email,
             $payment,
             $order_date,
-            $total_amount
+            $total_amount,
+            $coupon_code,
+            $discount_amount
         );
     }
 
