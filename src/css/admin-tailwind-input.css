@@ -55,3 +55,25 @@ h1, h2, h3, h4, h5, h6 {
 .animate-admin-fade-in {
     animation: admin-fade-in 0.35s ease-out;
 }
+
+/* Form validation error state (src/js/form-validate.js). Plain CSS rather
+   than Tailwind utility classes: the Tailwind CLI's content scanner does
+   not scan .js files in this project, so classes referenced only from
+   form-validate.js would be purged from the compiled bundle. Also uses
+   !important on .is-invalid so it reliably overrides a field's existing
+   border-slate-200 utility regardless of Tailwind's generation order. */
+.is-invalid {
+    border-color: #ef4444 !important;
+}
+.is-invalid:focus {
+    --tw-ring-color: #ef4444 !important;
+}
+.field-error {
+    margin-top: 0.25rem;
+    font-size: 0.75rem;
+    line-height: 1rem;
+    color: #dc2626;
+}
+.field-error.hidden {
+    display: none;
+}
