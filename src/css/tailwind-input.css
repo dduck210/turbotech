@@ -30,6 +30,47 @@ body {
   background-color: var(--color-ink-50);
 }
 
+/* Inter's glyph for the Vietnamese Dong sign (₫, U+20AB) draws with a full
+   horizontal stroke through the base that reads as a stray underline at
+   every weight (confirmed by isolated rendering tests) — a defect in the
+   typeface itself, not our CSS. Manrope draws it cleanly, so redirect just
+   this one code point to Manrope's own hosted glyph (same Google Fonts CDN
+   already used sitewide) while every other character keeps rendering from
+   Inter as normal. Covers every weight Inter is loaded at (400/500/600/700)
+   so it fixes all ₫ displays sitewide without touching each template. */
+@font-face {
+  font-family: "Inter";
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url(https://fonts.gstatic.com/s/manrope/v20/xn7_YHE41ni1AdIRqAuZuw1Bx9mbZk79FN_N-bnBeA.woff2) format("woff2");
+  unicode-range: U+20AB;
+}
+@font-face {
+  font-family: "Inter";
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url(https://fonts.gstatic.com/s/manrope/v20/xn7_YHE41ni1AdIRqAuZuw1Bx9mbZk7PFN_N-bnBeA.woff2) format("woff2");
+  unicode-range: U+20AB;
+}
+@font-face {
+  font-family: "Inter";
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: url(https://fonts.gstatic.com/s/manrope/v20/xn7_YHE41ni1AdIRqAuZuw1Bx9mbZk4jE9_N-bnBeA.woff2) format("woff2");
+  unicode-range: U+20AB;
+}
+@font-face {
+  font-family: "Inter";
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url(https://fonts.gstatic.com/s/manrope/v20/xn7_YHE41ni1AdIRqAuZuw1Bx9mbZk4aE9_N-bnBeA.woff2) format("woff2");
+  unicode-range: U+20AB;
+}
+
 h1,
 h2,
 h3,
