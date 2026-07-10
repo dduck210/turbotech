@@ -1,191 +1,110 @@
-<ul class="navbar-nav sidebar sidebar-dark accordion" id="accordionSidebar" style="background-color: black;">
+<?php
+$current_act = $_GET['act'] ?? 'dashboard';
+if ($current_act === '/') {
+    $current_act = 'dashboard';
+}
+$productsActive = in_array($current_act, ['add_product', 'list_product', 'edit_product'], true);
+$categoriesActive = in_array($current_act, ['add_category', 'list_category', 'edit_category'], true);
 
-    <!-- Sidebar - Brand -->
-    <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.php">
-        <div class="sidebar-brand-icon rotate-n-15">
-            <i class="fas fa-laugh-wink"></i>
+function nav_link_class(bool $active): string
+{
+    return $active
+        ? 'flex items-center px-3 py-2.5 rounded-lg bg-slate-800 text-white transition-colors group'
+        : 'flex items-center px-3 py-2.5 rounded-lg hover:bg-slate-800 text-slate-300 transition-colors group';
+}
+
+function nav_icon_class(bool $active): string
+{
+    return $active
+        ? 'w-6 text-center text-brand-500 transition-colors'
+        : 'w-6 text-center text-slate-400 group-hover:text-white transition-colors';
+}
+?>
+<aside id="mobile-sidebar-nav" class="w-64 bg-slate-900 text-slate-300 shrink-0 hidden md:flex flex-col shadow-2xl relative z-20">
+    <!-- Logo -->
+    <a href="index.php?act=admin" class="flex items-center justify-center h-20 border-b border-slate-800 hover:bg-slate-800/50 transition-colors group">
+        <div class="bg-brand-600 text-white p-2.5 rounded-xl group-hover:scale-110 transition-transform shadow-lg shadow-brand-500/30 flex items-center justify-center">
+            <i class="fas fa-laugh-wink text-xl"></i>
         </div>
-        <div class="sidebar-brand-text mx-3">Trang Quản Trị Viên</div>
+        <span class="ml-3 font-heading font-bold text-lg text-white tracking-wide">Turbotech Admin</span>
     </a>
 
-    <!-- Divider -->
-    <hr class="sidebar-divider my-0">
-
-    <!-- Nav Item - Dashboard -->
-    <li class="nav-item active">
-        <a class="nav-link" href="index.php?act=admin">
-            <i class="fas fa-fw fa-tachometer-alt"></i>
-            <span>Bảng điều khiển</span></a>
-    </li>
-
-    <!-- Divider -->
-    <hr class="sidebar-divider">
-
-    <!-- Heading -->
-    <div class="sidebar-heading">
-        QUẢN LÝ
-    </div>
-
-    <!-- Nav Item - Pages Collapse Menu -->
-    <li class="nav-item">
-        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="true"
-            aria-controls="collapseTwo">
-            <i class="fas fa-brands fa-product-hunt"></i>
-            <!-- <i class="fas fa-fw fa-cog"></i> -->
-            <span>Sản Phẩm</span>
+    <!-- Nav Links -->
+    <div class="flex-1 overflow-y-auto py-6 px-4 space-y-1">
+        <div class="text-xs font-semibold text-slate-500 uppercase tracking-wider mb-2 mt-2 px-3">Main</div>
+        <a href="index.php?act=admin" class="<?= nav_link_class($current_act === 'dashboard') ?>">
+            <i class="fas fa-tachometer-alt <?= nav_icon_class($current_act === 'dashboard') ?>"></i>
+            <span class="ml-3 font-medium">Bảng điều khiển</span>
         </a>
-        <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
-            <div class="bg-white py-2 collapse-inner rounded">
-                <!-- <h6 class="collapse-header">Custom Components:</h6> -->
-                <a class="collapse-item" href="index.php?act=add_product">Thêm sản phẩm</a>
-                <a class="collapse-item" href="index.php?act=list_product">Danh sách sản phẩm</a>
+
+        <div class="text-xs font-semibold text-slate-500 uppercase tracking-wider mb-2 mt-6 px-3">Quản lý</div>
+
+        <!-- Products -->
+        <div class="space-y-1">
+            <div class="<?= $productsActive ? 'px-3 py-2.5 rounded-lg bg-slate-800 text-white transition-colors flex items-center justify-between cursor-pointer group' : 'px-3 py-2.5 rounded-lg hover:bg-slate-800 text-slate-300 transition-colors flex items-center justify-between cursor-pointer group' ?>" onclick="toggleSubmenu('submenu-products')">
+                <div class="flex items-center">
+                    <i class="fas fa-box <?= nav_icon_class($productsActive) ?>"></i>
+                    <span class="ml-3 font-medium">Sản Phẩm</span>
+                </div>
+                <i id="submenu-products-chevron" class="fas fa-chevron-down text-xs text-slate-500 transition-transform duration-300 <?= $productsActive ? 'rotate-180' : '' ?>"></i>
             </div>
-        </div>
-    </li>
-
-    <!-- Nav Item - Utilities Collapse Menu -->
-    <li class="nav-item">
-        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUtilities"
-            aria-expanded="true" aria-controls="collapseUtilities">
-            <!-- <i class="fas fa-fw fa-wrench"></i> -->
-            <i class="fas fa-solid fa-weight-hanging"></i>
-            <span>Loại</span>
-        </a>
-        <div id="collapseUtilities" class="collapse" aria-labelledby="headingUtilities" data-parent="#accordionSidebar">
-            <div class="bg-white py-2 collapse-inner rounded">
-                <a class="collapse-item" href="index.php?act=add_category">Thêm loại</a>
-                <a class="collapse-item" href="index.php?act=list_category">Danh sách loại</a>
-            </div>
-        </div>
-    </li>
-
-    <!-- <li class="nav-item">
-        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwoo" aria-expanded="true" aria-controls="collapseTwoo">
-            <i class=" fas fa-solid fa-users"></i>
-            <span>Khách hàng</span>
-        </a>
-        <div id="collapseTwoo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
-            <div class="bg-white py-2 collapse-inner rounded">
-                <a class="collapse-item" href="">Thêm khách hàng</a>
-                <a class="collapse-item" href="index.php?act=list_user">Danh sách khách hàng</a>
-            </div>
-        </div>
-    </li> -->
-
-    <li class="nav-item">
-        <a class="nav-link" href="index.php?act=list_user">
-            <i class=" fas fa-solid fa-users"></i>
-            <span>Khách hàng</span></a>
-    </li>
-    <li class="nav-item">
-        <a class="nav-link" href="index.php?act=list_bill">
-            <i class="fas fa-solid fa-receipt"></i>
-            <span>Hóa đơn</span></a>
-    </li>
-    <li class="nav-item">
-        <a class="nav-link" href="index.php?act=list_cmt">
-            <i class=" fas fa-solid fa-comment"></i>
-            <span>Bình luận</span></a>
-    </li>
-    <li class="nav-item">
-        <a class="nav-link" href="index.php?act=list_ques">
-            <i class="fa-solid fa-circle-question"></i>
-            <span>Hỏi đáp</span></a>
-    </li>
-    <li class="nav-item">
-        <a class="nav-link" href="index.php?act=list_statis">
-            <i class="fas fa-solid fa-chart-simple"></i>
-            <span>Thống kê</span></a>
-    </li>
-
-    <!-- <li class="nav-item">
-        <a class="nav-link" href="">
-            <i class="fas fa-fw fa-chart-area"></i>
-            <span>Biểu đồ</span></a>
-    </li> -->
-
-    <!-- Divider -->
-    <hr class="sidebar-divider d-none d-md-block">
-
-    <!-- Sidebar Toggler (Sidebar) -->
-    <div class="text-center d-none d-md-inline">
-        <button class="rounded-circle border-0" id="sidebarToggle"></button>
-    </div>
-
-</ul>
-<!-- End of Sidebar -->
-
-<!-- Content Wrapper -->
-<div id="content-wrapper" class="d-flex flex-column">
-
-    <!-- Main Content -->
-    <div id="content">
-
-        <!-- Topbar -->
-        <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
-
-            <!-- Sidebar Toggle (Topbar) -->
-            <button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">
-                <i class="fa fa-bars"></i>
-            </button>
-
-            <!-- Topbar Search -->
-
-
-            <!-- Topbar Navbar -->
-            <ul class="navbar-nav ml-auto">
-
-                <!-- Nav Item - Search Dropdown (Visible Only XS) -->
-                <li class="nav-item dropdown no-arrow d-sm-none">
-                    <a class="nav-link dropdown-toggle" href="#" id="searchDropdown" role="button"
-                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        <i class="fas fa-search fa-fw"></i>
-                    </a>
-                    <!-- Dropdown - Messages -->
-                    <div class="dropdown-menu dropdown-menu-right p-3 shadow animated--grow-in"
-                        aria-labelledby="searchDropdown">
-                        <form class="form-inline mr-auto w-100 navbar-search">
-                            <div class="input-group">
-                                <input type="text" class="form-control bg-light border-0 small"
-                                    placeholder="Tìm kiếm..." aria-label="Search" aria-describedby="basic-addon2">
-                                <div class="input-group-append">
-                                    <button class="btn btn-primary" type="button">
-                                        <i class="fas fa-search fa-sm"></i>
-                                    </button>
-                                </div>
-                            </div>
-                        </form>
+            <div id="submenu-products" class="grid transition-[grid-template-rows] duration-300 ease-in-out <?= $productsActive ? 'grid-rows-[1fr]' : 'grid-rows-[0fr]' ?>">
+                <div class="overflow-hidden">
+                    <div class="pl-11 pr-3 py-2 space-y-2 text-sm">
+                        <a href="index.php?act=add_product" class="block <?= $current_act === 'add_product' ? 'text-white font-semibold' : 'text-slate-400 hover:text-white' ?> transition-colors py-1">Thêm sản phẩm</a>
+                        <a href="index.php?act=list_product" class="block <?= $current_act === 'list_product' ? 'text-white font-semibold' : 'text-slate-400 hover:text-white' ?> transition-colors py-1">Danh sách sản phẩm</a>
                     </div>
-                </li>
+                </div>
+            </div>
+        </div>
 
-                <!-- Nav Item - Alerts -->
-
-
-                <!-- Nav Item - Messages -->
-
-
-                <div class="topbar-divider d-none d-sm-block"></div>
-
-                <!-- Nav Item - User Information -->
-                <li class="nav-item dropdown no-arrow">
-                    <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown"
-                        aria-haspopup="true" aria-expanded="false">
-                        <!-- <span class="mr-2 d-none d-lg-inline text-gray-600 small"><?php echo $_SESSION['admin']['full_name'] ?></span> -->
-                        <h5>
-                            <font color="black">Admin Turbotech</font>
-                        </h5>
-                        <img class="img-profile rounded-circle" src="view/assets/img/admin.png">
-                    </a>
-                    <!-- Dropdown - User Information -->
-                    <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
-                        aria-labelledby="userDropdown">
-                        <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">
-                            <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i> Đăng xuất
-                        </a>
+        <!-- Categories -->
+        <div class="space-y-1">
+            <div class="<?= $categoriesActive ? 'px-3 py-2.5 rounded-lg bg-slate-800 text-white transition-colors flex items-center justify-between cursor-pointer group' : 'px-3 py-2.5 rounded-lg hover:bg-slate-800 text-slate-300 transition-colors flex items-center justify-between cursor-pointer group' ?>" onclick="toggleSubmenu('submenu-categories')">
+                <div class="flex items-center">
+                    <i class="fas fa-tags <?= nav_icon_class($categoriesActive) ?>"></i>
+                    <span class="ml-3 font-medium">Danh Mục</span>
+                </div>
+                <i id="submenu-categories-chevron" class="fas fa-chevron-down text-xs text-slate-500 transition-transform duration-300 <?= $categoriesActive ? 'rotate-180' : '' ?>"></i>
+            </div>
+            <div id="submenu-categories" class="grid transition-[grid-template-rows] duration-300 ease-in-out <?= $categoriesActive ? 'grid-rows-[1fr]' : 'grid-rows-[0fr]' ?>">
+                <div class="overflow-hidden">
+                    <div class="pl-11 pr-3 py-2 space-y-2 text-sm">
+                        <a href="index.php?act=add_category" class="block <?= $current_act === 'add_category' ? 'text-white font-semibold' : 'text-slate-400 hover:text-white' ?> transition-colors py-1">Thêm danh mục</a>
+                        <a href="index.php?act=list_category" class="block <?= $current_act === 'list_category' ? 'text-white font-semibold' : 'text-slate-400 hover:text-white' ?> transition-colors py-1">Danh sách danh mục</a>
                     </div>
-                </li>
+                </div>
+            </div>
+        </div>
 
-            </ul>
+        <!-- Users -->
+        <a href="index.php?act=list_user" class="<?= nav_link_class(in_array($current_act, ['list_user', 'edit_user'], true)) ?>">
+            <i class="fas fa-users <?= nav_icon_class(in_array($current_act, ['list_user', 'edit_user'], true)) ?>"></i>
+            <span class="ml-3 font-medium">Khách hàng</span>
+        </a>
 
-        </nav>
-        <!-- End of Topbar -->
+        <!-- Orders -->
+        <a href="index.php?act=list_bill" class="<?= nav_link_class(in_array($current_act, ['list_bill', 'edit_bill', 'billdetail'], true)) ?>">
+            <i class="fas fa-shopping-cart <?= nav_icon_class(in_array($current_act, ['list_bill', 'edit_bill', 'billdetail'], true)) ?>"></i>
+            <span class="ml-3 font-medium">Đơn hàng</span>
+        </a>
+
+        <!-- Comments -->
+        <a href="index.php?act=list_cmt" class="<?= nav_link_class($current_act === 'list_cmt') ?>">
+            <i class="fas fa-comments <?= nav_icon_class($current_act === 'list_cmt') ?>"></i>
+            <span class="ml-3 font-medium">Bình luận</span>
+        </a>
+
+        <!-- Q&A -->
+        <a href="index.php?act=list_ques" class="<?= nav_link_class($current_act === 'list_ques') ?>">
+            <i class="fas fa-question-circle <?= nav_icon_class($current_act === 'list_ques') ?>"></i>
+            <span class="ml-3 font-medium">Hỏi đáp</span>
+        </a>
+
+        <!-- Statistics -->
+        <a href="index.php?act=list_statis" class="<?= nav_link_class($current_act === 'list_statis') ?>">
+            <i class="fas fa-chart-bar <?= nav_icon_class($current_act === 'list_statis') ?>"></i>
+            <span class="ml-3 font-medium">Thống kê</span>
+        </a>
+    </div>
+</aside>

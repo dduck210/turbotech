@@ -76,7 +76,7 @@
             </div>
 
             <div class="flex items-center gap-4 mt-8 pt-6 border-t border-slate-100">
-                <input type="submit" name="btn_add" class="px-6 py-2.5 bg-brand-600 text-white font-medium rounded-lg hover:bg-brand-700 focus:ring-4 focus:ring-blue-300 transition-all cursor-pointer" value="Thêm sản phẩm">
+                <input type="submit" name="btn_add" class="px-6 py-2.5 bg-brand-600 text-white font-medium rounded-lg hover:bg-brand-700 focus:ring-4 focus:ring-blue-300 transition-all active:scale-[0.97] cursor-pointer" value="Thêm sản phẩm">
                 <a href="?act=list_product" class="px-6 py-2.5 bg-slate-100 text-slate-700 font-medium rounded-lg hover:bg-slate-200 focus:ring-4 focus:ring-slate-100 transition-all">Hủy & Quay lại</a>
             </div>
         </form>

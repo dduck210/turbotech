@@ -51,7 +51,7 @@
                             <input type="password" name="password" placeholder="Nhập mật khẩu" class="w-full rounded-xl border border-slate-200 px-5 py-3 focus:ring-2 focus:ring-brand-500 focus:border-brand-500 outline-none transition-all bg-slate-50 focus:bg-white text-slate-800" required>
                         </div>
 
-                        <input type="submit" name="btn_login" value="Đăng nhập" class="w-full bg-slate-900 hover:bg-brand-600 text-white font-semibold rounded-xl px-4 py-3.5 mt-4 transition-colors cursor-pointer shadow-lg shadow-slate-900/20 hover:shadow-brand-500/30">
+                        <input type="submit" name="btn_login" value="Đăng nhập" class="w-full bg-slate-900 hover:bg-brand-600 text-white font-semibold rounded-xl px-4 py-3.5 mt-4 transition-all active:scale-[0.98] cursor-pointer shadow-lg shadow-slate-900/20 hover:shadow-brand-500/30">
                     </form>
 
                     <div class="mt-6 text-center text-green-500 font-medium text-sm">

@@ -1,68 +1,63 @@
-<?php include_once "header.php" ?>
+﻿<?php include_once "header.php" ?>
 
-<body id="page-top">
-  <!-- Page Wrapper -->
-  <div id="wrapper">
-    <!-- Sidebar -->
-    <?php include_once "nav.php" ?>
-    <!-- Begin Page Content -->
-    <div class="container-fluid">
 
-      <div>
-        <h3 class="alert alert-success">Cập nhật tài khoản người dùng</h3>
+
+      <div class="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden mb-6">
+        <div class="px-6 py-4 border-b border-slate-200 bg-slate-50/50 font-semibold text-slate-800">
+          <h6 class="m-0 text-emerald-600">Cập nhật tài khoản người dùng</h6>
+        </div>
+        <div class="p-6">
+          <div class="form-addcate">
+            <form action="index.php?act=update_user" method="post">
+              <?php
+              /** @var array $user */
+              if (is_array($user))
+                extract($user);
+              ?>
+              <div class="mb-4">
+                <label for="formGroupExampleInput" class="block text-sm font-medium text-slate-700 mb-1">Mã người dùng</label>
+                <input type="text" name="id_user" class="w-full rounded-lg border border-slate-200 px-4 py-2 focus:ring-2 focus:ring-brand-500 outline-none transition-all" placeholder="Mã KH(auto increase)" value="<?= $id_user ?>" disabled>
+              </div>
+              <div class="mb-4">
+                <label for="formGroupExampleInput" class="block text-sm font-medium text-slate-700 mb-1">Tên đăng nhập</label>
+                <input type="text" name="user_name" class="w-full rounded-lg border border-slate-200 px-4 py-2 focus:ring-2 focus:ring-brand-500 outline-none transition-all" placeholder="Nhập tên dùng để đăng nhập" value="<?= $user_name ?>">
+              </div>
+              <div class="mb-4">
+                <label for="formGroupExampleInput" class="block text-sm font-medium text-slate-700 mb-1">Họ tên</label>
+                <input type="text" name="full_name" class="w-full rounded-lg border border-slate-200 px-4 py-2 focus:ring-2 focus:ring-brand-500 outline-none transition-all" placeholder="Nhập họ và tên người dùng" value="<?= $full_name ?>">
+              </div>
+              <div class="mb-4">
+                <label for="formGroupExampleInput" class="block text-sm font-medium text-slate-700 mb-1">Email</label>
+                <input type="email" name="email_user" class="w-full rounded-lg border border-slate-200 px-4 py-2 focus:ring-2 focus:ring-brand-500 outline-none transition-all" placeholder="Nhập email người dùng" value="<?= $email_user ?>">
+              </div>
+              <div class="mb-4">
+                <label for="formGroupExampleInput" class="block text-sm font-medium text-slate-700 mb-1">Mật khẩu</label>
+                <input type="text" name="password" class="w-full rounded-lg border border-slate-200 px-4 py-2 focus:ring-2 focus:ring-brand-500 outline-none transition-all" placeholder="Nhập mật khẩu muốn thay đổi" value="<?= $password ?>">
+              </div>
+
+              <div class="mb-4">
+                <label for="" class="block text-sm font-medium text-slate-700 mb-1">Vai trò: <span style="color:red">
+                    <?php if ($role == 1) {
+                      echo "Admin";
+                    } else {
+                      echo "Thành viên";
+                    } ?></span></label>
+                <select required class="w-full rounded-lg border border-slate-200 px-4 py-2 focus:ring-2 focus:ring-brand-500 outline-none transition-all bg-white" name="role" id="">
+                  <?php $arr = array('0' => 'Thành Viên', '1' => 'Admin'); ?>
+                  <?php foreach ($arr as $key => $value) { ?>
+                    <option value="<?php echo $key; ?>" <?php echo $key ==  $role ? ' selected="selected"' : ''; ?>><?php echo $value; ?></option>
+                  <?php } ?>
+                </select>
+              </div>
+
+              <div class="wrap-btn mt-4">
+                <input type="hidden" name="id_user" value="<?= $id_user ?>">
+                <input type="submit" name="btn_update" class="bg-brand-600 hover:bg-brand-700 text-white font-medium rounded-lg px-4 py-2 transition-all active:scale-[0.97] inline-block" value="Cập nhật">
+                <input type="reset" class="bg-red-500 hover:bg-red-600 text-white rounded-lg px-3 py-1.5 inline-block ml-2" value="Nhập lại">
+              </div>
+            </form>
+          </div>
+        </div>
       </div>
-      <div class="form-addcate">
-        <form action="index.php?act=update_user" method="post">
-          <?php if (is_array($user))
-            extract($user);
-          ?>
-          <div class="form-group mt-3">
-            <label for="formGroupExampleInput" class="font-lb">Mã người dùng</label>
-            <input type="text" name="id_user" class="form-control" placeholder="Mã KH(auto increase)" value="<?= $id_user ?>" disabled>
-          </div>
-          <div class="form-group mt-3">
-            <label for="formGroupExampleInput" class="font-lb">Tên đăng nhập</label>
-            <input type="text" name="user_name" class="form-control" placeholder="Nhập tên dùng để đăng nhập" value="<?= $user_name ?>">
-          </div>
-          <div class="form-group mt-3">
-            <label for="formGroupExampleInput" class="font-lb">Họ tên</label>
-            <input type="text" name="full_name" class="form-control" placeholder="Nhập họ và tên người dùng" value="<?= $full_name ?>">
-          </div>
-          <div class="form-group mt-3">
-            <label for="formGroupExampleInput" class="font-lb">Email</label>
-            <input type="email" name="email_user" class="form-control" placeholder="Nhập email người dùng" value="<?= $email_user ?>">
-          </div>
-          <div class="form-group mt-3">
-            <label for="formGroupExampleInput" class="font-lb">Mật khẩu</label>
-            <input type="text" name="password" class="form-control" placeholder="Nhập mật khẩu muốn thay đổi" value="<?= $password ?>">
-          </div>
 
-          <div class="form-group">
-            <label for="">Vai trò: <span style="color:red">
-                <?php if ($role == 1) {
-                  echo "Admin";
-                } else {
-                  echo "Thành viên";
-                } ?></span></label>
-            <select required class="form-control" name="role" id="">
-              <?php $arr = array('0' => 'Thành Viên', '1' => 'Admin'); ?>
-              <?php foreach ($arr as $key => $value) { ?>
-                <option value="<?php echo $key; ?>" <?php echo $key ==  $role ? ' selected="selected"' : ''; ?>><?php echo $value; ?></option>
-              <?php } ?>
-            </select>
-          </div>
-
-          <div class="wrap-btn">
-            <input type="hidden" name="id_user" value="<?= $id_user ?>">
-            <input type="submit" name="btn_update" class="btn btn-success mt-3" value="Cập nhật">
-            <input type="reset" class="btn btn-danger mt-3" value="Nhập lại">
-          </div>
-        </form>
-      </div>
-      <div class="pb-70"></div>
-    </div>
-    <!-- /.container-fluid -->
-
-  </div>
-  <!-- End of Main Content -->
   <?php include_once "footer.php" ?>

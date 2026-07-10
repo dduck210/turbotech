@@ -3,7 +3,7 @@
 
 
                 <div class="mb-8 flex items-center justify-between">
-    <h1 class="text-3xl font-bold text-slate-800">Quản Lý Sản Phẩm</h1>
+    <h1 class="text-3xl font-bold text-slate-800">Quản Lý Danh Mục</h1>
 </div>
 
 <div class="bg-white rounded-xl shadow-sm hover:shadow-md transition-shadow duration-300 overflow-hidden mb-6">
@@ -26,8 +26,8 @@
                                             <td class="px-4 py-4 font-medium text-slate-800"><?= $loai['name_cate'] ?></td>
                                             <td class="px-4 py-4 text-center">
                                                 <div class="flex items-center justify-center gap-2">
-                                                    <a href="index.php?act=edit_category&id_cate=<?= $loai['id_cate'] ?>" class="p-2 text-yellow-600 bg-yellow-50 rounded-lg hover:bg-yellow-100 transition-colors" title="Sửa"><i class="fa-solid fa-pen-to-square"></i></a>
-                                                    <a href="index.php?act=delete_cate&id_cate=<?= $loai['id_cate'] ?>" class="p-2 text-red-600 bg-red-50 rounded-lg hover:bg-red-100 transition-colors" onclick="return confirm('Bạn có chắc chắn muốn xóa không?')" title="Xóa"><i class="fa-solid fa-trash"></i></a>
+                                                    <a href="index.php?act=edit_category&id_cate=<?= $loai['id_cate'] ?>" class="p-2 text-yellow-600 bg-yellow-50 rounded-lg hover:bg-yellow-100 transition-all active:scale-90" title="Sửa"><i class="fa-solid fa-pen-to-square"></i></a>
+                                                    <a href="index.php?act=delete_cate&id_cate=<?= $loai['id_cate'] ?>" class="p-2 text-red-600 bg-red-50 rounded-lg hover:bg-red-100 transition-all active:scale-90" onclick="return confirm('Bạn có chắc chắn muốn xóa không?')" title="Xóa"><i class="fa-solid fa-trash"></i></a>
                                                 </div>
                                             </td>
                                         </tr>

@@ -67,8 +67,8 @@
 
                                             <td class="px-4 py-4 text-center">
                                                 <div class="flex items-center justify-center gap-2">
-                                                    <a href="index.php?act=edit_bill&idbill=<?= $bill['id_bill'] ?>" class="p-2 text-yellow-600 bg-yellow-50 rounded-lg hover:bg-yellow-100 transition-colors" title="Sửa"><i class="fas fa-edit"></i></a>
-                                                    <a href="index.php?act=billdetail&idbill=<?= $bill['id_bill'] ?>" class="p-2 text-emerald-600 bg-emerald-50 rounded-lg hover:bg-emerald-100 transition-colors" title="Chi tiết"><i class="fa-solid fa-circle-info"></i></a>
+                                                    <a href="index.php?act=edit_bill&idbill=<?= $bill['id_bill'] ?>" class="p-2 text-yellow-600 bg-yellow-50 rounded-lg hover:bg-yellow-100 transition-all active:scale-90" title="Sửa"><i class="fas fa-edit"></i></a>
+                                                    <a href="index.php?act=billdetail&idbill=<?= $bill['id_bill'] ?>" class="p-2 text-emerald-600 bg-emerald-50 rounded-lg hover:bg-emerald-100 transition-all active:scale-90" title="Chi tiết"><i class="fa-solid fa-circle-info"></i></a>
                                                 </div>
                                             </td>
                                         </tr>

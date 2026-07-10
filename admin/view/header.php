@@ -33,4 +33,4 @@
             <?php include_once "topbar.php"; ?>
             <!-- Main Scrollable Content -->
             <main class="flex-1 overflow-y-auto bg-slate-50/50 p-4 md:p-6 lg:p-8">
-                <div class="mx-auto max-w-7xl">
+                <div class="mx-auto max-w-7xl animate-admin-fade-in">

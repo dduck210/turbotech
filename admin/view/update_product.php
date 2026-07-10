@@ -80,7 +80,7 @@
                             </div>
                             <div class="wrap-btn mt-4">
                                 <input type="hidden" name="id_pro" value="<?= $id_pro ?>">
-                                <input type="submit" name="btn_update" class="bg-brand-600 hover:bg-brand-700 text-white font-medium rounded-lg px-4 py-2 transition-colors inline-block" value="Cập nhật">
+                                <input type="submit" name="btn_update" class="bg-brand-600 hover:bg-brand-700 text-white font-medium rounded-lg px-4 py-2 transition-all active:scale-[0.97] inline-block" value="Cập nhật">
                                 <input type="reset" class="bg-red-500 hover:bg-red-600 text-white rounded-lg px-3 py-1.5 inline-block ml-2" value="Nhập lại">
                             </div>
                         </form>

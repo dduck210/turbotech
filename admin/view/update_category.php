@@ -1,43 +1,36 @@
-<?php include_once "header.php" ?>
+﻿<?php include_once "header.php" ?>
+<?php /** @var array $one_loai */ ?>
 
-<body id="page-top">
-  <!-- Page Wrapper -->
-  <div id="wrapper">
-    <!-- Sidebar -->
-    <?php include_once "nav.php" ?>
-    <!-- Begin Page Content -->
-    <div class="container-fluid">
+
       <?php
       if (is_array($one_loai)) {
         extract($one_loai);
       }
       ?>
-      <div class="card shadow mb-4">
-        <div class="card-header py-3">
-          <h6 class="m-0 font-weight-bold text-primary">Cập nhật loại máy tính</h6>
-        </div>
-        <div class="card-body">
+      <div class="mb-8 flex items-center justify-between">
+    <h1 class="text-3xl font-bold text-slate-800">Cập nhật loại máy tính</h1>
+</div>
+
+<div class="bg-white rounded-xl shadow-sm hover:shadow-md transition-shadow duration-300 overflow-hidden mb-6">
+    <div class="p-6">
           <div class="form-addcate">
             <form action="index.php?act=update_category" method="post">
-              <div class="form-group mt-3">
-                <label for="formGroupExampleInput" class="font-lb">Mã loại</label>
-                <input type="text" class="form-control" value="<?= $id_cate ?>" disabled>
+              <div class="mb-4">
+                <label for="formGroupExampleInput" class="block text-sm font-medium text-slate-700 mb-1">Mã loại</label>
+                <input type="text" class="w-full rounded-lg border border-slate-200 px-4 py-2 focus:ring-2 focus:ring-brand-500 outline-none transition-all mb-4" value="<?= $id_cate ?>" disabled>
               </div>
-              <div class="form-group mt-3">
-                <label for="formGroupExampleInput" class="font-lb">Tên loại</label>
-                <input type="text" name="name_cate" class="form-control" value="<?= $name_cate ?>">
+              <div class="mb-4">
+                <label for="formGroupExampleInput" class="block text-sm font-medium text-slate-700 mb-1">Tên loại</label>
+                <input type="text" name="name_cate" class="w-full rounded-lg border border-slate-200 px-4 py-2 focus:ring-2 focus:ring-brand-500 outline-none transition-all mb-4" value="<?= $name_cate ?>">
               </div>
-              <div class="wrap-btn">
+              <div class="wrap-btn mt-4">
                 <input type="hidden" name="id_cate" value="<?= $id_cate ?>">
-                <input type="submit" name="btn_update" class="btn btn-success mt-3" value="Cập nhật">
-                <input type="reset" class="btn btn-danger mt-3" value="Nhập lại">
+                <input type="submit" name="btn_update" class="bg-brand-600 hover:bg-brand-700 text-white font-medium rounded-lg px-4 py-2 transition-all active:scale-[0.97] inline-block" value="Cập nhật">
+                <input type="reset" class="bg-red-500 hover:bg-red-600 text-white rounded-lg px-3 py-1.5 inline-block ml-2" value="Nhập lại">
               </div>
             </form>
           </div>
         </div>
       </div>
-      <!-- /.container-fluid -->
 
-    </div>
-    <!-- End of Main Content -->
     <?php include_once "footer.php" ?>
