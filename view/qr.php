@@ -80,6 +80,10 @@ $qrImageUrl = Payment::vietQrUrl((int) $amount, (string) $bill_code);
             animation: slideOut 0.3s ease;
         }
 
+        .copy-feedback.error {
+            background: #dc2626;
+        }
+
         /* Entrance animation for the payment card — pure CSS so it plays
            immediately on page load with no JS/FOUC dependency. */
         @keyframes cardEnter {
@@ -259,30 +263,60 @@ $qrImageUrl = Payment::vietQrUrl((int) $amount, (string) $bill_code);
         function copyToClipboard(elementId) {
             const element = document.getElementById(elementId);
             const text = element.textContent.trim();
+            const btn = event.target.closest('.copy-btn');
 
-            // Copy to clipboard
-            navigator.clipboard.writeText(text).then(() => {
-                // Show feedback
+            function onCopySuccess() {
                 showCopyFeedback();
-
-                // Add animation
-                const btn = event.target.closest('.copy-btn');
-                btn.style.background = '#16a34a';
-                btn.innerHTML = '<i class="fas fa-check"></i> Đã copy!';
-
+                btn.classList.add('text-emerald-600');
+                btn.innerHTML = '<i class="fas fa-check"></i>';
                 setTimeout(() => {
-                    btn.style.background = '';
-                    btn.innerHTML = '<i class="fas fa-copy"></i> Copy';
+                    btn.classList.remove('text-emerald-600');
+                    btn.innerHTML = '<i class="fas fa-copy"></i>';
                 }, 2000);
-            }).catch(err => {
-                alert('Lỗi: Không thể copy!');
-            });
+            }
+
+            function onCopyFailure() {
+                showCopyFeedback('Không thể sao chép, vui lòng thử lại!', true);
+            }
+
+            // Legacy fallback (temporary off-screen textarea + execCommand)
+            // for browsers/contexts where the async Clipboard API is
+            // unavailable or its permission is denied — gives copying an
+            // actual second chance instead of just swallowing the error.
+            function legacyCopy() {
+                const textarea = document.createElement('textarea');
+                textarea.value = text;
+                textarea.style.position = 'fixed';
+                textarea.style.opacity = '0';
+                document.body.appendChild(textarea);
+                textarea.focus();
+                textarea.select();
+                let ok = false;
+                try {
+                    ok = document.execCommand('copy');
+                } catch (e) {
+                    ok = false;
+                }
+                document.body.removeChild(textarea);
+                if (ok) {
+                    onCopySuccess();
+                } else {
+                    onCopyFailure();
+                }
+            }
+
+            if (navigator.clipboard && navigator.clipboard.writeText) {
+                navigator.clipboard.writeText(text).then(onCopySuccess).catch(legacyCopy);
+            } else {
+                legacyCopy();
+            }
         }
 
-        function showCopyFeedback() {
+        function showCopyFeedback(message, isError) {
             const feedback = document.createElement('div');
-            feedback.className = 'copy-feedback';
-            feedback.innerHTML = '<i class="fas fa-check-circle"></i> Đã copy vào bộ nhớ!';
+            feedback.className = isError ? 'copy-feedback error' : 'copy-feedback';
+            const icon = isError ? 'fa-circle-exclamation' : 'fa-check-circle';
+            feedback.innerHTML = '<i class="fas ' + icon + '"></i> ' + (message || 'Đã copy vào bộ nhớ!');
             document.body.appendChild(feedback);
 
             setTimeout(() => {
