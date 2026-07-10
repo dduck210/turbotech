@@ -22,18 +22,26 @@
             if (chevron) chevron.classList.toggle('rotate-180');
         }
 
-        // Mobile sidebar toggle logic
+        // Mobile sidebar toggle logic (sidebar overlays as a fixed panel on
+        // mobile via nav.php's "fixed inset-y-0 left-0 md:relative" classes;
+        // this only needs to flip visibility + the backdrop, not position).
         document.addEventListener('DOMContentLoaded', () => {
             const btn = document.getElementById('mobile-sidebar-toggle');
             const sidebar = document.getElementById('mobile-sidebar-nav');
-            if (btn && sidebar) {
-                btn.addEventListener('click', () => {
-                    sidebar.classList.toggle('hidden');
-                    sidebar.classList.toggle('absolute');
-                    sidebar.classList.toggle('h-full');
-                    sidebar.classList.toggle('z-50');
-                });
-            }
+            const backdrop = document.getElementById('mobile-sidebar-backdrop');
+            if (!btn || !sidebar) return;
+
+            const closeSidebar = () => {
+                sidebar.classList.add('hidden');
+                if (backdrop) backdrop.classList.add('hidden');
+            };
+            const toggleSidebar = () => {
+                sidebar.classList.toggle('hidden');
+                if (backdrop) backdrop.classList.toggle('hidden');
+            };
+
+            btn.addEventListener('click', toggleSidebar);
+            if (backdrop) backdrop.addEventListener('click', closeSidebar);
         });
     </script>
 </body>
