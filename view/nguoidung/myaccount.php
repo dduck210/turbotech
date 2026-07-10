@@ -224,10 +224,29 @@
                                 </div>
 
                                 <div>
-                                    <label for="account-details-address" class="block text-sm font-medium text-ink-700 mb-1.5">Địa chỉ</label>
-                                    <input type="text" name="address" id="account-details-address" value="<?= $_SESSION['user']['address'] ?>"
-                                        placeholder="Nhập địa chỉ nhận hàng của bạn"
-                                        data-rules="required|min:5|max:255"
+                                    <label for="account-details-province" class="block text-sm font-medium text-ink-700 mb-1.5">Tỉnh/Thành phố</label>
+                                    <select name="province" id="account-details-province" data-address-province
+                                        data-existing-address="<?= htmlspecialchars($_SESSION['user']['address'] ?? '') ?>"
+                                        data-rules="required" data-msg-required="Vui lòng chọn tỉnh/thành phố"
+                                        class="block w-full rounded-lg border border-ink-200 bg-white px-3.5 py-2.5 text-sm text-ink-900 focus:outline-none focus:ring-2 focus:ring-brand-500 focus:border-brand-500">
+                                        <option value="">Đang tải danh sách...</option>
+                                    </select>
+                                </div>
+
+                                <div>
+                                    <label for="account-details-ward" class="block text-sm font-medium text-ink-700 mb-1.5">Xã/Phường</label>
+                                    <select name="ward" id="account-details-ward" data-address-ward
+                                        data-rules="required" data-msg-required="Vui lòng chọn xã/phường"
+                                        class="block w-full rounded-lg border border-ink-200 bg-white px-3.5 py-2.5 text-sm text-ink-900 focus:outline-none focus:ring-2 focus:ring-brand-500 focus:border-brand-500" disabled>
+                                        <option value="">Chọn tỉnh/thành phố trước</option>
+                                    </select>
+                                </div>
+
+                                <div>
+                                    <label for="account-details-address" class="block text-sm font-medium text-ink-700 mb-1.5">Địa chỉ chi tiết</label>
+                                    <input type="text" name="address_detail" id="account-details-address" data-address-detail
+                                        placeholder="Số nhà, tên đường..."
+                                        data-rules="required|min:3|max:255"
                                         class="block w-full rounded-lg border border-ink-200 bg-white px-3.5 py-2.5 text-sm text-ink-900 placeholder:text-ink-300 focus:outline-none focus:ring-2 focus:ring-brand-500 focus:border-brand-500">
                                 </div>
 

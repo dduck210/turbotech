@@ -20,6 +20,7 @@ class AuthController extends Controller
             $full_name = trim($_POST['full_name'] ?? '');
             $email_user = trim($_POST['email_user'] ?? '');
             $password = $_POST['password'] ?? '';
+            $sex = ($_POST['sex'] ?? '0') === '1' ? 1 : 0;
             $province = trim($_POST['province'] ?? '');
             $ward = trim($_POST['ward'] ?? '');
             $address_detail = trim($_POST['address_detail'] ?? '');
@@ -29,7 +30,7 @@ class AuthController extends Controller
             $address = $address_detail !== '' ? "{$address_detail}, {$ward}, {$province}" : '';
 
             if ($error === null) {
-                User::register($user_name, $full_name, $email_user, $password, $address, $phone_user);
+                User::register($user_name, $full_name, $email_user, $password, $address, $phone_user, $sex);
                 echo '<script>alert("Đăng ký tài khoản thành công! Vui lòng đăng nhập")</script>';
                 // NOTE: old code's redirect target has a pre-existing typo
                 // ('act-login' instead of 'act=login', `index.php:84`); the

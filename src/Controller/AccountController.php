@@ -32,29 +32,36 @@ class AccountController extends Controller
 
         if (isset($_POST['btn_change']) && $_POST['btn_change']) {
             $id_user = $_POST['id_user'] ?? $user['id_user'];
-            $full_name = $_POST['full_name'] ?? '';
+            $full_name = trim($_POST['full_name'] ?? '');
             $user_name = $user['user_name'];
             $password = $user['password'];
             $sex = $_POST['sex'] ?? '';
-            $email_user = $_POST['email_user'] ?? '';
-            $address = $_POST['address'] ?? '';
-            $phone_user = $_POST['phone_user'] ?? '';
+            $email_user = trim($_POST['email_user'] ?? '');
+            $province = trim($_POST['province'] ?? '');
+            $ward = trim($_POST['ward'] ?? '');
+            $address_detail = trim($_POST['address_detail'] ?? '');
+            $phone_user = trim($_POST['phone_user'] ?? '');
+            $address = $address_detail !== '' ? "{$address_detail}, {$ward}, {$province}" : '';
 
-            $img_user = $_FILES['img_user']['name'] ?? '';
-            if (!empty($_FILES['img_user']['tmp_name'])) {
-                $target_file = 'uploads/' . basename($_FILES['img_user']['name']);
-                move_uploaded_file($_FILES['img_user']['tmp_name'], $target_file);
+            if ($full_name === '' || !filter_var($email_user, FILTER_VALIDATE_EMAIL) || $province === '' || $ward === '' || $address_detail === '') {
+                echo '<script>alert("Vui lòng nhập đầy đủ và đúng định dạng thông tin !")</script>';
+            } else {
+                $img_user = $_FILES['img_user']['name'] ?? '';
+                if (!empty($_FILES['img_user']['tmp_name'])) {
+                    $target_file = 'uploads/' . basename($_FILES['img_user']['name']);
+                    move_uploaded_file($_FILES['img_user']['tmp_name'], $target_file);
+                }
+
+                User::update($id_user, $img_user, $full_name, $sex, $email_user, $address, $phone_user);
+
+                $refreshed = User::check($user_name, $password);
+                if (is_array($refreshed)) {
+                    Auth::login($refreshed);
+                    $user = $refreshed;
+                }
+
+                echo '<script>alert("Thay đổi thông tin thành công!")</script>';
             }
-
-            User::update($id_user, $img_user, $full_name, $sex, $email_user, $address, $phone_user);
-
-            $refreshed = User::check($user_name, $password);
-            if (is_array($refreshed)) {
-                Auth::login($refreshed);
-                $user = $refreshed;
-            }
-
-            echo '<script>alert("Thay đổi thông tin thành công!")</script>';
         }
 
         if (isset($_POST['btn_pass'])) {

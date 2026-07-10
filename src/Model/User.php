@@ -16,12 +16,15 @@ class User
      * (`view/giohang/bill.php` already reads `$address`/`$phone_user` from
      * `$_SESSION['user']` — this is the other half of that link).
      * Mirrors old `register($user_name, $full_name, $email_user, $password)`,
-     * extended with `$address`/`$phone_user`.
+     * extended with `$address`/`$phone_user`/`$sex` — `$sex` used to only be
+     * settable from the account-settings page, silently defaulting to 0
+     * ("Nam") for every new signup regardless of the account holder's actual
+     * answer, since registration never asked.
      */
-    public static function register(string $user_name, string $full_name, string $email_user, string $password, string $address = '', string $phone_user = ''): void
+    public static function register(string $user_name, string $full_name, string $email_user, string $password, string $address = '', string $phone_user = '', int $sex = 0): void
     {
-        $sql = "INSERT INTO user (user_name, full_name, email_user, password, address, phone_user) VALUES (?, ?, ?, ?, ?, ?)";
-        Database::execute($sql, $user_name, $full_name, $email_user, $password, $address, $phone_user);
+        $sql = "INSERT INTO user (user_name, full_name, email_user, password, address, phone_user, sex) VALUES (?, ?, ?, ?, ?, ?, ?)";
+        Database::execute($sql, $user_name, $full_name, $email_user, $password, $address, $phone_user, $sex);
     }
 
     /**
