@@ -49,11 +49,31 @@
     </div>
 </footer>
 
+<!-- Custom confirm dialog (replaces the native browser confirm() popup) —
+     logic lives in src/js/confirm-dialog.js; markup stays here so its
+     classes are seen by Tailwind's content scan. -->
+<div id="confirm-dialog-overlay" class="hidden fixed inset-0 z-50 flex items-center justify-center bg-ink-900/50 p-4">
+    <div class="w-full max-w-sm rounded-2xl bg-white p-6 shadow-xl">
+        <div class="mb-4 flex items-center gap-3">
+            <div class="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-amber-100 text-amber-600">
+                <i class="fas fa-exclamation-triangle" aria-hidden="true"></i>
+            </div>
+            <h3 class="font-heading text-base font-semibold text-ink-900">Xác nhận</h3>
+        </div>
+        <p id="confirm-dialog-message" class="mb-6 text-sm text-ink-600"></p>
+        <div class="flex justify-end gap-3">
+            <button type="button" id="confirm-dialog-cancel" class="rounded-lg border border-ink-200 bg-white px-4 py-2 text-sm font-semibold text-ink-900 transition-colors hover:bg-ink-50 focus:outline-none focus:ring-2 focus:ring-brand-500">Hủy</button>
+            <button type="button" id="confirm-dialog-ok" class="rounded-lg bg-red-600 px-4 py-2 text-sm font-semibold text-white transition-colors hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2">Xác nhận</button>
+        </div>
+    </div>
+</div>
+
 <script src="./src/js/plugins.min.js"></script>
 <script src="./src/js/ajax-mail.js"></script>
 <script src="./src/js/main.js"></script>
 <script src="./src/js/form-validate.js"></script>
 <script src="./src/js/address-select.js"></script>
+<script src="./src/js/confirm-dialog.js"></script>
 </body>
 
 </html>

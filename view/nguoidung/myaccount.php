@@ -70,7 +70,7 @@
                             </li>
                             <li>
                                 <a href="index.php?act=logout" role="tab" aria-selected="false"
-                                    onclick="return confirm('Bạn chắc chắc muốn đăng xuất tài khoản?')"
+                                    data-confirm="Bạn chắc chắc muốn đăng xuất tài khoản?"
                                     class="flex items-center gap-3 px-4 py-3.5 text-sm font-semibold text-red-600 hover:bg-red-50 focus:outline-none focus:ring-2 focus:ring-brand-500 focus:ring-inset">
                                     <i class="fa-solid fa-right-from-bracket" aria-hidden="true"></i> Đăng xuất
                                 </a>
@@ -88,7 +88,7 @@
                             class="account-tab-panel rounded-2xl border border-ink-200 bg-white shadow-sm p-6">
                             <p class="text-ink-700">Xin chào, <b class="text-ink-900"><?= $_SESSION['user']['full_name'] ?></b>
                                 (không phải <?= $_SESSION['user']['full_name'] ?>?
-                                <a href="index.php?act=logout" onclick="return confirm('Bạn chắc chắc muốn đăng xuất tài khoản?')"
+                                <a href="index.php?act=logout" data-confirm="Bạn chắc chắc muốn đăng xuất tài khoản?"
                                     class="font-semibold text-brand-600 hover:text-brand-700">Đăng xuất</a>)</p>
                             <p class="mt-3 text-ink-700">Từ bảng điều khiển tài khoản của mình, bạn có thể xem các đơn đặt hàng gần
                                 đây, quản lý địa chỉ giao hàng và thanh toán cũng như chỉnh sửa mật khẩu và thông tin chi tiết tài
@@ -137,7 +137,7 @@
                                                     <td class="px-4 py-3">
                                                         <?php if ((int) $status === 0) : ?>
                                                             <form action="index.php?act=cancelorder" method="post"
-                                                                onsubmit="return confirm('Bạn chắc chắn muốn hủy đơn hàng UTP-<?= $id_bill ?>?')">
+                                                                data-confirm="Bạn chắc chắn muốn hủy đơn hàng UTP-<?= $id_bill ?>?">
                                                                 <input type="hidden" name="id_bill" value="<?= $id_bill ?>">
                                                                 <button type="submit"
                                                                     class="inline-flex items-center justify-center gap-1.5 rounded-lg border border-red-200 px-3 py-1.5 text-xs font-semibold text-red-600 hover:bg-red-50 focus:outline-none focus:ring-2 focus:ring-brand-500">

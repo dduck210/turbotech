@@ -26,7 +26,7 @@ $total_amount = \Codemoi\Model\Cart::total();
                     <div
                         class="invisible absolute left-0 top-full z-50 w-56 rounded-xl border border-ink-200 bg-white py-2 opacity-0 shadow-lg transition-all group-hover:visible group-hover:opacity-100">
                         <?php
-                        foreach ($listcate as $cate) {
+                        foreach ($listcate ?? [] as $cate) {
                             extract($cate);
                             $linkpro = "index.php?act=product&idcate=" . $id_cate;
                             echo '<a href="' . $linkpro . '" class="block px-4 py-2 text-sm text-ink-700 hover:bg-ink-50 hover:text-brand-600 focus:outline-none focus:ring-2 focus:ring-brand-500">' . $name_cate . '</a>';
@@ -125,7 +125,7 @@ $total_amount = \Codemoi\Model\Cart::total();
                         <?php } else { ?>
                         <i class="fa-solid fa-user text-lg"></i>
                         <?php } ?>
-                        <span class="hidden max-w-[8rem] truncate sm:inline"><?= $_SESSION['user']['full_name'] ?></span>
+                        <span class="hidden max-w-32 truncate sm:inline"><?= $_SESSION['user']['full_name'] ?></span>
                     </a>
                     <?php } ?>
                     <div
@@ -142,7 +142,7 @@ $total_amount = \Codemoi\Model\Cart::total();
                             class="flex items-center gap-2 px-4 py-2 text-sm text-ink-700 hover:bg-ink-50 hover:text-brand-600 focus:outline-none focus:ring-2 focus:ring-brand-500"><i
                                 class="fa-solid fa-circle-info w-4"></i> Thông tin tài khoản</a>
                         <a href="index.php?act=logout"
-                            onclick="return confirm('Bạn chắc chắc muốn đăng xuất tài khoản?')"
+                            data-confirm="Bạn chắc chắc muốn đăng xuất tài khoản?"
                             class="flex items-center gap-2 px-4 py-2 text-sm text-ink-700 hover:bg-ink-50 hover:text-brand-600 focus:outline-none focus:ring-2 focus:ring-brand-500"><i
                                 class="fa-solid fa-right-from-bracket w-4"></i> Đăng xuất</a>
                         <?php } else { ?>
@@ -150,7 +150,7 @@ $total_amount = \Codemoi\Model\Cart::total();
                             class="flex items-center gap-2 px-4 py-2 text-sm text-ink-700 hover:bg-ink-50 hover:text-brand-600 focus:outline-none focus:ring-2 focus:ring-brand-500"><i
                                 class="fa-solid fa-circle-info w-4"></i> Thông tin tài khoản</a>
                         <a href="index.php?act=logout"
-                            onclick="return confirm('Bạn chắc chắc muốn đăng xuất tài khoản?')"
+                            data-confirm="Bạn chắc chắc muốn đăng xuất tài khoản?"
                             class="flex items-center gap-2 px-4 py-2 text-sm text-ink-700 hover:bg-ink-50 hover:text-brand-600 focus:outline-none focus:ring-2 focus:ring-brand-500"><i
                                 class="fa-solid fa-right-from-bracket w-4"></i> Đăng xuất</a>
                         <?php } ?>
@@ -231,7 +231,7 @@ $total_amount = \Codemoi\Model\Cart::total();
                     class="flex items-center gap-2 rounded-lg px-3 py-2.5 text-sm font-medium text-ink-700 hover:bg-ink-50 focus:outline-none focus:ring-2 focus:ring-brand-500"><i
                         class="fa-solid fa-circle-info w-4"></i> Thông tin tài khoản (<?= $_SESSION['user']['full_name'] ?>)</a>
                 <a href="index.php?act=logout"
-                    onclick="return confirm('Bạn chắc chắc muốn đăng xuất tài khoản?')"
+                    data-confirm="Bạn chắc chắc muốn đăng xuất tài khoản?"
                     class="flex items-center gap-2 rounded-lg px-3 py-2.5 text-sm font-medium text-ink-700 hover:bg-ink-50 focus:outline-none focus:ring-2 focus:ring-brand-500"><i
                         class="fa-solid fa-right-from-bracket w-4"></i> Đăng xuất</a>
                 <?php } ?>
