@@ -15,16 +15,16 @@ class Order
      * Mirrors old `insert_bill(...)`.
      */
     public static function create(
-        $bill_code,
-        $id_user,
-        $user_name,
-        $full_name,
-        $address,
-        $phone,
-        $email,
-        $payment,
-        $order_date,
-        $total_amount
+        string $bill_code,
+        int $id_user,
+        string $user_name,
+        string $full_name,
+        string $address,
+        string $phone,
+        string $email,
+        string $payment,
+        string $order_date,
+        string $total_amount
     ): string {
         $sql = "INSERT INTO bill(bill_code,id_user, user_name, full_name, address, phone, email, payment, order_date, total_amount) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
         return Database::executeReturnId(
@@ -48,7 +48,7 @@ class Order
      *
      * @return array|false
      */
-    public static function one($id_bill)
+    public static function one(int $id_bill)
     {
         $sql = "SELECT * FROM bill WHERE id_bill = ?";
         return Database::queryOne($sql, $id_bill);
@@ -58,17 +58,33 @@ class Order
      * All bills placed by a user.
      * Mirrors old `loadall_bill($id_user)`.
      */
-    public static function allByUser($id_user): array
+    public static function allByUser(int $id_user): array
     {
         $sql = "SELECT * FROM bill WHERE id_user = ?";
         return Database::query($sql, $id_user);
     }
 
     /**
+     * Whether a user has an actually-delivered (status = 3) order
+     * containing this product — the bar for letting them leave a review,
+     * so reviews only ever come from verified purchasers. Delivered rather
+     * than just paid/placed, since admin's update_bill.php only sets
+     * status = 3 once the order has genuinely been handed to the customer.
+     */
+    public static function hasDeliveredPurchase(int $id_user, int $id_pro): bool
+    {
+        $sql = "SELECT 1 FROM cart c
+                INNER JOIN bill b ON c.id_bill = b.id_bill
+                WHERE c.id_user = ? AND c.id_pro = ? AND b.status = 3
+                LIMIT 1";
+        return Database::queryOne($sql, $id_user, $id_pro) !== false;
+    }
+
+    /**
      * Persisted cart lines for a bill.
      * Mirrors old `loadall_cart($idbill)` / `load_cart_all($idbill)`.
      */
-    public static function items($idbill): array
+    public static function items(int $idbill): array
     {
         $sql = "SELECT * FROM cart WHERE id_bill = ?";
         return Database::query($sql, $idbill);
@@ -78,7 +94,7 @@ class Order
      * Count of persisted cart lines for a bill.
      * Mirrors old `loadall_countcart($idbill)` (`model/giohang.php:163`).
      */
-    public static function itemCount($idbill): int
+    public static function itemCount(int $idbill): int
     {
         $sql = "SELECT * FROM cart WHERE id_bill = ?";
         return count(Database::query($sql, $idbill));
@@ -89,15 +105,15 @@ class Order
      * Mirrors old `insert_cart(...)` (`model/giohang.php:152`).
      */
     public static function addItem(
-        $id_user,
-        $user_name,
-        $id_pro,
-        $img_pro,
-        $name_pro,
-        $price,
-        $quantity,
-        $total_amount,
-        $idbill
+        int $id_user,
+        string $user_name,
+        int $id_pro,
+        string $img_pro,
+        string $name_pro,
+        string $price,
+        int $quantity,
+        string $total_amount,
+        int $idbill
     ): void {
         $sql = "INSERT INTO cart(id_user, user_name, id_pro, img_pro, name_pro, price_pro, quantity, total_amount, id_bill) values (?, ?, ?, ?, ?, ?, ?, ?, ?)";
         Database::execute(
@@ -124,7 +140,7 @@ class Order
      *
      * @return bool True if the order was actually cancelled.
      */
-    public static function cancel($id_bill, $id_user): bool
+    public static function cancel(int $id_bill, int $id_user): bool
     {
         $sql = "UPDATE bill SET status = 4 WHERE id_bill = ? AND id_user = ? AND status = 0";
         return Database::execute($sql, $id_bill, $id_user) > 0;
@@ -134,7 +150,7 @@ class Order
      * Human-readable label for a bill status code.
      * Mirrors old `get_stt($n)`.
      */
-    public static function statusLabel($n): string
+    public static function statusLabel(int $n): string
     {
         switch ($n) {
             case '0':

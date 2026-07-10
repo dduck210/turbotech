@@ -3,9 +3,14 @@ session_start();
 require __DIR__ . '/../../vendor/autoload.php';
 
 use Codemoi\Model\Comment;
+use Codemoi\Model\Order;
 
 $idpro = $_REQUEST['idpro'];
 $listcmt = Comment::forProduct($idpro);
+// Reviews are limited to verified purchasers (an order for this product
+// that's actually been delivered) — checked again server-side in the
+// submit handler below, not just to decide whether to show the form.
+$canReview = isset($_SESSION['user']) && Order::hasDeliveredPurchase((int) $_SESSION['user']['id_user'], (int) $idpro);
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -29,7 +34,9 @@ $listcmt = Comment::forProduct($idpro);
             $user_name = $_SESSION['user']['user_name'];
             $full_name = $_SESSION['user']['full_name'];
             $comment_date = date("m/d/Y h:i:sa");
-            if ($content == null) {
+            if (!$canReview) {
+                echo '<script>alert("Bạn cần mua và nhận sản phẩm này để đánh giá !")</script>';
+            } elseif ($content == null) {
                 echo '<script>alert("không được để trống !")</script>';
             } else {
                 Comment::create($content, $id_user, $user_name, $full_name, $idpro, $comment_date);
@@ -50,7 +57,7 @@ $listcmt = Comment::forProduct($idpro);
         <!-- Form bình luận-->
 
         <div class="comment-btn-area mt-3">
-        <?php if(isset($_SESSION['user'])){ ?>
+        <?php if ($canReview) { ?>
             <form action="<?= $_SERVER['PHP_SELF']; ?>" method="post" data-validate novalidate class="rounded-2xl border border-ink-200 bg-white p-4 shadow-sm">
                 <label for="content_cmt" class="mb-1.5 block text-sm font-medium text-ink-700">Bình luận của bạn</label>
                 <textarea id="content_cmt" name="content_cmt" data-rules="required|min:2" class="area-cmt block w-full rounded-lg border border-ink-200 bg-white px-3.5 py-2.5 text-sm text-ink-900 placeholder:text-ink-300 focus:outline-none focus:ring-2 focus:ring-brand-500 focus:border-brand-500" cols="60" rows="3" placeholder="Nhập bình luận của bạn"></textarea>
@@ -59,11 +66,15 @@ $listcmt = Comment::forProduct($idpro);
                     <input type="submit" name="btn_cmt" value="Gửi" class="ip-cmt inline-flex cursor-pointer items-center justify-center gap-2 rounded-lg bg-brand-600 px-5 py-2.5 text-sm font-semibold text-white shadow-sm transition-colors hover:bg-brand-700 focus:outline-none focus:ring-2 focus:ring-brand-500 focus:ring-offset-2">
                 </div>
             </form>
-            <?php }else {?>
+            <?php } elseif (!isset($_SESSION['user'])) { ?>
                             <div class="rounded-lg border border-brand-100 bg-brand-50 p-3 text-sm text-brand-700">
                                 <p class="alert alert-primary fs-6">Vui lòng đăng nhập để bình luận !</p>
                             </div>
-                        <?php } ?>
+            <?php } else { ?>
+                            <div class="rounded-lg border border-amber-200 bg-amber-50 p-3 text-sm text-amber-800">
+                                <p>Bạn cần mua và nhận sản phẩm này để có thể đánh giá.</p>
+                            </div>
+            <?php } ?>
         </div>
 
         <!-- End bình luận -->
