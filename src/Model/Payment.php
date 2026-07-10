@@ -2,6 +2,7 @@
 
 namespace Codemoi\Model;
 
+use Codemoi\Core\Config;
 use Codemoi\Core\Database;
 
 /**
@@ -15,12 +16,43 @@ class Payment
     private const MEMO_PREFIX = " ";
 
     /**
+     * Transfer memo shown to the customer and encoded into the QR's
+     * `addInfo`, kept in one place so the two can never drift apart.
+     * Keeps the "{MEMO_PREFIX}{billCode}" shape parseOrderId() already
+     * expects, so a real transaction-forwarding webhook (in place of
+     * atm.php's third-party demo API) could still auto-match payments
+     * against this same memo format later.
+     */
+    public static function transferMemo(string $billCode): string
+    {
+        return 'Thanh toan don' . self::MEMO_PREFIX . $billCode;
+    }
+
+    /**
+     * Build a VietQR.io image URL (NAPAS's official, free bank-QR
+     * generator — no third-party account needed) that pre-fills the
+     * transfer amount and memo, so the customer's banking app fills
+     * in the amount/content automatically instead of them having to
+     * type it. Bank account comes from Config (.env), never hardcoded.
+     */
+    public static function vietQrUrl(int $amount, string $billCode): string
+    {
+        $bankCode = rawurlencode(Config::bankCode());
+        $accountNo = rawurlencode(Config::bankAccountNo());
+        $accountName = rawurlencode(Config::bankAccountName());
+        $memo = rawurlencode(self::transferMemo($billCode));
+
+        return "https://img.vietqr.io/image/{$bankCode}-{$accountNo}-compact2.png"
+            . "?amount={$amount}&addInfo={$memo}&accountName={$accountName}";
+    }
+
+    /**
      * Extract the order id embedded in a bank transfer memo/description.
      * Mirrors old `parse_order_id($des)`.
      *
      * @return int|null
      */
-    public static function parseOrderId($des)
+    public static function parseOrderId(string $des)
     {
         $re = '/' . self::MEMO_PREFIX . '\d+/im';
         preg_match_all($re, $des, $matches, PREG_SET_ORDER, 0);
@@ -39,7 +71,7 @@ class Payment
      *
      * @return string|false
      */
-    public static function curlGet($url)
+    public static function curlGet(string $url)
     {
         $ch = curl_init();
         curl_setopt($ch, CURLOPT_URL, $url);
@@ -56,7 +88,7 @@ class Payment
      *
      * @return array|false
      */
-    public static function findByTran($tranId)
+    public static function findByTran(string $tranId)
     {
         $sql = "SELECT * FROM history_bank WHERE tranid = ?";
         return Database::queryOne($sql, $tranId);
@@ -68,7 +100,7 @@ class Payment
      *
      * @return array|false
      */
-    public static function findBillByCode($id)
+    public static function findBillByCode(string $id)
     {
         $sql = "SELECT * FROM bill WHERE bill_code = ?";
         return Database::queryOne($sql, $id);

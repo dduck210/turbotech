@@ -1,11 +1,18 @@
 <?php
 session_start();
+require __DIR__ . '/../vendor/autoload.php';
+
+use Codemoi\Core\Config;
+use Codemoi\Model\Payment;
+
 $_SESSION['check'] = 1;
 
 if (isset($_SESSION['pay'])) {
     $amount = $_SESSION['pay'][1];
     $bill_code = $_SESSION['pay'][2];
     $payment = $_SESSION['pay'][0];
+    $transferContent = Payment::transferMemo((string) $bill_code);
+    $qrImageUrl = Payment::vietQrUrl((int) $amount, (string) $bill_code);
 }
 ?>
 <!DOCTYPE html>
@@ -87,7 +94,7 @@ if (isset($_SESSION['pay'])) {
                         <div class="mb-4 text-xs font-semibold uppercase tracking-wide text-brand-600">
                             <i class="fas fa-qrcode" aria-hidden="true"></i> Mã QR Chuyển Khoản
                         </div>
-                        <img src="../src/image/qr_code/qrne.jpg" alt="QR Code Chuyển Khoản"
+                        <img src="<?= htmlspecialchars($qrImageUrl ?? '') ?>" alt="QR Code Chuyển Khoản"
                             class="mx-auto h-56 w-56 rounded-lg object-cover" />
                         <div class="mt-4 text-sm text-ink-500">
                             <i class="fas fa-mobile-alt" aria-hidden="true"></i> Quét mã QR bằng ứng dụng ngân hàng
@@ -102,7 +109,7 @@ if (isset($_SESSION['pay'])) {
                         <span class="mb-2 block text-xs font-semibold uppercase tracking-wide text-ink-500">
                             <i class="fas fa-university" aria-hidden="true"></i> Ngân Hàng
                         </span>
-                        <div class="font-semibold text-ink-900">BIDV (Ngân hàng Đầu tư và Phát triển Việt Nam)</div>
+                        <div class="font-semibold text-ink-900"><?= htmlspecialchars(strtoupper(Config::bankCode())) ?></div>
                     </div>
 
                     <!-- Account Number -->
@@ -111,7 +118,7 @@ if (isset($_SESSION['pay'])) {
                             <i class="fas fa-credit-card" aria-hidden="true"></i> Số Tài Khoản
                         </span>
                         <div class="flex items-center justify-between gap-2">
-                            <span id="accountNumber" class="font-bold text-ink-900">1234567890</span>
+                            <span id="accountNumber" class="font-bold text-ink-900"><?= htmlspecialchars(Config::bankAccountNo()) ?></span>
                             <button type="button" class="copy-btn inline-flex items-center gap-1.5 rounded-lg bg-brand-600 px-3 py-2 text-xs font-semibold text-white hover:bg-brand-700 transition-colors focus:outline-none focus:ring-2 focus:ring-brand-500 focus:ring-offset-2"
                                 onclick="copyToClipboard('accountNumber')">
                                 <i class="fas fa-copy" aria-hidden="true"></i> Copy
@@ -124,7 +131,7 @@ if (isset($_SESSION['pay'])) {
                         <span class="mb-2 block text-xs font-semibold uppercase tracking-wide text-ink-500">
                             <i class="fas fa-user" aria-hidden="true"></i> Chủ Tài Khoản
                         </span>
-                        <div class="font-semibold text-ink-900">TURBOTECH VIETNAM</div>
+                        <div class="font-semibold text-ink-900"><?= htmlspecialchars(Config::bankAccountName()) ?></div>
                     </div>
 
                     <!-- Transfer Content -->
@@ -133,7 +140,7 @@ if (isset($_SESSION['pay'])) {
                             <i class="fas fa-comment" aria-hidden="true"></i> Nội Dung Chuyển
                         </span>
                         <div class="flex items-center justify-between gap-2">
-                            <span id="transferContent" class="font-bold text-ink-900">UTP-<?= $bill_code ?></span>
+                            <span id="transferContent" class="font-bold text-ink-900"><?= htmlspecialchars($transferContent ?? '') ?></span>
                             <button type="button" class="copy-btn inline-flex items-center gap-1.5 rounded-lg bg-brand-600 px-3 py-2 text-xs font-semibold text-white hover:bg-brand-700 transition-colors focus:outline-none focus:ring-2 focus:ring-brand-500 focus:ring-offset-2"
                                 onclick="copyToClipboard('transferContent')">
                                 <i class="fas fa-copy" aria-hidden="true"></i> Copy

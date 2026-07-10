@@ -53,6 +53,21 @@ class Config
         return self::env('SMTP_FROM_NAME', 'Turbotech');
     }
 
+    public static function bankCode(): string
+    {
+        return self::env('BANK_CODE', '');
+    }
+
+    public static function bankAccountNo(): string
+    {
+        return self::env('BANK_ACCOUNT_NO', '');
+    }
+
+    public static function bankAccountName(): string
+    {
+        return self::env('BANK_ACCOUNT_NAME', '');
+    }
+
     private static function env(string $key, string $default): string
     {
         if (self::$env === null) {
