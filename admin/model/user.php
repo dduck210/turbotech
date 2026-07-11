@@ -27,12 +27,6 @@ function delete_user(int $id_user)
     $sql = "DELETE FROM user WHERE id_user = ?";
     pdo_execute($sql, $id_user);
 }
-function countusser()
-{
-    $sql = "SELECT count(*) FROM user";
-    $a = pdo_query($sql);
-    return $a;
-}
 function check_user_admin(string $user_name, string $password)
 {
     $sql = "SELECT * FROM user WHERE ((user_name = ?) OR (email_user = ?)) AND password = ? AND role = '1'";

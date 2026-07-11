@@ -56,14 +56,3 @@ function remove_pro(int $id_pro)
     $sql = "DELETE FROM product WHERE id_pro = ?";
     pdo_execute($sql, $id_pro);
 }
-function filter_by_cate(int $id_pro, int $idcate)
-{
-    $sql = "SELECT * FROM product WHERE idcate = ? AND id_pro <> ?";
-    $listpro = pdo_query($sql, $idcate, $id_pro);
-    return $listpro;
-}
-// function loadall_pro() { 
-//     $sql = "SELECT * FROM product ORDER BY id_pro DESC";
-//     $listpro = pdo_query($sql);
-//     return $listpro;
-// }
