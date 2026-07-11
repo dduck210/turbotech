@@ -11,6 +11,8 @@ $listcmt = Comment::forProduct($idpro);
 // that's actually been delivered) — checked again server-side in the
 // submit handler below, not just to decide whether to show the form.
 $canReview = isset($_SESSION['user']) && Order::hasDeliveredPurchase((int) $_SESSION['user']['id_user'], (int) $idpro);
+$flash_success = $_SESSION['flash_success'] ?? null;
+unset($_SESSION['flash_success']);
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -23,9 +25,13 @@ $canReview = isset($_SESSION['user']) && Order::hasDeliveredPurchase((int) $_SES
     <link rel="stylesheet" type="text/css" media="screen" href="../assets/css/tailwind.css" />
     <link rel="shortcut icon" type="../assets/imagex-icon" href="../assets/images/menu/logo/logo-url.jpg" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" integrity="sha512-xh6O/CkQoPOWDdYTDqeRdPCVd1SpvCA9XXcUnZS2FmJNp1coAFzvtCN9BmamE+4aHK8yyUHUSCcJHgXloTyT2A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
 
 <body class="bg-ink-50 font-sans text-ink-900 antialiased">
+    <?php if ($flash_success): ?>
+    <script>document.addEventListener("DOMContentLoaded",()=>Swal.fire({toast:true,position:"top-end",icon:"success",title:<?= json_encode($flash_success) ?>,showConfirmButton:false,timer:3000}));</script>
+    <?php endif; ?>
     <?php
     if (isset($_POST['btn_cmt']) && $_POST['btn_cmt']) {
         $content = $_POST['content_cmt'];
@@ -35,11 +41,12 @@ $canReview = isset($_SESSION['user']) && Order::hasDeliveredPurchase((int) $_SES
         $full_name = $_SESSION['user']['full_name'];
         $comment_date = date("m/d/Y h:i:sa");
         if (!$canReview) {
-            echo '<script>alert("Bạn cần mua và nhận sản phẩm này để đánh giá !")</script>';
+            echo '<script>document.addEventListener("DOMContentLoaded",()=>Swal.fire({toast:true,position:"top-end",icon:"error",title:"Bạn cần mua và nhận sản phẩm này để đánh giá !",showConfirmButton:false,timer:3000}));</script>';
         } elseif ($content == null) {
-            echo '<script>alert("không được để trống !")</script>';
+            echo '<script>document.addEventListener("DOMContentLoaded",()=>Swal.fire({toast:true,position:"top-end",icon:"error",title:"Không được để trống !",showConfirmButton:false,timer:3000}));</script>';
         } else {
             Comment::create($content, $id_user, $user_name, $full_name, $idpro, $comment_date);
+            $_SESSION['flash_success'] = 'Cảm ơn bạn đã đánh giá!';
             header("Location: " . $_SERVER['HTTP_REFERER']);
         }
     }

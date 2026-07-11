@@ -39,18 +39,21 @@ class AuthController extends Controller
 
             if ($error === null && $duplicateField === null) {
                 User::register($user_name, $full_name, $email_user, $password, $address, $phone_user, $sex);
-                echo '<script>alert("Đăng ký tài khoản thành công! Vui lòng đăng nhập")</script>';
-                // NOTE: old code's redirect target has a pre-existing typo
-                // ('act-login' instead of 'act=login', `index.php:84`); the
-                // browser discards the buffered body below on redirect either
-                // way, so we stop here instead of also re-rendering the form.
-                $this->redirect('index.php?act-login');
+                // Flash message survives the redirect (a script echoed right
+                // before header('Location: ...') never runs — the browser
+                // never executes a 3xx response's body). Also fixes a
+                // pre-existing typo in the redirect target itself
+                // ('act-login' instead of 'act=login', `index.php:84`),
+                // which sent every new signup to the homepage instead of
+                // the login page.
+                $_SESSION['flash_success'] = 'Đăng ký tài khoản thành công! Vui lòng đăng nhập';
+                $this->redirect('index.php?act=login');
             }
 
             if ($duplicateField === 'username') {
-                echo '<script>alert("Tên đăng nhập này đã được sử dụng, vui lòng chọn tên khác")</script>';
+                echo '<script>document.addEventListener("DOMContentLoaded",()=>Swal.fire({toast:true,position:"top-end",icon:"error",title:"Tên đăng nhập này đã được sử dụng, vui lòng chọn tên khác",showConfirmButton:false,timer:3000}));</script>';
             } elseif ($error !== null) {
-                echo '<script>alert(' . json_encode($error) . ')</script>';
+                echo '<script>document.addEventListener("DOMContentLoaded",()=>Swal.fire({toast:true,position:"top-end",icon:"error",title:' . json_encode($error) . ',showConfirmButton:false,timer:3000}));</script>';
             }
 
             $this->view('user/register', ['duplicateField' => $duplicateField]);
@@ -114,10 +117,11 @@ class AuthController extends Controller
 
             if (is_array($check_user)) {
                 Auth::login($check_user);
+                $_SESSION['flash_success'] = 'Đăng nhập thành công!';
                 $this->redirect('index.php');
             }
 
-            echo '<script>alert("Tài khoản sai hoặc không tồn tại!")</script>';
+            echo '<script>document.addEventListener("DOMContentLoaded",()=>Swal.fire({toast:true,position:"top-end",icon:"error",title:"Tài khoản sai hoặc không tồn tại!",showConfirmButton:false,timer:3000}));</script>';
         }
 
         $this->view('user/login');

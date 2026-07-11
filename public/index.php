@@ -46,7 +46,6 @@ $router->add('removecart', [CartController::class, 'remove']);
 $router->add('bill', [CheckoutController::class, 'bill']);
 $router->add('applycoupon', [CheckoutController::class, 'applyCoupon']);
 $router->add('removecoupon', [CheckoutController::class, 'removeCoupon']);
-$router->add('pay', [CheckoutController::class, 'pay']);
 $router->add('billconfirm', [CheckoutController::class, 'confirm']);
 $router->add('viewbill', [CheckoutController::class, 'viewbill']);
 $router->add('question', [QuestionController::class, 'index']);

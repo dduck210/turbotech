@@ -44,8 +44,7 @@ if (isset($_GET['act'])) {
                         $check = check_user_admin($user_name, $password);
                         if (is_array($check)) {
                             $_SESSION['admin'] = $check;
-                            echo '<script>document.addEventListener("DOMContentLoaded",()=>Swal.fire({toast:true,position:"top-end",icon:"success",title:"Đăng nhập thành công!",showConfirmButton:false,timer:3000}));</script>';
-                            // sleep(10);
+                            $_SESSION['flash_success'] = 'Đăng nhập thành công!';
                             header('Location: index.php');
                         } else {
                             echo '<script>document.addEventListener("DOMContentLoaded",()=>Swal.fire({toast:true,position:"top-end",icon:"error",title:"Tài khoản sai hoặc không tồn tại!",showConfirmButton:false,timer:3000}));</script>';
@@ -78,9 +77,11 @@ if (isset($_GET['act'])) {
 
             if (isset($_SESSION['admin'])) {
                 $ds_loai = loadall_loai();
+                $flash_success = $_SESSION['flash_success'] ?? null;
+                unset($_SESSION['flash_success']);
                 render(
                     'list_category',
-                    ['ds_loai' => $ds_loai]
+                    ['ds_loai' => $ds_loai, 'flash_success' => $flash_success]
                 );
             } else {
                 header("location: index.php?act=login");
@@ -114,7 +115,7 @@ if (isset($_GET['act'])) {
                     break;
                 }
                 capnhat_loai($id_cate, $name_cate);
-                echo '<script>document.addEventListener("DOMContentLoaded",()=>Swal.fire({toast:true,position:"top-end",icon:"success",title:"Cập nhật loại thành công!",showConfirmButton:false,timer:3000}));</script>';
+                $_SESSION['flash_success'] = 'Cập nhật loại thành công!';
             }
             header('location:index.php?act=list_category');
             break;
@@ -182,10 +183,11 @@ if (isset($_GET['act'])) {
                 $ds_loai = loadall_loai();
                 $listpro = loadall_pro($idcate);
                 $flash_error = $_SESSION['flash_error'] ?? null;
-                unset($_SESSION['flash_error']);
+                $flash_success = $_SESSION['flash_success'] ?? null;
+                unset($_SESSION['flash_error'], $_SESSION['flash_success']);
                 render(
                     "list_product",
-                    ['ds_loai' => $ds_loai, 'listpro' => $listpro, 'idcate' => $idcate, 'flash_error' => $flash_error]
+                    ['ds_loai' => $ds_loai, 'listpro' => $listpro, 'idcate' => $idcate, 'flash_error' => $flash_error, 'flash_success' => $flash_success]
                 );
             } else {
                 header("location: index.php?act=login");
@@ -226,7 +228,7 @@ if (isset($_GET['act'])) {
                 $target_file = $target_dir . basename($_FILES["img_pro"]["name"]);
                 (move_uploaded_file($_FILES["img_pro"]["tmp_name"], $target_file));
                 update_pro($id_pro, $name_pro, $price, $discount, $short_des, $detail_des, $img_pro, $idcate, $stock, $stock_message);
-                echo '<script>document.addEventListener("DOMContentLoaded",()=>Swal.fire({toast:true,position:"top-end",icon:"success",title:"Cập nhật sản phẩm thành công!",showConfirmButton:false,timer:3000}));</script>';
+                $_SESSION['flash_success'] = 'Cập nhật sản phẩm thành công!';
                 header('location:index.php?act=list_product');
             }
             break;
@@ -256,9 +258,11 @@ if (isset($_GET['act'])) {
 
             if (isset($_SESSION['admin'])) {
                 $listuser = loadall_user();
+                $flash_success = $_SESSION['flash_success'] ?? null;
+                unset($_SESSION['flash_success']);
                 render(
                     'list_user',
-                    ['listuser' => $listuser]
+                    ['listuser' => $listuser, 'flash_success' => $flash_success]
                 );
             } else {
                 header("location: index.php?act=login");
@@ -307,7 +311,7 @@ if (isset($_GET['act'])) {
                     break;
                 }
                 update_user($id_user, $user_name, $full_name, $email_user, $password, $role);
-                echo '<script>document.addEventListener("DOMContentLoaded",()=>Swal.fire({toast:true,position:"top-end",icon:"success",title:"Cập nhật tài khoản thành công!",showConfirmButton:false,timer:3000}));</script>';
+                $_SESSION['flash_success'] = 'Cập nhật tài khoản thành công!';
             }
             header('location: index.php?act=list_user');
             break;
@@ -344,12 +348,17 @@ if (isset($_GET['act'])) {
                     }
                 }
                 $listbill = loadall_bill(0, $status, $keyword, $from_date, $to_date);
+                $flash_error = $_SESSION['flash_error'] ?? null;
+                $flash_success = $_SESSION['flash_success'] ?? null;
+                unset($_SESSION['flash_error'], $_SESSION['flash_success']);
                 render('list_bill', [
-                    'listbill' => $listbill, 
-                    'status' => $status, 
+                    'listbill' => $listbill,
+                    'status' => $status,
                     'keyword' => $keyword,
                     'from_date' => $from_date,
-                    'to_date' => $to_date
+                    'to_date' => $to_date,
+                    'flash_error' => $flash_error,
+                    'flash_success' => $flash_success
                 ]);
             } else {
                 header("location: index.php?act=login");
@@ -366,10 +375,16 @@ if (isset($_GET['act'])) {
         //     break;
         case 'edit_bill':
             if (isset($_SESSION['admin'])) {
-                if (isset($_GET['idbill']) && ($_GET['idbill']) > 0) {
-                    $idbill = $_GET['idbill'];
-                    $one_bill = loadone_bill($idbill);
+                $one_bill = (isset($_GET['idbill']) && ($_GET['idbill']) > 0)
+                    ? loadone_bill($_GET['idbill'])
+                    : false;
+
+                if (!is_array($one_bill)) {
+                    $_SESSION['flash_error'] = 'Không tìm thấy đơn hàng này.';
+                    header('location:index.php?act=list_bill');
+                    break;
                 }
+
                 render(
                     'update_bill',
                     ['one_bill' => $one_bill]
@@ -388,7 +403,7 @@ if (isset($_GET['act'])) {
                     $status_pay = 1;
                 }
                 update_bill($id_bill, $status, $status_pay);
-                echo '<script>document.addEventListener("DOMContentLoaded",()=>Swal.fire({toast:true,position:"top-end",icon:"success",title:"Cập nhật đơn hàng thành công!",showConfirmButton:false,timer:3000}));</script>';
+                $_SESSION['flash_success'] = 'Cập nhật đơn hàng thành công!';
                 header('location:index.php?act=list_bill');
             }
             break;
@@ -398,7 +413,7 @@ if (isset($_GET['act'])) {
                 $bill = loadone_bill($idbill);
                 if ($bill && $bill['status'] == 0) {
                     update_bill($idbill, '1', $bill['status_pay']);
-                    echo '<script>document.addEventListener("DOMContentLoaded",()=>Swal.fire({toast:true,position:"top-end",icon:"success",title:"Đã duyệt đơn hàng thành công!",showConfirmButton:false,timer:3000}));</script>';
+                    $_SESSION['flash_success'] = 'Đã duyệt đơn hàng thành công!';
                 }
             }
             header('location:index.php?act=list_bill');
@@ -409,7 +424,7 @@ if (isset($_GET['act'])) {
                 $bill = loadone_bill($idbill);
                 if ($bill && $bill['status'] == 1) {
                     update_bill($idbill, '2', $bill['status_pay']);
-                    echo '<script>document.addEventListener("DOMContentLoaded",()=>Swal.fire({toast:true,position:"top-end",icon:"success",title:"Đã chuyển sang đang giao hàng!",showConfirmButton:false,timer:3000}));</script>';
+                    $_SESSION['flash_success'] = 'Đã chuyển sang đang giao hàng!';
                 }
             }
             header('location:index.php?act=list_bill');
@@ -420,17 +435,23 @@ if (isset($_GET['act'])) {
                 $bill = loadone_bill($idbill);
                 if ($bill && ($bill['status'] == 0 || $bill['status'] == 1)) {
                     update_bill($idbill, '4', $bill['status_pay']);
-                    echo '<script>document.addEventListener("DOMContentLoaded",()=>Swal.fire({toast:true,position:"top-end",icon:"success",title:"Đã hủy đơn hàng!",showConfirmButton:false,timer:3000}));</script>';
+                    $_SESSION['flash_success'] = 'Đã hủy đơn hàng!';
                 }
             }
             header('location:index.php?act=list_bill');
             break;
         case 'billdetail':
             if (isset($_SESSION['admin'])) {
-                if (isset($_GET['idbill']) && ($_GET['idbill']) > 0) {
-                    $idbill = $_GET['idbill'];
-                    $one_bill = loadone_bill($idbill);
+                $one_bill = (isset($_GET['idbill']) && ($_GET['idbill']) > 0)
+                    ? loadone_bill($_GET['idbill'])
+                    : false;
+
+                if (!is_array($one_bill)) {
+                    $_SESSION['flash_error'] = 'Không tìm thấy đơn hàng này.';
+                    header('location:index.php?act=list_bill');
+                    break;
                 }
+
                 render(
                     'billdetail',
                     ['one_bill' => $one_bill]
@@ -511,7 +532,9 @@ if (isset($_GET['act'])) {
         case 'list_coupon':
             if (isset($_SESSION['admin'])) {
                 $listcoupon = loadall_coupon();
-                render('list_coupon', ['listcoupon' => $listcoupon]);
+                $flash_success = $_SESSION['flash_success'] ?? null;
+                unset($_SESSION['flash_success']);
+                render('list_coupon', ['listcoupon' => $listcoupon, 'flash_success' => $flash_success]);
             } else {
                 header("location: index.php?act=login");
             }
@@ -544,7 +567,7 @@ if (isset($_GET['act'])) {
             if (isset($_GET['id_coupon']) && ($_GET['id_coupon']) > 0) {
                 $id_coupon = $_GET['id_coupon'];
                 delete_coupon($id_coupon);
-                echo '<script>document.addEventListener("DOMContentLoaded",()=>Swal.fire({toast:true,position:"top-end",icon:"success",title:"Xóa mã thành công!",showConfirmButton:false,timer:3000}));</script>';
+                $_SESSION['flash_success'] = 'Xóa mã thành công!';
             }
             header('location: index.php?act=list_coupon');
             break;
@@ -576,14 +599,16 @@ if (isset($_GET['act'])) {
                 $usage_limit = $_POST['usage_limit'];
                 $status = $_POST['status'];
                 update_coupon($id_coupon, $code, $discount_type, $discount_value, $max_discount, $min_order_value, $product_id, $start_date, $end_date, $usage_limit, $status);
-                echo '<script>document.addEventListener("DOMContentLoaded",()=>Swal.fire({toast:true,position:"top-end",icon:"success",title:"Cập nhật mã giảm giá thành công!",showConfirmButton:false,timer:3000}));</script>';
+                $_SESSION['flash_success'] = 'Cập nhật mã giảm giá thành công!';
             }
             header('location: index.php?act=list_coupon');
             break;
 
         default:
             if (isset($_SESSION['admin'])) {
-                render('dashboard');
+                $flash_success = $_SESSION['flash_success'] ?? null;
+                unset($_SESSION['flash_success']);
+                render('dashboard', ['flash_success' => $flash_success]);
             } else {
                 header("location: index.php?act=login");
             }
@@ -591,7 +616,9 @@ if (isset($_GET['act'])) {
     }
 } else {
     if (isset($_SESSION['admin'])) {
-        render('dashboard');
+        $flash_success = $_SESSION['flash_success'] ?? null;
+        unset($_SESSION['flash_success']);
+        render('dashboard', ['flash_success' => $flash_success]);
     } else {
         header("location: index.php?act=login");
     }

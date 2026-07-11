@@ -44,7 +44,7 @@ class AccountController extends Controller
             $address = $address_detail !== '' ? "{$address_detail}, {$ward}, {$province}" : '';
 
             if ($full_name === '' || !filter_var($email_user, FILTER_VALIDATE_EMAIL) || $province === '' || $ward === '' || $address_detail === '') {
-                echo '<script>alert("Vui lòng nhập đầy đủ và đúng định dạng thông tin !")</script>';
+                echo '<script>document.addEventListener("DOMContentLoaded",()=>Swal.fire({toast:true,position:"top-end",icon:"error",title:"Vui lòng nhập đầy đủ và đúng định dạng thông tin !",showConfirmButton:false,timer:3000}));</script>';
             } else {
                 $img_user = $_FILES['img_user']['name'] ?? '';
                 if (!empty($_FILES['img_user']['tmp_name'])) {
@@ -60,7 +60,7 @@ class AccountController extends Controller
                     $user = $refreshed;
                 }
 
-                echo '<script>alert("Thay đổi thông tin thành công!")</script>';
+                echo '<script>document.addEventListener("DOMContentLoaded",()=>Swal.fire({toast:true,position:"top-end",icon:"success",title:"Thay đổi thông tin thành công!",showConfirmButton:false,timer:3000}));</script>';
             }
         }
 
@@ -69,12 +69,12 @@ class AccountController extends Controller
             $password = $_POST['newpass'] ?? '';
 
             if ($password == "") {
-                echo '<script>alert("Không được để trống mật khẩu mới !")</script>';
+                echo '<script>document.addEventListener("DOMContentLoaded",()=>Swal.fire({toast:true,position:"top-end",icon:"error",title:"Không được để trống mật khẩu mới !",showConfirmButton:false,timer:3000}));</script>';
             } elseif (($_POST['repass'] ?? null) !== ($_POST['newpass'] ?? null)) {
-                echo '<script>alert("Nhập lại mật khẩu không khớp !")</script>';
+                echo '<script>document.addEventListener("DOMContentLoaded",()=>Swal.fire({toast:true,position:"top-end",icon:"error",title:"Nhập lại mật khẩu không khớp !",showConfirmButton:false,timer:3000}));</script>';
             } else {
                 User::updatePassword($user_name, $password);
-                echo '<script>alert("Đổi mật khẩu thành công !")</script>';
+                echo '<script>document.addEventListener("DOMContentLoaded",()=>Swal.fire({toast:true,position:"top-end",icon:"success",title:"Đổi mật khẩu thành công !",showConfirmButton:false,timer:3000}));</script>';
             }
         }
 

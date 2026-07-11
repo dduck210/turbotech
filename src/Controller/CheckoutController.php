@@ -24,11 +24,6 @@ class CheckoutController extends Controller
 {
     public function bill(): void
     {
-        if (isset($_SESSION['errorMessage'])) {
-            echo "<script type='text/javascript'>alert('" . $_SESSION['errorMessage'] . "');</script>";
-            unset($_SESSION['errorMessage']);
-        }
-
         // Re-validate the session's applied coupon against the current
         // cart on every page load, so a stale/expired code (or one that no
         // longer matches the cart contents) is silently dropped instead of
@@ -39,11 +34,6 @@ class CheckoutController extends Controller
             'couponCode' => $coupon['code'],
             'couponDiscount' => $coupon['discount'],
         ]);
-    }
-
-    public function pay(): void
-    {
-        $this->view('qr');
     }
 
     /**
@@ -137,7 +127,7 @@ class CheckoutController extends Controller
 
         if (isset($_POST['orderconfirm']) && $_POST['orderconfirm']) {
             if (!Auth::check()) {
-                echo '<script>alert("Bạn phải đăng nhập để đặt hàng!")</script>';
+                $_SESSION['flash_error'] = 'Bạn phải đăng nhập để đặt hàng!';
                 $this->redirect('index.php?act=login');
             }
 
@@ -159,15 +149,15 @@ class CheckoutController extends Controller
             // hợp lệ!") instead of ever actually validating the email —
             // fixed to check each field once, for real.
             if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-                $_SESSION['errorMessage'] = "Email không hợp lệ !";
+                $_SESSION['flash_error'] = "Email không hợp lệ !";
                 $check_error = 1;
             }
             if (self::validateMobile($phone) == 0) {
-                $_SESSION['errorMessage'] = "Số điện thoại không đúng định dạng !";
+                $_SESSION['flash_error'] = "Số điện thoại không đúng định dạng !";
                 $check_error = 1;
             }
             if ($province === '' || $ward === '' || $address_detail === '') {
-                $_SESSION['errorMessage'] = "Vui lòng nhập đầy đủ địa chỉ nhận hàng !";
+                $_SESSION['flash_error'] = "Vui lòng nhập đầy đủ địa chỉ nhận hàng !";
                 $check_error = 1;
             }
 
@@ -188,7 +178,7 @@ class CheckoutController extends Controller
             // more units than are actually in stock.
             foreach (Cart::items() as $cart) {
                 if (!Product::hasStock($cart[0], $cart[4])) {
-                    $_SESSION['errorMessage'] = "Sản phẩm \"{$cart[1]}\" không đủ số lượng tồn kho, vui lòng cập nhật giỏ hàng!";
+                    $_SESSION['flash_error'] = "Sản phẩm \"{$cart[1]}\" không đủ số lượng tồn kho, vui lòng cập nhật giỏ hàng!";
                     $this->redirect('?act=viewcart');
                 }
             }
@@ -300,7 +290,7 @@ class CheckoutController extends Controller
             if ($total_amount > 0) {
                 foreach (Cart::items() as $cart) {
                     if (!Product::hasStock($cart[0], $cart[4])) {
-                        $_SESSION['errorMessage'] = "Sản phẩm \"{$cart[1]}\" không đủ số lượng tồn kho, vui lòng cập nhật giỏ hàng!";
+                        $_SESSION['flash_error'] = "Sản phẩm \"{$cart[1]}\" không đủ số lượng tồn kho, vui lòng cập nhật giỏ hàng!";
                         $this->redirect('?act=viewcart');
                     }
                 }

@@ -1,5 +1,11 @@
     <?php include_once "header.php" ?>
     <?php /** @var array $listbill */ ?>
+    <?php if (!empty($flash_error)): ?>
+    <script>document.addEventListener("DOMContentLoaded",()=>Swal.fire({toast:true,position:"top-end",icon:"error",title:<?= json_encode($flash_error) ?>,showConfirmButton:false,timer:4000}));</script>
+    <?php endif; ?>
+    <?php if (!empty($flash_success)): ?>
+    <script>document.addEventListener("DOMContentLoaded",()=>Swal.fire({toast:true,position:"top-end",icon:"success",title:<?= json_encode($flash_success) ?>,showConfirmButton:false,timer:3000}));</script>
+    <?php endif; ?>
 
 
     <div class="mb-8 flex items-center justify-between">
@@ -133,10 +139,12 @@
                                         <?php if ($bill['status'] == 0): ?>
                                             <a href="index.php?act=approve_bill&idbill=<?= $bill['id_bill'] ?>"
                                                 class="p-2 text-blue-600 bg-blue-50 rounded-lg hover:bg-blue-100 transition-all active:scale-90"
+                                                data-confirm="Bạn có chắc chắn muốn duyệt đơn hàng này?"
                                                 title="Duyệt đơn hàng"><i class="fas fa-check"></i></a>
                                         <?php elseif ($bill['status'] == 1): ?>
                                             <a href="index.php?act=ship_bill&idbill=<?= $bill['id_bill'] ?>"
                                                 class="p-2 text-indigo-600 bg-indigo-50 rounded-lg hover:bg-indigo-100 transition-all active:scale-90"
+                                                data-confirm="Bạn có chắc chắn muốn chuyển đơn hàng này sang giao hàng?"
                                                 title="Giao hàng"><i class="fas fa-truck"></i></a>
                                         <?php endif; ?>
 

@@ -247,7 +247,7 @@
                     }
                 },
                 error: function() {
-                    alert('Không thể áp dụng mã giảm giá, vui lòng thử lại!');
+                    Swal.fire({toast: true, position: 'top-end', icon: 'error', title: 'Không thể áp dụng mã giảm giá, vui lòng thử lại!', showConfirmButton: false, timer: 3000});
                 }
             });
         });

@@ -1,7 +1,21 @@
 <?php
 $count = \Codemoi\Model\Cart::count();
 $total_amount = \Codemoi\Model\Cart::total();
+
+// Site-wide flash toast: any controller can set these in $_SESSION right
+// before a redirect and the message will still reach the user on the next
+// page — a script echoed right before header('Location: ...') never runs,
+// since browsers don't execute a 3xx response's body.
+$flash_success = $_SESSION['flash_success'] ?? null;
+$flash_error = $_SESSION['flash_error'] ?? null;
+unset($_SESSION['flash_success'], $_SESSION['flash_error']);
 ?>
+<?php if ($flash_success): ?>
+<script>document.addEventListener("DOMContentLoaded",()=>Swal.fire({toast:true,position:"top-end",icon:"success",title:<?= json_encode($flash_success) ?>,showConfirmButton:false,timer:3000}));</script>
+<?php endif; ?>
+<?php if ($flash_error): ?>
+<script>document.addEventListener("DOMContentLoaded",()=>Swal.fire({toast:true,position:"top-end",icon:"error",title:<?= json_encode($flash_error) ?>,showConfirmButton:false,timer:3000}));</script>
+<?php endif; ?>
 
 <header class="sticky top-0 z-40 border-b border-ink-200 bg-white/90 backdrop-blur">
     <div class="mx-auto max-w-7xl px-3 sm:px-6 lg:px-8">

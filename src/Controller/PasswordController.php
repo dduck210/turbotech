@@ -46,11 +46,19 @@ class PasswordController extends Controller
                                 Nhập mã sau đây để đặt lại mật khẩu: <span style='color: black; font-weight: 600'>" . $code . "</span></p>";
 
                     $mail = new \Codemoi\Mail\Mailer();
-                    $mail->sendMail($title, $content, $email);
+                    $sent = $mail->sendMail($title, $content, $email);
 
-                    $_SESSION['mail'] = $email;
-                    $_SESSION['code'] = $code;
-                    $this->redirect('index.php?act=verification');
+                    if ($sent) {
+                        $_SESSION['mail'] = $email;
+                        $_SESSION['code'] = $code;
+                        $this->redirect('index.php?act=verification');
+                    }
+
+                    // Don't send the user to "enter the code we emailed you"
+                    // when no email actually went out (e.g. an expired SMTP
+                    // app password) — they'd be stuck waiting for a code
+                    // that never arrives with no idea why.
+                    $error = 'Không thể gửi email lúc này, vui lòng thử lại sau hoặc liên hệ quản trị viên.';
                 }
             }
         }

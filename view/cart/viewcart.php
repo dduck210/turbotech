@@ -58,6 +58,7 @@
                                     <td class="px-4 py-3 font-semibold text-ink-900"><?= number_format($cart[5]) ?> ₫</td>
                                     <td class="px-4 py-3 text-center">
                                         <a href="<?= $removepro ?>" title="Xóa sản phẩm"
+                                            data-confirm="Bạn có chắc chắn muốn xóa sản phẩm này khỏi giỏ hàng?"
                                             class="inline-flex h-11 w-11 items-center justify-center rounded-full text-red-600 hover:bg-red-50 transition-colors focus:outline-none focus:ring-2 focus:ring-brand-500">
                                             <i class="fa fa-trash" aria-hidden="true"></i>
                                             <span class="sr-only">Xóa</span>
@@ -73,6 +74,7 @@
 
             <div class="mt-6 flex flex-wrap items-center justify-between gap-3">
                 <a href="index.php?act=removecart"
+                    data-confirm="Bạn có chắc chắn muốn xóa toàn bộ sản phẩm trong giỏ hàng?"
                     class="inline-flex items-center justify-center gap-2 rounded-lg border border-red-200 bg-white px-5 py-2.5 text-sm font-semibold text-red-600 hover:bg-red-50 transition-colors focus:outline-none focus:ring-2 focus:ring-brand-500">
                     <i class="fa-solid fa-trash" aria-hidden="true"></i> Xóa toàn bộ sản phẩm
                 </a>
@@ -110,10 +112,6 @@
     </form>
 </div>
 <script>
-    function aler() {
-        alert("Problen in sending reply!")
-    }
-
     function saveCart(obj) {
         var quantity = $(obj).val();
         // var code = document.getElementById("code").value;
@@ -132,14 +130,14 @@
                     try {
                         var result = JSON.parse(match[1]);
                         if (result.success === false && result.message) {
-                            alert(result.message);
+                            Swal.fire({toast: true, position: 'top-end', icon: 'warning', title: result.message, showConfirmButton: false, timer: 3000});
                         }
                     } catch (e) {}
                 }
                 location.reload();
             },
             error: function() {
-                alert("Problen in sending reply!")
+                Swal.fire({toast: true, position: 'top-end', icon: 'error', title: 'Có lỗi xảy ra, vui lòng thử lại!', showConfirmButton: false, timer: 3000});
             }
         });
     }

@@ -1,4 +1,7 @@
 <?php include_once "header.php" ?>
+<?php if (!empty($flash_success)): ?>
+<script>document.addEventListener("DOMContentLoaded",()=>Swal.fire({toast:true,position:"top-end",icon:"success",title:<?= json_encode($flash_success) ?>,showConfirmButton:false,timer:3000}));</script>
+<?php endif; ?>
 <div class="mb-8 flex items-center justify-between">
     <h1 class="text-3xl font-bold text-slate-800">Quản Lý Mã Giảm Giá</h1>
     <a href="index.php?act=add_coupon"

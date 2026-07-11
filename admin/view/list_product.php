@@ -4,6 +4,9 @@
 <?php if (!empty($flash_error)): ?>
 <script>document.addEventListener("DOMContentLoaded",()=>Swal.fire({toast:true,position:"top-end",icon:"error",title:<?= json_encode($flash_error) ?>,showConfirmButton:false,timer:4000}));</script>
 <?php endif; ?>
+<?php if (!empty($flash_success)): ?>
+<script>document.addEventListener("DOMContentLoaded",()=>Swal.fire({toast:true,position:"top-end",icon:"success",title:<?= json_encode($flash_success) ?>,showConfirmButton:false,timer:3000}));</script>
+<?php endif; ?>
 
 <div class="mb-8 flex items-center justify-between">
     <h1 class="text-3xl font-bold text-slate-800">Quản Lý Sản Phẩm</h1>

@@ -1,5 +1,8 @@
     <?php include_once "header.php" ?>
     <?php /** @var array $ds_loai */ ?>
+    <?php if (!empty($flash_success)): ?>
+    <script>document.addEventListener("DOMContentLoaded",()=>Swal.fire({toast:true,position:"top-end",icon:"success",title:<?= json_encode($flash_success) ?>,showConfirmButton:false,timer:3000}));</script>
+    <?php endif; ?>
 
 
     <div class="mb-8 flex items-center justify-between">

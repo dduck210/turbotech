@@ -1,4 +1,7 @@
 <?php include_once "header.php" ?>
+<?php if (!empty($flash_success)): ?>
+<script>document.addEventListener("DOMContentLoaded",()=>Swal.fire({toast:true,position:"top-end",icon:"success",title:<?= json_encode($flash_success) ?>,showConfirmButton:false,timer:3000}));</script>
+<?php endif; ?>
 <?php $listuser = loadall_user();
 $listcmt = loadall_cmt();
 $listbill = loadall_bill(0);

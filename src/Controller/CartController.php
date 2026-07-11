@@ -20,15 +20,6 @@ class CartController extends Controller
 {
     public function viewCart(): void
     {
-        // Set by add()/edit() (insufficient-stock cases) or
-        // CheckoutController when stock runs out between adding to cart and
-        // confirming the order — same flash-message pattern as
-        // CheckoutController::bill().
-        if (isset($_SESSION['errorMessage'])) {
-            echo "<script type='text/javascript'>alert('" . $_SESSION['errorMessage'] . "');</script>";
-            unset($_SESSION['errorMessage']);
-        }
-
         $this->view('cart/viewcart');
     }
 
@@ -97,7 +88,10 @@ class CartController extends Controller
                 if (Product::hasStock($id_pro, $alreadyInCart + $quantity)) {
                     Cart::add($id_pro, $name_pro, $img_pro, $price, $quantity);
                 } else {
-                    echo '<script>alert("Sản phẩm không đủ số lượng tồn kho!")</script>';
+                    // Flash, not echo — this always falls through to the
+                    // redirect below, and a script echoed right before
+                    // header('Location: ...') never runs in a real browser.
+                    $_SESSION['flash_error'] = 'Sản phẩm không đủ số lượng tồn kho!';
                 }
             }
 

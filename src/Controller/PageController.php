@@ -28,7 +28,7 @@ class PageController extends Controller
             $contennt = $_POST['contennt'] ?? '';
 
             Question::create($name, $email, $phone, $contennt);
-            echo '<script>alert("Gửi câu hỏi thành công !")</script>';
+            echo '<script>document.addEventListener("DOMContentLoaded",()=>Swal.fire({toast:true,position:"top-end",icon:"success",title:"Gửi câu hỏi thành công !",showConfirmButton:false,timer:3000}));</script>';
         }
 
         $this->view('contact');

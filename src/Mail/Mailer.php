@@ -21,7 +21,13 @@ require_once __DIR__ . '/../../email/PHPMailer/src/SMTP.php';
  */
 class Mailer
 {
-    public function sendMail(string $title, string $content, string $addressMail)
+    /**
+     * @return bool True if the message was actually handed off to the SMTP
+     * server successfully, false otherwise. Callers where the email IS the
+     * point of the request (e.g. forgot-password OTP) must check this
+     * instead of assuming success — see `PasswordController::forgotPassword()`.
+     */
+    public function sendMail(string $title, string $content, string $addressMail): bool
     {
         // Create an instance; passing `true` enables exceptions
         $mail = new PHPMailer(true);
@@ -48,9 +54,16 @@ class Mailer
             $mail->Body = $content;
 
             $mail->send();
+            return true;
         } catch (Exception $e) {
-            // Mirrors old behavior (`email/index.php:54-56`): swallow send
-            // failures rather than surfacing a fatal error to the user.
+            // Old behavior (`email/index.php:54-56`) swallowed this
+            // completely — a bad/expired SMTP password then failed
+            // silently with no way to tell from the outside. Log it so
+            // it's at least visible in the PHP/Apache error log, and let
+            // the caller know so it can decide how to react instead of
+            // assuming the email went out.
+            error_log('Mailer::sendMail failed for ' . $addressMail . ': ' . $mail->ErrorInfo);
+            return false;
         }
     }
 }
