@@ -11,9 +11,9 @@
     </div> <!-- End h-screen flex -->
     
     <!-- Custom confirm dialog (replaces the native browser confirm() popup) —
-         logic lives in src/js/confirm-dialog.js; markup stays here so its
+         logic lives in assets/js/confirm-dialog.js; markup stays here so its
          classes are seen by Tailwind's content scan. -->
-    <div id="confirm-dialog-overlay" class="hidden fixed inset-0 z-50 flex items-center justify-center bg-slate-900/50 p-4">
+    <div id="confirm-dialog-overlay" class="fixed inset-0 z-50 flex items-center justify-center bg-slate-900/50 p-4" style="display: none;">
         <div class="w-full max-w-sm rounded-2xl bg-white p-6 shadow-xl">
             <div class="mb-4 flex items-center gap-3">
                 <div class="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-amber-100 text-amber-600">
@@ -30,8 +30,8 @@
     </div>
 
     <!-- Shared form-validation engine (same file used by the client storefront) -->
-    <script src="../src/js/form-validate.js"></script>
-    <script src="../src/js/confirm-dialog.js"></script>
+    <script src="../assets/js/form-validate.js"></script>
+    <script src="../assets/js/confirm-dialog.js"></script>
 
     <!-- Scripts for interactivity (DataTables, Dropdowns, etc.) -->
     <script>

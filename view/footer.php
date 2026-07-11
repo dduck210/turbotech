@@ -50,7 +50,7 @@
 </footer>
 
 <!-- Custom confirm dialog (replaces the native browser confirm() popup) —
-     logic lives in src/js/confirm-dialog.js; markup stays here so its
+     logic lives in assets/js/confirm-dialog.js; markup stays here so its
      classes are seen by Tailwind's content scan. -->
 <div id="confirm-dialog-overlay" class="hidden fixed inset-0 z-50 flex items-center justify-center bg-ink-900/50 p-4">
     <div class="w-full max-w-sm rounded-2xl bg-white p-6 shadow-xl">
@@ -68,12 +68,12 @@
     </div>
 </div>
 
-<script src="./src/js/plugins.min.js"></script>
-<script src="./src/js/ajax-mail.js"></script>
-<script src="./src/js/main.js"></script>
-<script src="./src/js/form-validate.js"></script>
-<script src="./src/js/address-select.js"></script>
-<script src="./src/js/confirm-dialog.js"></script>
+<script src="./assets/js/plugins.min.js"></script>
+<script src="./assets/js/ajax-mail.js"></script>
+<script src="./assets/js/main.js"></script>
+<script src="./assets/js/form-validate.js"></script>
+<script src="./assets/js/address-select.js"></script>
+<script src="./assets/js/confirm-dialog.js"></script>
 </body>
 
 </html>

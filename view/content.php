@@ -10,7 +10,7 @@
     <div class="grid grid-cols-1 gap-6 md:grid-cols-2">
         <!-- Begin Hero Banner Item -->
         <div class="relative flex min-h-[280px] items-end overflow-hidden rounded-2xl bg-ink-900 bg-cover bg-center sm:min-h-[380px]"
-            style="background-image:url('./src/image/slider/anhmoi.jpg')">
+            style="background-image:url('./assets/images/slider/anhmoi.jpg')">
             <div class="relative z-10 p-6 sm:p-8">
                 <a class="inline-flex items-center justify-center gap-2 rounded-lg bg-brand-600 px-5 py-2.5 text-sm font-semibold text-white shadow-sm transition-colors hover:bg-brand-700 focus:outline-none focus:ring-2 focus:ring-brand-500 focus:ring-offset-2"
                     href="index.php?act=product">Mua ngay</a>
@@ -19,7 +19,7 @@
         <!-- Hero Banner Item End Here -->
         <!-- Begin Hero Banner Item -->
         <div class="relative flex min-h-[280px] items-end overflow-hidden rounded-2xl bg-ink-900 bg-cover bg-center sm:min-h-[380px]"
-            style="background-image:url('./src/image/slider/anhmoi2.jpg')">
+            style="background-image:url('./assets/images/slider/anhmoi2.jpg')">
             <div class="relative z-10 p-6 sm:p-8">
                 <a class="inline-flex items-center justify-center gap-2 rounded-lg bg-brand-600 px-5 py-2.5 text-sm font-semibold text-white shadow-sm transition-colors hover:bg-brand-700 focus:outline-none focus:ring-2 focus:ring-brand-500 focus:ring-offset-2"
                     href="index.php?act=product">Mua ngay</a>
@@ -284,7 +284,7 @@
 <!-- Begin Turbotech Product With Content Area -->
 <section class="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
     <div class="relative flex min-h-[280px] items-center overflow-hidden rounded-2xl bg-ink-900 bg-cover bg-center sm:min-h-[420px]"
-        style="background-image:url('./src/image/banner/pcgami.png')">
+        style="background-image:url('./assets/images/banner/pcgami.png')">
         <div class="relative z-10 ml-auto w-full max-w-md p-6 text-right sm:p-10">
             <h2 class="font-heading text-2xl font-bold text-white sm:text-3xl">PC Gaming</h2>
             <p class="mt-3 text-sm text-white/90 sm:text-base">
@@ -305,12 +305,12 @@
     <div class="grid grid-cols-1 gap-6 md:grid-cols-2">
         <div class="overflow-hidden rounded-2xl border border-ink-200 shadow-sm transition-shadow hover:shadow-md">
             <a href="index.php?act=product&idcate=12">
-                <img class="h-56 w-full object-cover" src="./src/image/banner/lapmsi.jpg" alt="Tubotech" />
+                <img class="h-56 w-full object-cover" src="./assets/images/banner/lapmsi.jpg" alt="Tubotech" />
             </a>
         </div>
         <div class="overflow-hidden rounded-2xl border border-ink-200 shadow-sm transition-shadow hover:shadow-md">
             <a href="index.php?act=product&idcate=11">
-                <img class="h-56 w-full object-cover" src="./src/image/banner/lenovo.jpg" alt="Tubotech" />
+                <img class="h-56 w-full object-cover" src="./assets/images/banner/lenovo.jpg" alt="Tubotech" />
             </a>
         </div>
     </div>

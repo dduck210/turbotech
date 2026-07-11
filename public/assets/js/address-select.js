@@ -2,7 +2,7 @@
  * Cascading Tỉnh/Thành phố -> Xã/Phường address picker (vanilla JS).
  * Data is the current 2-tier administrative structure (34 provinces, no
  * district level) fetched from provinces.open-api.vn and saved locally at
- * src/data/vietnam-locations.json so the page doesn't depend on that API
+ * assets/data/vietnam-locations.json so the page doesn't depend on that API
  * at runtime.
  *
  * Usage: a <select data-address-province>, a <select data-address-ward>,
@@ -27,7 +27,7 @@
 
     function loadLocations() {
         if (!locationsPromise) {
-            locationsPromise = fetch('src/data/vietnam-locations.json').then(function (r) {
+            locationsPromise = fetch('assets/data/vietnam-locations.json').then(function (r) {
                 return r.json();
             });
         }

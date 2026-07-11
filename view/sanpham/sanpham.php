@@ -49,7 +49,7 @@
             <!-- Sidebar banner -->
             <div class="rounded-2xl overflow-hidden border border-ink-200">
                 <a href="#">
-                    <img src="./src/image/shop/1.png" alt="Turbotech" class="w-full h-auto">
+                    <img src="./assets/images/shop/1.png" alt="Turbotech" class="w-full h-auto">
                 </a>
             </div>
 
@@ -93,7 +93,7 @@
             <!-- Top banner -->
             <div class="rounded-2xl overflow-hidden border border-ink-200 mb-8">
                 <a href="#">
-                    <img src="./src/image/shop/anhmoi1.png" alt="Ultraphone Product"
+                    <img src="./assets/images/shop/anhmoi1.png" alt="Ultraphone Product"
                         class="w-full h-[220px] md:h-[350px] object-cover">
                 </a>
             </div>

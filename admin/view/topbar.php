@@ -23,7 +23,7 @@
                 <div class="text-sm font-semibold text-slate-700">Admin Turbotech</div>
                 <div class="text-xs text-slate-500 font-medium">Quản trị viên</div>
             </div>
-            <img src="view/assets/img/admin.png" onerror="this.src='https://ui-avatars.com/api/?name=Admin&background=eff6ff&color=2563eb'" class="w-10 h-10 rounded-full border-2 border-brand-100 object-cover shadow-sm">
+            <img src="../assets/admin-images/admin.png" onerror="this.src='https://ui-avatars.com/api/?name=Admin&background=eff6ff&color=2563eb'" class="w-10 h-10 rounded-full border-2 border-brand-100 object-cover shadow-sm">
             <a href="index.php?act=logout" class="ml-2 p-2 text-slate-400 hover:text-red-500 transition-colors rounded-full hover:bg-red-50" title="Đăng xuất">
                 <i class="fas fa-sign-out-alt text-lg"></i>
             </a>

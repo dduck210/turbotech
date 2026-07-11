@@ -97,6 +97,12 @@ function nav_submenu_toggle_class(bool $active): string
             <span class="ml-3 font-medium">Đơn hàng</span>
         </a>
 
+        <!-- Coupons -->
+        <a href="index.php?act=list_coupon" class="<?= nav_link_class(in_array($current_act, ['list_coupon', 'add_coupon', 'edit_coupon'], true)) ?>">
+            <i class="fas fa-ticket-alt <?= nav_icon_class(in_array($current_act, ['list_coupon', 'add_coupon', 'edit_coupon'], true)) ?>"></i>
+            <span class="ml-3 font-medium">Mã giảm giá</span>
+        </a>
+
         <!-- Comments -->
         <a href="index.php?act=list_cmt" class="<?= nav_link_class($current_act === 'list_cmt') ?>">
             <i class="fas fa-comments <?= nav_icon_class($current_act === 'list_cmt') ?>"></i>
@@ -110,8 +116,8 @@ function nav_submenu_toggle_class(bool $active): string
         </a>
 
         <!-- Statistics -->
-        <a href="index.php?act=list_statis" class="<?= nav_link_class($current_act === 'list_statis') ?>">
-            <i class="fas fa-chart-bar <?= nav_icon_class($current_act === 'list_statis') ?>"></i>
+        <a href="index.php?act=list_thongke" class="<?= nav_link_class($current_act === 'list_thongke') ?>">
+            <i class="fas fa-chart-bar <?= nav_icon_class($current_act === 'list_thongke') ?>"></i>
             <span class="ml-3 font-medium">Thống kê</span>
         </a>
     </div>

@@ -1,17 +1,18 @@
 <?php
 session_start();
-require_once "controller/controller.php";
+require_once __DIR__ . '/../../admin/controller/controller.php';
 
-//include dao để dùng các functione: 
+//include dao để dùng các functione:
 
-include "model/pdo.php";
-include "model/loai.php";
-include "model/sanpham.php";
-include "model/nguoidung.php";
-include "model/hoadon.php";
-include "model/binhluan.php";
-include "model/thongke.php";
-include "model/hoidap.php";
+include __DIR__ . '/../../admin/model/pdo.php';
+include __DIR__ . '/../../admin/model/loai.php';
+include __DIR__ . '/../../admin/model/sanpham.php';
+include __DIR__ . '/../../admin/model/nguoidung.php';
+include __DIR__ . '/../../admin/model/hoadon.php';
+include __DIR__ . '/../../admin/model/binhluan.php';
+include __DIR__ . '/../../admin/model/thongke.php';
+include __DIR__ . '/../../admin/model/hoidap.php';
+include __DIR__ . '/../../admin/model/coupon.php';
 // controller
 if (isset($_GET['act'])) {
     $act = $_GET['act'];
@@ -309,17 +310,36 @@ if (isset($_GET['act'])) {
 
         // show all bill
         case 'list_bill':
-
             if (isset($_SESSION['admin'])) {
-                $listbill = loadall_bill(0);
-                render(
-                    'list_bill',
-                    ['listbill' => $listbill]
-                );
+                $status = -1;
+                $keyword = "";
+                $from_date = "";
+                $to_date = "";
+                if (isset($_POST['btn_filter'])) {
+                    if (isset($_POST['status'])) {
+                        $status = (int)$_POST['status'];
+                    }
+                    if (isset($_POST['keyword'])) {
+                        $keyword = trim($_POST['keyword']);
+                    }
+                    if (isset($_POST['from_date'])) {
+                        $from_date = $_POST['from_date'];
+                    }
+                    if (isset($_POST['to_date'])) {
+                        $to_date = $_POST['to_date'];
+                    }
+                }
+                $listbill = loadall_bill(0, $status, $keyword, $from_date, $to_date);
+                render('list_bill', [
+                    'listbill' => $listbill, 
+                    'status' => $status, 
+                    'keyword' => $keyword,
+                    'from_date' => $from_date,
+                    'to_date' => $to_date
+                ]);
             } else {
                 header("location: index.php?act=login");
             }
-
             break;
         //     xóa bill: 
         // case 'removebill':
@@ -357,6 +377,39 @@ if (isset($_GET['act'])) {
                 echo '<script>document.addEventListener("DOMContentLoaded",()=>Swal.fire({toast:true,position:"top-end",icon:"success",title:"Cập nhật đơn hàng thành công!",showConfirmButton:false,timer:3000}));</script>';
                 header('location:index.php?act=list_bill');
             }
+            break;
+        case 'approve_bill':
+            if (isset($_GET['idbill']) && ($_GET['idbill'] > 0)) {
+                $idbill = $_GET['idbill'];
+                $bill = loadone_bill($idbill);
+                if ($bill && $bill['status'] == 0) {
+                    update_bill($idbill, '1', $bill['status_pay']);
+                    echo '<script>document.addEventListener("DOMContentLoaded",()=>Swal.fire({toast:true,position:"top-end",icon:"success",title:"Đã duyệt đơn hàng thành công!",showConfirmButton:false,timer:3000}));</script>';
+                }
+            }
+            header('location:index.php?act=list_bill');
+            break;
+        case 'ship_bill':
+            if (isset($_GET['idbill']) && ($_GET['idbill'] > 0)) {
+                $idbill = $_GET['idbill'];
+                $bill = loadone_bill($idbill);
+                if ($bill && $bill['status'] == 1) {
+                    update_bill($idbill, '2', $bill['status_pay']);
+                    echo '<script>document.addEventListener("DOMContentLoaded",()=>Swal.fire({toast:true,position:"top-end",icon:"success",title:"Đã chuyển sang đang giao hàng!",showConfirmButton:false,timer:3000}));</script>';
+                }
+            }
+            header('location:index.php?act=list_bill');
+            break;
+        case 'cancel_bill':
+            if (isset($_GET['idbill']) && ($_GET['idbill'] > 0)) {
+                $idbill = $_GET['idbill'];
+                $bill = loadone_bill($idbill);
+                if ($bill && ($bill['status'] == 0 || $bill['status'] == 1)) {
+                    update_bill($idbill, '4', $bill['status_pay']);
+                    echo '<script>document.addEventListener("DOMContentLoaded",()=>Swal.fire({toast:true,position:"top-end",icon:"success",title:"Đã hủy đơn hàng!",showConfirmButton:false,timer:3000}));</script>';
+                }
+            }
+            header('location:index.php?act=list_bill');
             break;
         case 'billdetail':
             if (isset($_SESSION['admin'])) {
@@ -397,18 +450,28 @@ if (isset($_GET['act'])) {
             break;
 
         //CONTROLLER THỐNG KÊ
-        //list thống kê: 
-        case 'list_statis':
+        // Danh sách thống kê
+        case 'list_thongke':
             if (isset($_SESSION['admin'])) {
-                $liststatis = loadall_statis();
-                render(
-                    'list_statistic',
-                    ['liststatis' => $liststatis]
-                );
+                $from_date = isset($_POST['from_date']) ? $_POST['from_date'] : '';
+                $to_date = isset($_POST['to_date']) ? $_POST['to_date'] : '';
+                $sort_product = isset($_POST['sort_product']) ? $_POST['sort_product'] : 'DESC';
+                
+                $revenue_stats = get_revenue_by_date($from_date, $to_date);
+                $product_sold_stats = get_products_sold_by_date($from_date, $to_date, $sort_product);
+                $inventory_stats = get_inventory();
+                
+                render('list_statistic', [
+                    'revenue_stats' => $revenue_stats, 
+                    'product_sold_stats' => $product_sold_stats,
+                    'inventory_stats' => $inventory_stats,
+                    'from_date' => $from_date,
+                    'to_date' => $to_date,
+                    'sort_product' => $sort_product
+                ]);
             } else {
                 header("location: index.php?act=login");
             }
-
             break;
         // Danh sách hỏi đáp
         case 'list_ques':
@@ -429,6 +492,79 @@ if (isset($_GET['act'])) {
                 delete_ques($id_ques);
             }
             header('location: index.php?act=list_ques');
+            break;
+
+        case 'list_coupon':
+            if (isset($_SESSION['admin'])) {
+                $listcoupon = loadall_coupon();
+                render('list_coupon', ['listcoupon' => $listcoupon]);
+            } else {
+                header("location: index.php?act=login");
+            }
+            break;
+
+        case 'add_coupon':
+            if (isset($_SESSION['admin'])) {
+                if (isset($_POST['btn_add'])) {
+                    $code = $_POST['code'];
+                    $discount_type = $_POST['discount_type'];
+                    $discount_value = $_POST['discount_value'];
+                    $max_discount = $_POST['max_discount'];
+                    $min_order_value = $_POST['min_order_value'];
+                    $product_id = $_POST['product_id'];
+                    $start_date = $_POST['start_date'];
+                    $end_date = $_POST['end_date'];
+                    $usage_limit = $_POST['usage_limit'];
+                    $status = $_POST['status'];
+                    insert_coupon($code, $discount_type, $discount_value, $max_discount, $min_order_value, $product_id, $start_date, $end_date, $usage_limit, $status);
+                    echo '<script>document.addEventListener("DOMContentLoaded",()=>Swal.fire({toast:true,position:"top-end",icon:"success",title:"Thêm mã giảm giá thành công!",showConfirmButton:false,timer:3000}));</script>';
+                }
+                $listpro = loadall_pro(); // To select product to apply
+                render('add_coupon', ['listpro' => $listpro]);
+            } else {
+                header("location: index.php?act=login");
+            }
+            break;
+
+        case 'delete_coupon':
+            if (isset($_GET['id_coupon']) && ($_GET['id_coupon']) > 0) {
+                $id_coupon = $_GET['id_coupon'];
+                delete_coupon($id_coupon);
+                echo '<script>document.addEventListener("DOMContentLoaded",()=>Swal.fire({toast:true,position:"top-end",icon:"success",title:"Xóa mã thành công!",showConfirmButton:false,timer:3000}));</script>';
+            }
+            header('location: index.php?act=list_coupon');
+            break;
+
+        case 'edit_coupon':
+            if (isset($_SESSION['admin'])) {
+                if (isset($_GET['id_coupon']) && ($_GET['id_coupon']) > 0) {
+                    $id_coupon = $_GET['id_coupon'];
+                    $one_coupon = loadone_coupon($id_coupon);
+                }
+                $listpro = loadall_pro();
+                render('update_coupon', ['one_coupon' => $one_coupon, 'listpro' => $listpro]);
+            } else {
+                header("location: index.php?act=login");
+            }
+            break;
+
+        case 'update_coupon':
+            if (isset($_POST['btn_update'])) {
+                $id_coupon = $_POST['id_coupon'];
+                $code = $_POST['code'];
+                $discount_type = $_POST['discount_type'];
+                $discount_value = $_POST['discount_value'];
+                $max_discount = $_POST['max_discount'];
+                $min_order_value = $_POST['min_order_value'];
+                $product_id = $_POST['product_id'];
+                $start_date = $_POST['start_date'];
+                $end_date = $_POST['end_date'];
+                $usage_limit = $_POST['usage_limit'];
+                $status = $_POST['status'];
+                update_coupon($id_coupon, $code, $discount_type, $discount_value, $max_discount, $min_order_value, $product_id, $start_date, $end_date, $usage_limit, $status);
+                echo '<script>document.addEventListener("DOMContentLoaded",()=>Swal.fire({toast:true,position:"top-end",icon:"success",title:"Cập nhật mã giảm giá thành công!",showConfirmButton:false,timer:3000}));</script>';
+            }
+            header('location: index.php?act=list_coupon');
             break;
 
         default:

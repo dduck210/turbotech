@@ -21,7 +21,7 @@ require_once __DIR__ . '/../../email/PHPMailer/src/SMTP.php';
  */
 class Mailer
 {
-    public function sendMail($title, $content, $addressMail)
+    public function sendMail(string $title, string $content, string $addressMail)
     {
         // Create an instance; passing `true` enables exceptions
         $mail = new PHPMailer(true);

@@ -3,7 +3,8 @@
     "type": "library",
     "autoload": {
         "psr-4": {
-            "Codemoi\\": "src/"
+            "Codemoi\\": "src/",
+            "PHPMailer\\PHPMailer\\": "email/PHPMailer/src/"
         }
     },
     "require": {}

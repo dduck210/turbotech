@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <title>Turbotech Admin - Premium Dashboard</title>
-    <link rel="shortcut icon" type="image/x-icon" href="view/assets/img/logoadmin.png" />
+    <link rel="shortcut icon" type="image/x-icon" href="../assets/admin-images/logoadmin.png" />
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -16,8 +16,8 @@
     <!-- Tailwind CSS: precompiled via standalone CLI (src/css/admin-tailwind-input.css),
          replacing the @tailwindcss/browser CDN runtime compiler — faster, no external
          network dependency at page-load time. Rebuild after changing any admin/view/*.php
-         class names: tailwindcss.exe -i src/css/admin-tailwind-input.css -o admin/view/assets/css/tailwind.css -m -->
-    <link rel="stylesheet" href="view/assets/css/tailwind.css" />
+         class names: tailwindcss.exe -i src/css/admin-tailwind-input.css -o public/assets/css/admin-tailwind.css -m -->
+    <link rel="stylesheet" href="../assets/css/admin-tailwind.css" />
 
     <!-- SweetAlert2 -->
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>

@@ -24,7 +24,7 @@ class Category
      * Category name by id, or a single space when no id is given.
      * Mirrors old `load_namecate($idcate)` without the `extract()` call.
      */
-    public static function name($idcate): string
+    public static function name(int $idcate): string
     {
         if ($idcate > 0) {
             $sql = "SELECT * FROM category WHERE id_cate = ?";

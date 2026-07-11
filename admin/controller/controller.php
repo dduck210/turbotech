@@ -1,7 +1,7 @@
-<?php 
-function render($path, $data = [])
+<?php
+function render(string $path, array $data = [])
 {
     extract($data);
-    $view = "view/" . $path . ".php";
+    $view = __DIR__ . "/../view/" . $path . ".php";
     include_once $view;
 }

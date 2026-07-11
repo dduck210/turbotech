@@ -70,7 +70,7 @@
             <!-- Add to cart form: field names / values byte-identical to before.
                  Quantity stepper markup (cart-plus-minus / cart-plus-minus-box / dec /
                  inc / qtybutton classes, name="quatity") kept exactly — these are hooked by
-                 the vanilla-JS handler in src/js/main.js, only restyled visually.
+                 the vanilla-JS handler in assets/js/main.js, only restyled visually.
                  Hidden entirely (not just disabled) when out of stock, matching backend
                  guard in CartController::add(). -->
             <?php if ((int) $one_pro['stock'] > 0) { ?>
@@ -171,7 +171,7 @@
      (documented in report) — only the real, visible block remains. Carousel classes
      ("jb-product_slider", slick-initialized) dropped per design-system guidance, replaced with a
      responsive grid. Decorative non-functional wishlist/copy "#" links (no JS behavior, verified
-     against src/js/main.js) dropped as dead UI per YAGNI. -->
+     against assets/js/main.js) dropped as dead UI per YAGNI. -->
 <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-12 md:py-16">
     <h4 class="font-heading text-xl font-semibold text-ink-900 mb-6">Các sản phẩm cùng loại</h4>
     <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-6">

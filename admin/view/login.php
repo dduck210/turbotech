@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <title>Turbotech Admin - Đăng nhập</title>
-    <link rel="shortcut icon" type="image/x-icon" href="view/assets/img/logoadmin.png" />
+    <link rel="shortcut icon" type="image/x-icon" href="../assets/admin-images/logoadmin.png" />
     
     <!-- Modern Typography -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -15,9 +15,9 @@
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
     <!-- Tailwind CSS: precompiled via standalone CLI, same stylesheet as header.php
-         (src/css/admin-tailwind-input.css -> admin/view/assets/css/tailwind.css) —
+         (src/css/admin-tailwind-input.css -> public/assets/css/admin-tailwind.css) —
          replaces the @tailwindcss/browser CDN runtime compiler. -->
-    <link rel="stylesheet" href="view/assets/css/tailwind.css" />
+    <link rel="stylesheet" href="../assets/css/admin-tailwind.css" />
 </head>
 <body class="bg-slate-900 text-slate-800 antialiased flex items-center justify-center min-h-screen relative overflow-hidden">
     <!-- Decorative Background Shapes -->
@@ -69,6 +69,6 @@
             &copy; 2026 Turbotech Admin. Premium Access.
         </div>
     </div>
-    <script src="../src/js/form-validate.js"></script>
+    <script src="../assets/js/form-validate.js"></script>
 </body>
 </html>

@@ -1,6 +1,6 @@
 <?php
 
-require __DIR__ . '/vendor/autoload.php';
+require __DIR__ . '/../vendor/autoload.php';
 
 use Codemoi\Controller\AccountController;
 use Codemoi\Controller\AuthController;
@@ -21,12 +21,12 @@ ob_start();
 // kiểm tra session my cart đã tồn tại là 1 mảng chưa, nếu chưa thì khởi tạo 1 mảng mới
 Cart::items();
 
-include __DIR__ . '/view/head.php';
+include __DIR__ . '/../view/head.php';
 
 // load danh mục dùng chung cho header/sidebar
 $listcate = Category::all();
 
-include __DIR__ . '/view/header.php';
+include __DIR__ . '/../view/header.php';
 
 $router = new Router();
 $router->add('product', [ProductController::class, 'index']);
@@ -56,5 +56,5 @@ $router->setDefault([HomeController::class, 'index']);
 
 $router->dispatch($_GET['act'] ?? '');
 
-include __DIR__ . '/view/footer.php';
+include __DIR__ . '/../view/footer.php';
 ob_end_flush();

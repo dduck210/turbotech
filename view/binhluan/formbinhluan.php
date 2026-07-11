@@ -20,8 +20,8 @@ $canReview = isset($_SESSION['user']) && Order::hasDeliveredPurchase((int) $_SES
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-    <link rel="stylesheet" type="text/css" media="screen" href="./src/css/tailwind.css" />
-    <link rel="shortcut icon" type="./src/imagex-icon" href="./src/image/menu/logo/logo-url.png" />
+    <link rel="stylesheet" type="text/css" media="screen" href="./assets/css/tailwind.css" />
+    <link rel="shortcut icon" type="./assets/imagex-icon" href="./assets/images/menu/logo/logo-url.png" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" integrity="sha512-xh6O/CkQoPOWDdYTDqeRdPCVd1SpvCA9XXcUnZS2FmJNp1coAFzvtCN9BmamE+4aHK8yyUHUSCcJHgXloTyT2A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 </head>
 
@@ -79,10 +79,10 @@ $canReview = isset($_SESSION['user']) && Order::hasDeliveredPurchase((int) $_SES
 
         <!-- End bình luận -->
     </div>
-    <script src="./src/js/plugins.min.js"></script>
-    <script src="./src/js/ajax-mail.js"></script>
-    <script src="./src/js/main.js"></script>
-    <script src="./src/js/form-validate.js"></script>
+    <script src="./assets/js/plugins.min.js"></script>
+    <script src="./assets/js/ajax-mail.js"></script>
+    <script src="./assets/js/main.js"></script>
+    <script src="./assets/js/form-validate.js"></script>
 </body>
 
 </html>

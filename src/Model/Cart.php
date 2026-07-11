@@ -40,7 +40,7 @@ class Cart
      * quantity/total are increased instead of adding a duplicate line.
      * Mirrors old 'addtocart' case (`index.php:237-264`).
      */
-    public static function add($id_pro, $name_pro, $img_pro, $price, $quantity = 1): void
+    public static function add(int $id_pro, string $name_pro, string $img_pro, string $price, int $quantity = 1): void
     {
         self::ensure();
 
@@ -61,7 +61,7 @@ class Cart
      * the line entirely.
      * Mirrors old 'edit' case (`index.php:223-235`).
      */
-    public static function update($index, $quantity): void
+    public static function update(int $index, int $quantity): void
     {
         self::ensure();
 

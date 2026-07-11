@@ -8,7 +8,7 @@ $total_amount = \Codemoi\Model\Cart::total();
         <div class="flex h-16 items-center justify-between gap-1 sm:gap-3">
             <!-- Logo -->
             <a href="index.php" class="flex shrink-0 items-center gap-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-brand-500">
-                <img src="./src/image/menu/logo/logo4.png" alt="Logo Turbotech" class="h-8 w-auto sm:h-10" />
+                <img src="./assets/images/menu/logo/logo4.png" alt="Logo Turbotech" class="h-8 w-auto sm:h-10" />
             </a>
 
             <!-- Desktop nav -->
