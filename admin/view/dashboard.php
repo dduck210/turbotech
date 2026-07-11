@@ -13,7 +13,8 @@ $ds_loai = loadall_loai(); ?>
 <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-6 mb-8">
 
     <!-- Earnings (Daily) -->
-    <div class="bg-white rounded-xl shadow-sm hover:shadow-md transition-shadow duration-300 p-6 border-l-4 border-brand-500 flex items-center justify-between">
+    <div
+        class="bg-white rounded-xl shadow-sm hover:shadow-md transition-shadow duration-300 p-6 border-l-4 border-brand-500 flex items-center justify-between">
         <div>
             <div class="text-xs font-bold text-brand-500 uppercase tracking-wider mb-1">Tổng doanh thu(Ngày)</div>
             <div class="text-2xl font-bold text-slate-800"><?= number_format(ngay()) ?> đ</div>
@@ -24,7 +25,8 @@ $ds_loai = loadall_loai(); ?>
     </div>
 
     <!-- Earnings (Weekly) -->
-    <div class="bg-white rounded-xl shadow-sm hover:shadow-md transition-shadow duration-300 p-6 border-l-4 border-yellow-500 flex items-center justify-between">
+    <div
+        class="bg-white rounded-xl shadow-sm hover:shadow-md transition-shadow duration-300 p-6 border-l-4 border-yellow-500 flex items-center justify-between">
         <div>
             <div class="text-xs font-bold text-yellow-500 uppercase tracking-wider mb-1">Tổng doanh thu(Tuần)</div>
             <div class="text-2xl font-bold text-slate-800"><?= number_format(tuan()) ?> đ</div>
@@ -35,7 +37,8 @@ $ds_loai = loadall_loai(); ?>
     </div>
 
     <!-- Earnings (Monthly) -->
-    <div class="bg-white rounded-xl shadow-sm hover:shadow-md transition-shadow duration-300 p-6 border-l-4 border-green-500 flex items-center justify-between">
+    <div
+        class="bg-white rounded-xl shadow-sm hover:shadow-md transition-shadow duration-300 p-6 border-l-4 border-green-500 flex items-center justify-between">
         <div>
             <div class="text-xs font-bold text-green-500 uppercase tracking-wider mb-1">Tổng doanh thu(Tháng)</div>
             <div class="text-2xl font-bold text-slate-800"><?= number_format(thang()) ?> đ</div>
@@ -46,7 +49,8 @@ $ds_loai = loadall_loai(); ?>
     </div>
 
     <!-- Total Orders -->
-    <div class="bg-white rounded-xl shadow-sm hover:shadow-md transition-shadow duration-300 p-6 border-l-4 border-brand-500 flex items-center justify-between">
+    <div
+        class="bg-white rounded-xl shadow-sm hover:shadow-md transition-shadow duration-300 p-6 border-l-4 border-brand-500 flex items-center justify-between">
         <div>
             <div class="text-xs font-bold text-brand-500 uppercase tracking-wider mb-1">Tổng đơn</div>
             <div class="text-2xl font-bold text-slate-800"><?= count($listbill) ?></div>
@@ -57,7 +61,8 @@ $ds_loai = loadall_loai(); ?>
     </div>
 
     <!-- Total Customers -->
-    <div class="bg-white rounded-xl shadow-sm hover:shadow-md transition-shadow duration-300 p-6 border-l-4 border-yellow-500 flex items-center justify-between">
+    <div
+        class="bg-white rounded-xl shadow-sm hover:shadow-md transition-shadow duration-300 p-6 border-l-4 border-yellow-500 flex items-center justify-between">
         <div>
             <div class="text-xs font-bold text-yellow-500 uppercase tracking-wider mb-1">Tổng khách hàng</div>
             <div class="text-2xl font-bold text-slate-800"><?= count($listuser); ?></div>
@@ -68,7 +73,8 @@ $ds_loai = loadall_loai(); ?>
     </div>
 
     <!-- Total Products -->
-    <div class="bg-white rounded-xl shadow-sm hover:shadow-md transition-shadow duration-300 p-6 border-l-4 border-green-500 flex items-center justify-between">
+    <div
+        class="bg-white rounded-xl shadow-sm hover:shadow-md transition-shadow duration-300 p-6 border-l-4 border-green-500 flex items-center justify-between">
         <div>
             <div class="text-xs font-bold text-green-500 uppercase tracking-wider mb-1">Tổng sản phẩm</div>
             <div class="text-2xl font-bold text-slate-800"><?= count($listpro) ?></div>
@@ -79,7 +85,8 @@ $ds_loai = loadall_loai(); ?>
     </div>
 
     <!-- Total Categories -->
-    <div class="bg-white rounded-xl shadow-sm hover:shadow-md transition-shadow duration-300 p-6 border-l-4 border-indigo-500 flex items-center justify-between">
+    <div
+        class="bg-white rounded-xl shadow-sm hover:shadow-md transition-shadow duration-300 p-6 border-l-4 border-indigo-500 flex items-center justify-between">
         <div>
             <div class="text-xs font-bold text-indigo-500 uppercase tracking-wider mb-1">Tổng loại sản phẩm</div>
             <div class="text-2xl font-bold text-slate-800"><?= count($ds_loai) ?></div>
@@ -91,9 +98,10 @@ $ds_loai = loadall_loai(); ?>
 </div>
 
 <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-8">
-    <!-- Area Chart -->
+    <!-- Area Graph -->
     <div class="lg:col-span-2">
-        <div class="bg-white rounded-xl shadow-sm hover:shadow-md transition-shadow duration-300 h-full flex flex-col overflow-hidden">
+        <div
+            class="bg-white rounded-xl shadow-sm hover:shadow-md transition-shadow duration-300 h-full flex flex-col overflow-hidden">
             <div class="px-6 py-4 border-b border-slate-100 bg-slate-50/50">
                 <h6 class="m-0 font-bold text-brand-600">Biểu đồ thống kê Doanh thu</h6>
             </div>
@@ -109,11 +117,12 @@ $ds_loai = loadall_loai(); ?>
                 $dau1  ?>
                 const ctx = document.getElementById('myChart');
 
-                new Chart(ctx, {
+                new window.Chart(ctx, {
                     type: 'line',
                     data: {
                         labels: [
-                            'Tháng 1', 'Tháng 2', 'Tháng 3', 'Tháng 4', 'Tháng 5', 'Tháng 6', 'Tháng 7', 'Tháng 8', 'Tháng 9', 'Tháng 10', 'Tháng 11', 'Tháng 12'
+                            'Tháng 1', 'Tháng 2', 'Tháng 3', 'Tháng 4', 'Tháng 5', 'Tháng 6', 'Tháng 7',
+                            'Tháng 8', 'Tháng 9', 'Tháng 10', 'Tháng 11', 'Tháng 12'
                         ],
                         datasets: [{
                             label: 'Tháng',
@@ -146,9 +155,10 @@ $ds_loai = loadall_loai(); ?>
         </div>
     </div>
 
-    <!-- Pie Chart -->
+    <!-- Pie Graph -->
     <div>
-        <div class="bg-white rounded-xl shadow-sm hover:shadow-md transition-shadow duration-300 h-full flex flex-col overflow-hidden border-t-4 border-red-500">
+        <div
+            class="bg-white rounded-xl shadow-sm hover:shadow-md transition-shadow duration-300 h-full flex flex-col overflow-hidden border-t-4 border-red-500">
             <div class="px-6 py-4 border-b border-slate-100 bg-slate-50/50">
                 <h6 class="m-0 font-bold text-red-500">Thống kê danh mục</h6>
             </div>
@@ -179,7 +189,9 @@ $ds_loai = loadall_loai(); ?>
                             <?php $i++;
                             } ?>
                         ],
-                        backgroundColor: ['#f56954', '#00a65a', '#f39c12', '#00c0ef', '#3c8db2', '#d2d6de', '#6610f2', '#3d9970', '#001f3f'],
+                        backgroundColor: ['#f56954', '#00a65a', '#f39c12', '#00c0ef', '#3c8db2', '#d2d6de',
+                            '#6610f2', '#3d9970', '#001f3f'
+                        ],
                     }]
                 }
 
@@ -190,7 +202,7 @@ $ds_loai = loadall_loai(); ?>
                     responsive: true,
                 }
 
-                new Chart(pieChartCanvas, {
+                new window.Chart(pieChartCanvas, {
                     type: 'pie',
                     data: pieData,
                     options: pieOptions

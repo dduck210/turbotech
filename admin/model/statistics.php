@@ -65,7 +65,8 @@ function get_products_sold_by_date(string $from_date, string $to_date, string $s
     return pdo_query($sql, ...$args);
 }
 
-function get_inventory() {
+function get_inventory()
+{
     $sql = "SELECT id_pro, name_pro, img_pro, stock, price FROM product ORDER BY stock ASC";
     return pdo_query($sql);
 }

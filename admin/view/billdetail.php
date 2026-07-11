@@ -26,7 +26,8 @@ if (is_array($one_bill)) {
         <p>Ngày đặt: <?= $order_date ?>
         </p>
         <?php if (!empty($coupon_code)) : ?>
-        <p>Mã giảm giá: <span class="text-emerald-600 font-bold"><?= $coupon_code ?> (-<?= number_format($discount_amount) ?>₫)</span></p>
+            <p>Mã giảm giá: <span class="text-emerald-600 font-bold"><?= $coupon_code ?>
+                    (-<?= number_format($discount_amount) ?>₫)</span></p>
         <?php endif; ?>
         <p>Thành tiền: <span class="text-slate-800 font-bold">
                 <?= number_format($total_amount) ?>₫
@@ -86,7 +87,8 @@ if (is_array($one_bill)) {
                 foreach ($bill as $value) {
                 ?>
                     <tr class="border-b border-slate-100 hover:bg-slate-50 transition-colors">
-                        <td class="px-4 py-3"><img src="../admin/uploads/<?= $value['img_pro'] ?>" alt="Ultraphone Product" width="80px"></img></td>
+                        <td class="px-4 py-3"><img src="../admin/uploads/<?= $value['img_pro'] ?>" alt="Ultraphone Product"
+                                width="80px"></img></td>
                         <td class="px-4 py-3">
                             <?= $value['name_pro'] ?>
                         </td>
@@ -106,7 +108,9 @@ if (is_array($one_bill)) {
     </div>
 </div>
 <div class="btn-function mb-6">
-    <a href="index.php?act=listbill" class="bg-brand-600 hover:bg-brand-700 text-white font-medium rounded-lg px-4 py-2 transition-colors inline-block"><i class="fa-solid fa-arrow-left"></i> Quay lại
+    <a href="index.php?act=listbill"
+        class="bg-brand-600 hover:bg-brand-700 text-white font-medium rounded-lg px-4 py-2 transition-colors inline-block"><i
+            class="fa-solid fa-arrow-left"></i> Quay lại
         danh sách</a>
 </div>
 </div>
