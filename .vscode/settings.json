@@ -7,8 +7,7 @@
     "**/.DS_Store/**",
     "**/node_modules/**",
     "**/bower_components/**",
-    "**/vendor/**/{Tests,tests}/**",
-    "email/PHPMailer/get_oauth_token.php"
+    "**/vendor/**/{Tests,tests}/**"
   ],
   "css.lint.unknownAtRules": "ignore",
   "css.lint.unknownProperties": "ignore",
