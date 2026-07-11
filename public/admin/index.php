@@ -181,9 +181,11 @@ if (isset($_GET['act'])) {
                 }
                 $ds_loai = loadall_loai();
                 $listpro = loadall_pro($idcate);
+                $flash_error = $_SESSION['flash_error'] ?? null;
+                unset($_SESSION['flash_error']);
                 render(
                     "list_product",
-                    ['ds_loai' => $ds_loai, 'listpro' => $listpro, 'idcate' => $idcate]
+                    ['ds_loai' => $ds_loai, 'listpro' => $listpro, 'idcate' => $idcate, 'flash_error' => $flash_error]
                 );
             } else {
                 header("location: index.php?act=login");
@@ -231,7 +233,19 @@ if (isset($_GET['act'])) {
         case "delete_product":
             if (isset($_GET['id_pro']) && ($_GET['id_pro']) > 0) {
                 $id_pro = $_GET['id_pro'];
-                remove_pro($id_pro);
+                try {
+                    remove_pro($id_pro);
+                } catch (PDOException $e) {
+                    // SQLSTATE 23000: product already referenced by an order
+                    // line in `cart` (lk_pro_cart) — deleting it would break
+                    // that order's history, so block it with a clear message
+                    // instead of the raw fatal error.
+                    if ($e->getCode() === '23000') {
+                        $_SESSION['flash_error'] = 'Không thể xoá sản phẩm này vì đã có đơn hàng liên quan.';
+                    } else {
+                        throw $e;
+                    }
+                }
             }
             header('location:index.php?act=list_product');
             break;
