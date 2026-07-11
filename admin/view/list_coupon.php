@@ -1,0 +1,81 @@
+<?php include_once "header.php" ?>
+<div class="mb-8 flex items-center justify-between">
+    <h1 class="text-3xl font-bold text-slate-800">Quản Lý Mã Giảm Giá</h1>
+    <a href="index.php?act=add_coupon" class="bg-brand-600 hover:bg-brand-700 text-white font-medium rounded-lg px-5 py-2.5 transition-all shadow-sm flex items-center gap-2">
+        <i class="fas fa-plus"></i> Thêm mã mới
+    </a>
+</div>
+
+<div class="bg-white rounded-xl shadow-sm hover:shadow-md transition-shadow duration-300 overflow-hidden mb-6">
+    <div class="p-6">
+        <div class="overflow-x-auto">
+            <table class="w-full text-left border-collapse">
+                <thead>
+                    <tr class="bg-slate-50 text-slate-700 uppercase text-xs font-semibold border-b border-slate-200">
+                        <th class="px-4 py-3">ID</th>
+                        <th class="px-4 py-3">Mã giảm giá</th>
+                        <th class="px-4 py-3">Mức giảm</th>
+                        <th class="px-4 py-3">Điều kiện</th>
+                        <th class="px-4 py-3">Thời gian</th>
+                        <th class="px-4 py-3 text-center">Lượt dùng</th>
+                        <th class="px-4 py-3 text-center">Trạng thái</th>
+                        <th class="px-4 py-3 text-center">Thao tác</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php foreach ($listcoupon as $coupon): ?>
+                        <tr class="border-b border-slate-100 hover:bg-slate-50 transition-colors">
+                            <td class="px-4 py-4 font-medium text-slate-900">#<?= $coupon['id_coupon'] ?></td>
+                            <td class="px-4 py-4"><span class="bg-brand-100 text-brand-700 px-3 py-1 rounded-md font-mono font-bold"><?= $coupon['code'] ?></span></td>
+                            <td class="px-4 py-4">
+                                <?php if ($coupon['discount_type'] == 1): ?>
+                                    <span class="text-emerald-600 font-bold"><?= $coupon['discount_value'] ?>%</span>
+                                    <?php if ($coupon['max_discount'] > 0): ?>
+                                        <div class="text-xs text-slate-500 mt-1">Tối đa: <?= number_format($coupon['max_discount']) ?>đ</div>
+                                    <?php endif; ?>
+                                <?php else: ?>
+                                    <span class="text-emerald-600 font-bold"><?= number_format($coupon['discount_value']) ?>đ</span>
+                                <?php endif; ?>
+                            </td>
+                            <td class="px-4 py-4 text-sm text-slate-600">
+                                <div>Đơn từ: <span class="font-semibold"><?= number_format($coupon['min_order_value']) ?>đ</span></div>
+                                <?php if ($coupon['product_id'] > 0): ?>
+                                    <div class="text-brand-600 mt-1"><i class="fas fa-box text-xs mr-1"></i>Chỉ SP ID: <?= $coupon['product_id'] ?></div>
+                                <?php else: ?>
+                                    <div class="text-slate-500 mt-1"><i class="fas fa-layer-group text-xs mr-1"></i>Tất cả SP</div>
+                                <?php endif; ?>
+                            </td>
+                            <td class="px-4 py-4 text-xs text-slate-600">
+                                <div><span class="font-semibold text-slate-500">Từ:</span> <?= date('d/m/Y H:i', strtotime($coupon['start_date'])) ?></div>
+                                <div class="mt-1"><span class="font-semibold text-slate-500">Đến:</span> <?= date('d/m/Y H:i', strtotime($coupon['end_date'])) ?></div>
+                            </td>
+                            <td class="px-4 py-4 text-center">
+                                <span class="font-bold text-slate-700"><?= $coupon['used_count'] ?></span>
+                                <span class="text-slate-400">/ <?= $coupon['usage_limit'] > 0 ? $coupon['usage_limit'] : '&infin;' ?></span>
+                            </td>
+                            <td class="px-4 py-4 text-center">
+                                <?php if ($coupon['status'] == 1): ?>
+                                    <span class="bg-emerald-100 text-emerald-700 px-3 py-1 rounded-full text-xs font-medium">Hoạt động</span>
+                                <?php else: ?>
+                                    <span class="bg-red-100 text-red-700 px-3 py-1 rounded-full text-xs font-medium">Đã tắt</span>
+                                <?php endif; ?>
+                            </td>
+                            <td class="px-4 py-4 text-center">
+                                <div class="flex items-center justify-center gap-2">
+                                    <a href="index.php?act=edit_coupon&id_coupon=<?= $coupon['id_coupon'] ?>" class="p-2 text-amber-600 bg-amber-50 rounded-lg hover:bg-amber-100 transition-all active:scale-90" title="Sửa"><i class="fas fa-edit"></i></a>
+                                    <a href="index.php?act=delete_coupon&id_coupon=<?= $coupon['id_coupon'] ?>" class="p-2 text-red-600 bg-red-50 rounded-lg hover:bg-red-100 transition-all active:scale-90" data-confirm="Bạn có chắc chắn muốn xóa mã giảm giá này?" title="Xóa"><i class="fas fa-trash"></i></a>
+                                </div>
+                            </td>
+                        </tr>
+                    <?php endforeach; ?>
+                    <?php if (empty($listcoupon)): ?>
+                        <tr>
+                            <td colspan="8" class="px-4 py-8 text-center text-slate-500">Chưa có mã giảm giá nào.</td>
+                        </tr>
+                    <?php endif; ?>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+<?php include_once "footer.php" ?>

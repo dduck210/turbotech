@@ -13,7 +13,7 @@ class PageController extends Controller
 {
     public function introduce(): void
     {
-        $this->view('gioithieu');
+        $this->view('introduce');
     }
 
     /** Contact form reuses the question-submission model, matching the
@@ -31,6 +31,6 @@ class PageController extends Controller
             echo '<script>alert("Gửi câu hỏi thành công !")</script>';
         }
 
-        $this->view('lienhe');
+        $this->view('contact');
     }
 }
