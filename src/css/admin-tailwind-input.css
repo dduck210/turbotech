@@ -8,23 +8,28 @@
  * approach as src/css/tailwind-input.css for the client storefront.
  */
 @theme {
-    --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
-    --font-heading: "Outfit", ui-sans-serif, system-ui, sans-serif;
+  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+  --font-heading: "Outfit", ui-sans-serif, system-ui, sans-serif;
 
-    --color-brand-50: #eff6ff;
-    --color-brand-100: #dbeafe;
-    --color-brand-500: #3b82f6;
-    --color-brand-600: #2563eb;
-    --color-brand-700: #1d4ed8;
-    --color-brand-900: #1e3a8a;
+  --color-brand-50: #eff6ff;
+  --color-brand-100: #dbeafe;
+  --color-brand-500: #3b82f6;
+  --color-brand-600: #2563eb;
+  --color-brand-700: #1d4ed8;
+  --color-brand-900: #1e3a8a;
 }
 
 body {
-    font-family: var(--font-sans);
+  font-family: var(--font-sans);
 }
 
-h1, h2, h3, h4, h5, h6 {
-    font-family: var(--font-heading);
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: var(--font-heading);
 }
 
 /* Inter's glyph for the Vietnamese Dong sign (₫, U+20AB) draws with a full
@@ -36,65 +41,86 @@ h1, h2, h3, h4, h5, h6 {
    Inter as normal. Covers every weight Inter is loaded at (400/500/600/700)
    so it fixes all ₫ displays sitewide without touching each template. */
 @font-face {
-    font-family: "Inter";
-    font-style: normal;
-    font-weight: 400;
-    font-display: swap;
-    src: url(https://fonts.gstatic.com/s/manrope/v20/xn7_YHE41ni1AdIRqAuZuw1Bx9mbZk79FN_N-bnBeA.woff2) format("woff2");
-    unicode-range: U+20AB;
+  font-family: "Inter";
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url(https://fonts.gstatic.com/s/manrope/v20/xn7_YHE41ni1AdIRqAuZuw1Bx9mbZk79FN_N-bnBeA.woff2)
+    format("woff2");
+  unicode-range: U+20AB;
 }
 @font-face {
-    font-family: "Inter";
-    font-style: normal;
-    font-weight: 500;
-    font-display: swap;
-    src: url(https://fonts.gstatic.com/s/manrope/v20/xn7_YHE41ni1AdIRqAuZuw1Bx9mbZk7PFN_N-bnBeA.woff2) format("woff2");
-    unicode-range: U+20AB;
+  font-family: "Inter";
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url(https://fonts.gstatic.com/s/manrope/v20/xn7_YHE41ni1AdIRqAuZuw1Bx9mbZk7PFN_N-bnBeA.woff2)
+    format("woff2");
+  unicode-range: U+20AB;
 }
 @font-face {
-    font-family: "Inter";
-    font-style: normal;
-    font-weight: 600;
-    font-display: swap;
-    src: url(https://fonts.gstatic.com/s/manrope/v20/xn7_YHE41ni1AdIRqAuZuw1Bx9mbZk4jE9_N-bnBeA.woff2) format("woff2");
-    unicode-range: U+20AB;
+  font-family: "Inter";
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: url(https://fonts.gstatic.com/s/manrope/v20/xn7_YHE41ni1AdIRqAuZuw1Bx9mbZk4jE9_N-bnBeA.woff2)
+    format("woff2");
+  unicode-range: U+20AB;
 }
 @font-face {
-    font-family: "Inter";
-    font-style: normal;
-    font-weight: 700;
-    font-display: swap;
-    src: url(https://fonts.gstatic.com/s/manrope/v20/xn7_YHE41ni1AdIRqAuZuw1Bx9mbZk4aE9_N-bnBeA.woff2) format("woff2");
-    unicode-range: U+20AB;
+  font-family: "Inter";
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url(https://fonts.gstatic.com/s/manrope/v20/xn7_YHE41ni1AdIRqAuZuw1Bx9mbZk4aE9_N-bnBeA.woff2)
+    format("woff2");
+  unicode-range: U+20AB;
 }
 
-::-webkit-scrollbar { width: 6px; height: 6px; }
-::-webkit-scrollbar-track { background: transparent; }
-::-webkit-scrollbar-thumb { @apply bg-slate-300 rounded-full; }
-::-webkit-scrollbar-thumb:hover { @apply bg-slate-400; }
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  @apply bg-slate-300 rounded-full;
+}
+::-webkit-scrollbar-thumb:hover {
+  @apply bg-slate-400;
+}
 
 /* Hide the CKEditor 4 security warning banner (kept from the previous
    CDN-era <style> block in header.php). */
-.cke_notifications_area { display: none !important; }
+.cke_notifications_area {
+  display: none !important;
+}
 
 /* Login page decorative blurred background shapes (kept from login.php). */
 .bg-shape {
-    position: absolute;
-    filter: blur(80px);
-    z-index: -1;
-    border-radius: 50%;
-    opacity: 0.6;
+  position: absolute;
+  filter: blur(80px);
+  z-index: -1;
+  border-radius: 50%;
+  opacity: 0.6;
 }
 
 /* Subtle entrance animation for page content: softens the flash of a
    full page reload between admin pages (this is a classic MVC app,
    not an SPA, so every navigation reloads the document). */
 @keyframes admin-fade-in {
-    from { opacity: 0; transform: translateY(6px); }
-    to { opacity: 1; transform: translateY(0); }
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 .animate-admin-fade-in {
-    animation: admin-fade-in 0.35s ease-out;
+  animation: admin-fade-in 0.35s ease-out;
 }
 
 /* Form validation error state (src/js/form-validate.js). Plain CSS rather
@@ -104,17 +130,17 @@ h1, h2, h3, h4, h5, h6 {
    !important on .is-invalid so it reliably overrides a field's existing
    border-slate-200 utility regardless of Tailwind's generation order. */
 .is-invalid {
-    border-color: #ef4444 !important;
+  border-color: #ef4444 !important;
 }
 .is-invalid:focus {
-    --tw-ring-color: #ef4444 !important;
+  --tw-ring-color: #ef4444 !important;
 }
 .field-error {
-    margin-top: 0.25rem;
-    font-size: 0.75rem;
-    line-height: 1rem;
-    color: #dc2626;
+  margin-top: 0.25rem;
+  font-size: 0.75rem;
+  line-height: 1rem;
+  color: #dc2626;
 }
 .field-error.hidden {
-    display: none;
+  display: none;
 }

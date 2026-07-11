@@ -1,4 +1,5 @@
 <?php
+
 /** @var string|null $error Validation/lookup error message, if any. */
 ?>
 <!-- Breadcrumb -->

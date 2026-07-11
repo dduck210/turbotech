@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @var array $one_pro     Product row (Codemoi\Model\Product::one()).
  * @var array $similar_pro Other products in the same category (Codemoi\Model\Product::similar()).
@@ -74,40 +75,40 @@
                  Hidden entirely (not just disabled) when out of stock, matching backend
                  guard in CartController::add(). -->
             <?php if ((int) $one_pro['stock'] > 0) { ?>
-            <form action="index.php?act=addtocart" method="post" class="mb-6">
-                <div class="flex flex-wrap items-end gap-4 mb-5">
-                    <div>
-                        <label for="quatity" class="block text-sm font-medium text-ink-700 mb-1.5">Số lượng</label>
-                        <div class="cart-plus-minus inline-flex items-stretch rounded-lg border border-ink-200 overflow-hidden">
-                            <input class="cart-plus-minus-box w-16 h-11 text-center text-sm text-ink-900 focus:outline-none"
-                                id="quatity" name="quatity" value="1" type="text">
-                            <div class="dec qtybutton flex items-center justify-center w-11 h-11 border-l border-ink-200 hover:bg-ink-50 cursor-pointer">
-                                <i class="fa fa-angle-down" aria-hidden="true"></i>
-                            </div>
-                            <div class="inc qtybutton flex items-center justify-center w-11 h-11 border-l border-ink-200 hover:bg-ink-50 cursor-pointer">
-                                <i class="fa fa-angle-up" aria-hidden="true"></i>
+                <form action="index.php?act=addtocart" method="post" class="mb-6">
+                    <div class="flex flex-wrap items-end gap-4 mb-5">
+                        <div>
+                            <label for="quatity" class="block text-sm font-medium text-ink-700 mb-1.5">Số lượng</label>
+                            <div class="cart-plus-minus inline-flex items-stretch rounded-lg border border-ink-200 overflow-hidden">
+                                <input class="cart-plus-minus-box w-16 h-11 text-center text-sm text-ink-900 focus:outline-none"
+                                    id="quatity" name="quatity" value="1" type="text">
+                                <div class="dec qtybutton flex items-center justify-center w-11 h-11 border-l border-ink-200 hover:bg-ink-50 cursor-pointer">
+                                    <i class="fa fa-angle-down" aria-hidden="true"></i>
+                                </div>
+                                <div class="inc qtybutton flex items-center justify-center w-11 h-11 border-l border-ink-200 hover:bg-ink-50 cursor-pointer">
+                                    <i class="fa fa-angle-up" aria-hidden="true"></i>
+                                </div>
                             </div>
                         </div>
+                        <input type="hidden" name="id_pro" value="<?php echo $one_pro['id_pro'] ?>">
+                        <input type="hidden" name="name_pro" value="<?php echo $one_pro['name_pro'] ?>">
+                        <input type="hidden" name="img_pro" value="<?php echo $one_pro['img_pro'] ?>">
+                        <input type="hidden" name="price" value="<?php echo $one_pro['price'] ?>">
+                        <input type="submit" name="addtocart" value="Thêm giỏ hàng"
+                            class="inline-flex items-center justify-center gap-2 rounded-lg bg-brand-600 px-5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-brand-700 transition-colors focus:outline-none focus:ring-2 focus:ring-brand-500 focus:ring-offset-2 cursor-pointer">
                     </div>
-                    <input type="hidden" name="id_pro" value="<?php echo $one_pro['id_pro'] ?>">
-                    <input type="hidden" name="name_pro" value="<?php echo $one_pro['name_pro'] ?>">
-                    <input type="hidden" name="img_pro" value="<?php echo $one_pro['img_pro'] ?>">
-                    <input type="hidden" name="price" value="<?php echo $one_pro['price'] ?>">
-                    <input type="submit" name="addtocart" value="Thêm giỏ hàng"
-                        class="inline-flex items-center justify-center gap-2 rounded-lg bg-brand-600 px-5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-brand-700 transition-colors focus:outline-none focus:ring-2 focus:ring-brand-500 focus:ring-offset-2 cursor-pointer">
-                </div>
 
-                <ul class="space-y-2 text-sm text-ink-700">
-                    <li class="flex items-center gap-2"><i class="fas fa-check-square text-brand-600" aria-hidden="true"></i>Bảo hành chính hãng</li>
-                    <li class="flex items-center gap-2"><i class="fa fa-truck text-brand-600" aria-hidden="true"></i>Giao hàng nhanh chóng</li>
-                    <li class="flex items-center gap-2"><i class="fas fa-sync-alt text-brand-600" aria-hidden="true"></i>Chế độ đổi trả trong vòng 12 tháng</li>
-                </ul>
-            </form>
+                    <ul class="space-y-2 text-sm text-ink-700">
+                        <li class="flex items-center gap-2"><i class="fas fa-check-square text-brand-600" aria-hidden="true"></i>Bảo hành chính hãng</li>
+                        <li class="flex items-center gap-2"><i class="fa fa-truck text-brand-600" aria-hidden="true"></i>Giao hàng nhanh chóng</li>
+                        <li class="flex items-center gap-2"><i class="fas fa-sync-alt text-brand-600" aria-hidden="true"></i>Chế độ đổi trả trong vòng 12 tháng</li>
+                    </ul>
+                </form>
             <?php } else { ?>
-            <button type="button" disabled
-                class="mb-6 inline-flex items-center justify-center gap-2 rounded-lg bg-ink-100 px-5 py-2.5 text-sm font-semibold text-ink-300 cursor-not-allowed">
-                <?= htmlspecialchars($one_pro['stock_message'] ?: 'Hết hàng') ?>
-            </button>
+                <button type="button" disabled
+                    class="mb-6 inline-flex items-center justify-center gap-2 rounded-lg bg-ink-100 px-5 py-2.5 text-sm font-semibold text-ink-300 cursor-not-allowed">
+                    <?= htmlspecialchars($one_pro['stock_message'] ?: 'Hết hàng') ?>
+                </button>
             <?php } ?>
         </div>
     </div>
@@ -222,20 +223,20 @@
 <!-- End Similar products -->
 
 <script>
-    (function () {
+    (function() {
         var triggers = document.querySelectorAll('.detail-tab-trigger');
         var panels = document.querySelectorAll('[data-tab-panel]');
 
-        triggers.forEach(function (trigger) {
-            trigger.addEventListener('click', function (e) {
+        triggers.forEach(function(trigger) {
+            trigger.addEventListener('click', function(e) {
                 e.preventDefault();
                 var targetId = trigger.getAttribute('data-tab-target');
 
-                panels.forEach(function (panel) {
+                panels.forEach(function(panel) {
                     panel.classList.toggle('active', panel.id === targetId);
                 });
 
-                triggers.forEach(function (t) {
+                triggers.forEach(function(t) {
                     t.classList.toggle('active', t === trigger);
                 });
             });

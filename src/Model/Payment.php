@@ -7,8 +7,11 @@ use Codemoi\Core\Database;
 
 /**
  * Bank-transfer payment poller helpers. Ported from `model/function.php`.
- * `atm.php` (the standalone poller script) still requires the old procedural
- * files directly; it is addressed in Phase 05.
+ * The old standalone `atm.php` poller (called an unverified third-party
+ * API to auto-match transactions) was removed as dead code — it was never
+ * wired up to run (no cron/scheduler referencing it). Payment confirmation
+ * is currently either the customer's self-declared "Đã Chuyển Khoản"
+ * button or an admin manually marking a bill paid.
  */
 class Payment
 {
@@ -19,9 +22,8 @@ class Payment
      * Transfer memo shown to the customer and encoded into the QR's
      * `addInfo`, kept in one place so the two can never drift apart.
      * Keeps the "{MEMO_PREFIX}{billCode}" shape parseOrderId() already
-     * expects, so a real transaction-forwarding webhook (in place of
-     * atm.php's third-party demo API) could still auto-match payments
-     * against this same memo format later.
+     * expects, so a real transaction-forwarding webhook could still
+     * auto-match payments against this same memo format later.
      */
     public static function transferMemo(string $billCode): string
     {

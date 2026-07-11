@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @var array|false $bill        Bill row (Codemoi\Model\Order::one()).
  * @var array        $cart_detail Persisted cart lines (Codemoi\Model\Order::items()).
@@ -34,10 +35,10 @@
                 <dd class="font-semibold text-ink-900"><?= $order_date ?></dd>
             </div>
             <?php if (!empty($coupon_code)) : ?>
-            <div class="flex items-center justify-between">
-                <dt class="text-ink-500">Mã giảm giá</dt>
-                <dd class="font-semibold text-emerald-600"><?= htmlspecialchars($coupon_code) ?> (-<?= number_format($discount_amount) ?>₫)</dd>
-            </div>
+                <div class="flex items-center justify-between">
+                    <dt class="text-ink-500">Mã giảm giá</dt>
+                    <dd class="font-semibold text-emerald-600"><?= htmlspecialchars($coupon_code) ?> (-<?= number_format($discount_amount) ?>₫)</dd>
+                </div>
             <?php endif; ?>
             <div class="flex items-center justify-between">
                 <dt class="text-ink-500">Tổng thành tiền</dt>

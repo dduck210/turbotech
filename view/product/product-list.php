@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @var array  $listpro   Filtered product listing (Codemoi\Model\Product::search()).
  * @var string $namecate  Selected category/brand name (Codemoi\Model\Category::name()).

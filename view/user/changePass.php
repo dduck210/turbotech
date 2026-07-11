@@ -1,4 +1,5 @@
 <?php
+
 /** @var array $error Validation errors keyed by field, e.g. $error['fail']. */
 ?>
 <!-- Breadcrumb -->

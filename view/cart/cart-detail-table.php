@@ -1,10 +1,11 @@
 <?php
+
 /**
  * Partial: renders a persisted order's cart lines as an HTML table.
  * Inlined from the old `cart_detail($listcart)` helper (`model/giohang.php`),
- * used by both `billconfirm.php` and `viewbill.php` via `include` (so it
- * shares the including file's local scope — `$cart_detail` is already
- * defined there, extracted by `Codemoi\Core\View::render()`).
+ * used by `billconfirm.php` via `include` (so it shares the including
+ * file's local scope — `$cart_detail` is already defined there, extracted
+ * by `Codemoi\Core\View::render()`).
  *
  * @var array $cart_detail Persisted cart lines (Codemoi\Model\Order::items()).
  */
@@ -28,17 +29,17 @@ $total_amount = 0;
                     $prodetail = "index.php?act=prodetail&idpro=" . $cart['id_pro'];
                     $total_amount += $cart['total_amount'];
                 ?>
-                <tr>
-                    <td class="px-4 py-3">
-                        <img src="<?= $img_pro ?>" alt="<?= $cart['name_pro'] ?>" class="h-16 w-16 rounded-lg bg-ink-100 object-cover" />
-                    </td>
-                    <td class="px-4 py-3">
-                        <a href="<?= $prodetail ?>" class="font-heading font-semibold text-ink-900 hover:text-brand-600 transition-colors"><?= $cart['name_pro'] ?></a>
-                    </td>
-                    <td class="px-4 py-3 text-ink-700"><?= number_format($cart['price_pro']) ?> ₫</td>
-                    <td class="px-4 py-3 text-center text-ink-700"><?= $cart['quantity'] ?></td>
-                    <td class="px-4 py-3 font-semibold text-ink-900"><?= number_format($cart['total_amount']) ?> ₫</td>
-                </tr>
+                    <tr>
+                        <td class="px-4 py-3">
+                            <img src="<?= $img_pro ?>" alt="<?= $cart['name_pro'] ?>" class="h-16 w-16 rounded-lg bg-ink-100 object-cover" />
+                        </td>
+                        <td class="px-4 py-3">
+                            <a href="<?= $prodetail ?>" class="font-heading font-semibold text-ink-900 hover:text-brand-600 transition-colors"><?= $cart['name_pro'] ?></a>
+                        </td>
+                        <td class="px-4 py-3 text-ink-700"><?= number_format($cart['price_pro']) ?> ₫</td>
+                        <td class="px-4 py-3 text-center text-ink-700"><?= $cart['quantity'] ?></td>
+                        <td class="px-4 py-3 font-semibold text-ink-900"><?= number_format($cart['total_amount']) ?> ₫</td>
+                    </tr>
                 <?php } ?>
             </tbody>
         </table>

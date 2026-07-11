@@ -13,84 +13,84 @@
     <form action="index.php?act=billconfirm" method="post" data-validate novalidate>
         <?php if (isset($_SESSION['user'])) {
             extract($_SESSION['user']); ?>
-        <div class="mb-6 rounded-2xl border border-ink-200 bg-white p-6 shadow-sm">
-            <h2 class="font-heading text-lg font-semibold text-ink-900 mb-4">Thông tin đặt hàng</h2>
-            <div class="space-y-4">
-                <div>
-                    <label for="bill-user-name" class="block text-sm font-medium text-ink-700 mb-1.5">Tài khoản người dùng</label>
-                    <input id="bill-user-name" name="user_name" type="text" value="<?= $user_name ?>" disabled
-                        class="block w-full rounded-lg border border-ink-200 bg-ink-50 px-3.5 py-2.5 text-sm font-semibold text-ink-500 cursor-not-allowed" />
+            <div class="mb-6 rounded-2xl border border-ink-200 bg-white p-6 shadow-sm">
+                <h2 class="font-heading text-lg font-semibold text-ink-900 mb-4">Thông tin đặt hàng</h2>
+                <div class="space-y-4">
+                    <div>
+                        <label for="bill-user-name" class="block text-sm font-medium text-ink-700 mb-1.5">Tài khoản người dùng</label>
+                        <input id="bill-user-name" name="user_name" type="text" value="<?= $user_name ?>" disabled
+                            class="block w-full rounded-lg border border-ink-200 bg-ink-50 px-3.5 py-2.5 text-sm font-semibold text-ink-500 cursor-not-allowed" />
+                    </div>
+                    <div>
+                        <label for="bill-full-name" class="block text-sm font-medium text-ink-700 mb-1.5">Họ tên người đặt</label>
+                        <input id="bill-full-name" name="full_name" type="text" placeholder="Nhập họ tên người nhận" value="<?= $full_name ?>"
+                            data-rules="required|min:2|max:100"
+                            class="block w-full rounded-lg border border-ink-200 bg-white px-3.5 py-2.5 text-sm text-ink-900 placeholder:text-ink-300 focus:outline-none focus:ring-2 focus:ring-brand-500 focus:border-brand-500" />
+                    </div>
+                    <div>
+                        <label for="bill-province" class="block text-sm font-medium text-ink-700 mb-1.5">Tỉnh/Thành phố</label>
+                        <select id="bill-province" name="province" data-address-province
+                            data-existing-address="<?= htmlspecialchars($address ?? '') ?>"
+                            data-rules="required" data-msg-required="Vui lòng chọn tỉnh/thành phố"
+                            class="block w-full rounded-lg border border-ink-200 bg-white px-3.5 py-2.5 text-sm text-ink-900 focus:outline-none focus:ring-2 focus:ring-brand-500 focus:border-brand-500">
+                            <option value="">Đang tải danh sách...</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label for="bill-ward" class="block text-sm font-medium text-ink-700 mb-1.5">Xã/Phường</label>
+                        <select id="bill-ward" name="ward" data-address-ward
+                            data-rules="required" data-msg-required="Vui lòng chọn xã/phường"
+                            class="block w-full rounded-lg border border-ink-200 bg-white px-3.5 py-2.5 text-sm text-ink-900 focus:outline-none focus:ring-2 focus:ring-brand-500 focus:border-brand-500" disabled>
+                            <option value="">Chọn tỉnh/thành phố trước</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label for="bill-address-detail" class="block text-sm font-medium text-ink-700 mb-1.5">Địa chỉ chi tiết</label>
+                        <input id="bill-address-detail" name="address_detail" type="text" data-address-detail placeholder="Số nhà, tên đường..."
+                            data-rules="required|min:3|max:255"
+                            class="block w-full rounded-lg border border-ink-200 bg-white px-3.5 py-2.5 text-sm text-ink-900 placeholder:text-ink-300 focus:outline-none focus:ring-2 focus:ring-brand-500 focus:border-brand-500" />
+                    </div>
+                    <div>
+                        <label for="bill-email" class="block text-sm font-medium text-ink-700 mb-1.5">Email</label>
+                        <input id="bill-email" name="email" type="email" placeholder="Nhập email người nhận" value="<?= $email_user ?>"
+                            data-rules="required|email"
+                            class="block w-full rounded-lg border border-ink-200 bg-white px-3.5 py-2.5 text-sm text-ink-900 placeholder:text-ink-300 focus:outline-none focus:ring-2 focus:ring-brand-500 focus:border-brand-500" />
+                    </div>
+                    <div>
+                        <label for="bill-phone" class="block text-sm font-medium text-ink-700 mb-1.5">Điện thoại</label>
+                        <input id="bill-phone" name="phone" type="text" placeholder="Nhập số điện thoại người nhận" value="<?= $phone_user ?>"
+                            data-rules="required|phone"
+                            class="block w-full rounded-lg border border-ink-200 bg-white px-3.5 py-2.5 text-sm text-ink-900 placeholder:text-ink-300 focus:outline-none focus:ring-2 focus:ring-brand-500 focus:border-brand-500" />
+                    </div>
+                    <?php if (isset($_COOKIE['error'])) : ?>
+                        <p class="rounded-lg border border-green-200 bg-green-50 p-3 text-sm font-semibold text-green-700">
+                            <?= $_COOKIE['error'] ?>
+                        </p>
+                    <?php endif ?>
                 </div>
-                <div>
-                    <label for="bill-full-name" class="block text-sm font-medium text-ink-700 mb-1.5">Họ tên người đặt</label>
-                    <input id="bill-full-name" name="full_name" type="text" placeholder="Nhập họ tên người nhận" value="<?= $full_name ?>"
-                        data-rules="required|min:2|max:100"
-                        class="block w-full rounded-lg border border-ink-200 bg-white px-3.5 py-2.5 text-sm text-ink-900 placeholder:text-ink-300 focus:outline-none focus:ring-2 focus:ring-brand-500 focus:border-brand-500" />
-                </div>
-                <div>
-                    <label for="bill-province" class="block text-sm font-medium text-ink-700 mb-1.5">Tỉnh/Thành phố</label>
-                    <select id="bill-province" name="province" data-address-province
-                        data-existing-address="<?= htmlspecialchars($address ?? '') ?>"
-                        data-rules="required" data-msg-required="Vui lòng chọn tỉnh/thành phố"
-                        class="block w-full rounded-lg border border-ink-200 bg-white px-3.5 py-2.5 text-sm text-ink-900 focus:outline-none focus:ring-2 focus:ring-brand-500 focus:border-brand-500">
-                        <option value="">Đang tải danh sách...</option>
-                    </select>
-                </div>
-                <div>
-                    <label for="bill-ward" class="block text-sm font-medium text-ink-700 mb-1.5">Xã/Phường</label>
-                    <select id="bill-ward" name="ward" data-address-ward
-                        data-rules="required" data-msg-required="Vui lòng chọn xã/phường"
-                        class="block w-full rounded-lg border border-ink-200 bg-white px-3.5 py-2.5 text-sm text-ink-900 focus:outline-none focus:ring-2 focus:ring-brand-500 focus:border-brand-500" disabled>
-                        <option value="">Chọn tỉnh/thành phố trước</option>
-                    </select>
-                </div>
-                <div>
-                    <label for="bill-address-detail" class="block text-sm font-medium text-ink-700 mb-1.5">Địa chỉ chi tiết</label>
-                    <input id="bill-address-detail" name="address_detail" type="text" data-address-detail placeholder="Số nhà, tên đường..."
-                        data-rules="required|min:3|max:255"
-                        class="block w-full rounded-lg border border-ink-200 bg-white px-3.5 py-2.5 text-sm text-ink-900 placeholder:text-ink-300 focus:outline-none focus:ring-2 focus:ring-brand-500 focus:border-brand-500" />
-                </div>
-                <div>
-                    <label for="bill-email" class="block text-sm font-medium text-ink-700 mb-1.5">Email</label>
-                    <input id="bill-email" name="email" type="email" placeholder="Nhập email người nhận" value="<?= $email_user ?>"
-                        data-rules="required|email"
-                        class="block w-full rounded-lg border border-ink-200 bg-white px-3.5 py-2.5 text-sm text-ink-900 placeholder:text-ink-300 focus:outline-none focus:ring-2 focus:ring-brand-500 focus:border-brand-500" />
-                </div>
-                <div>
-                    <label for="bill-phone" class="block text-sm font-medium text-ink-700 mb-1.5">Điện thoại</label>
-                    <input id="bill-phone" name="phone" type="text" placeholder="Nhập số điện thoại người nhận" value="<?= $phone_user ?>"
-                        data-rules="required|phone"
-                        class="block w-full rounded-lg border border-ink-200 bg-white px-3.5 py-2.5 text-sm text-ink-900 placeholder:text-ink-300 focus:outline-none focus:ring-2 focus:ring-brand-500 focus:border-brand-500" />
-                </div>
-                <?php if (isset($_COOKIE['error'])) : ?>
-                <p class="rounded-lg border border-green-200 bg-green-50 p-3 text-sm font-semibold text-green-700">
-                    <?= $_COOKIE['error'] ?>
-                </p>
-                <?php endif ?>
             </div>
-        </div>
-        <!-- phương thức thanh toán -->
-        <div class="mb-6 rounded-2xl border border-ink-200 bg-white p-6 shadow-sm">
-            <h2 class="font-heading text-lg font-semibold text-ink-900 mb-4">Phương thức thanh toán</h2>
-            <div class="flex flex-col sm:flex-row gap-3">
-                <label class="flex flex-1 min-h-11 items-center gap-3 rounded-lg border border-ink-200 px-4 py-3 cursor-pointer hover:bg-ink-50 has-checked:border-brand-500 has-checked:bg-brand-50 transition-colors">
-                    <input class="h-4 w-4 text-brand-600 focus:ring-2 focus:ring-brand-500" type="radio" name="payment" id="inlineRadio1" value="1" checked>
-                    <span class="text-sm font-medium text-ink-900">Thanh toán khi nhận hàng</span>
-                </label>
-                <label class="flex flex-1 min-h-11 items-center gap-3 rounded-lg border border-ink-200 px-4 py-3 cursor-pointer hover:bg-ink-50 has-checked:border-brand-500 has-checked:bg-brand-50 transition-colors">
-                    <input class="h-4 w-4 text-brand-600 focus:ring-2 focus:ring-brand-500" type="radio" name="payment" id="inlineRadio2" value="2">
-                    <span class="text-sm font-medium text-ink-900">Chuyển khoản ngân hàng</span>
-                </label>
+            <!-- phương thức thanh toán -->
+            <div class="mb-6 rounded-2xl border border-ink-200 bg-white p-6 shadow-sm">
+                <h2 class="font-heading text-lg font-semibold text-ink-900 mb-4">Phương thức thanh toán</h2>
+                <div class="flex flex-col sm:flex-row gap-3">
+                    <label class="flex flex-1 min-h-11 items-center gap-3 rounded-lg border border-ink-200 px-4 py-3 cursor-pointer hover:bg-ink-50 has-checked:border-brand-500 has-checked:bg-brand-50 transition-colors">
+                        <input class="h-4 w-4 text-brand-600 focus:ring-2 focus:ring-brand-500" type="radio" name="payment" id="inlineRadio1" value="1" checked>
+                        <span class="text-sm font-medium text-ink-900">Thanh toán khi nhận hàng</span>
+                    </label>
+                    <label class="flex flex-1 min-h-11 items-center gap-3 rounded-lg border border-ink-200 px-4 py-3 cursor-pointer hover:bg-ink-50 has-checked:border-brand-500 has-checked:bg-brand-50 transition-colors">
+                        <input class="h-4 w-4 text-brand-600 focus:ring-2 focus:ring-brand-500" type="radio" name="payment" id="inlineRadio2" value="2">
+                        <span class="text-sm font-medium text-ink-900">Chuyển khoản ngân hàng</span>
+                    </label>
+                </div>
             </div>
-        </div>
         <?php } else { ?>
-        <div class="mb-6 rounded-2xl border border-red-200 bg-red-50 p-6 text-center">
-            <p class="mb-4 text-sm font-semibold text-red-600">Bạn chưa đăng nhập. Hãy đăng nhập tài khoản để tiến hành đặt hàng!</p>
-            <a href="index.php?act=login"
-                class="inline-flex items-center justify-center gap-2 rounded-lg bg-brand-600 px-5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-brand-700 transition-colors focus:outline-none focus:ring-2 focus:ring-brand-500 focus:ring-offset-2">
-                <i class="fa-solid fa-right-to-bracket" aria-hidden="true"></i> Đăng nhập
-            </a>
-        </div>
+            <div class="mb-6 rounded-2xl border border-red-200 bg-red-50 p-6 text-center">
+                <p class="mb-4 text-sm font-semibold text-red-600">Bạn chưa đăng nhập. Hãy đăng nhập tài khoản để tiến hành đặt hàng!</p>
+                <a href="index.php?act=login"
+                    class="inline-flex items-center justify-center gap-2 rounded-lg bg-brand-600 px-5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-brand-700 transition-colors focus:outline-none focus:ring-2 focus:ring-brand-500 focus:ring-offset-2">
+                    <i class="fa-solid fa-right-to-bracket" aria-hidden="true"></i> Đăng nhập
+                </a>
+            </div>
         <?php } ?>
         <!-- Begin JB's Cart Area -->
         <div class="rounded-2xl border border-ink-200 bg-white shadow-sm overflow-hidden">
@@ -118,19 +118,19 @@
                             $total = $cart[3] * $cart[4];
                             $total_amount += $total;
                         ?>
-                        <tr>
-                            <td class="px-4 py-3">
-                                <a href="<?= $prodetail ?>" class="block h-16 w-16 overflow-hidden rounded-lg bg-ink-100">
-                                    <img src="<?= $img_pro ?>" alt="<?= $cart[1] ?>" class="h-full w-full object-cover" />
-                                </a>
-                            </td>
-                            <td class="px-4 py-3">
-                                <a href="<?= $prodetail ?>" class="font-heading font-semibold text-ink-900 hover:text-brand-600 transition-colors"><?= $cart[1] ?></a>
-                            </td>
-                            <td class="px-4 py-3 text-ink-700"><?= number_format($cart[3]) ?> ₫</td>
-                            <td class="px-4 py-3 text-center text-ink-700"><?= $quantity ?></td>
-                            <td class="px-4 py-3 font-semibold text-ink-900"><?= number_format($total) ?> ₫</td>
-                        </tr>
+                            <tr>
+                                <td class="px-4 py-3">
+                                    <a href="<?= $prodetail ?>" class="block h-16 w-16 overflow-hidden rounded-lg bg-ink-100">
+                                        <img src="<?= $img_pro ?>" alt="<?= $cart[1] ?>" class="h-full w-full object-cover" />
+                                    </a>
+                                </td>
+                                <td class="px-4 py-3">
+                                    <a href="<?= $prodetail ?>" class="font-heading font-semibold text-ink-900 hover:text-brand-600 transition-colors"><?= $cart[1] ?></a>
+                                </td>
+                                <td class="px-4 py-3 text-ink-700"><?= number_format($cart[3]) ?> ₫</td>
+                                <td class="px-4 py-3 text-center text-ink-700"><?= $quantity ?></td>
+                                <td class="px-4 py-3 font-semibold text-ink-900"><?= number_format($total) ?> ₫</td>
+                            </tr>
                         <?php $i += 1;
                         } ?>
                     </tbody>
@@ -188,68 +188,70 @@
 </div>
 
 <script>
-(function () {
-    var subtotal = <?= (int) $total_amount ?>;
+    (function() {
+        var subtotal = <?= (int) $total_amount ?>;
 
-    function formatVnd(n) {
-        // Comma thousands-separator to match PHP's number_format() used
-        // everywhere else on this page (not toLocaleString('vi-VN'), which
-        // uses periods and would look inconsistent after an AJAX update).
-        return Number(n).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',') + ' ₫';
-    }
+        function formatVnd(n) {
+            // Comma thousands-separator to match PHP's number_format() used
+            // everywhere else on this page (not toLocaleString('vi-VN'), which
+            // uses periods and would look inconsistent after an AJAX update).
+            return Number(n).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',') + ' ₫';
+        }
 
-    function bindRemoveCoupon() {
-        var btn = document.getElementById('coupon-remove-btn');
-        if (!btn) return;
-        btn.addEventListener('click', function () {
+        function bindRemoveCoupon() {
+            var btn = document.getElementById('coupon-remove-btn');
+            if (!btn) return;
+            btn.addEventListener('click', function() {
+                $.ajax({
+                    url: '?act=removecoupon',
+                    type: 'POST',
+                    success: function(data) {
+                        var match = /<!--COUPON_RESULT:(.*?):END-->/.exec(data);
+                        if (!match) return;
+                        document.getElementById('coupon-code').value = '';
+                        var msgEl = document.getElementById('coupon-message');
+                        msgEl.className = 'mt-1.5 text-xs hidden';
+                        msgEl.innerHTML = '';
+                        document.getElementById('coupon-discount-row').classList.add('hidden');
+                        document.getElementById('coupon-total').textContent = formatVnd(subtotal);
+                    }
+                });
+            });
+        }
+
+        document.getElementById('coupon-apply-btn')?.addEventListener('click', function() {
+            var code = document.getElementById('coupon-code').value.trim();
             $.ajax({
-                url: '?act=removecoupon',
+                url: '?act=applycoupon',
                 type: 'POST',
-                success: function (data) {
+                data: {
+                    coupon_code: code
+                },
+                success: function(data) {
                     var match = /<!--COUPON_RESULT:(.*?):END-->/.exec(data);
                     if (!match) return;
-                    document.getElementById('coupon-code').value = '';
+                    var result = JSON.parse(match[1]);
                     var msgEl = document.getElementById('coupon-message');
-                    msgEl.className = 'mt-1.5 text-xs hidden';
-                    msgEl.innerHTML = '';
-                    document.getElementById('coupon-discount-row').classList.add('hidden');
-                    document.getElementById('coupon-total').textContent = formatVnd(subtotal);
+
+                    if (result.success) {
+                        msgEl.className = 'mt-1.5 text-xs text-emerald-600';
+                        msgEl.innerHTML = 'Đã áp dụng mã ' + result.code +
+                            ' <button type="button" id="coupon-remove-btn" class="ml-1 font-semibold text-red-600 underline">Xóa mã</button>';
+                        document.getElementById('coupon-discount-row').classList.remove('hidden');
+                        document.getElementById('coupon-discount-value').textContent = '-' + formatVnd(result.discount);
+                        document.getElementById('coupon-total').textContent = formatVnd(result.total);
+                        bindRemoveCoupon();
+                    } else {
+                        msgEl.className = 'mt-1.5 text-xs text-red-600';
+                        msgEl.textContent = result.message;
+                    }
+                },
+                error: function() {
+                    alert('Không thể áp dụng mã giảm giá, vui lòng thử lại!');
                 }
             });
         });
-    }
 
-    document.getElementById('coupon-apply-btn')?.addEventListener('click', function () {
-        var code = document.getElementById('coupon-code').value.trim();
-        $.ajax({
-            url: '?act=applycoupon',
-            type: 'POST',
-            data: { coupon_code: code },
-            success: function (data) {
-                var match = /<!--COUPON_RESULT:(.*?):END-->/.exec(data);
-                if (!match) return;
-                var result = JSON.parse(match[1]);
-                var msgEl = document.getElementById('coupon-message');
-
-                if (result.success) {
-                    msgEl.className = 'mt-1.5 text-xs text-emerald-600';
-                    msgEl.innerHTML = 'Đã áp dụng mã ' + result.code +
-                        ' <button type="button" id="coupon-remove-btn" class="ml-1 font-semibold text-red-600 underline">Xóa mã</button>';
-                    document.getElementById('coupon-discount-row').classList.remove('hidden');
-                    document.getElementById('coupon-discount-value').textContent = '-' + formatVnd(result.discount);
-                    document.getElementById('coupon-total').textContent = formatVnd(result.total);
-                    bindRemoveCoupon();
-                } else {
-                    msgEl.className = 'mt-1.5 text-xs text-red-600';
-                    msgEl.textContent = result.message;
-                }
-            },
-            error: function () {
-                alert('Không thể áp dụng mã giảm giá, vui lòng thử lại!');
-            }
-        });
-    });
-
-    bindRemoveCoupon();
-})();
+        bindRemoveCoupon();
+    })();
 </script>

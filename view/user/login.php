@@ -68,16 +68,16 @@
 </div>
 
 <script>
-    (function () {
+    (function() {
         var toggle = document.getElementById('login-password-toggle');
         var input = document.getElementById('login-password');
         if (!toggle || !input) return;
-        toggle.addEventListener('click', function () {
+        toggle.addEventListener('click', function() {
             var isHidden = input.type === 'password';
             input.type = isHidden ? 'text' : 'password';
-            toggle.innerHTML = isHidden
-                ? '<i class="fa-regular fa-eye-slash" aria-hidden="true"></i>'
-                : '<i class="fa-regular fa-eye" aria-hidden="true"></i>';
+            toggle.innerHTML = isHidden ?
+                '<i class="fa-regular fa-eye-slash" aria-hidden="true"></i>' :
+                '<i class="fa-regular fa-eye" aria-hidden="true"></i>';
         });
     })();
 </script>

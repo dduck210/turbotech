@@ -74,35 +74,35 @@ $total_amount = \Codemoi\Model\Cart::total();
                     <div
                         class="invisible absolute right-0 top-full z-50 w-80 rounded-xl border border-ink-200 bg-white opacity-0 shadow-lg transition-all group-hover:visible group-hover:opacity-100">
                         <?php if (empty($_SESSION['mycart'])) { ?>
-                        <p class="p-6 text-center text-sm text-ink-500">Bạn chưa thêm sản phẩm nào vào giỏ hàng !</p>
+                            <p class="p-6 text-center text-sm text-ink-500">Bạn chưa thêm sản phẩm nào vào giỏ hàng !</p>
                         <?php } else { ?>
-                        <ul class="max-h-80 divide-y divide-ink-100 overflow-y-auto">
-                            <?php foreach ($_SESSION['mycart'] as $cart) { ?>
-                            <li class="flex gap-3 p-3">
-                                <a href="index.php?act=prodetail&idpro=<?= $cart[0] ?>"
-                                    class="relative h-14 w-14 shrink-0 overflow-hidden rounded-lg bg-ink-100">
-                                    <img src="admin/uploads/<?= $cart[2] ?>" alt="<?= $cart[1] ?>"
-                                        class="h-full w-full object-cover" />
-                                    <span
-                                        class="absolute bottom-0 right-0 rounded-tl-md bg-ink-900/80 px-1 text-[10px] font-semibold text-white"><?= $cart[4] ?>x</span>
-                                </a>
-                                <div class="min-w-0 flex-1">
-                                    <a href="index.php?act=prodetail&idpro=<?= $cart[0] ?>"
-                                        class="line-clamp-2 text-sm font-medium text-ink-900 hover:text-brand-600 focus:outline-none focus:ring-2 focus:ring-brand-500"><?= $cart[1] ?></a>
-                                    <p class="mt-1 text-sm font-semibold text-brand-600"><?= number_format($cart[3]) ?>₫</p>
+                            <ul class="max-h-80 divide-y divide-ink-100 overflow-y-auto">
+                                <?php foreach ($_SESSION['mycart'] as $cart) { ?>
+                                    <li class="flex gap-3 p-3">
+                                        <a href="index.php?act=prodetail&idpro=<?= $cart[0] ?>"
+                                            class="relative h-14 w-14 shrink-0 overflow-hidden rounded-lg bg-ink-100">
+                                            <img src="admin/uploads/<?= $cart[2] ?>" alt="<?= $cart[1] ?>"
+                                                class="h-full w-full object-cover" />
+                                            <span
+                                                class="absolute bottom-0 right-0 rounded-tl-md bg-ink-900/80 px-1 text-[10px] font-semibold text-white"><?= $cart[4] ?>x</span>
+                                        </a>
+                                        <div class="min-w-0 flex-1">
+                                            <a href="index.php?act=prodetail&idpro=<?= $cart[0] ?>"
+                                                class="line-clamp-2 text-sm font-medium text-ink-900 hover:text-brand-600 focus:outline-none focus:ring-2 focus:ring-brand-500"><?= $cart[1] ?></a>
+                                            <p class="mt-1 text-sm font-semibold text-brand-600"><?= number_format($cart[3]) ?>₫</p>
+                                        </div>
+                                    </li>
+                                <?php } ?>
+                            </ul>
+                            <div class="border-t border-ink-200 p-4">
+                                <div class="flex items-center justify-between text-sm font-semibold text-ink-900">
+                                    <span>Tổng tiền</span>
+                                    <span class="text-brand-600"><?= number_format($total_amount) ?>₫</span>
                                 </div>
-                            </li>
-                            <?php } ?>
-                        </ul>
-                        <div class="border-t border-ink-200 p-4">
-                            <div class="flex items-center justify-between text-sm font-semibold text-ink-900">
-                                <span>Tổng tiền</span>
-                                <span class="text-brand-600"><?= number_format($total_amount) ?>₫</span>
+                                <a href="index.php?act=viewcart"
+                                    class="mt-3 inline-flex w-full items-center justify-center gap-2 rounded-lg bg-brand-600 px-5 py-2.5 text-sm font-semibold text-white shadow-sm transition-colors hover:bg-brand-700 focus:outline-none focus:ring-2 focus:ring-brand-500 focus:ring-offset-2">Xem
+                                    giỏ hàng</a>
                             </div>
-                            <a href="index.php?act=viewcart"
-                                class="mt-3 inline-flex w-full items-center justify-center gap-2 rounded-lg bg-brand-600 px-5 py-2.5 text-sm font-semibold text-white shadow-sm transition-colors hover:bg-brand-700 focus:outline-none focus:ring-2 focus:ring-brand-500 focus:ring-offset-2">Xem
-                                giỏ hàng</a>
-                        </div>
                         <?php } ?>
                     </div>
                 </div>
@@ -111,48 +111,48 @@ $total_amount = \Codemoi\Model\Cart::total();
                      reachable via the mobile menu drawer instead — see #mobile-menu below) -->
                 <div class="group relative hidden sm:block">
                     <?php if (!isset($_SESSION['user'])) { ?>
-                    <a href="#"
-                        class="flex h-11 items-center gap-2 rounded-full px-3 text-sm font-medium text-ink-700 transition-colors hover:bg-ink-100 focus:outline-none focus:ring-2 focus:ring-brand-500">
-                        <i class="fa-solid fa-user text-lg"></i>
-                        <span class="hidden sm:inline">Tài khoản</span>
-                    </a>
+                        <a href="#"
+                            class="flex h-11 items-center gap-2 rounded-full px-3 text-sm font-medium text-ink-700 transition-colors hover:bg-ink-100 focus:outline-none focus:ring-2 focus:ring-brand-500">
+                            <i class="fa-solid fa-user text-lg"></i>
+                            <span class="hidden sm:inline">Tài khoản</span>
+                        </a>
                     <?php } else { ?>
-                    <a href="#"
-                        class="flex h-11 items-center gap-2 rounded-full px-3 text-sm font-medium text-ink-700 transition-colors hover:bg-ink-100 focus:outline-none focus:ring-2 focus:ring-brand-500">
-                        <?php if (isset($_SESSION['user']['img_user']) && $_SESSION['user']['img_user'] != '') { ?>
-                        <img src="uploads/<?= $_SESSION['user']['img_user'] ?>" alt=""
-                            class="h-7 w-7 rounded-full object-cover" />
-                        <?php } else { ?>
-                        <i class="fa-solid fa-user text-lg"></i>
-                        <?php } ?>
-                        <span class="hidden max-w-32 truncate sm:inline"><?= $_SESSION['user']['full_name'] ?></span>
-                    </a>
+                        <a href="#"
+                            class="flex h-11 items-center gap-2 rounded-full px-3 text-sm font-medium text-ink-700 transition-colors hover:bg-ink-100 focus:outline-none focus:ring-2 focus:ring-brand-500">
+                            <?php if (isset($_SESSION['user']['img_user']) && $_SESSION['user']['img_user'] != '') { ?>
+                                <img src="uploads/<?= $_SESSION['user']['img_user'] ?>" alt=""
+                                    class="h-7 w-7 rounded-full object-cover" />
+                            <?php } else { ?>
+                                <i class="fa-solid fa-user text-lg"></i>
+                            <?php } ?>
+                            <span class="hidden max-w-32 truncate sm:inline"><?= $_SESSION['user']['full_name'] ?></span>
+                        </a>
                     <?php } ?>
                     <div
                         class="invisible absolute right-0 top-full z-50 w-56 rounded-xl border border-ink-200 bg-white py-2 opacity-0 shadow-lg transition-all group-hover:visible group-hover:opacity-100">
                         <?php if (!isset($_SESSION['user'])) { ?>
-                        <a href="index.php?act=login"
-                            class="flex items-center gap-2 px-4 py-2 text-sm text-ink-700 hover:bg-ink-50 hover:text-brand-600 focus:outline-none focus:ring-2 focus:ring-brand-500"><i
-                                class="fa-solid fa-right-to-bracket w-4"></i> Đăng nhập</a>
+                            <a href="index.php?act=login"
+                                class="flex items-center gap-2 px-4 py-2 text-sm text-ink-700 hover:bg-ink-50 hover:text-brand-600 focus:outline-none focus:ring-2 focus:ring-brand-500"><i
+                                    class="fa-solid fa-right-to-bracket w-4"></i> Đăng nhập</a>
                         <?php } else if ($_SESSION['user']['role'] == 1) { ?>
-                        <a href="./admin/index.php"
-                            class="flex items-center gap-2 px-4 py-2 text-sm text-ink-700 hover:bg-ink-50 hover:text-brand-600 focus:outline-none focus:ring-2 focus:ring-brand-500"><i
-                                class="fa-solid fa-gears w-4"></i> Vào trang Admin</a>
-                        <a href="index.php?act=myaccount"
-                            class="flex items-center gap-2 px-4 py-2 text-sm text-ink-700 hover:bg-ink-50 hover:text-brand-600 focus:outline-none focus:ring-2 focus:ring-brand-500"><i
-                                class="fa-solid fa-circle-info w-4"></i> Thông tin tài khoản</a>
-                        <a href="index.php?act=logout"
-                            data-confirm="Bạn chắc chắc muốn đăng xuất tài khoản?"
-                            class="flex items-center gap-2 px-4 py-2 text-sm text-ink-700 hover:bg-ink-50 hover:text-brand-600 focus:outline-none focus:ring-2 focus:ring-brand-500"><i
-                                class="fa-solid fa-right-from-bracket w-4"></i> Đăng xuất</a>
+                            <a href="./admin/index.php"
+                                class="flex items-center gap-2 px-4 py-2 text-sm text-ink-700 hover:bg-ink-50 hover:text-brand-600 focus:outline-none focus:ring-2 focus:ring-brand-500"><i
+                                    class="fa-solid fa-gears w-4"></i> Vào trang Admin</a>
+                            <a href="index.php?act=myaccount"
+                                class="flex items-center gap-2 px-4 py-2 text-sm text-ink-700 hover:bg-ink-50 hover:text-brand-600 focus:outline-none focus:ring-2 focus:ring-brand-500"><i
+                                    class="fa-solid fa-circle-info w-4"></i> Thông tin tài khoản</a>
+                            <a href="index.php?act=logout"
+                                data-confirm="Bạn chắc chắc muốn đăng xuất tài khoản?"
+                                class="flex items-center gap-2 px-4 py-2 text-sm text-ink-700 hover:bg-ink-50 hover:text-brand-600 focus:outline-none focus:ring-2 focus:ring-brand-500"><i
+                                    class="fa-solid fa-right-from-bracket w-4"></i> Đăng xuất</a>
                         <?php } else { ?>
-                        <a href="index.php?act=myaccount"
-                            class="flex items-center gap-2 px-4 py-2 text-sm text-ink-700 hover:bg-ink-50 hover:text-brand-600 focus:outline-none focus:ring-2 focus:ring-brand-500"><i
-                                class="fa-solid fa-circle-info w-4"></i> Thông tin tài khoản</a>
-                        <a href="index.php?act=logout"
-                            data-confirm="Bạn chắc chắc muốn đăng xuất tài khoản?"
-                            class="flex items-center gap-2 px-4 py-2 text-sm text-ink-700 hover:bg-ink-50 hover:text-brand-600 focus:outline-none focus:ring-2 focus:ring-brand-500"><i
-                                class="fa-solid fa-right-from-bracket w-4"></i> Đăng xuất</a>
+                            <a href="index.php?act=myaccount"
+                                class="flex items-center gap-2 px-4 py-2 text-sm text-ink-700 hover:bg-ink-50 hover:text-brand-600 focus:outline-none focus:ring-2 focus:ring-brand-500"><i
+                                    class="fa-solid fa-circle-info w-4"></i> Thông tin tài khoản</a>
+                            <a href="index.php?act=logout"
+                                data-confirm="Bạn chắc chắc muốn đăng xuất tài khoản?"
+                                class="flex items-center gap-2 px-4 py-2 text-sm text-ink-700 hover:bg-ink-50 hover:text-brand-600 focus:outline-none focus:ring-2 focus:ring-brand-500"><i
+                                    class="fa-solid fa-right-from-bracket w-4"></i> Đăng xuất</a>
                         <?php } ?>
                     </div>
                 </div>
@@ -218,22 +218,22 @@ $total_amount = \Codemoi\Model\Cart::total();
                  sm breakpoint up) -->
             <div class="mt-2 space-y-1 border-t border-ink-200 pt-2 sm:hidden">
                 <?php if (!isset($_SESSION['user'])) { ?>
-                <a href="index.php?act=login"
-                    class="flex items-center gap-2 rounded-lg px-3 py-2.5 text-sm font-medium text-ink-700 hover:bg-ink-50 focus:outline-none focus:ring-2 focus:ring-brand-500"><i
-                        class="fa-solid fa-right-to-bracket w-4"></i> Đăng nhập</a>
+                    <a href="index.php?act=login"
+                        class="flex items-center gap-2 rounded-lg px-3 py-2.5 text-sm font-medium text-ink-700 hover:bg-ink-50 focus:outline-none focus:ring-2 focus:ring-brand-500"><i
+                            class="fa-solid fa-right-to-bracket w-4"></i> Đăng nhập</a>
                 <?php } else { ?>
-                <?php if ($_SESSION['user']['role'] == 1) { ?>
-                <a href="./admin/index.php"
-                    class="flex items-center gap-2 rounded-lg px-3 py-2.5 text-sm font-medium text-ink-700 hover:bg-ink-50 focus:outline-none focus:ring-2 focus:ring-brand-500"><i
-                        class="fa-solid fa-gears w-4"></i> Vào trang Admin</a>
-                <?php } ?>
-                <a href="index.php?act=myaccount"
-                    class="flex items-center gap-2 rounded-lg px-3 py-2.5 text-sm font-medium text-ink-700 hover:bg-ink-50 focus:outline-none focus:ring-2 focus:ring-brand-500"><i
-                        class="fa-solid fa-circle-info w-4"></i> Thông tin tài khoản (<?= $_SESSION['user']['full_name'] ?>)</a>
-                <a href="index.php?act=logout"
-                    data-confirm="Bạn chắc chắc muốn đăng xuất tài khoản?"
-                    class="flex items-center gap-2 rounded-lg px-3 py-2.5 text-sm font-medium text-ink-700 hover:bg-ink-50 focus:outline-none focus:ring-2 focus:ring-brand-500"><i
-                        class="fa-solid fa-right-from-bracket w-4"></i> Đăng xuất</a>
+                    <?php if ($_SESSION['user']['role'] == 1) { ?>
+                        <a href="./admin/index.php"
+                            class="flex items-center gap-2 rounded-lg px-3 py-2.5 text-sm font-medium text-ink-700 hover:bg-ink-50 focus:outline-none focus:ring-2 focus:ring-brand-500"><i
+                                class="fa-solid fa-gears w-4"></i> Vào trang Admin</a>
+                    <?php } ?>
+                    <a href="index.php?act=myaccount"
+                        class="flex items-center gap-2 rounded-lg px-3 py-2.5 text-sm font-medium text-ink-700 hover:bg-ink-50 focus:outline-none focus:ring-2 focus:ring-brand-500"><i
+                            class="fa-solid fa-circle-info w-4"></i> Thông tin tài khoản (<?= $_SESSION['user']['full_name'] ?>)</a>
+                    <a href="index.php?act=logout"
+                        data-confirm="Bạn chắc chắc muốn đăng xuất tài khoản?"
+                        class="flex items-center gap-2 rounded-lg px-3 py-2.5 text-sm font-medium text-ink-700 hover:bg-ink-50 focus:outline-none focus:ring-2 focus:ring-brand-500"><i
+                            class="fa-solid fa-right-from-bracket w-4"></i> Đăng xuất</a>
                 <?php } ?>
             </div>
         </div>
@@ -241,11 +241,11 @@ $total_amount = \Codemoi\Model\Cart::total();
 </header>
 
 <script>
-    (function () {
+    (function() {
         var btn = document.getElementById('mobile-menu-btn');
         var menu = document.getElementById('mobile-menu');
         if (!btn || !menu) return;
-        btn.addEventListener('click', function () {
+        btn.addEventListener('click', function() {
             var isNowHidden = menu.classList.toggle('hidden');
             btn.setAttribute('aria-expanded', String(!isNowHidden));
         });

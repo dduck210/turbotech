@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @var array $prohome    Full product listing (Codemoi\Model\Product::allHome()).
  * @var array $list_topsp Featured products (Codemoi\Model\Product::featured()).
@@ -106,55 +107,55 @@
                     <!-- Phần show sản phẩm mới nhất -->
                     <?php
                     foreach ($prohome as $pro) { ?>
-                    <div class="group relative overflow-hidden rounded-2xl border border-ink-200 bg-white shadow-sm transition-shadow hover:shadow-md">
-                        <div class="relative aspect-square overflow-hidden bg-ink-100">
-                            <a class="block h-full w-full"
-                                href="index.php?act=prodetail&idpro=<?php echo $pro['id_pro'] ?>">
-                                <img class="h-full w-full object-cover" src="admin/uploads/<?php echo $pro['img_pro'] ?>"
-                                    alt="<?php echo $pro['name_pro'] ?>" />
-                            </a>
-                            <span
-                                class="absolute top-2 right-2 inline-flex items-center rounded-full bg-brand-50 px-3 py-1 text-xs font-medium text-brand-700">Mới</span>
-                            <?php if (!isset($pro['discount']) || $pro['discount'] <= 0) { ?>
-                            <?php } else { ?>
-                            <span
-                                class="absolute top-2 left-2 rounded-full bg-red-600 px-2 py-1 text-xs font-bold text-white">-<?= $pro['discount'] ?>%</span>
-                            <?php } ?>
-                            <?php if ((int) $pro['stock'] <= 0) { ?>
-                            <span class="absolute bottom-2 left-2 rounded-full bg-ink-900/80 px-2 py-1 text-xs font-bold text-white"><?= htmlspecialchars($pro['stock_message'] ?: 'Hết hàng') ?></span>
-                            <?php } ?>
-                        </div>
-                        <div class="p-4">
-                            <h6 class="mb-2">
-                                <a class="font-heading font-semibold text-ink-900 line-clamp-2 transition-colors hover:text-brand-600"
-                                    href="index.php?act=prodetail&idpro=<?php echo $pro['id_pro'] ?>"><?php echo $pro['name_pro'] ?></a>
-                            </h6>
-                            <div class="mb-3 flex items-baseline gap-2">
-                                <?php if (!isset($pro['discount']) || $pro['discount'] <= 0) { ?>
-                                <span class="font-bold text-brand-600"><?= number_format($pro['price']) ?>₫</span>
-                                <?php } else { ?>
+                        <div class="group relative overflow-hidden rounded-2xl border border-ink-200 bg-white shadow-sm transition-shadow hover:shadow-md">
+                            <div class="relative aspect-square overflow-hidden bg-ink-100">
+                                <a class="block h-full w-full"
+                                    href="index.php?act=prodetail&idpro=<?php echo $pro['id_pro'] ?>">
+                                    <img class="h-full w-full object-cover" src="admin/uploads/<?php echo $pro['img_pro'] ?>"
+                                        alt="<?php echo $pro['name_pro'] ?>" />
+                                </a>
                                 <span
-                                    class="font-bold text-brand-600"><?= number_format(($pro['price']) - (($pro['price']) * ($pro['discount']) / 100)) ?>₫</span>
-                                <span class="text-sm text-ink-300 line-through"><?= number_format($pro['price']) ?>₫</span>
+                                    class="absolute top-2 right-2 inline-flex items-center rounded-full bg-brand-50 px-3 py-1 text-xs font-medium text-brand-700">Mới</span>
+                                <?php if (!isset($pro['discount']) || $pro['discount'] <= 0) { ?>
+                                <?php } else { ?>
+                                    <span
+                                        class="absolute top-2 left-2 rounded-full bg-red-600 px-2 py-1 text-xs font-bold text-white">-<?= $pro['discount'] ?>%</span>
+                                <?php } ?>
+                                <?php if ((int) $pro['stock'] <= 0) { ?>
+                                    <span class="absolute bottom-2 left-2 rounded-full bg-ink-900/80 px-2 py-1 text-xs font-bold text-white"><?= htmlspecialchars($pro['stock_message'] ?: 'Hết hàng') ?></span>
                                 <?php } ?>
                             </div>
-                            <?php if ((int) $pro['stock'] > 0) { ?>
-                            <form action="index.php?act=addtocart" method="post">
-                                <input type="hidden" name="id_pro" value="<?php echo $pro['id_pro'] ?>">
-                                <input type="hidden" name="name_pro" value="<?php echo $pro['name_pro'] ?>">
-                                <input type="hidden" name="img_pro" value="<?php echo $pro['img_pro'] ?>">
-                                <input type="hidden" name="price" value="<?php echo $pro['price'] ?>">
-                                <input type="submit" name="addtocart" value="Thêm vào giỏ"
-                                    class="inline-flex w-full cursor-pointer items-center justify-center gap-2 rounded-lg bg-brand-600 px-5 py-2.5 text-sm font-semibold text-white shadow-sm transition-colors hover:bg-brand-700 focus:outline-none focus:ring-2 focus:ring-brand-500 focus:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50">
-                            </form>
-                            <?php } else { ?>
-                            <button type="button" disabled
-                                class="inline-flex w-full items-center justify-center gap-2 rounded-lg bg-ink-100 px-5 py-2.5 text-sm font-semibold text-ink-300 cursor-not-allowed">
-                                <?= htmlspecialchars($pro['stock_message'] ?: 'Hết hàng') ?>
-                            </button>
-                            <?php } ?>
+                            <div class="p-4">
+                                <h6 class="mb-2">
+                                    <a class="font-heading font-semibold text-ink-900 line-clamp-2 transition-colors hover:text-brand-600"
+                                        href="index.php?act=prodetail&idpro=<?php echo $pro['id_pro'] ?>"><?php echo $pro['name_pro'] ?></a>
+                                </h6>
+                                <div class="mb-3 flex items-baseline gap-2">
+                                    <?php if (!isset($pro['discount']) || $pro['discount'] <= 0) { ?>
+                                        <span class="font-bold text-brand-600"><?= number_format($pro['price']) ?>₫</span>
+                                    <?php } else { ?>
+                                        <span
+                                            class="font-bold text-brand-600"><?= number_format(($pro['price']) - (($pro['price']) * ($pro['discount']) / 100)) ?>₫</span>
+                                        <span class="text-sm text-ink-300 line-through"><?= number_format($pro['price']) ?>₫</span>
+                                    <?php } ?>
+                                </div>
+                                <?php if ((int) $pro['stock'] > 0) { ?>
+                                    <form action="index.php?act=addtocart" method="post">
+                                        <input type="hidden" name="id_pro" value="<?php echo $pro['id_pro'] ?>">
+                                        <input type="hidden" name="name_pro" value="<?php echo $pro['name_pro'] ?>">
+                                        <input type="hidden" name="img_pro" value="<?php echo $pro['img_pro'] ?>">
+                                        <input type="hidden" name="price" value="<?php echo $pro['price'] ?>">
+                                        <input type="submit" name="addtocart" value="Thêm vào giỏ"
+                                            class="inline-flex w-full cursor-pointer items-center justify-center gap-2 rounded-lg bg-brand-600 px-5 py-2.5 text-sm font-semibold text-white shadow-sm transition-colors hover:bg-brand-700 focus:outline-none focus:ring-2 focus:ring-brand-500 focus:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50">
+                                    </form>
+                                <?php } else { ?>
+                                    <button type="button" disabled
+                                        class="inline-flex w-full items-center justify-center gap-2 rounded-lg bg-ink-100 px-5 py-2.5 text-sm font-semibold text-ink-300 cursor-not-allowed">
+                                        <?= htmlspecialchars($pro['stock_message'] ?: 'Hết hàng') ?>
+                                    </button>
+                                <?php } ?>
+                            </div>
                         </div>
-                    </div>
                     <?php   } ?>
                     <!-- end phần show sản sản phẩm mới nhất -->
                 </div>
@@ -164,54 +165,54 @@
                     <!-- Sản phẩm bán chạy -->
                     <?php
                     foreach ($list_bestsp as $pro) { ?>
-                    <div class="group relative overflow-hidden rounded-2xl border border-ink-200 bg-white shadow-sm transition-shadow hover:shadow-md">
-                        <div class="relative aspect-square overflow-hidden bg-ink-100">
-                            <a class="block h-full w-full" href="index.php?act=prodetail&idpro=<?= $pro['id_pro'] ?>">
-                                <img class="h-full w-full object-cover" src="admin/uploads/<?= $pro['img_pro'] ?>"
-                                    alt="<?= $pro['name_pro'] ?>" />
-                            </a>
-                            <span
-                                class="absolute top-2 right-2 inline-flex items-center rounded-full bg-brand-50 px-3 py-1 text-xs font-medium text-brand-700">Hot</span>
-                            <?php if (!isset($pro['discount']) || $pro['discount'] <= 0) { ?>
-                            <?php } else { ?>
-                            <span
-                                class="absolute top-2 left-2 rounded-full bg-red-600 px-2 py-1 text-xs font-bold text-white">-<?= $pro['discount'] ?>%</span>
-                            <?php } ?>
-                            <?php if ((int) $pro['stock'] <= 0) { ?>
-                            <span class="absolute bottom-2 left-2 rounded-full bg-ink-900/80 px-2 py-1 text-xs font-bold text-white"><?= htmlspecialchars($pro['stock_message'] ?: 'Hết hàng') ?></span>
-                            <?php } ?>
-                        </div>
-                        <div class="p-4">
-                            <h6 class="mb-2">
-                                <a class="font-heading font-semibold text-ink-900 line-clamp-2 transition-colors hover:text-brand-600"
-                                    href="index.php?act=prodetail&idpro=<?= $pro['id_pro'] ?>"><?= $pro['name_pro'] ?></a>
-                            </h6>
-                            <div class="mb-3 flex items-baseline gap-2">
-                                <?php if (!isset($pro['discount']) || $pro['discount'] <= 0) { ?>
-                                <span class="font-bold text-brand-600"><?= number_format($pro['price']) ?>₫</span>
-                                <?php } else { ?>
+                        <div class="group relative overflow-hidden rounded-2xl border border-ink-200 bg-white shadow-sm transition-shadow hover:shadow-md">
+                            <div class="relative aspect-square overflow-hidden bg-ink-100">
+                                <a class="block h-full w-full" href="index.php?act=prodetail&idpro=<?= $pro['id_pro'] ?>">
+                                    <img class="h-full w-full object-cover" src="admin/uploads/<?= $pro['img_pro'] ?>"
+                                        alt="<?= $pro['name_pro'] ?>" />
+                                </a>
                                 <span
-                                    class="font-bold text-brand-600"><?= number_format(($pro['price']) - (($pro['price']) * ($pro['discount']) / 100)) ?>₫</span>
-                                <span class="text-sm text-ink-300 line-through"><?= number_format($pro['price']) ?>₫</span>
+                                    class="absolute top-2 right-2 inline-flex items-center rounded-full bg-brand-50 px-3 py-1 text-xs font-medium text-brand-700">Hot</span>
+                                <?php if (!isset($pro['discount']) || $pro['discount'] <= 0) { ?>
+                                <?php } else { ?>
+                                    <span
+                                        class="absolute top-2 left-2 rounded-full bg-red-600 px-2 py-1 text-xs font-bold text-white">-<?= $pro['discount'] ?>%</span>
+                                <?php } ?>
+                                <?php if ((int) $pro['stock'] <= 0) { ?>
+                                    <span class="absolute bottom-2 left-2 rounded-full bg-ink-900/80 px-2 py-1 text-xs font-bold text-white"><?= htmlspecialchars($pro['stock_message'] ?: 'Hết hàng') ?></span>
                                 <?php } ?>
                             </div>
-                            <?php if ((int) $pro['stock'] > 0) { ?>
-                            <form action="index.php?act=addtocart" method="post">
-                                <input type="hidden" name="id_pro" value="<?php echo $pro['id_pro'] ?>">
-                                <input type="hidden" name="name_pro" value="<?php echo $pro['name_pro'] ?>">
-                                <input type="hidden" name="img_pro" value="<?php echo $pro['img_pro'] ?>">
-                                <input type="hidden" name="price" value="<?php echo $pro['price'] ?>">
-                                <input type="submit" name="addtocart" value="Thêm vào giỏ"
-                                    class="inline-flex w-full cursor-pointer items-center justify-center gap-2 rounded-lg bg-brand-600 px-5 py-2.5 text-sm font-semibold text-white shadow-sm transition-colors hover:bg-brand-700 focus:outline-none focus:ring-2 focus:ring-brand-500 focus:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50">
-                            </form>
-                            <?php } else { ?>
-                            <button type="button" disabled
-                                class="inline-flex w-full items-center justify-center gap-2 rounded-lg bg-ink-100 px-5 py-2.5 text-sm font-semibold text-ink-300 cursor-not-allowed">
-                                <?= htmlspecialchars($pro['stock_message'] ?: 'Hết hàng') ?>
-                            </button>
-                            <?php } ?>
+                            <div class="p-4">
+                                <h6 class="mb-2">
+                                    <a class="font-heading font-semibold text-ink-900 line-clamp-2 transition-colors hover:text-brand-600"
+                                        href="index.php?act=prodetail&idpro=<?= $pro['id_pro'] ?>"><?= $pro['name_pro'] ?></a>
+                                </h6>
+                                <div class="mb-3 flex items-baseline gap-2">
+                                    <?php if (!isset($pro['discount']) || $pro['discount'] <= 0) { ?>
+                                        <span class="font-bold text-brand-600"><?= number_format($pro['price']) ?>₫</span>
+                                    <?php } else { ?>
+                                        <span
+                                            class="font-bold text-brand-600"><?= number_format(($pro['price']) - (($pro['price']) * ($pro['discount']) / 100)) ?>₫</span>
+                                        <span class="text-sm text-ink-300 line-through"><?= number_format($pro['price']) ?>₫</span>
+                                    <?php } ?>
+                                </div>
+                                <?php if ((int) $pro['stock'] > 0) { ?>
+                                    <form action="index.php?act=addtocart" method="post">
+                                        <input type="hidden" name="id_pro" value="<?php echo $pro['id_pro'] ?>">
+                                        <input type="hidden" name="name_pro" value="<?php echo $pro['name_pro'] ?>">
+                                        <input type="hidden" name="img_pro" value="<?php echo $pro['img_pro'] ?>">
+                                        <input type="hidden" name="price" value="<?php echo $pro['price'] ?>">
+                                        <input type="submit" name="addtocart" value="Thêm vào giỏ"
+                                            class="inline-flex w-full cursor-pointer items-center justify-center gap-2 rounded-lg bg-brand-600 px-5 py-2.5 text-sm font-semibold text-white shadow-sm transition-colors hover:bg-brand-700 focus:outline-none focus:ring-2 focus:ring-brand-500 focus:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50">
+                                    </form>
+                                <?php } else { ?>
+                                    <button type="button" disabled
+                                        class="inline-flex w-full items-center justify-center gap-2 rounded-lg bg-ink-100 px-5 py-2.5 text-sm font-semibold text-ink-300 cursor-not-allowed">
+                                        <?= htmlspecialchars($pro['stock_message'] ?: 'Hết hàng') ?>
+                                    </button>
+                                <?php } ?>
+                            </div>
                         </div>
-                    </div>
                     <?php } ?>
                     <!-- End sản phẩm bán chạy -->
                 </div>
@@ -223,55 +224,55 @@
                     <!-- Phần show sản phẩm nổi bật -->
                     <?php
                     foreach ($list_topsp as $pro) { ?>
-                    <div class="group relative overflow-hidden rounded-2xl border border-ink-200 bg-white shadow-sm transition-shadow hover:shadow-md">
-                        <div class="relative aspect-square overflow-hidden bg-ink-100">
-                            <a class="block h-full w-full" href="index.php?act=prodetail&idpro=<?= $pro['id_pro'] ?>">
-                                <img class="h-full w-full object-cover" src="admin/uploads/<?= $pro['img_pro'] ?>"
-                                    alt="<?= $pro['name_pro'] ?>" />
-                            </a>
-                            <span
-                                class="absolute top-2 right-2 inline-flex items-center rounded-full bg-brand-50 px-3 py-1 text-xs font-medium text-brand-700">Nổi
-                                bật</span>
-                            <?php if (!isset($pro['discount']) || $pro['discount'] <= 0) { ?>
-                            <?php } else { ?>
-                            <span
-                                class="absolute top-2 left-2 rounded-full bg-red-600 px-2 py-1 text-xs font-bold text-white">-<?= $pro['discount'] ?>%</span>
-                            <?php } ?>
-                            <?php if ((int) $pro['stock'] <= 0) { ?>
-                            <span class="absolute bottom-2 left-2 rounded-full bg-ink-900/80 px-2 py-1 text-xs font-bold text-white"><?= htmlspecialchars($pro['stock_message'] ?: 'Hết hàng') ?></span>
-                            <?php } ?>
-                        </div>
-                        <div class="p-4">
-                            <h6 class="mb-2">
-                                <a class="font-heading font-semibold text-ink-900 line-clamp-2 transition-colors hover:text-brand-600"
-                                    href="index.php?act=prodetail&idpro=<?= $pro['id_pro'] ?>"><?= $pro['name_pro'] ?></a>
-                            </h6>
-                            <div class="mb-3 flex items-baseline gap-2">
-                                <?php if (!isset($pro['discount']) || $pro['discount'] <= 0) { ?>
-                                <span class="font-bold text-brand-600"><?= number_format($pro['price']) ?>₫</span>
-                                <?php } else { ?>
+                        <div class="group relative overflow-hidden rounded-2xl border border-ink-200 bg-white shadow-sm transition-shadow hover:shadow-md">
+                            <div class="relative aspect-square overflow-hidden bg-ink-100">
+                                <a class="block h-full w-full" href="index.php?act=prodetail&idpro=<?= $pro['id_pro'] ?>">
+                                    <img class="h-full w-full object-cover" src="admin/uploads/<?= $pro['img_pro'] ?>"
+                                        alt="<?= $pro['name_pro'] ?>" />
+                                </a>
                                 <span
-                                    class="font-bold text-brand-600"><?= number_format(($pro['price']) - (($pro['price']) * ($pro['discount']) / 100)) ?>₫</span>
-                                <span class="text-sm text-ink-300 line-through"><?= number_format($pro['price']) ?>₫</span>
+                                    class="absolute top-2 right-2 inline-flex items-center rounded-full bg-brand-50 px-3 py-1 text-xs font-medium text-brand-700">Nổi
+                                    bật</span>
+                                <?php if (!isset($pro['discount']) || $pro['discount'] <= 0) { ?>
+                                <?php } else { ?>
+                                    <span
+                                        class="absolute top-2 left-2 rounded-full bg-red-600 px-2 py-1 text-xs font-bold text-white">-<?= $pro['discount'] ?>%</span>
+                                <?php } ?>
+                                <?php if ((int) $pro['stock'] <= 0) { ?>
+                                    <span class="absolute bottom-2 left-2 rounded-full bg-ink-900/80 px-2 py-1 text-xs font-bold text-white"><?= htmlspecialchars($pro['stock_message'] ?: 'Hết hàng') ?></span>
                                 <?php } ?>
                             </div>
-                            <?php if ((int) $pro['stock'] > 0) { ?>
-                            <form action="index.php?act=addtocart" method="post">
-                                <input type="hidden" name="id_pro" value="<?php echo $pro['id_pro'] ?>">
-                                <input type="hidden" name="name_pro" value="<?php echo $pro['name_pro'] ?>">
-                                <input type="hidden" name="img_pro" value="<?php echo $pro['img_pro'] ?>">
-                                <input type="hidden" name="price" value="<?php echo $pro['price'] ?>">
-                                <input type="submit" name="addtocart" value="Thêm vào giỏ"
-                                    class="inline-flex w-full cursor-pointer items-center justify-center gap-2 rounded-lg bg-brand-600 px-5 py-2.5 text-sm font-semibold text-white shadow-sm transition-colors hover:bg-brand-700 focus:outline-none focus:ring-2 focus:ring-brand-500 focus:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50">
-                            </form>
-                            <?php } else { ?>
-                            <button type="button" disabled
-                                class="inline-flex w-full items-center justify-center gap-2 rounded-lg bg-ink-100 px-5 py-2.5 text-sm font-semibold text-ink-300 cursor-not-allowed">
-                                <?= htmlspecialchars($pro['stock_message'] ?: 'Hết hàng') ?>
-                            </button>
-                            <?php } ?>
+                            <div class="p-4">
+                                <h6 class="mb-2">
+                                    <a class="font-heading font-semibold text-ink-900 line-clamp-2 transition-colors hover:text-brand-600"
+                                        href="index.php?act=prodetail&idpro=<?= $pro['id_pro'] ?>"><?= $pro['name_pro'] ?></a>
+                                </h6>
+                                <div class="mb-3 flex items-baseline gap-2">
+                                    <?php if (!isset($pro['discount']) || $pro['discount'] <= 0) { ?>
+                                        <span class="font-bold text-brand-600"><?= number_format($pro['price']) ?>₫</span>
+                                    <?php } else { ?>
+                                        <span
+                                            class="font-bold text-brand-600"><?= number_format(($pro['price']) - (($pro['price']) * ($pro['discount']) / 100)) ?>₫</span>
+                                        <span class="text-sm text-ink-300 line-through"><?= number_format($pro['price']) ?>₫</span>
+                                    <?php } ?>
+                                </div>
+                                <?php if ((int) $pro['stock'] > 0) { ?>
+                                    <form action="index.php?act=addtocart" method="post">
+                                        <input type="hidden" name="id_pro" value="<?php echo $pro['id_pro'] ?>">
+                                        <input type="hidden" name="name_pro" value="<?php echo $pro['name_pro'] ?>">
+                                        <input type="hidden" name="img_pro" value="<?php echo $pro['img_pro'] ?>">
+                                        <input type="hidden" name="price" value="<?php echo $pro['price'] ?>">
+                                        <input type="submit" name="addtocart" value="Thêm vào giỏ"
+                                            class="inline-flex w-full cursor-pointer items-center justify-center gap-2 rounded-lg bg-brand-600 px-5 py-2.5 text-sm font-semibold text-white shadow-sm transition-colors hover:bg-brand-700 focus:outline-none focus:ring-2 focus:ring-brand-500 focus:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50">
+                                    </form>
+                                <?php } else { ?>
+                                    <button type="button" disabled
+                                        class="inline-flex w-full items-center justify-center gap-2 rounded-lg bg-ink-100 px-5 py-2.5 text-sm font-semibold text-ink-300 cursor-not-allowed">
+                                        <?= htmlspecialchars($pro['stock_message'] ?: 'Hết hàng') ?>
+                                    </button>
+                                <?php } ?>
+                            </div>
                         </div>
-                    </div>
                     <?php } ?>
                     <!-- end phần show sản phẩm nổi bật -->
                 </div>
@@ -318,20 +319,20 @@
 <!-- Tubotech Product With Two Columns Area End Here -->
 
 <script>
-    (function () {
+    (function() {
         var triggers = document.querySelectorAll('.home-tab-trigger');
         var panels = document.querySelectorAll('[data-tab-panel]');
 
-        triggers.forEach(function (trigger) {
-            trigger.addEventListener('click', function (e) {
+        triggers.forEach(function(trigger) {
+            trigger.addEventListener('click', function(e) {
                 e.preventDefault();
                 var targetId = trigger.getAttribute('data-tab-target');
 
-                panels.forEach(function (panel) {
+                panels.forEach(function(panel) {
                     panel.classList.toggle('active', panel.id === targetId);
                 });
 
-                triggers.forEach(function (t) {
+                triggers.forEach(function(t) {
                     t.classList.toggle('active', t === trigger);
                 });
             });

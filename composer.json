@@ -1,11 +1,11 @@
 {
-    "name": "84904/codemoi",
-    "type": "library",
-    "autoload": {
-        "psr-4": {
-            "Codemoi\\": "src/",
-            "PHPMailer\\PHPMailer\\": "email/PHPMailer/src/"
-        }
-    },
-    "require": {}
+  "name": "84904/codemoi",
+  "type": "library",
+  "autoload": {
+    "psr-4": {
+      "Codemoi\\": "src/",
+      "PHPMailer\\PHPMailer\\": "email/PHPMailer/src/"
+    }
+  },
+  "require": {}
 }
