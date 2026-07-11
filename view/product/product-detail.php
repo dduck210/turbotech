@@ -119,8 +119,8 @@
      data-bs-toggle="tab" data-api does NOT actually fire in this theme's bundled
      plugins.min.js (verified: bootstrap object loads but the Tab component's click
      delegation never toggles .active), so don't rely on it. Same proven pattern as
-     the account-page tabs in view/nguoidung/myaccount.php.
-     Comment widget (view/binhluan/formbinhluan.php, owned by another agent) AJAX-load left untouched. -->
+     the account-page tabs in view/user/myaccount.php.
+     Comment widget (public/view/comment-form.php, owned by another agent) AJAX-load left untouched. -->
 <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-12 md:py-16">
     <div class="border-b border-ink-200 mb-6">
         <ul class="nav flex gap-2" role="tablist">
@@ -153,7 +153,7 @@
             <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
             <script>
                 $(document).ready(function() {
-                    $("#comment").load("./view/binhluan/formbinhluan.php", {
+                    $("#comment").load("./view/comment-form.php", {
                         idpro: <?= $one_pro['id_pro'] ?>,
                     });
                 });

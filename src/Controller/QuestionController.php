@@ -23,6 +23,6 @@ class QuestionController extends Controller
             echo '<script>alert("Gửi câu hỏi thành công !")</script>';
         }
 
-        $this->view('hoidap/question');
+        $this->view('qa/question');
     }
 }

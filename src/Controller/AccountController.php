@@ -82,7 +82,7 @@ class AccountController extends Controller
         $cancelMessage = $_SESSION['cancelMessage'] ?? null;
         unset($_SESSION['cancelMessage']);
 
-        $this->view('nguoidung/myaccount', [
+        $this->view('user/myaccount', [
             'list_mybill' => $list_mybill,
             'cancelMessage' => $cancelMessage,
         ]);
@@ -110,7 +110,7 @@ class AccountController extends Controller
 
         // #account-orders so the page reopens on the Orders tab instead of
         // resetting to the dashboard — see the hash-handling script in
-        // view/nguoidung/myaccount.php.
+        // view/user/myaccount.php.
         $this->redirect('?act=myaccount#account-orders');
     }
 }

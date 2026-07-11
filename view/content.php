@@ -90,7 +90,7 @@
              the bottom of this file) — Bootstrap's data-bs-toggle="tab" data-api does NOT actually
              fire in this theme's bundled plugins.min.js (verified: bootstrap object loads but the
              Tab component's click delegation never toggles .active), so don't rely on it. Same
-             proven pattern as the account-page tabs in view/nguoidung/myaccount.php. -->
+             proven pattern as the account-page tabs in view/user/myaccount.php. -->
         <div class="mb-8 flex flex-wrap justify-center gap-3">
             <a class="home-tab-trigger active inline-flex min-h-11 items-center justify-center rounded-full border border-ink-200 bg-white px-4 py-2.5 text-sm font-semibold text-ink-700 transition-colors hover:bg-ink-50 focus:outline-none focus:ring-2 focus:ring-brand-500 [&.active]:border-brand-600! [&.active]:bg-brand-600! [&.active]:text-white!"
                 data-tab-target="new-arrival" href="#new-arrival"><span>Sản phẩm mới</span></a>

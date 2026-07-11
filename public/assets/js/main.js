@@ -435,7 +435,7 @@
     /*  Cart Plus Minus Button
 /*----------------------------------------*/
     // NOTE: the dec/inc buttons used to be injected here via .append(); the
-    // Tailwind-redesigned template (view/sanpham/sanphamct.php) now renders
+    // Tailwind-redesigned template (view/product/product-detail.php) now renders
     // them statically (with proper styling), so appending a second pair here
     // would just duplicate them. Only the click handler is still needed.
     $('.qtybutton').on('click', function() {

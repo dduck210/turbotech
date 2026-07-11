@@ -55,16 +55,16 @@ class PasswordController extends Controller
             }
         }
 
-        $this->view('nguoidung/cachthuclaymk', ['error' => $error]);
+        $this->view('user/forgot-password', ['error' => $error]);
     }
 
     /** Nhập mã xác nhận. The template handles its own POST check inline
-     * (`view/nguoidung/verification.php`) — no data to pass here.
+     * (`view/user/verification.php`) — no data to pass here.
      * `index.php:154-156`.
      */
     public function verification(): void
     {
-        $this->view('nguoidung/verification');
+        $this->view('user/verification');
     }
 
     /** Tạo mật khẩu mới. `index.php:159-174`. */
@@ -84,6 +84,6 @@ class PasswordController extends Controller
             }
         }
 
-        $this->view('nguoidung/changePass', ['error' => $error]);
+        $this->view('user/changePass', ['error' => $error]);
     }
 }

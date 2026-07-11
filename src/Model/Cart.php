@@ -9,7 +9,7 @@ namespace Codemoi\Model;
  * 'addtocart' / 'removecart' (lines ~223-276).
  *
  * Each cart line is a POSITIONAL tuple, preserved exactly as the legacy code
- * expects (existing `view/giohang/*.php` templates read these by index):
+ * expects (existing `view/cart/*.php` templates read these by index):
  *   [0] id_pro, [1] name_pro, [2] img_pro, [3] price, [4] quantity, [5] total
  */
 class Cart

@@ -5,13 +5,13 @@ require_once __DIR__ . '/../../admin/controller/controller.php';
 //include dao để dùng các functione:
 
 include __DIR__ . '/../../admin/model/pdo.php';
-include __DIR__ . '/../../admin/model/loai.php';
-include __DIR__ . '/../../admin/model/sanpham.php';
-include __DIR__ . '/../../admin/model/nguoidung.php';
-include __DIR__ . '/../../admin/model/hoadon.php';
-include __DIR__ . '/../../admin/model/binhluan.php';
-include __DIR__ . '/../../admin/model/thongke.php';
-include __DIR__ . '/../../admin/model/hoidap.php';
+include __DIR__ . '/../../admin/model/category.php';
+include __DIR__ . '/../../admin/model/product.php';
+include __DIR__ . '/../../admin/model/user.php';
+include __DIR__ . '/../../admin/model/bill.php';
+include __DIR__ . '/../../admin/model/comment.php';
+include __DIR__ . '/../../admin/model/statistics.php';
+include __DIR__ . '/../../admin/model/question.php';
 include __DIR__ . '/../../admin/model/coupon.php';
 // controller
 if (isset($_GET['act'])) {

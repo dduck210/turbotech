@@ -29,7 +29,7 @@ class CartController extends Controller
             unset($_SESSION['errorMessage']);
         }
 
-        $this->view('giohang/viewcart');
+        $this->view('cart/viewcart');
     }
 
     /**
@@ -41,7 +41,7 @@ class CartController extends Controller
      * away with this because it sent no body at all and the caller never
      * inspected the response. Now that the caller needs to know whether the
      * quantity got clamped to available stock, the result is wrapped in an
-     * HTML-comment marker that view/giohang/viewcart.php's saveCart() pulls
+     * HTML-comment marker that view/cart/viewcart.php's saveCart() pulls
      * out of the full response with a regex instead of relying on
      * dataType: "json" to parse the whole body.
      */
@@ -104,7 +104,7 @@ class CartController extends Controller
             $this->redirect('index.php?act=viewcart');
         }
 
-        $this->view('giohang/viewcart');
+        $this->view('cart/viewcart');
     }
 
     public function remove(): void

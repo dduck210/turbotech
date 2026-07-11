@@ -13,7 +13,7 @@ class User
     /**
      * Create a new user account, including delivery address/phone so
      * checkout can prefill them from the session immediately after login
-     * (`view/giohang/bill.php` already reads `$address`/`$phone_user` from
+     * (`view/cart/bill.php` already reads `$address`/`$phone_user` from
      * `$_SESSION['user']` — this is the other half of that link).
      * Mirrors old `register($user_name, $full_name, $email_user, $password)`,
      * extended with `$address`/`$phone_user`/`$sex` — `$sex` used to only be

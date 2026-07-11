@@ -28,7 +28,7 @@ class ProductController extends Controller
             [$min, $max] = [$max, $min];
         }
 
-        $this->view('sanpham/sanpham', [
+        $this->view('product/product-list', [
             'listpro' => Product::search($kyw, $idcate, $min, $max),
             'namecate' => Category::name($idcate),
             'listcate' => Category::all(),
@@ -48,7 +48,7 @@ class ProductController extends Controller
     public function detail(): void
     {
         if (!isset($_GET['idpro']) || $_GET['idpro'] <= 0) {
-            $this->view('sanpham/sanpham', [
+            $this->view('product/product-list', [
                 'listpro' => [],
                 'namecate' => Category::name(0),
                 'listcate' => Category::all(),
@@ -62,7 +62,7 @@ class ProductController extends Controller
         $idcate = $one_pro['idcate'] ?? 0;
         $similar_pro = Product::similar($id_pro, $idcate);
 
-        $this->view('sanpham/sanphamct', [
+        $this->view('product/product-detail', [
             'one_pro' => $one_pro,
             'similar_pro' => $similar_pro,
         ]);

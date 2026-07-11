@@ -12,7 +12,7 @@ abstract class Controller
     /**
      * Render a view template, delegating to `Core\View::render`.
      *
-     * @param string $template Template path relative to `view/`, e.g. `'sanpham/sanpham'`.
+     * @param string $template Template path relative to `view/`, e.g. `'product/product-list'`.
      * @param array $data Variables to expose to the template.
      */
     protected function view(string $template, array $data = []): void

@@ -53,15 +53,15 @@ class AuthController extends Controller
                 echo '<script>alert(' . json_encode($error) . ')</script>';
             }
 
-            $this->view('nguoidung/register', ['duplicateField' => $duplicateField]);
+            $this->view('user/register', ['duplicateField' => $duplicateField]);
             return;
         }
 
-        $this->view('nguoidung/register');
+        $this->view('user/register');
     }
 
     /**
-     * Server-side mirror of the data-rules checks in view/nguoidung/register.php
+     * Server-side mirror of the data-rules checks in view/user/register.php
      * (src/js/form-validate.js) — a request that skips or tampers with the
      * client-side JS must still be rejected here.
      *
@@ -120,7 +120,7 @@ class AuthController extends Controller
             echo '<script>alert("Tài khoản sai hoặc không tồn tại!")</script>';
         }
 
-        $this->view('nguoidung/login');
+        $this->view('user/login');
     }
 
     public function logout(): void

@@ -25,8 +25,8 @@ class View
      * Render a template file with the given data.
      *
      * @param string $template Template path relative to `view/`, without
-     *                         the `.php` extension, e.g. `'sanpham/sanpham'`
-     *                         resolves to `view/sanpham/sanpham.php`.
+     *                         the `.php` extension, e.g. `'product/product-list'`
+     *                         resolves to `view/product/product-list.php`.
      * @param array $data Associative array of variables made available to
      *                    the template under their array keys.
      * @throws RuntimeException if the resolved template file does not exist.

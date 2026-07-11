@@ -35,7 +35,7 @@ class CheckoutController extends Controller
         // showing a discount that `confirm()` won't actually honor.
         $coupon = $this->resolveCoupon(Cart::total());
 
-        $this->view('giohang/bill', [
+        $this->view('cart/bill', [
             'couponCode' => $coupon['code'],
             'couponDiscount' => $coupon['discount'],
         ]);
@@ -255,7 +255,7 @@ class CheckoutController extends Controller
         $_SESSION['check'] = 1;
 
         if (($_SESSION['check'] ?? null) == 1 || $payment == 1) {
-            $this->view('giohang/billconfirm', [
+            $this->view('cart/billconfirm', [
                 'bill' => $bill,
                 'cart_detail' => $cart_detail,
             ]);
@@ -350,7 +350,7 @@ class CheckoutController extends Controller
         $_SESSION['check'] = 1;
 
         if (($_SESSION['check'] ?? null) == 1 || $payment == 1) {
-            $this->view('giohang/billconfirm', [
+            $this->view('cart/billconfirm', [
                 'bill' => $bill,
                 'cart_detail' => $cart_detail,
             ]);
