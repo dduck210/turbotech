@@ -1,0 +1,13 @@
+# Safety net for deployments where the web server's document root is
+# pointed at the project root instead of public/ (the correct setup).
+# In that misconfiguration this blocks direct HTTP access to source code,
+# vendor/, .env, and database dumps instead of leaving them world-readable.
+# The public/.htaccess below overrides this for the folder that should
+# actually be served.
+<IfModule mod_authz_core.c>
+    Require all denied
+</IfModule>
+<IfModule !mod_authz_core.c>
+    Order deny,allow
+    Deny from all
+</IfModule>
