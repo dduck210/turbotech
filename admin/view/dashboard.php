@@ -20,7 +20,7 @@ $ds_loai = \Codemoi\Model\Category::all(); ?>
         class="bg-white rounded-xl shadow-sm hover:shadow-md transition-shadow duration-300 p-6 border-l-4 border-brand-500 flex items-center justify-between">
         <div>
             <div class="text-xs font-bold text-brand-500 uppercase tracking-wider mb-1">Tổng doanh thu(Ngày)</div>
-            <div class="text-2xl font-bold text-slate-800"><?= number_format(ngay()) ?> đ</div>
+            <div class="text-2xl font-bold text-slate-800"><?= number_format(\Codemoi\Model\Stats::today()) ?> đ</div>
         </div>
         <div class="text-slate-300">
             <i class="fas fa-dollar-sign fa-2x"></i>
@@ -32,7 +32,7 @@ $ds_loai = \Codemoi\Model\Category::all(); ?>
         class="bg-white rounded-xl shadow-sm hover:shadow-md transition-shadow duration-300 p-6 border-l-4 border-yellow-500 flex items-center justify-between">
         <div>
             <div class="text-xs font-bold text-yellow-500 uppercase tracking-wider mb-1">Tổng doanh thu(Tuần)</div>
-            <div class="text-2xl font-bold text-slate-800"><?= number_format(tuan()) ?> đ</div>
+            <div class="text-2xl font-bold text-slate-800"><?= number_format(\Codemoi\Model\Stats::thisWeek()) ?> đ</div>
         </div>
         <div class="text-slate-300">
             <i class="fas fa-dollar-sign fa-2x"></i>
@@ -44,7 +44,7 @@ $ds_loai = \Codemoi\Model\Category::all(); ?>
         class="bg-white rounded-xl shadow-sm hover:shadow-md transition-shadow duration-300 p-6 border-l-4 border-green-500 flex items-center justify-between">
         <div>
             <div class="text-xs font-bold text-green-500 uppercase tracking-wider mb-1">Tổng doanh thu(Tháng)</div>
-            <div class="text-2xl font-bold text-slate-800"><?= number_format(thang()) ?> đ</div>
+            <div class="text-2xl font-bold text-slate-800"><?= number_format(\Codemoi\Model\Stats::thisMonth()) ?> đ</div>
         </div>
         <div class="text-slate-300">
             <i class="fas fa-dollar-sign fa-2x"></i>
@@ -131,7 +131,7 @@ $ds_loai = \Codemoi\Model\Category::all(); ?>
                             label: 'Tháng',
                             data: [
                                 <?php for ($i = 1; $i <= $thang; $i++) {
-                                    $a = tungthang($i);
+                                    $a = \Codemoi\Model\Stats::forMonth($i);
                                     if ($i == $thang) {
                                         $dau1 = "";
                                     } else {
@@ -170,7 +170,7 @@ $ds_loai = \Codemoi\Model\Category::all(); ?>
             </div>
 
             <script type="text/javascript">
-                <?php $all = thonngke();
+                <?php $all = \Codemoi\Model\Stats::byCategory();
                 $dem = count($all);
                 $i = 1; ?>
 

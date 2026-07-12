@@ -14,6 +14,7 @@ use Codemoi\Controller\Admin\CouponController;
 use Codemoi\Controller\Admin\BillController;
 use Codemoi\Controller\Admin\CommentController;
 use Codemoi\Controller\Admin\QuestionController;
+use Codemoi\Controller\Admin\StatsController;
 
 // Every admin POST action goes through here — one guard covers the whole
 // panel. Failure sets a flash message and bounces back to the referring
@@ -72,52 +73,14 @@ $router->add('list_cmt', [CommentController::class, 'list']);
 $router->add('delete_cmt', [CommentController::class, 'delete']);
 $router->add('list_ques', [QuestionController::class, 'list']);
 $router->add('delete_ques', [QuestionController::class, 'delete']);
+$router->add('list_thongke', [StatsController::class, 'index']);
 $router->setDefault([DashboardController::class, 'index']);
 
 $act = $_GET['act'] ?? '';
-$portedActs = [
-    'dashboard', '/', 'login', 'logout', '',
-    'add_category', 'list_category', 'edit_category', 'update_category', 'delete_cate',
-    'add_product', 'list_product', 'edit_product', 'update_product', 'delete_product',
-    'list_user', 'edit_user', 'update_user', 'delete_usser',
-    'list_coupon', 'add_coupon', 'delete_coupon', 'edit_coupon', 'update_coupon',
-    'list_bill', 'edit_bill', 'update_bill', 'approve_bill', 'ship_bill', 'cancel_bill', 'billdetail',
-    'list_cmt', 'delete_cmt', 'list_ques', 'delete_ques',
-];
 
-if (in_array($act, $portedActs, true)) {
-    $router->dispatch($act === '/' ? '' : $act);
-} else {
-    switch ($act) {
-        //CONTROLLER THỐNG KÊ
-        // Danh sách thống kê
-        case 'list_thongke':
-            if (isset($_SESSION['admin'])) {
-                $from_date = isset($_POST['from_date']) ? $_POST['from_date'] : '';
-                $to_date = isset($_POST['to_date']) ? $_POST['to_date'] : '';
-                $sort_product = isset($_POST['sort_product']) ? $_POST['sort_product'] : 'DESC';
-                
-                $revenue_stats = get_revenue_by_date($from_date, $to_date);
-                $product_sold_stats = get_products_sold_by_date($from_date, $to_date, $sort_product);
-                $inventory_stats = get_inventory();
-                
-                render('list_statistic', [
-                    'revenue_stats' => $revenue_stats, 
-                    'product_sold_stats' => $product_sold_stats,
-                    'inventory_stats' => $inventory_stats,
-                    'from_date' => $from_date,
-                    'to_date' => $to_date,
-                    'sort_product' => $sort_product
-                ]);
-            } else {
-                header("location: index.php?act=login");
-            }
-            break;
-        default:
-            // Unreachable in practice: $portedActs above already routes
-            // every unregistered/empty `act` to DashboardController via
-            // Router::dispatch()'s default handler before this switch runs.
-            $router->dispatch($act);
-    }
-}
+// Every admin action is now ported (Phase 07-09) — the old procedural
+// switch this replaced is gone. Router::dispatch() already falls back to
+// DashboardController for an empty/unregistered `act`, matching the old
+// switch's `default:`/no-`act` behavior.
+$router->dispatch($act === '/' ? '' : $act);
 
