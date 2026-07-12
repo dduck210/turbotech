@@ -24,19 +24,22 @@ class User
     public static function register(string $user_name, string $full_name, string $email_user, string $password, string $address = '', string $phone_user = '', int $sex = 0): void
     {
         $sql = "INSERT INTO user (user_name, full_name, email_user, password, address, phone_user, sex) VALUES (?, ?, ?, ?, ?, ?, ?)";
-        Database::execute($sql, $user_name, $full_name, $email_user, $password, $address, $phone_user, $sex);
+        Database::execute($sql, $user_name, $full_name, $email_user, password_hash($password, PASSWORD_DEFAULT), $address, $phone_user, $sex);
     }
 
     /**
      * Look up a user by username-or-email + password (login check).
-     * Mirrors old `check_user($user_name, $password)`.
+     * Mirrors old `check_user($user_name, $password)`. Fetches by identity
+     * only, then verifies the hash in PHP — the password column can no
+     * longer be compared in SQL now that it holds a `password_hash()` value.
      *
      * @return array|false
      */
     public static function check(string $user_name, string $password)
     {
-        $sql = "SELECT * FROM user WHERE ((user_name = ?) OR (email_user = ?)) AND password = ?";
-        return Database::queryOne($sql, $user_name, $user_name, $password);
+        $sql = "SELECT * FROM user WHERE (user_name = ?) OR (email_user = ?)";
+        $row = Database::queryOne($sql, $user_name, $user_name);
+        return ($row && password_verify($password, $row['password'])) ? $row : false;
     }
 
     /**
@@ -98,7 +101,7 @@ class User
     public static function updatePassword(string $user_name, string $password): void
     {
         $sql = "UPDATE `user` SET password = ? WHERE user_name = ?";
-        Database::execute($sql, $password, $user_name);
+        Database::execute($sql, password_hash($password, PASSWORD_DEFAULT), $user_name);
     }
 
     /**
@@ -108,7 +111,7 @@ class User
     public static function resetPassword(string $password, string $email): void
     {
         $sql = "UPDATE user SET password = ? WHERE email_user = ?";
-        Database::execute($sql, $password, $email);
+        Database::execute($sql, password_hash($password, PASSWORD_DEFAULT), $email);
     }
 
     /**

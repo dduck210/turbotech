@@ -304,13 +304,15 @@ if (isset($_GET['act'])) {
                     $user = loadone_user($id_user);
                     render('update_user', ['user' => $user]);
                     break;
-                } elseif (strlen($password) < 6) {
+                } elseif ($password !== '' && strlen($password) < 6) {
+                    // Blank is allowed (means "keep current password");
+                    // only enforce the minimum length when actually changing it.
                     echo '<script>document.addEventListener("DOMContentLoaded",()=>Swal.fire({toast:true,position:"top-end",icon:"error",title:"Mật khẩu phải có ít nhất 6 ký tự !",showConfirmButton:false,timer:3000}));</script>';
                     $user = loadone_user($id_user);
                     render('update_user', ['user' => $user]);
                     break;
                 }
-                update_user($id_user, $user_name, $full_name, $email_user, $password, $role);
+                update_user($id_user, $user_name, $full_name, $email_user, $password === '' ? null : $password, $role);
                 $_SESSION['flash_success'] = 'Cập nhật tài khoản thành công!';
             }
             header('location: index.php?act=list_user');

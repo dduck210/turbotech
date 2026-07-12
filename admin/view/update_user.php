@@ -43,9 +43,9 @@
         <div class="mb-4">
           <label for="formGroupExampleInput" class="block text-sm font-medium text-slate-700 mb-1">Mật
             khẩu</label>
-          <input type="text" name="password" data-rules="required|min:6"
+          <input type="password" name="password" data-rules="min:6" autocomplete="new-password"
             class="w-full rounded-lg border border-slate-200 px-4 py-2 focus:ring-2 focus:ring-brand-500 outline-none transition-all"
-            placeholder="Nhập mật khẩu muốn thay đổi" value="<?= $password ?>">
+            placeholder="Để trống nếu không đổi mật khẩu">
         </div>
 
         <div class="mb-4">

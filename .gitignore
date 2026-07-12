@@ -7,5 +7,9 @@ Thumbs.db
 # Local secrets (SMTP credentials, etc.) — never commit, see .env.example
 /.env
 
+# One-off DB backups taken before a migration (e.g. scripts/migrate-*.php) —
+# these can contain plaintext data (e.g. pre-hash passwords), local-only.
+/scripts/*_backup_*.sql
+
 # Claude Code tooling
 .claude/
