@@ -9,6 +9,7 @@ use Codemoi\Controller\Admin\AuthController;
 use Codemoi\Controller\Admin\DashboardController;
 use Codemoi\Controller\Admin\CategoryController;
 use Codemoi\Controller\Admin\ProductController;
+use Codemoi\Controller\Admin\UserController;
 
 // Every admin POST action goes through here — one guard covers the whole
 // panel. Failure sets a flash message and bounces back to the referring
@@ -51,6 +52,10 @@ $router->add('list_product', [ProductController::class, 'list']);
 $router->add('edit_product', [ProductController::class, 'edit']);
 $router->add('update_product', [ProductController::class, 'update']);
 $router->add('delete_product', [ProductController::class, 'delete']);
+$router->add('list_user', [UserController::class, 'list']);
+$router->add('edit_user', [UserController::class, 'edit']);
+$router->add('update_user', [UserController::class, 'update']);
+$router->add('delete_usser', [UserController::class, 'delete']);
 $router->setDefault([DashboardController::class, 'index']);
 
 $act = $_GET['act'] ?? '';
@@ -58,86 +63,13 @@ $portedActs = [
     'dashboard', '/', 'login', 'logout', '',
     'add_category', 'list_category', 'edit_category', 'update_category', 'delete_cate',
     'add_product', 'list_product', 'edit_product', 'update_product', 'delete_product',
+    'list_user', 'edit_user', 'update_user', 'delete_usser',
 ];
 
 if (in_array($act, $portedActs, true)) {
     $router->dispatch($act === '/' ? '' : $act);
 } else {
     switch ($act) {
-        // CONTROLLER NGƯỜI DÙNG:
-        // danh sách người dùng
-        case 'list_user':
-
-            if (isset($_SESSION['admin'])) {
-                $listuser = loadall_user();
-                $flash_success = $_SESSION['flash_success'] ?? null;
-                unset($_SESSION['flash_success']);
-                render(
-                    'list_user',
-                    ['listuser' => $listuser, 'flash_success' => $flash_success]
-                );
-            } else {
-                header("location: index.php?act=login");
-            }
-
-            break;
-        // chỉnh sửa user
-        case 'edit_user':
-
-            if (isset($_SESSION['admin'])) {
-                if (isset($_GET['id_user']) && ($_GET['id_user'] > 0)) {
-                    $id_user = $_GET['id_user'];
-                    $user = loadone_user($id_user);
-                }
-                render(
-                    'update_user',
-                    ['user' => $user]
-                );
-            } else {
-                header("location: index.php?act=login");
-            }
-
-            break;
-        case 'update_user':
-            if (isset($_POST['btn_update']) && ($_POST['btn_update'])) {
-                $id_user = $_POST['id_user'];
-                $user_name = trim($_POST['user_name']);
-                $full_name = trim($_POST['full_name']);
-                $email_user = trim($_POST['email_user']);
-                $password = $_POST['password'];
-                $role = $_POST['role'];
-                if ($user_name === '' || $full_name === '') {
-                    echo '<script>document.addEventListener("DOMContentLoaded",()=>Swal.fire({toast:true,position:"top-end",icon:"error",title:"Vui lòng nhập đầy đủ nội dung !",showConfirmButton:false,timer:3000}));</script>';
-                    $user = loadone_user($id_user);
-                    render('update_user', ['user' => $user]);
-                    break;
-                } elseif (!filter_var($email_user, FILTER_VALIDATE_EMAIL)) {
-                    echo '<script>document.addEventListener("DOMContentLoaded",()=>Swal.fire({toast:true,position:"top-end",icon:"error",title:"Email không hợp lệ !",showConfirmButton:false,timer:3000}));</script>';
-                    $user = loadone_user($id_user);
-                    render('update_user', ['user' => $user]);
-                    break;
-                } elseif ($password !== '' && strlen($password) < 6) {
-                    // Blank is allowed (means "keep current password");
-                    // only enforce the minimum length when actually changing it.
-                    echo '<script>document.addEventListener("DOMContentLoaded",()=>Swal.fire({toast:true,position:"top-end",icon:"error",title:"Mật khẩu phải có ít nhất 6 ký tự !",showConfirmButton:false,timer:3000}));</script>';
-                    $user = loadone_user($id_user);
-                    render('update_user', ['user' => $user]);
-                    break;
-                }
-                update_user($id_user, $user_name, $full_name, $email_user, $password === '' ? null : $password, $role);
-                $_SESSION['flash_success'] = 'Cập nhật tài khoản thành công!';
-            }
-            header('location: index.php?act=list_user');
-            break;
-        // Xóa người dùng
-        case "delete_usser":
-            if (isset($_GET['id_user']) && ($_GET['id_user'] > 0)) {
-                $id_user = $_GET['id_user'];
-                delete_user($id_user);
-            }
-            header('location:index.php?act=list_user');
-            break;
-
         //CONTROLLER HÓA ĐƠN
 
         // show all bill
