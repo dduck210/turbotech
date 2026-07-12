@@ -136,12 +136,12 @@
                                 <td class="px-4 py-3 text-center">
                                     <div class="flex items-center justify-center gap-2">
                                         <?php if ($bill['status'] == 0): ?>
-                                            <a href="index.php?act=approve_bill&idbill=<?= e($bill['id_bill']) ?>"
+                                            <a href="index.php?act=approve_bill&idbill=<?= e($bill['id_bill']) ?>&_token=<?= urlencode(\Codemoi\Core\Csrf::token()) ?>"
                                                 class="p-2 text-blue-600 bg-blue-50 rounded-lg hover:bg-blue-100 transition-all active:scale-90"
                                                 data-confirm="Bạn có chắc chắn muốn duyệt đơn hàng này?"
                                                 title="Duyệt đơn hàng"><i class="fas fa-check"></i></a>
                                         <?php elseif ($bill['status'] == 1): ?>
-                                            <a href="index.php?act=ship_bill&idbill=<?= e($bill['id_bill']) ?>"
+                                            <a href="index.php?act=ship_bill&idbill=<?= e($bill['id_bill']) ?>&_token=<?= urlencode(\Codemoi\Core\Csrf::token()) ?>"
                                                 class="p-2 text-indigo-600 bg-indigo-50 rounded-lg hover:bg-indigo-100 transition-all active:scale-90"
                                                 data-confirm="Bạn có chắc chắn muốn chuyển đơn hàng này sang giao hàng?"
                                                 title="Giao hàng"><i class="fas fa-truck"></i></a>
@@ -155,7 +155,7 @@
                                             title="Xem chi tiết"><i class="fa-solid fa-circle-info"></i></a>
 
                                         <?php if ($bill['status'] == 0 || $bill['status'] == 1): ?>
-                                            <a href="index.php?act=cancel_bill&idbill=<?= e($bill['id_bill']) ?>"
+                                            <a href="index.php?act=cancel_bill&idbill=<?= e($bill['id_bill']) ?>&_token=<?= urlencode(\Codemoi\Core\Csrf::token()) ?>"
                                                 class="p-2 text-red-600 bg-red-50 rounded-lg hover:bg-red-100 transition-all active:scale-90"
                                                 data-confirm="Bạn có chắc chắn muốn hủy đơn hàng này?" title="Hủy đơn"><i
                                                     class="fas fa-times"></i></a>

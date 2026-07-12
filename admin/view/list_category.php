@@ -36,7 +36,7 @@
                                         <a href="index.php?act=edit_category&id_cate=<?= e($loai['id_cate']) ?>"
                                             class="p-2 text-yellow-600 bg-yellow-50 rounded-lg hover:bg-yellow-100 transition-all active:scale-90"
                                             title="Sửa"><i class="fa-solid fa-pen-to-square"></i></a>
-                                        <a href="index.php?act=delete_cate&id_cate=<?= e($loai['id_cate']) ?>"
+                                        <a href="index.php?act=delete_cate&id_cate=<?= e($loai['id_cate']) ?>&_token=<?= urlencode(\Codemoi\Core\Csrf::token()) ?>"
                                             class="p-2 text-red-600 bg-red-50 rounded-lg hover:bg-red-100 transition-all active:scale-90"
                                             data-confirm="Bạn có chắc chắn muốn xóa không?" title="Xóa"><i
                                                 class="fa-solid fa-trash"></i></a>

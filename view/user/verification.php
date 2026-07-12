@@ -20,13 +20,21 @@
                 <?php
                 if (isset($_POST['btn_verification'])) {
                     $error = array();
-                    $expired = !isset($_SESSION['code_expires']) || time() > $_SESSION['code_expires'];
-                    if ($expired) {
+                    $attempts = $_SESSION['code_attempts'] ?? 0;
+                    if (!isset($_SESSION['code'], $_SESSION['code_expires'])) {
+                        $error['fali'] = 'Phiên xác nhận đã hết hạn, vui lòng yêu cầu mã mới !';
+                    } elseif ($attempts >= 5) {
+                        unset($_SESSION['code'], $_SESSION['code_expires'], $_SESSION['code_attempts']);
+                        $error['fali'] = 'Bạn đã nhập sai quá nhiều lần, vui lòng yêu cầu mã mới !';
+                    } elseif (time() > $_SESSION['code_expires']) {
+                        unset($_SESSION['code'], $_SESSION['code_expires'], $_SESSION['code_attempts']);
                         $error['fali'] = 'Mã xác nhận đã hết hạn, vui lòng yêu cầu mã mới !';
                     } elseif (!hash_equals((string) $_SESSION['code'], (string) ($_POST['ma'] ?? ''))) {
+                        $_SESSION['code_attempts'] = $attempts + 1;
                         $error['fali'] = 'Mã xác nhận không hợp lệ !';
                     } else {
-                        unset($_SESSION['code'], $_SESSION['code_expires']);
+                        unset($_SESSION['code'], $_SESSION['code_expires'], $_SESSION['code_attempts']);
+                        $_SESSION['otp_verified'] = true;
                         header('Location: index.php?act=changePass');
                         exit;
                     }

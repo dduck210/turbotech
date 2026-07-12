@@ -1,6 +1,7 @@
 <?php
 session_start();
 require_once __DIR__ . '/../../vendor/autoload.php';
+require_once __DIR__ . '/../../src/Core/helpers.php';
 
 use Codemoi\Core\Csrf;
 use Codemoi\Core\Router;
@@ -20,6 +21,24 @@ use Codemoi\Controller\Admin\StatsController;
 // page instead of a white-screen 403 (list_* pages already display
 // $_SESSION['flash_error']).
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && !Csrf::verify($_POST['_token'] ?? null)) {
+    $_SESSION['flash_error'] = 'Phiên làm việc đã hết hạn, vui lòng thử lại.';
+    header('Location: ' . ($_SERVER['HTTP_REFERER'] ?? 'index.php'));
+    exit;
+}
+
+// These delete/approve/ship/cancel actions are plain GET links (not forms),
+// so the POST-only check above doesn't cover them — without this, an
+// <img src="admin/index.php?act=delete_product&..."> on any page an admin
+// visits would trigger the action via their session cookie (CSRF-via-GET).
+$get_mutating_actions = [
+    'delete_cate', 'delete_product', 'delete_usser', 'approve_bill',
+    'ship_bill', 'cancel_bill', 'delete_cmt', 'delete_ques', 'delete_coupon',
+];
+if (
+    $_SERVER['REQUEST_METHOD'] === 'GET'
+    && in_array($_GET['act'] ?? '', $get_mutating_actions, true)
+    && !Csrf::verify($_GET['_token'] ?? null)
+) {
     $_SESSION['flash_error'] = 'Phiên làm việc đã hết hạn, vui lòng thử lại.';
     header('Location: ' . ($_SERVER['HTTP_REFERER'] ?? 'index.php'));
     exit;

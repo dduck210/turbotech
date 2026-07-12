@@ -84,7 +84,7 @@
                                 <a href="index.php?act=edit_coupon&id_coupon=<?= e($coupon['id_coupon']) ?>"
                                     class="p-2 text-amber-600 bg-amber-50 rounded-lg hover:bg-amber-100 transition-all active:scale-90"
                                     title="Sửa"><i class="fas fa-edit"></i></a>
-                                <a href="index.php?act=delete_coupon&id_coupon=<?= e($coupon['id_coupon']) ?>"
+                                <a href="index.php?act=delete_coupon&id_coupon=<?= e($coupon['id_coupon']) ?>&_token=<?= urlencode(\Codemoi\Core\Csrf::token()) ?>"
                                     class="p-2 text-red-600 bg-red-50 rounded-lg hover:bg-red-100 transition-all active:scale-90"
                                     data-confirm="Bạn có chắc chắn muốn xóa mã giảm giá này?" title="Xóa"><i
                                         class="fas fa-trash"></i></a>

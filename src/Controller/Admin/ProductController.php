@@ -28,10 +28,8 @@ class ProductController extends AdminController
             $idcate = $_POST['idcate'];
             $stock = $_POST['stock'] ?? 0;
             $stock_message = trim($_POST['stock_message'] ?? '') ?: null;
-            $img_pro = $_FILES['img_pro']['name'];
-            $extension = pathinfo($img_pro, PATHINFO_EXTENSION);
-
-            $this->moveUpload($_FILES['img_pro'] ?? null);
+            $hasFile = !empty($_FILES['img_pro']['tmp_name']);
+            $img_pro = $hasFile ? $this->moveUpload($_FILES['img_pro']) : null;
 
             if ($name_pro == null || $price == null || $short_des == null || $idcate == null) {
                 echo '<script>document.addEventListener("DOMContentLoaded",()=>Swal.fire({toast:true,position:"top-end",icon:"error",title:"Vui lòng nhập đầy đủ nội dung !",showConfirmButton:false,timer:3000}));</script>';
@@ -39,7 +37,7 @@ class ProductController extends AdminController
                 echo '<script>document.addEventListener("DOMContentLoaded",()=>Swal.fire({toast:true,position:"top-end",icon:"error",title:"Giá nhập không đúng !",showConfirmButton:false,timer:3000}));</script>';
             } elseif ($stock < 0) {
                 echo '<script>document.addEventListener("DOMContentLoaded",()=>Swal.fire({toast:true,position:"top-end",icon:"error",title:"Số lượng tồn kho không đúng !",showConfirmButton:false,timer:3000}));</script>';
-            } elseif (!in_array($extension, self::ALLOWED_EXTENSIONS)) {
+            } elseif ($img_pro === null) {
                 echo '<script>document.addEventListener("DOMContentLoaded",()=>Swal.fire({toast:true,position:"top-end",icon:"error",title:"File ảnh không phù hợp !",showConfirmButton:false,timer:3000}));</script>';
             } else {
                 Product::create($name_pro, $price, $discount, $img_pro, $short_des, $detail_des, (int) $idcate, (int) $stock, $stock_message);
@@ -90,9 +88,7 @@ class ProductController extends AdminController
             $detail_des = $_POST['detail_des'];
             $stock = (int) ($_POST['stock'] ?? 0);
             $stock_message = trim($_POST['stock_message'] ?? '') ?: null;
-            $img_pro = $_FILES['img_pro']['name'];
-
-            $this->moveUpload($_FILES['img_pro'] ?? null);
+            $img_pro = $this->moveUpload($_FILES['img_pro'] ?? null) ?? '';
 
             Product::update($id_pro, $name_pro, $price, $discount, $short_des, $detail_des, $img_pro, $idcate, $stock, $stock_message);
             $_SESSION['flash_success'] = 'Cập nhật sản phẩm thành công!';
@@ -125,19 +121,30 @@ class ProductController extends AdminController
     }
 
     /**
-     * `$file` is nullable because a request missing the `img_pro` file
-     * field entirely (not just an empty file input — real browsers always
-     * send the field, even empty) leaves `$_FILES['img_pro']` undefined.
-     * The old code hit that same case with warnings-then-silent-no-op;
-     * matching that here rather than a hard TypeError.
+     * Validates and moves an uploaded product image. Returns the sanitized
+     * stored filename on success, or null if there's no file, the extension
+     * isn't allowed, the filename hides a second extension (e.g.
+     * `shell.php.jpg`), or the move itself fails — callers must only write
+     * `$img_pro`/skip the column when this returns null, never fall back to
+     * the raw `$_FILES[...]['name']`.
      */
-    private function moveUpload(?array $file): void
+    private function moveUpload(?array $file): ?string
     {
         if ($file === null || $file['tmp_name'] === '') {
-            return;
+            return null;
         }
 
-        $target_file = self::UPLOAD_DIR . basename($file['name']);
-        move_uploaded_file($file['tmp_name'], $target_file);
+        $name = basename($file['name']);
+        $extension = strtolower(pathinfo($name, PATHINFO_EXTENSION));
+
+        if (!in_array($extension, self::ALLOWED_EXTENSIONS, true) || preg_match('/\.(php|phtml|pht)/i', $name)) {
+            return null;
+        }
+
+        if (!move_uploaded_file($file['tmp_name'], self::UPLOAD_DIR . $name)) {
+            return null;
+        }
+
+        return $name;
     }
 }
