@@ -1,7 +1,6 @@
 <?php
 session_start();
 require_once __DIR__ . '/../../vendor/autoload.php';
-require_once __DIR__ . '/../../admin/controller/controller.php';
 
 use Codemoi\Core\Csrf;
 use Codemoi\Core\Router;
@@ -26,19 +25,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && !Csrf::verify($_POST['_token'] ?? n
     exit;
 }
 
-//include dao để dùng các functione:
-
-include __DIR__ . '/../../admin/model/pdo.php';
-include __DIR__ . '/../../admin/model/bill.php';
-include __DIR__ . '/../../admin/model/comment.php';
-include __DIR__ . '/../../admin/model/statistics.php';
-include __DIR__ . '/../../admin/model/question.php';
-// controller
-// Strangler routing: 'dashboard'/'login'/'logout' (plus the empty/'/'
-// no-act fallback, which always rendered the dashboard too) are ported
-// onto the Codemoi\Controller\Admin\* MVC scaffold. Every other `act`
-// still falls through to the original switch below until Phase 08/09
-// port each domain onto the same scaffold.
+// Every admin `act` routes through here onto Codemoi\Controller\Admin\*
+// (the old procedural switch this replaced is gone — see plan phases 07-09).
 $router = new Router();
 $router->add('dashboard', [DashboardController::class, 'index']);
 $router->add('login', [AuthController::class, 'login']);
