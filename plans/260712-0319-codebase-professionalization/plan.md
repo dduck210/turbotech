@@ -35,7 +35,7 @@ Legacy PHP + MySQL (`codemoi2`), Apache, `public/` webroot. Client side already 
 | 03 | [XSS output-escaping audit + fix](phase-03-xss-escaping.md) | 1 | P1 | — | DONE |
 | 04 | [OTP hardening + redirect-exit fix](phase-04-otp-hardening.md) | 1 | P1 | — | DONE |
 | 05 | [DB layer env-config unification](phase-05-db-config-unification.md) | 2 | P2 | — | DONE |
-| 06 | [Error-handling FK guards + dead-table cleanup](phase-06-error-handling-cleanup.md) | 2 | P2 | — | YES (approve table drops) |
+| 06 | [Error-handling FK guards + dead-table cleanup](phase-06-error-handling-cleanup.md) | 2 | P2 | — | DONE |
 | 07 | [Admin MVC foundation](phase-07-admin-mvc-foundation.md) | 3 | P2 | 05 | no |
 | 08 | [Admin controllers: auth/dashboard + CRUD](phase-08-admin-controllers-crud.md) | 3 | P2 | 07 | no |
 | 09 | [Admin controllers: bill/moderation/stats](phase-09-admin-controllers-bill-mod.md) | 3 | P2 | 07 | no |

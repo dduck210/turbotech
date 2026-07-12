@@ -93,11 +93,12 @@ if (isset($_GET['act'])) {
 
             if (isset($_SESSION['admin'])) {
                 $ds_loai = loadall_loai();
+                $flash_error = $_SESSION['flash_error'] ?? null;
                 $flash_success = $_SESSION['flash_success'] ?? null;
-                unset($_SESSION['flash_success']);
+                unset($_SESSION['flash_error'], $_SESSION['flash_success']);
                 render(
                     'list_category',
-                    ['ds_loai' => $ds_loai, 'flash_success' => $flash_success]
+                    ['ds_loai' => $ds_loai, 'flash_error' => $flash_error, 'flash_success' => $flash_success]
                 );
             } else {
                 header("location: index.php?act=login");
@@ -138,7 +139,18 @@ if (isset($_GET['act'])) {
         case "delete_cate":
             if (isset($_GET['id_cate']) && ($_GET['id_cate'] > 0)) {
                 $id_cate = $_GET['id_cate'];
-                xoa_loai($id_cate);
+                try {
+                    xoa_loai($id_cate);
+                } catch (PDOException $e) {
+                    // SQLSTATE 23000: category still referenced by a product
+                    // (lk_cate_product) — block the delete with a clear
+                    // message instead of the raw fatal error.
+                    if ($e->getCode() === '23000') {
+                        $_SESSION['flash_error'] = 'Không thể xoá loại sản phẩm này vì vẫn còn sản phẩm thuộc loại này.';
+                    } else {
+                        throw $e;
+                    }
+                }
             }
             header('location:index.php?act=list_category');
             break;

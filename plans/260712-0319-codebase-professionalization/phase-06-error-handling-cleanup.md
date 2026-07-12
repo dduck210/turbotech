@@ -48,12 +48,40 @@ an uncaught `PDOException` and white-screens instead of showing a friendly messa
 5. `php -l`; test each guarded delete by attempting to remove a still-referenced row (expect flash, not crash).
 
 ## Todo
-- [ ] Schema FK audit → list exposable delete actions
-- [ ] Add try/catch guards to those delete cases (skip leaf deletes)
-- [ ] `scripts/drop-unused-tables.sql` + backup step
-- [ ] Owner confirmation on 6 dead tables (GATE)
-- [ ] Test guarded deletes (referenced row → flash, not white-screen)
-- [ ] `php -l` clean
+- [x] Schema FK audit → list exposable delete actions
+- [x] Add try/catch guards to those delete cases (skip leaf deletes)
+- [x] `scripts/drop-unused-tables.sql` + backup step
+- [x] Owner confirmation on 6 dead tables (GATE)
+- [x] Test guarded deletes (referenced row → flash, not white-screen)
+- [x] `php -l` clean
+
+## Implementation notes
+- Schema FK audit via `information_schema.KEY_COLUMN_USAGE` found only 4 enforced FK
+  constraints in the whole `codemoi2` schema: `cart.id_bill→bill`, `cart.id_pro→product`,
+  `comment.id_pro→product`, `product.idcate→category`. **No FK constraint references
+  `user`, `coupon`, or `question` at all** — deleting those can never throw a
+  `PDOException`, so per the phase's own YAGNI note, `delete_usser`/`delete_coupon`/
+  `delete_cmt`/`delete_ques` were left unguarded (confirmed leaf-safe, not assumed).
+- Only `delete_cate` needed a guard (`product.idcate` FK). Added the same
+  try/catch-on-SQLSTATE-23000 pattern already used by `delete_product`
+  (`public/admin/index.php`), with a matching Vietnamese flash message. `list_category`'s
+  controller case and `admin/view/list_category.php` didn't wire `flash_error` at all
+  before this (only `flash_success`) — added it, matching the `list_product` pattern.
+- Live-tested with a disposable test admin account (created, logged in, deleted after):
+  deleting category `id_cate=14` (HP, 9 products) → 302 redirect, friendly flash-error
+  toast, row still in DB, zero new server errors. Deleting an unreferenced throwaway
+  category (`id_cate=999`) → deletes normally. Confirms the guard blocks exactly the
+  FK-exposed case and nothing else.
+- 6 dead tables (`users`, `migrations`, `failed_jobs`, `password_resets`,
+  `personal_access_tokens`, `history_bank`) confirmed zero code references via a
+  project-wide grep (the handful of incidental string matches were all unrelated —
+  a Font Awesome `fa-users` icon class and an email domain in a PHPMailer doc comment).
+  Row counts at drop time: `migrations`=4, `history_bank`=9, the rest empty.
+- Owner approved via AskUserQuestion. Backed up all 6 via `mysqldump` to
+  `scripts/dead-tables_backup_<timestamp>.sql` (gitignored, matches the existing
+  `/scripts/*_backup_*.sql` pattern) before running `scripts/drop-unused-tables.sql`.
+  Post-drop regression sweep (client home, product-list, admin login) all 200, zero new
+  entries in `apache/logs/error.log`.
 
 ## Success criteria
 - Deleting a referenced category/user/coupon shows a friendly flash error, app stays up.

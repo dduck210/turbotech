@@ -1,5 +1,8 @@
     <?php include_once "header.php" ?>
     <?php /** @var array $ds_loai */ ?>
+    <?php if (!empty($flash_error)): ?>
+    <script>document.addEventListener("DOMContentLoaded",()=>Swal.fire({toast:true,position:"top-end",icon:"error",title:<?= json_encode($flash_error) ?>,showConfirmButton:false,timer:4000}));</script>
+    <?php endif; ?>
     <?php if (!empty($flash_success)): ?>
     <script>document.addEventListener("DOMContentLoaded",()=>Swal.fire({toast:true,position:"top-end",icon:"success",title:<?= json_encode($flash_success) ?>,showConfirmButton:false,timer:3000}));</script>
     <?php endif; ?>
