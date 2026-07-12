@@ -55,12 +55,59 @@ Stats:   Model\Stats aggregate queries ─> list_statistic view
 6. `php -l`; walk every bill status transition, filter combo, moderation delete, and the stats page.
 
 ## Todo
-- [ ] Enumerate bill filters + status-transition semantics
-- [ ] BillController + `Model\Order` admin methods (list/detail/status; preserve guards+flashes)
-- [ ] Comment + Question controllers + model methods (confirm question-answer path)
-- [ ] StatsController + `Model\Stats`
-- [ ] Routes registered; ported cases removed; superseded models deleted
-- [ ] `php -l`; walk all transitions/filters/moderation/stats
+- [x] Enumerate bill filters + status-transition semantics
+- [x] BillController + `Model\Order` admin methods (list/detail/status; preserve guards+flashes)
+- [x] Comment + Question controllers + model methods (confirmed: no answer path exists)
+- [x] StatsController + `Model\Stats`
+- [x] Routes registered; ported cases removed; superseded models deleted
+- [x] `php -l`; walk all transitions/filters/moderation/stats
+
+## Implementation notes
+- **Bill status transitions preserved exactly:** approve only fires from status 0,
+  ship only from 1, cancel only from 0 or 1 — each a silent no-op (still redirects,
+  no flash) outside its valid from-state. `update_bill`'s `status==3 → force
+  status_pay=1` rule carried over verbatim. Unified the three transition handlers
+  into one private `BillController::transition(array $fromStatuses, ...)` helper
+  (DRY) instead of three near-identical copy-pasted blocks.
+- **`cart`-as-line-items naming preserved**, not "fixed" — `Model\Order::items()`
+  (already existed, matches old `load_cart_all()` exactly) is what `billdetail.php`
+  and `update_bill.php` now call instead of the procedural function.
+- **Missing-order guard preserved**: `edit_bill`/`billdetail` both flash "Không tìm
+  thấy đơn hàng này." and redirect when `idbill` is missing/invalid — same behavior,
+  now via `$this->redirect()` (which properly exits, unlike the old bare `header()`
+  + `break`).
+- **Same missing-admin-guard fix as every other domain**, applied to `update_bill`,
+  `approve_bill`, `ship_bill`, `cancel_bill`, `delete_cmt`, `delete_ques` — none had
+  a session check in the old code.
+- **FK audit confirms no guard needed** for comment/question deletes (Phase 06:
+  zero FK constraints reference either table).
+- **No question-answer/reply path exists** — confirmed by reading the full case list;
+  moderation was always list + delete only, contrary to the phase file's "confirm
+  whether an answer path exists" open question.
+- `Model\Stats` ports all 8 aggregate queries from `admin/model/statistics.php`
+  (`today/thisWeek/thisMonth/forMonth/byCategory/revenueByDate/
+  productsSoldByDate/inventory`) — **verified byte-identical output** against the old
+  procedural functions on live data via a side-by-side PHP CLI comparison before
+  switching `dashboard.php`'s inline chart-data calls over and deleting the old file.
+- **Strangler scaffold retired**: with statistics ported, every one of the original
+  39 admin `act` values is now on the MVC scaffold. Collapsed
+  `public/admin/index.php`'s `if (in_array($act, $portedActs...)) {...} else {
+  switch... }` down to a single unconditional `$router->dispatch(...)` call —
+  `$portedActs` and the old switch no longer serve any purpose.
+- **`admin/model/pdo.php` deleted** (the Phase 07 deferred deletion) along with
+  `admin/model/{bill,comment,question,statistics}.php` and the now-dead
+  `admin/controller/controller.php` (its global `render()` had zero remaining
+  callers). The only other caller of `pdo_get_connection()` in the whole codebase,
+  `create_table.php` (a one-off migration script), was migrated onto
+  `Core\Database::execute()`.
+- Live-tested every domain end-to-end with a disposable test admin account and
+  throwaway bill/comment/question rows (all created/exercised/deleted): the full
+  bill state machine (approve→ship, cancel-from-0, cancel-from-1, cancel-blocked-
+  at-status-2, direct status=3 delivery with the auto-paid rule, missing-order
+  guard), comment/question list+delete, statistics with and without date filters,
+  the auth-guard fix across all 6 newly-guarded actions, and a full sweep of every
+  admin `act` (all 33, now 100% ported) both authenticated and not, plus client
+  routes. Zero new entries in `apache/logs/error.log` across the entire phase.
 
 ## Success criteria
 - Bill list/filters/detail and approve→ship→cancel transitions work via MVC with unchanged flashes/URLs.

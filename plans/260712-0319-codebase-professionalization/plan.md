@@ -38,7 +38,7 @@ Legacy PHP + MySQL (`codemoi2`), Apache, `public/` webroot. Client side already 
 | 06 | [Error-handling FK guards + dead-table cleanup](phase-06-error-handling-cleanup.md) | 2 | P2 | — | DONE |
 | 07 | [Admin MVC foundation](phase-07-admin-mvc-foundation.md) | 3 | P2 | 05 | DONE |
 | 08 | [Admin controllers: auth/dashboard + CRUD](phase-08-admin-controllers-crud.md) | 3 | P2 | 07 | DONE |
-| 09 | [Admin controllers: bill/moderation/stats](phase-09-admin-controllers-bill-mod.md) | 3 | P2 | 07 | no |
+| 09 | [Admin controllers: bill/moderation/stats](phase-09-admin-controllers-bill-mod.md) | 3 | P2 | 07 | DONE |
 | 10 | [Admin regression sweep](phase-10-admin-regression.md) | 3 | P1 | 08,09 | no |
 | 11 | [UI/UX audit (read-only)](phase-11-uiux-audit.md) | 4 | P3 | — | YES (review issue list) |
 | 12 | [UI/UX polish fixes](phase-12-uiux-polish.md) | 4 | P3 | 10,11 | YES (review before/after) |
@@ -76,11 +76,11 @@ Sequential-only conflicts are marked; **do not parallelize** a later phase over 
 |---------|--------|------|
 | `src/Model/User.php`, `admin/model/user.php` | 01 | password write/read paths |
 | `public/index.php` (client front controller — form dispatch), view `*` forms | 02, 03 | 02 wires CSRF verify; 03 escapes output — disjoint regions |
-| `public/admin/index.php` | 02 (CSRF), 06 (FK guards), 07–09 (rewrite) | **strictly sequential**; 07–09 supersede the file, must carry forward CSRF + guards |
+| `public/admin/index.php` | 02 (CSRF), 06 (FK guards), 07–09 (rewrite) | DONE — 07–09 fully superseded the old switch; strangler scaffold retired in 09 |
 | `view/*.php`, `admin/view/*.php` | 03 (escape), 12 (styling) | sequential; 03 edits echo output, 12 edits markup/classes |
-| `src/Core/Config.php`, `src/Core/Database.php`, `admin/model/pdo.php` | 05 (env), 09 (pdo.php deletion) | 05 makes env-ready; **correction (07):** `pdo.php` deletion deferred to end of 09, not 07 — 36 of 39 admin actions still depend on it until every domain is ported (strangler) |
+| `src/Core/Config.php`, `src/Core/Database.php`, `admin/model/pdo.php` | 05 (env), 09 (pdo.php deletion) | DONE — 05 made it env-ready, 09 deleted `pdo.php` (deferred from 07 per that phase's correction note) |
 | `src/Controller/PasswordController.php`, `view/user/verification.php` | 04 | OTP + redirect-exit fix |
-| `admin/model/{bill,comment,question,statistics}.php` | 06 (guards), 09 (superseded by `Model\*`) | 09 deletes these after bill/comment/question/statistics controllers reuse shared models — `{category,coupon,product,user}.php` already deleted in 08 |
+| `admin/model/{bill,comment,question,statistics}.php` | 06 (guards), 09 (superseded by `Model\*`) | DONE — deleted in 09; `{category,coupon,product,user}.php` deleted in 08 |
 
 ## Global risks
 - **HIGH — password migration reversibility:** hashing is one-way. A bad migration locks every user
@@ -116,7 +116,7 @@ Sequential-only conflicts are marked; **do not parallelize** a later phase over 
 - Zero unescaped DB/user output in the 42 views (grep audit: every `<?= $dbvar ?>` wrapped or justified).
 - OTP is `random_int`-generated and expires (≤10 min); expired codes rejected.
 - `admin/model/pdo.php` deleted; single `Core\Database` connection layer; `public/admin/index.php`
-  is a thin front controller; no `admin/model/*.php` remain.
+  is a thin front controller; no `admin/model/*.php` remain. **Achieved in Phase 09.**
 - Phase 10 authenticated sweep: every admin `?act=` returns without new PHP errors vs. pre-refactor log.
 - UI audit issue list resolved or explicitly deferred with owner sign-off.
 - Local XAMPP behavior and `index.php?act=X` / `admin/index.php?act=X` URLs unchanged throughout.
@@ -124,4 +124,4 @@ Sequential-only conflicts are marked; **do not parallelize** a later phase over 
 ## Open questions
 - Hashing algorithm: `PASSWORD_BCRYPT` (portable, default) vs `PASSWORD_ARGON2ID` (stronger, needs PHP
   build support — verify on XAMPP). Default to `PASSWORD_DEFAULT` unless owner requires argon2.
-- Admin namespace: `Codemoi\Controller\Admin\*` vs `Codemoi\Admin\Controller\*` — decided in Phase 07.
+- Admin namespace: decided in Phase 07 — `Codemoi\Controller\Admin\*` (matches the client `src/Controller/` PSR-4 layout).
