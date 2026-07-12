@@ -14,6 +14,7 @@ include_once "header.php";
 
 <div class="mb-6 bg-white p-5 rounded-xl border border-slate-200 shadow-sm">
     <form action="./index.php?act=list_thongke" method="POST" class="flex flex-col md:flex-row gap-4 items-end">
+<?= \Codemoi\Core\Csrf::field() ?>
         <div class="flex-1 text-slate-700 font-semibold">
             <i class="fas fa-filter mr-2 text-brand-500"></i>Lọc thống kê theo khoảng thời gian
         </div>

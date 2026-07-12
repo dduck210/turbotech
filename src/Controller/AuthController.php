@@ -3,6 +3,7 @@
 namespace Codemoi\Controller;
 
 use Codemoi\Core\Controller;
+use Codemoi\Core\Csrf;
 use Codemoi\Model\Auth;
 use Codemoi\Model\User;
 
@@ -117,6 +118,7 @@ class AuthController extends Controller
 
             if (is_array($check_user)) {
                 Auth::login($check_user);
+                Csrf::rotate();
                 $_SESSION['flash_success'] = 'Đăng nhập thành công!';
                 $this->redirect('index.php');
             }

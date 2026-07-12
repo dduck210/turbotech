@@ -66,6 +66,7 @@ unset($_SESSION['flash_success']);
         <div class="comment-btn-area mt-3">
             <?php if ($canReview) { ?>
                 <form action="<?= $_SERVER['PHP_SELF']; ?>" method="post" data-validate novalidate class="rounded-2xl border border-ink-200 bg-white p-4 shadow-sm">
+                    <?= \Codemoi\Core\Csrf::field() ?>
                     <label for="content_cmt" class="mb-1.5 block text-sm font-medium text-ink-700">Bình luận của bạn</label>
                     <textarea id="content_cmt" name="content_cmt" data-rules="required|min:2" class="area-cmt block w-full rounded-lg border border-ink-200 bg-white px-3.5 py-2.5 text-sm text-ink-900 placeholder:text-ink-300 focus:outline-none focus:ring-2 focus:ring-brand-500 focus:border-brand-500" cols="60" rows="3" placeholder="Nhập bình luận của bạn"></textarea>
                     <input type="hidden" name="idpro" value="<?= $idpro ?>">

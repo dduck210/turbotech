@@ -58,6 +58,7 @@
     </div>
     <!-- thông tin đặt hàng -->
     <form action="index.php?act=billconfirm" method="post">
+<?= \Codemoi\Core\Csrf::field() ?>
         <div class="mb-6 rounded-2xl border border-ink-200 bg-white p-6 shadow-sm">
             <h2 class="font-heading text-lg font-semibold text-ink-900 mb-4">Thông tin đặt hàng</h2>
             <div class="space-y-4">

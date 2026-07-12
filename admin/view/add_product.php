@@ -11,6 +11,7 @@
     </div>
     <div class="p-6">
         <form action="index.php?act=add_product" method="post" enctype="multipart/form-data" data-validate novalidate>
+<?= \Codemoi\Core\Csrf::field() ?>
             <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
                 <!-- Mã sản phẩm -->
                 <div>

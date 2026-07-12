@@ -1,4 +1,4 @@
-﻿<?php include_once "header.php" ?>
+<?php include_once "header.php" ?>
 
 
 <div class="mb-8 flex items-center justify-between">
@@ -9,6 +9,7 @@
     <div class="p-6">
         <div class="form-addcate">
             <form action="./index.php?act=add_category" method="post" data-validate novalidate>
+<?= \Codemoi\Core\Csrf::field() ?>
                 <div class="mb-4">
                     <label for="formGroupExampleInput" class="block text-sm font-medium text-slate-700 mb-1">Mã
                         loại</label>

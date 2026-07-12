@@ -21,6 +21,7 @@
     <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-12 md:py-16">
         <div class="mx-auto max-w-md rounded-2xl border border-ink-200 bg-white shadow-sm p-6 sm:p-8">
             <form action="index.php?act=mk" method="post" data-validate novalidate>
+<?= \Codemoi\Core\Csrf::field() ?>
                 <h1 class="mb-2 text-center font-heading text-2xl font-bold text-ink-900">Quên mật khẩu</h1>
                 <p class="mb-6 text-center text-sm text-ink-500">Nhập email hoặc số điện thoại đã đăng ký, chúng tôi sẽ gửi mã xác nhận đến email của tài khoản.</p>
 

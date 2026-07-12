@@ -21,6 +21,7 @@
         <div class="form-addcate">
             <form action="./index.php?act=update_product" method="post" enctype="multipart/form-data" data-validate
                 novalidate>
+<?= \Codemoi\Core\Csrf::field() ?>
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <div class="mb-4">
                         <label for="formGroupExampleInput" class="block text-sm font-medium text-slate-700 mb-1">Mã sản

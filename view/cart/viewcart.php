@@ -15,6 +15,7 @@
     <h1 class="font-heading text-2xl md:text-3xl font-bold text-ink-900 mb-6">Giỏ hàng của bạn</h1>
 
     <form action="index.php?act=bill" method="post">
+<?= \Codemoi\Core\Csrf::field() ?>
         <?php if (!empty($_SESSION['mycart'])) {
             $total_amount = 0;
             $i = 0;
@@ -120,7 +121,7 @@
         $.ajax({
             url: "?act=edit",
             type: "POST",
-            data: 'quantity=' + quantity + '&code=' + code,
+            data: 'quantity=' + quantity + '&code=' + code + '&_token=' + encodeURIComponent($('meta[name="csrf-token"]').attr('content')),
             success: function(data, status) {
                 // The response is a full page (index.php wraps every route
                 // in header/footer HTML), so the actual result is pulled

@@ -16,6 +16,7 @@
     <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-12 md:py-16">
         <div class="mx-auto max-w-md rounded-2xl border border-ink-200 bg-white shadow-sm p-6 sm:p-8">
             <form action="index.php?act=verification" method="post" data-validate novalidate>
+<?= \Codemoi\Core\Csrf::field() ?>
                 <?php
                 if (isset($_POST['btn_verification'])) {
                     $error = array();

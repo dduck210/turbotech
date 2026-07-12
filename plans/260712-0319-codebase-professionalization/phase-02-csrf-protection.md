@@ -48,12 +48,30 @@ POST submit    ─> front controller ─> Csrf::verify($_POST['_token']) ─> 40
 5. `php -l`; curl test: POST without token → rejected; with valid token → succeeds.
 
 ## Todo
-- [ ] `src/Core/Csrf.php` (token/field/verify/rotate)
-- [ ] Enumerate all POST forms (record count) and inject `Csrf::field()`
-- [ ] Client front-controller POST guard (`public/index.php`)
-- [ ] Admin front-controller POST guard (`public/admin/index.php`)
-- [ ] Rotate on login/logout
-- [ ] curl: missing/invalid token rejected; valid accepted
+- [x] `src/Core/Csrf.php` (token/field/verify/rotate)
+- [x] Enumerate all POST forms (39 forms / 27 files) and inject `Csrf::field()`
+- [x] Client front-controller POST guard (`public/index.php`)
+- [x] Admin front-controller POST guard (`public/admin/index.php`) — also added the missing
+      `vendor/autoload.php` require (wasn't loaded there at all before)
+- [x] Rotate on login/logout — logout already used `session_unset()` (clears everything incl. the
+      token), so only login needed an explicit `Csrf::rotate()`
+- [x] AJAX POST callers (`applycoupon`, `removecoupon`, cart-qty `edit`) send `_token` via a
+      `<meta name="csrf-token">` read at call time
+- [x] curl: missing/invalid token rejected (flash shown); valid token accepted — tested on client
+      login/register/add-to-cart and admin login, plus a full GET-route regression sweep
+
+## Bugs caught during the automated form-patching pass
+The regex-based injector (`<form\b[^>]*>` insert-after) had two real false matches, both found and
+fixed before commit:
+- `view/user/myaccount.php` — matched literal "`<form>`" mentions inside an explanatory HTML
+  *comment* (not real tags), injecting 5 stray `Csrf::field()` calls into the middle of that comment's
+  text. Comment restored, correct single field kept on the one real per-order cancel `<form>`.
+- `view/user/myaccount.php` (same form) and `public/view/comment-form.php` — the real `<form ...>`
+  tag's attributes contained an embedded `<?= ... ?>` short-echo tag; the regex's `[^>]*` stopped at
+  the `>` inside `?>` instead of the tag's real closing `>`, splitting the attribute string in half.
+  Fixed by hand: field moved to right after the tag's actual close.
+- Verified no other file has this pattern (checked every insertion is immediately preceded by a line
+  ending in `>`).
 
 ## Success criteria
 - `curl -X POST .../index.php?act=login` without `_token` → rejected (flash/403), does not mutate state.

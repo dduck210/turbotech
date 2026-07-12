@@ -22,6 +22,7 @@ if (is_array($one_coupon)) {
     </div>
     <div class="p-6">
         <form action="index.php?act=update_coupon" method="POST">
+<?= \Codemoi\Core\Csrf::field() ?>
             <input type="hidden" name="id_coupon" value="<?= isset($id_coupon) ? $id_coupon : '' ?>">
             <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
                 <div>

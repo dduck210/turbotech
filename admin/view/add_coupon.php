@@ -17,6 +17,7 @@ include_once "header.php";
     </div>
     <div class="p-6">
         <form action="index.php?act=add_coupon" method="POST">
+<?= \Codemoi\Core\Csrf::field() ?>
             <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
                 <div>
                     <label class="block text-sm font-medium text-slate-700 mb-2">Mã giảm giá (Code) *</label>

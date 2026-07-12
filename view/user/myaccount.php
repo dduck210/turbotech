@@ -140,6 +140,7 @@
                                                     <?php if ((int) $status === 0) : ?>
                                                         <form action="index.php?act=cancelorder" method="post"
                                                             data-confirm="Bạn chắc chắn muốn hủy đơn hàng UTP-<?= $id_bill ?>?">
+                                                            <?= \Codemoi\Core\Csrf::field() ?>
                                                             <input type="hidden" name="id_bill" value="<?= $id_bill ?>">
                                                             <button type="submit"
                                                                 class="inline-flex items-center justify-center gap-1.5 rounded-lg border border-red-200 px-3 py-1.5 text-xs font-semibold text-red-600 hover:bg-red-50 focus:outline-none focus:ring-2 focus:ring-brand-500">
@@ -178,6 +179,7 @@
                     <div id="account-details" data-tab-panel role="tabpanel" aria-labelledby="account-details-tab"
                         class="account-tab-panel hidden rounded-2xl border border-ink-200 bg-white shadow-sm p-6">
                         <form action="index.php?act=myaccount" method="post" enctype="multipart/form-data" data-validate novalidate>
+<?= \Codemoi\Core\Csrf::field() ?>
                             <div class="mb-6 text-center">
                                 <img src="uploads/<?= $_SESSION['user']['img_user'] ?>" alt="Avatar người dùng"
                                     class="mx-auto h-24 w-24 rounded-full border border-ink-200 object-cover">
@@ -275,6 +277,7 @@
                     <div id="account-password" data-tab-panel role="tabpanel" aria-labelledby="account-password-tab"
                         class="account-tab-panel hidden rounded-2xl border border-ink-200 bg-white shadow-sm p-6">
                         <form action="index.php?act=myaccount" method="post" data-validate novalidate>
+<?= \Codemoi\Core\Csrf::field() ?>
                             <div class="space-y-4">
                                 <div>
                                     <label for="account-password-username" class="block text-sm font-medium text-ink-700 mb-1.5">Tên đăng nhập</label>

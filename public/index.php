@@ -11,12 +11,23 @@ use Codemoi\Controller\PageController;
 use Codemoi\Controller\PasswordController;
 use Codemoi\Controller\ProductController;
 use Codemoi\Controller\QuestionController;
+use Codemoi\Core\Csrf;
 use Codemoi\Core\Router;
 use Codemoi\Model\Cart;
 use Codemoi\Model\Category;
 
 session_start();
 ob_start();
+
+// Every state-changing request goes through here, so this is the one place
+// a CSRF check covers the whole app. Runs before head.php/header.php so a
+// failure's flash message is set in time for header.php's flash display to
+// pick it up on the page it redirects back to.
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && !Csrf::verify($_POST['_token'] ?? null)) {
+    $_SESSION['flash_error'] = 'Phiên làm việc đã hết hạn, vui lòng thử lại.';
+    header('Location: ' . ($_SERVER['HTTP_REFERER'] ?? 'index.php'));
+    exit;
+}
 
 // kiểm tra session my cart đã tồn tại là 1 mảng chưa, nếu chưa thì khởi tạo 1 mảng mới
 Cart::items();

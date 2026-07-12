@@ -17,6 +17,7 @@
             <div class="w-full lg:w-1/2">
                 <!-- form hỏi đáp-->
                 <form action="index.php?act=question" method="post" data-validate novalidate class="rounded-2xl border border-ink-200 bg-white p-6 shadow-sm sm:p-8">
+<?= \Codemoi\Core\Csrf::field() ?>
                     <h2 class="text-center font-heading text-2xl font-bold text-ink-900">Hỏi đáp</h2>
                     <div class="mt-6 grid grid-cols-1 gap-5">
                         <div>

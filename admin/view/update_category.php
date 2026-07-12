@@ -1,4 +1,4 @@
-﻿<?php include_once "header.php" ?>
+<?php include_once "header.php" ?>
 <?php /** @var array $one_loai */ ?>
 
 
@@ -15,6 +15,7 @@ if (is_array($one_loai)) {
   <div class="p-6">
     <div class="form-addcate">
       <form action="index.php?act=update_category" method="post" data-validate novalidate>
+<?= \Codemoi\Core\Csrf::field() ?>
         <div class="mb-4">
           <label for="formGroupExampleInput" class="block text-sm font-medium text-slate-700 mb-1">Mã
             loại</label>

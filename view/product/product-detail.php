@@ -76,6 +76,7 @@
                  guard in CartController::add(). -->
             <?php if ((int) $one_pro['stock'] > 0) { ?>
                 <form action="index.php?act=addtocart" method="post" class="mb-6">
+<?= \Codemoi\Core\Csrf::field() ?>
                     <div class="flex flex-wrap items-end gap-4 mb-5">
                         <div>
                             <label for="quatity" class="block text-sm font-medium text-ink-700 mb-1.5">Số lượng</label>
@@ -202,6 +203,7 @@
                     </div>
                     <?php if ((int) $pro['stock'] > 0) { ?>
                         <form action="index.php?act=addtocart" method="post">
+<?= \Codemoi\Core\Csrf::field() ?>
                             <input type="hidden" name="id_pro" value="<?php echo $pro['id_pro'] ?>">
                             <input type="hidden" name="name_pro" value="<?php echo $pro['name_pro'] ?>">
                             <input type="hidden" name="img_pro" value="<?php echo $pro['img_pro'] ?>">

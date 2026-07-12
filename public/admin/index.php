@@ -1,6 +1,19 @@
 <?php
 session_start();
+require_once __DIR__ . '/../../vendor/autoload.php';
 require_once __DIR__ . '/../../admin/controller/controller.php';
+
+use Codemoi\Core\Csrf;
+
+// Every admin POST action goes through here — one guard covers the whole
+// panel. Failure sets a flash message and bounces back to the referring
+// page instead of a white-screen 403 (list_* pages already display
+// $_SESSION['flash_error']).
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && !Csrf::verify($_POST['_token'] ?? null)) {
+    $_SESSION['flash_error'] = 'Phiên làm việc đã hết hạn, vui lòng thử lại.';
+    header('Location: ' . ($_SERVER['HTTP_REFERER'] ?? 'index.php'));
+    exit;
+}
 
 //include dao để dùng các functione:
 
@@ -44,6 +57,7 @@ if (isset($_GET['act'])) {
                         $check = check_user_admin($user_name, $password);
                         if (is_array($check)) {
                             $_SESSION['admin'] = $check;
+                            Csrf::rotate();
                             $_SESSION['flash_success'] = 'Đăng nhập thành công!';
                             header('Location: index.php');
                         } else {
@@ -51,7 +65,9 @@ if (isset($_GET['act'])) {
                         }
                     }
                 }
-                render('login');
+                $flash_error = $_SESSION['flash_error'] ?? null;
+                unset($_SESSION['flash_error']);
+                render('login', ['flash_error' => $flash_error]);
             }
             break;
 

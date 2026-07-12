@@ -1,4 +1,4 @@
-﻿<?php include_once "header.php" ?>
+<?php include_once "header.php" ?>
 
 <div class="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden mb-6">
   <div class="px-6 py-4 border-b border-slate-200 bg-slate-50/50 font-semibold text-slate-800">
@@ -7,6 +7,7 @@
   <div class="p-6">
     <div class="form-addcate">
       <form action="index.php?act=update_user" method="post" data-validate novalidate>
+<?= \Codemoi\Core\Csrf::field() ?>
         <?php
         /** @var array $user */
         if (is_array($user))

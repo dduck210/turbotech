@@ -22,6 +22,7 @@
 
         <div class="mx-auto max-w-md rounded-2xl border border-ink-200 bg-white shadow-sm p-6 sm:p-8">
             <form action="index.php?act=login" method="post" data-validate novalidate>
+<?= \Codemoi\Core\Csrf::field() ?>
                 <h1 class="mb-6 text-center font-heading text-2xl font-bold text-ink-900">Đăng nhập tài khoản</h1>
 
                 <div class="mb-4">

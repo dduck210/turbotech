@@ -111,6 +111,7 @@
             </div>
 
             <form action="index.php" method="get" class="rounded-2xl border border-ink-200 bg-white p-5 mb-8">
+<?= \Codemoi\Core\Csrf::field() ?>
                 <input type="hidden" name="act" value="product">
                 <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 items-end">
                     <div>
@@ -206,6 +207,7 @@
                             </div>
                             <?php if ((int) $pro['stock'] > 0) { ?>
                                 <form action="index.php?act=addtocart" method="post">
+<?= \Codemoi\Core\Csrf::field() ?>
                                     <input type="hidden" name="id_pro" value="<?php echo $pro['id_pro'] ?>">
                                     <input type="hidden" name="name_pro" value="<?php echo $pro['name_pro'] ?>">
                                     <input type="hidden" name="img_pro" value="<?php echo $pro['img_pro'] ?>">

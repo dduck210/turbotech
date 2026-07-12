@@ -25,6 +25,9 @@
 
 <body
     class="bg-slate-900 text-slate-800 antialiased flex items-center justify-center min-h-screen relative overflow-hidden">
+    <?php if (!empty($flash_error)): ?>
+    <script>document.addEventListener("DOMContentLoaded",()=>Swal.fire({toast:true,position:"top-end",icon:"error",title:<?= json_encode($flash_error) ?>,showConfirmButton:false,timer:4000}));</script>
+    <?php endif; ?>
     <!-- Decorative Background Shapes -->
     <div class="bg-shape bg-brand-600 w-[500px] h-[500px] top-[-200px] left-[-200px]"></div>
     <div class="bg-shape bg-purple-600 w-[400px] h-[400px] bottom-[-100px] right-[-100px]"></div>
@@ -48,6 +51,7 @@
                     </div>
 
                     <form class="space-y-6" action="index.php?act=login" method="post" data-validate novalidate>
+<?= \Codemoi\Core\Csrf::field() ?>
                         <div>
                             <label class="block text-sm font-medium text-slate-700 mb-2">Tài khoản</label>
                             <input type="text" name="user_name" placeholder="Nhập tài khoản" data-rules="required"

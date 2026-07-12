@@ -30,7 +30,7 @@ Legacy PHP + MySQL (`codemoi2`), Apache, `public/` webroot. Client side already 
 | # | Phase | WS | Priority | Depends on | Owner action? |
 |---|-------|----|----------|-----------|---------------|
 | 01 | [Password hashing + migration](phase-01-password-hashing.md) | 1 | P1 | — | DONE |
-| 02 | [CSRF protection](phase-02-csrf-protection.md) | 1 | P1 | — | no |
+| 02 | [CSRF protection](phase-02-csrf-protection.md) | 1 | P1 | — | DONE |
 | 03 | [XSS output-escaping audit + fix](phase-03-xss-escaping.md) | 1 | P1 | — | no |
 | 04 | [OTP hardening + redirect-exit fix](phase-04-otp-hardening.md) | 1 | P1 | — | no |
 | 05 | [DB layer env-config unification](phase-05-db-config-unification.md) | 2 | P2 | — | no |

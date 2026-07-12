@@ -11,6 +11,7 @@
 <!-- Breadcrumb End Here -->
 
 <form action="index.php?act=introduce" method="post">
+<?= \Codemoi\Core\Csrf::field() ?>
     <div class="mx-auto max-w-4xl px-4 py-12 sm:px-6 lg:px-8 md:py-16">
         <div class="text-center">
             <h2 class="font-heading text-2xl font-bold text-ink-900 sm:text-3xl">Giới thiệu về Turbotech</h2>

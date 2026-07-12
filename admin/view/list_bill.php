@@ -19,6 +19,7 @@
                     tìm kiếm & Lọc đơn hàng</div>
                 <form action="./index.php?act=list_bill" method="POST"
                     class="flex flex-col lg:flex-row gap-4 items-end">
+<?= \Codemoi\Core\Csrf::field() ?>
                     <!-- Search Keyword -->
                     <div class="w-full lg:flex-1">
                         <label class="block text-xs font-medium text-slate-500 mb-1 uppercase tracking-wider">Từ khóa

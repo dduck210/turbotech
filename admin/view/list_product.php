@@ -21,6 +21,7 @@
         <div class="mb-6 bg-slate-50 p-4 rounded-lg border border-slate-100 flex items-center justify-between">
             <div class="text-slate-600 font-medium">Lọc sản phẩm</div>
             <form action="./index.php?act=list_product" method="POST" class="flex gap-3">
+<?= \Codemoi\Core\Csrf::field() ?>
                 <select name="idcate"
                     class="px-4 py-2 border border-slate-200 rounded-lg focus:ring-2 focus:ring-brand-500 focus:border-brand-500 transition-colors bg-white min-w-[200px]">
                     <option value="0">Tất cả danh mục</option>

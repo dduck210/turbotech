@@ -11,6 +11,7 @@
 
     <!-- thông tin đặt hàng -->
     <form action="index.php?act=billconfirm" method="post" data-validate novalidate>
+<?= \Codemoi\Core\Csrf::field() ?>
         <?php if (isset($_SESSION['user'])) {
             extract($_SESSION['user']); ?>
             <div class="mb-6 rounded-2xl border border-ink-200 bg-white p-6 shadow-sm">
@@ -205,6 +206,9 @@
                 $.ajax({
                     url: '?act=removecoupon',
                     type: 'POST',
+                    data: {
+                        _token: $('meta[name="csrf-token"]').attr('content')
+                    },
                     success: function(data) {
                         var match = /<!--COUPON_RESULT:(.*?):END-->/.exec(data);
                         if (!match) return;
@@ -225,7 +229,8 @@
                 url: '?act=applycoupon',
                 type: 'POST',
                 data: {
-                    coupon_code: code
+                    coupon_code: code,
+                    _token: $('meta[name="csrf-token"]').attr('content')
                 },
                 success: function(data) {
                     var match = /<!--COUPON_RESULT:(.*?):END-->/.exec(data);
