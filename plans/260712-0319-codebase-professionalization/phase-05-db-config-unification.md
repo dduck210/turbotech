@@ -51,11 +51,34 @@ avoid rewriting all `admin/model/*.php` twice.
 5. `php -l` the three files; smoke: `Database::query('SELECT 1')` and `pdo_query('SELECT 1')` both succeed.
 
 ## Todo
-- [ ] `Config::db*()` env methods with literal defaults
-- [ ] `Database.php` DSN → methods + port
-- [ ] `admin/model/pdo.php` env-driven (Config or local fallback)
-- [ ] `.env.example` DB keys
-- [ ] Smoke both connection paths; `php -l`
+- [x] `Config::db*()` env methods with literal defaults
+- [x] `Database.php` DSN → methods + port
+- [x] `admin/model/pdo.php` env-driven (Config or local fallback)
+- [x] `.env.example` DB keys
+- [x] Smoke both connection paths; `php -l`
+
+## Implementation notes
+- Added `Config::dbHost()/dbPort()/dbName()/dbUser()/dbPass()/charset()`, all `self::env('DB_*',
+  <literal default>)` — same pattern as the existing `smtp*()` methods. `dbPort()` casts to
+  int like `smtpPort()`. The `DB_*` class constants are kept as the literal defaults (not
+  removed), so an absent `.env` behaves identically to before.
+- `Database.php`'s DSN builder now calls the `Config::db*()` methods and adds an explicit
+  `port=` segment (previously relied on the implicit default).
+- Traced `pdo.php`'s include chain (`public/admin/index.php:3` requires `vendor/autoload.php`
+  **before** `:20` includes `pdo.php`) — the autoloader IS reachable, so `pdo.php` calls
+  `\Codemoi\Core\Config::db*()` directly instead of adding a second env-reading mechanism.
+  `127.0.0.1` reconciled to `localhost` as the shared default (matches `Config::DB_HOST`,
+  preserves the XAMPP socket-connection path per the phase's risk note).
+- Found and fixed one more caller during the include-chain trace: root-level `create_table.php`
+  (a one-off migration script) includes `admin/model/pdo.php` directly **without** loading the
+  autoloader first — would have fataled with "Class Config not found" the next time it's run.
+  Added `require_once __DIR__ . '/vendor/autoload.php';` before its `pdo.php` include.
+- `.env.example` documents `DB_HOST/DB_PORT/DB_NAME/DB_USER/DB_PASS/DB_CHARSET` with a comment
+  noting they're safe to leave unset for local XAMPP.
+- Smoke-tested via PHP CLI (`Database::queryOne('SELECT 1')` and `pdo_query('SELECT 1')` both
+  succeed with no env set, connecting to the same local `codemoi2`) and via a live curl sweep
+  (admin login redirect, admin `list_product` session guard, client home, client
+  `product-list`) — zero new entries in `apache/logs/error.log`.
 
 ## Success criteria
 - Empty DB env → local `codemoi2` unchanged (client + admin both connect).

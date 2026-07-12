@@ -2,12 +2,17 @@
 
 /**
  * Mở kết nối đến CSDL sử dụng PDO
+ *
+ * Reads connection settings via Codemoi\Core\Config (env-driven, falls
+ * back to the local XAMPP defaults) — the autoloader is already required
+ * by public/admin/index.php before this file is included.
  */
 function pdo_get_connection()
 {
-    $dburl = "mysql:host=127.0.0.1;dbname=codemoi2;charset=utf8";
-    $username = 'root';
-    $password = '';
+    $dburl = "mysql:host=" . \Codemoi\Core\Config::dbHost() . ";port=" . \Codemoi\Core\Config::dbPort()
+        . ";dbname=" . \Codemoi\Core\Config::dbName() . ";charset=" . \Codemoi\Core\Config::charset();
+    $username = \Codemoi\Core\Config::dbUser();
+    $password = \Codemoi\Core\Config::dbPass();
 
     $conn = new PDO($dburl, $username, $password);
     $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);

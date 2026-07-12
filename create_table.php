@@ -1,4 +1,5 @@
 <?php
+require_once __DIR__ . '/vendor/autoload.php';
 include "admin/model/pdo.php";
 $sql = "CREATE TABLE IF NOT EXISTS coupons (
   id_coupon int(11) NOT NULL AUTO_INCREMENT,

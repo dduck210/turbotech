@@ -19,9 +19,10 @@ class Database
      */
     private static function connection(): PDO
     {
-        $dsn = 'mysql:host=' . Config::DB_HOST . ';dbname=' . Config::DB_NAME . ';charset=' . Config::CHARSET;
+        $dsn = 'mysql:host=' . Config::dbHost() . ';port=' . Config::dbPort()
+            . ';dbname=' . Config::dbName() . ';charset=' . Config::charset();
 
-        $conn = new PDO($dsn, Config::DB_USER, Config::DB_PASS);
+        $conn = new PDO($dsn, Config::dbUser(), Config::dbPass());
         $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
         return $conn;
