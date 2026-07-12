@@ -2,11 +2,11 @@
 <?php if (!empty($flash_success)): ?>
 <script>document.addEventListener("DOMContentLoaded",()=>Swal.fire({toast:true,position:"top-end",icon:"success",title:<?= json_encode($flash_success) ?>,showConfirmButton:false,timer:3000}));</script>
 <?php endif; ?>
-<?php $listuser = loadall_user();
+<?php $listuser = \Codemoi\Model\User::allAdmin();
 $listcmt = loadall_cmt();
 $listbill = loadall_bill(0);
-$listpro = loadall_pro();
-$ds_loai = loadall_loai(); ?>
+$listpro = \Codemoi\Model\Product::allAdmin();
+$ds_loai = \Codemoi\Model\Category::all(); ?>
 
 <div class="mb-8 flex items-center justify-between">
     <h1 class="text-3xl font-bold text-slate-800">Bảng điều khiển</h1>

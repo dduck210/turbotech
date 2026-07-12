@@ -25,14 +25,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && !Csrf::verify($_POST['_token'] ?? n
 //include dao để dùng các functione:
 
 include __DIR__ . '/../../admin/model/pdo.php';
-include __DIR__ . '/../../admin/model/category.php';
-include __DIR__ . '/../../admin/model/product.php';
-include __DIR__ . '/../../admin/model/user.php';
 include __DIR__ . '/../../admin/model/bill.php';
 include __DIR__ . '/../../admin/model/comment.php';
 include __DIR__ . '/../../admin/model/statistics.php';
 include __DIR__ . '/../../admin/model/question.php';
-include __DIR__ . '/../../admin/model/coupon.php';
 // controller
 // Strangler routing: 'dashboard'/'login'/'logout' (plus the empty/'/'
 // no-act fallback, which always rendered the dashboard too) are ported
