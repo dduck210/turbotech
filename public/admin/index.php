@@ -7,6 +7,7 @@ use Codemoi\Core\Csrf;
 use Codemoi\Core\Router;
 use Codemoi\Controller\Admin\AuthController;
 use Codemoi\Controller\Admin\DashboardController;
+use Codemoi\Controller\Admin\CategoryController;
 
 // Every admin POST action goes through here — one guard covers the whole
 // panel. Failure sets a flash message and bounces back to the referring
@@ -39,99 +40,23 @@ $router = new Router();
 $router->add('dashboard', [DashboardController::class, 'index']);
 $router->add('login', [AuthController::class, 'login']);
 $router->add('logout', [AuthController::class, 'logout']);
+$router->add('add_category', [CategoryController::class, 'add']);
+$router->add('list_category', [CategoryController::class, 'list']);
+$router->add('edit_category', [CategoryController::class, 'edit']);
+$router->add('update_category', [CategoryController::class, 'update']);
+$router->add('delete_cate', [CategoryController::class, 'delete']);
 $router->setDefault([DashboardController::class, 'index']);
 
 $act = $_GET['act'] ?? '';
-$portedActs = ['dashboard', '/', 'login', 'logout', ''];
+$portedActs = [
+    'dashboard', '/', 'login', 'logout', '',
+    'add_category', 'list_category', 'edit_category', 'update_category', 'delete_cate',
+];
 
 if (in_array($act, $portedActs, true)) {
     $router->dispatch($act === '/' ? '' : $act);
 } else {
     switch ($act) {
-        // CONTROLLER LOẠI:
-        case "add_category":
-            if (isset($_SESSION['admin'])) {
-                if (isset($_POST['btn_add']) && ($_POST['btn_add'])) {
-                    $name_cate = $_POST['name_cate'];
-                    if ($name_cate == null) {
-                        echo '<script>document.addEventListener("DOMContentLoaded",()=>Swal.fire({toast:true,position:"top-end",icon:"error",title:"Vui lòng nhập đầy đủ !",showConfirmButton:false,timer:3000}));</script>';
-                    } else {
-                        them_loai($name_cate);
-                        echo '<script>document.addEventListener("DOMContentLoaded",()=>Swal.fire({toast:true,position:"top-end",icon:"success",title:"Thêm loại thành công!",showConfirmButton:false,timer:3000}));</script>';
-                    }
-                }
-                render('add_category');
-            } else {
-                header("location: index.php?act=login");
-            }
-
-            break;
-        case "list_category":
-
-            if (isset($_SESSION['admin'])) {
-                $ds_loai = loadall_loai();
-                $flash_error = $_SESSION['flash_error'] ?? null;
-                $flash_success = $_SESSION['flash_success'] ?? null;
-                unset($_SESSION['flash_error'], $_SESSION['flash_success']);
-                render(
-                    'list_category',
-                    ['ds_loai' => $ds_loai, 'flash_error' => $flash_error, 'flash_success' => $flash_success]
-                );
-            } else {
-                header("location: index.php?act=login");
-            }
-
-            break;
-        case "edit_category":
-
-            if (isset($_SESSION['admin'])) {
-                if (isset($_GET['id_cate']) && ($_GET['id_cate'] > 0)) {
-                    $id_cate = $_GET['id_cate'];
-                    $one_loai = loadone_loai($id_cate);
-                }
-                render(
-                    'update_category',
-                    ['one_loai' => $one_loai]
-                );
-            } else {
-                header("location: index.php?act=login");
-            }
-
-            break;
-        case "update_category":
-            if (isset($_POST['btn_update']) && ($_POST['btn_update'])) {
-                $id_cate = $_POST['id_cate'];
-                $name_cate = trim($_POST['name_cate']);
-                if ($name_cate === '') {
-                    echo '<script>document.addEventListener("DOMContentLoaded",()=>Swal.fire({toast:true,position:"top-end",icon:"error",title:"Vui lòng nhập tên loại !",showConfirmButton:false,timer:3000}));</script>';
-                    $one_loai = loadone_loai($id_cate);
-                    render('update_category', ['one_loai' => $one_loai]);
-                    break;
-                }
-                capnhat_loai($id_cate, $name_cate);
-                $_SESSION['flash_success'] = 'Cập nhật loại thành công!';
-            }
-            header('location:index.php?act=list_category');
-            break;
-        case "delete_cate":
-            if (isset($_GET['id_cate']) && ($_GET['id_cate'] > 0)) {
-                $id_cate = $_GET['id_cate'];
-                try {
-                    xoa_loai($id_cate);
-                } catch (PDOException $e) {
-                    // SQLSTATE 23000: category still referenced by a product
-                    // (lk_cate_product) — block the delete with a clear
-                    // message instead of the raw fatal error.
-                    if ($e->getCode() === '23000') {
-                        $_SESSION['flash_error'] = 'Không thể xoá loại sản phẩm này vì vẫn còn sản phẩm thuộc loại này.';
-                    } else {
-                        throw $e;
-                    }
-                }
-            }
-            header('location:index.php?act=list_category');
-            break;
-
         // CONTROLLER SẢN PHẨM:
         case "add_product":
 

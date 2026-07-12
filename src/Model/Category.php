@@ -34,4 +34,37 @@ class Category
 
         return " ";
     }
+
+    /**
+     * Look up a single category by id. Mirrors old `loadone_loai($id_cate)`.
+     *
+     * @return array|false
+     */
+    public static function find(int $idCate)
+    {
+        return Database::queryOne("SELECT * FROM category WHERE id_cate = ?", $idCate);
+    }
+
+    /** Mirrors old `them_loai($name_cate)`. */
+    public static function create(string $nameCate): void
+    {
+        Database::execute("INSERT INTO category (name_cate) VALUES (?)", $nameCate);
+    }
+
+    /** Mirrors old `capnhat_loai($id_cate, $name_cate)`. */
+    public static function update(int $idCate, string $nameCate): void
+    {
+        Database::execute("UPDATE category SET name_cate = ? WHERE id_cate = ?", $nameCate, $idCate);
+    }
+
+    /**
+     * Mirrors old `xoa_loai($id_cate)`. Throws PDOException (SQLSTATE 23000)
+     * when the category is still referenced by a product — callers guard
+     * this the same way the old code did (see
+     * `Controller\Admin\CategoryController::delete()`).
+     */
+    public static function delete(int $idCate): void
+    {
+        Database::execute("DELETE FROM category WHERE id_cate = ?", $idCate);
+    }
 }
