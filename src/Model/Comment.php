@@ -28,4 +28,24 @@ class Comment
         $sql = "SELECT * FROM comment WHERE id_pro = ? ORDER BY id_cmt desc limit 0,8";
         return Database::query($sql, $idpro);
     }
+
+    /**
+     * Every comment across all products (for moderation), joined with the
+     * product so the admin list can show which product each comment is on.
+     * Mirrors old `admin/model/comment.php::loadall_cmt()`.
+     */
+    public static function allAdmin(): array
+    {
+        $sql = "SELECT * FROM comment c inner join product p on c.id_pro = p.id_pro ORDER BY id_cmt DESC";
+        return Database::query($sql);
+    }
+
+    /**
+     * Mirrors old `admin/model/comment.php::remove_cmt($id_cmt)`. No FK
+     * references `comment` (Phase 06 audit), so this can't fail on delete.
+     */
+    public static function delete(int $idCmt): void
+    {
+        Database::execute("DELETE FROM comment WHERE id_cmt = ?", $idCmt);
+    }
 }

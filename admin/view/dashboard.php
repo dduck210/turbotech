@@ -3,7 +3,7 @@
 <script>document.addEventListener("DOMContentLoaded",()=>Swal.fire({toast:true,position:"top-end",icon:"success",title:<?= json_encode($flash_success) ?>,showConfirmButton:false,timer:3000}));</script>
 <?php endif; ?>
 <?php $listuser = \Codemoi\Model\User::allAdmin();
-$listcmt = loadall_cmt();
+$listcmt = \Codemoi\Model\Comment::allAdmin();
 $listbill = \Codemoi\Model\Order::allAdmin();
 $listpro = \Codemoi\Model\Product::allAdmin();
 $ds_loai = \Codemoi\Model\Category::all(); ?>

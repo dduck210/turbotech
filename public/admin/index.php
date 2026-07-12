@@ -12,6 +12,8 @@ use Codemoi\Controller\Admin\ProductController;
 use Codemoi\Controller\Admin\UserController;
 use Codemoi\Controller\Admin\CouponController;
 use Codemoi\Controller\Admin\BillController;
+use Codemoi\Controller\Admin\CommentController;
+use Codemoi\Controller\Admin\QuestionController;
 
 // Every admin POST action goes through here — one guard covers the whole
 // panel. Failure sets a flash message and bounces back to the referring
@@ -66,6 +68,10 @@ $router->add('approve_bill', [BillController::class, 'approve']);
 $router->add('ship_bill', [BillController::class, 'ship']);
 $router->add('cancel_bill', [BillController::class, 'cancel']);
 $router->add('billdetail', [BillController::class, 'detail']);
+$router->add('list_cmt', [CommentController::class, 'list']);
+$router->add('delete_cmt', [CommentController::class, 'delete']);
+$router->add('list_ques', [QuestionController::class, 'list']);
+$router->add('delete_ques', [QuestionController::class, 'delete']);
 $router->setDefault([DashboardController::class, 'index']);
 
 $act = $_GET['act'] ?? '';
@@ -76,35 +82,13 @@ $portedActs = [
     'list_user', 'edit_user', 'update_user', 'delete_usser',
     'list_coupon', 'add_coupon', 'delete_coupon', 'edit_coupon', 'update_coupon',
     'list_bill', 'edit_bill', 'update_bill', 'approve_bill', 'ship_bill', 'cancel_bill', 'billdetail',
+    'list_cmt', 'delete_cmt', 'list_ques', 'delete_ques',
 ];
 
 if (in_array($act, $portedActs, true)) {
     $router->dispatch($act === '/' ? '' : $act);
 } else {
     switch ($act) {
-        //CONTROLLER BÌNH LUẬN
-        //show list: 
-        case 'list_cmt':
-            if (isset($_SESSION['admin'])) {
-                $listcmt = loadall_cmt();
-                render(
-                    'list_comment',
-                    ['listcmt' => $listcmt]
-                );
-            } else {
-                header("location: index.php?act=login");
-            }
-
-            break;
-        //xóa bì-nh luận: 
-        case 'delete_cmt':
-            if (isset($_GET['idcmt']) && ($_GET['idcmt']) > 0) {
-                $id_cmt = $_GET['idcmt'];
-                remove_cmt($id_cmt);
-            }
-            header('location: index.php?act=list_cmt');
-            break;
-
         //CONTROLLER THỐNG KÊ
         // Danh sách thống kê
         case 'list_thongke':
@@ -129,28 +113,6 @@ if (in_array($act, $portedActs, true)) {
                 header("location: index.php?act=login");
             }
             break;
-        // Danh sách hỏi đáp
-        case 'list_ques':
-            if (isset($_SESSION['admin'])) {
-                $listques = question();
-                render(
-                    'list_question',
-                    ['listques' => $listques]
-                );
-            } else {
-                header("location: index.php?act=login");
-            }
-            break;
-        //xóa hỏi đáp: 
-        case 'delete_ques':
-            if (isset($_GET['id_ques']) && ($_GET['id_ques']) > 0) {
-                $id_ques = $_GET['id_ques'];
-                delete_ques($id_ques);
-            }
-            header('location: index.php?act=list_ques');
-            break;
-
-
         default:
             // Unreachable in practice: $portedActs above already routes
             // every unregistered/empty `act` to DashboardController via
