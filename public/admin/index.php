@@ -8,6 +8,7 @@ use Codemoi\Core\Router;
 use Codemoi\Controller\Admin\AuthController;
 use Codemoi\Controller\Admin\DashboardController;
 use Codemoi\Controller\Admin\CategoryController;
+use Codemoi\Controller\Admin\ProductController;
 
 // Every admin POST action goes through here — one guard covers the whole
 // panel. Failure sets a flash message and bounces back to the referring
@@ -45,144 +46,25 @@ $router->add('list_category', [CategoryController::class, 'list']);
 $router->add('edit_category', [CategoryController::class, 'edit']);
 $router->add('update_category', [CategoryController::class, 'update']);
 $router->add('delete_cate', [CategoryController::class, 'delete']);
+$router->add('add_product', [ProductController::class, 'add']);
+$router->add('list_product', [ProductController::class, 'list']);
+$router->add('edit_product', [ProductController::class, 'edit']);
+$router->add('update_product', [ProductController::class, 'update']);
+$router->add('delete_product', [ProductController::class, 'delete']);
 $router->setDefault([DashboardController::class, 'index']);
 
 $act = $_GET['act'] ?? '';
 $portedActs = [
     'dashboard', '/', 'login', 'logout', '',
     'add_category', 'list_category', 'edit_category', 'update_category', 'delete_cate',
+    'add_product', 'list_product', 'edit_product', 'update_product', 'delete_product',
 ];
 
 if (in_array($act, $portedActs, true)) {
     $router->dispatch($act === '/' ? '' : $act);
 } else {
     switch ($act) {
-        // CONTROLLER SẢN PHẨM:
-        case "add_product":
-
-            if (isset($_SESSION['admin'])) {
-                if (isset($_POST['btn_add']) && ($_POST['btn_add'])) {
-                    // $id_pro = $_POST['id_pro'];
-                    $name_pro = $_POST['name_pro'];
-                    $price = $_POST['price'];
-                    $discount = $_POST['discount'];
-                    $short_des = $_POST['short_des'];
-                    $detail_des = $_POST['detail_des'];
-                    $idcate = $_POST['idcate'];
-                    $stock = $_POST['stock'] ?? 0;
-                    $stock_message = trim($_POST['stock_message'] ?? '') ?: null;
-                    $img_pro = $_FILES['img_pro']['name'];
-                    $target_dir = "./uploads/";
-                    $target_file = $target_dir . basename($_FILES["img_pro"]["name"]);
-                    $extension = pathinfo($img_pro, PATHINFO_EXTENSION);
-
-                    $allowed_extensions = array("jpg", "jpeg", "png", "gif");
-
-                    (move_uploaded_file($_FILES["img_pro"]["tmp_name"], $target_file));
-                    if ($name_pro == null || $price == null || $short_des == null || $idcate == null) {
-                        echo '<script>document.addEventListener("DOMContentLoaded",()=>Swal.fire({toast:true,position:"top-end",icon:"error",title:"Vui lòng nhập đầy đủ nội dung !",showConfirmButton:false,timer:3000}));</script>';
-                    } elseif ($price <= 0) {
-                        echo '<script>document.addEventListener("DOMContentLoaded",()=>Swal.fire({toast:true,position:"top-end",icon:"error",title:"Giá nhập không đúng !",showConfirmButton:false,timer:3000}));</script>';
-                    } elseif ($stock < 0) {
-                        echo '<script>document.addEventListener("DOMContentLoaded",()=>Swal.fire({toast:true,position:"top-end",icon:"error",title:"Số lượng tồn kho không đúng !",showConfirmButton:false,timer:3000}));</script>';
-                    } elseif (!in_array($extension, $allowed_extensions)) {
-                        echo '<script>document.addEventListener("DOMContentLoaded",()=>Swal.fire({toast:true,position:"top-end",icon:"error",title:"File ảnh không phù hợp !",showConfirmButton:false,timer:3000}));</script>';
-                    } else {
-                        add_pro($name_pro, $price, $discount, $img_pro, $short_des, $detail_des, $idcate, $stock, $stock_message);
-                        echo '<script>document.addEventListener("DOMContentLoaded",()=>Swal.fire({toast:true,position:"top-end",icon:"success",title:"Thêm sản phẩm thành công !",showConfirmButton:false,timer:3000}));</script>';
-                    }
-                }
-                $ds_loai = loadall_loai();
-                render(
-                    'add_product',
-                    ['ds_loai' => $ds_loai]
-                );
-            } else {
-                header("location: index.php?act=login");
-            }
-
-            break;
-        case "list_product":
-
-            if (isset($_SESSION['admin'])) {
-                if (isset($_POST['btn_filter']) && ($_POST['btn_filter'])) {
-                    $idcate = $_POST['idcate'];
-                } else {
-                    $idcate = 0;
-                }
-                $ds_loai = loadall_loai();
-                $listpro = loadall_pro($idcate);
-                $flash_error = $_SESSION['flash_error'] ?? null;
-                $flash_success = $_SESSION['flash_success'] ?? null;
-                unset($_SESSION['flash_error'], $_SESSION['flash_success']);
-                render(
-                    "list_product",
-                    ['ds_loai' => $ds_loai, 'listpro' => $listpro, 'idcate' => $idcate, 'flash_error' => $flash_error, 'flash_success' => $flash_success]
-                );
-            } else {
-                header("location: index.php?act=login");
-            }
-
-            break;
-        case "edit_product":
-
-            if (isset($_SESSION['admin'])) {
-                if (isset($_GET['id_pro']) && $_GET['id_pro'] > 0) {
-                    $id_pro = $_GET['id_pro'];
-                    $pro = loadone_pro($id_pro);
-                }
-
-                $ds_loai = loadall_loai();
-                render(
-                    'update_product',
-                    ['ds_loai' => $ds_loai, 'pro' => $pro]
-                );
-            } else {
-                header("location: index.php?act=login");
-            }
-
-            break;
-        case "update_product":
-            if (isset($_POST['btn_update']) && $_POST['btn_update'] > 0) {
-                $id_pro = $_POST['id_pro'];
-                $idcate = $_POST['idcate'];
-                $name_pro = $_POST['name_pro'];
-                $price = $_POST['price'];
-                $discount = $_POST['discount'];
-                $short_des = $_POST['short_des'];
-                $detail_des = $_POST['detail_des'];
-                $stock = $_POST['stock'] ?? 0;
-                $stock_message = trim($_POST['stock_message'] ?? '') ?: null;
-                $img_pro = $_FILES['img_pro']['name'];
-                $target_dir = "./uploads/";
-                $target_file = $target_dir . basename($_FILES["img_pro"]["name"]);
-                (move_uploaded_file($_FILES["img_pro"]["tmp_name"], $target_file));
-                update_pro($id_pro, $name_pro, $price, $discount, $short_des, $detail_des, $img_pro, $idcate, $stock, $stock_message);
-                $_SESSION['flash_success'] = 'Cập nhật sản phẩm thành công!';
-                header('location:index.php?act=list_product');
-            }
-            break;
-        case "delete_product":
-            if (isset($_GET['id_pro']) && ($_GET['id_pro']) > 0) {
-                $id_pro = $_GET['id_pro'];
-                try {
-                    remove_pro($id_pro);
-                } catch (PDOException $e) {
-                    // SQLSTATE 23000: product already referenced by an order
-                    // line in `cart` (lk_pro_cart) — deleting it would break
-                    // that order's history, so block it with a clear message
-                    // instead of the raw fatal error.
-                    if ($e->getCode() === '23000') {
-                        $_SESSION['flash_error'] = 'Không thể xoá sản phẩm này vì đã có đơn hàng liên quan.';
-                    } else {
-                        throw $e;
-                    }
-                }
-            }
-            header('location:index.php?act=list_product');
-            break;
-
-        // CONTROLLER NGƯỜI DÙNG: 
+        // CONTROLLER NGƯỜI DÙNG:
         // danh sách người dùng
         case 'list_user':
 

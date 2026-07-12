@@ -147,4 +147,94 @@ class Product
         $row = Database::queryOne($sql, $id_pro);
         return $row !== false && (int) $row['stock'] >= (int) $quantity;
     }
+
+    /**
+     * All products, optionally filtered by category — the admin product
+     * list's simpler filter (no keyword/price range, unlike `search()`).
+     * Mirrors old `admin/model/product.php::loadall_pro($idcate = 0)`.
+     */
+    public static function allAdmin(int $idcate = 0): array
+    {
+        $sql = "SELECT * FROM product WHERE 1";
+        $args = [];
+        if ($idcate > 0) {
+            $sql .= " AND idcate = ?";
+            $args[] = $idcate;
+        }
+        $sql .= " ORDER BY id_pro DESC";
+
+        return Database::query($sql, ...$args);
+    }
+
+    /** Mirrors old `add_pro(...)`. */
+    public static function create(
+        string $namePro,
+        string $price,
+        string $discount,
+        string $imgPro,
+        string $shortDes,
+        string $detailDes,
+        int $idcate,
+        int $stock = 0,
+        ?string $stockMessage = null
+    ): void {
+        $sql = "INSERT INTO product (name_pro, price, discount, img_pro, short_des, detail_des, idcate, stock, stock_message) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        Database::execute($sql, $namePro, $price, $discount, $imgPro, $shortDes, $detailDes, $idcate, $stock, $stockMessage);
+    }
+
+    /**
+     * Mirrors old `update_pro(...)`. When `$imgPro` is empty, the image
+     * column is left untouched (same "leave it if no new file" behavior
+     * as the old two-branch SQL).
+     */
+    public static function update(
+        int $idPro,
+        string $namePro,
+        string $price,
+        string $discount,
+        string $shortDes,
+        string $detailDes,
+        string $imgPro,
+        int $idcate,
+        int $stock = 0,
+        ?string $stockMessage = null
+    ): void {
+        if ($imgPro !== '') {
+            $sql = "UPDATE product SET
+        name_pro = ?,
+        price = ?,
+        discount = ?,
+        short_des = ?,
+        detail_des = ?,
+        img_pro = ?,
+        idcate = ?,
+        stock = ?,
+        stock_message = ?
+        WHERE id_pro = ?";
+            Database::execute($sql, $namePro, $price, $discount, $shortDes, $detailDes, $imgPro, $idcate, $stock, $stockMessage, $idPro);
+            return;
+        }
+
+        $sql = "UPDATE product SET
+        name_pro = ?,
+        price = ?,
+        discount = ?,
+        short_des = ?,
+        detail_des = ?,
+        idcate = ?,
+        stock = ?,
+        stock_message = ?
+        WHERE id_pro = ?";
+        Database::execute($sql, $namePro, $price, $discount, $shortDes, $detailDes, $idcate, $stock, $stockMessage, $idPro);
+    }
+
+    /**
+     * Mirrors old `remove_pro($id_pro)`. Throws PDOException (SQLSTATE
+     * 23000) when the product is still referenced by a cart/order line —
+     * callers guard this (see `Controller\Admin\ProductController::delete()`).
+     */
+    public static function delete(int $idPro): void
+    {
+        Database::execute("DELETE FROM product WHERE id_pro = ?", $idPro);
+    }
 }
