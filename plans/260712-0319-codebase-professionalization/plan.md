@@ -39,7 +39,7 @@ Legacy PHP + MySQL (`codemoi2`), Apache, `public/` webroot. Client side already 
 | 07 | [Admin MVC foundation](phase-07-admin-mvc-foundation.md) | 3 | P2 | 05 | DONE |
 | 08 | [Admin controllers: auth/dashboard + CRUD](phase-08-admin-controllers-crud.md) | 3 | P2 | 07 | DONE |
 | 09 | [Admin controllers: bill/moderation/stats](phase-09-admin-controllers-bill-mod.md) | 3 | P2 | 07 | DONE |
-| 10 | [Admin regression sweep](phase-10-admin-regression.md) | 3 | P1 | 08,09 | no |
+| 10 | [Admin regression sweep](phase-10-admin-regression.md) | 3 | P1 | 08,09 | DONE |
 | 11 | [UI/UX audit (read-only)](phase-11-uiux-audit.md) | 4 | P3 | — | YES (review issue list) |
 | 12 | [UI/UX polish fixes](phase-12-uiux-polish.md) | 4 | P3 | 10,11 | YES (review before/after) |
 
