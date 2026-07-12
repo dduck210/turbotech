@@ -65,14 +65,14 @@
                                 <div
                                     class="w-14 h-14 rounded-lg border border-slate-200 overflow-hidden bg-white flex items-center justify-center">
                                     <img src="./uploads/<?= e($pro['img_pro']) ?>"
-                                        alt="<?= htmlspecialchars($pro['name_pro']) ?>"
+                                        alt="<?= e($pro['name_pro']) ?>"
                                         class="max-w-full max-h-full object-cover">
                                 </div>
                             </td>
                             <td class="px-4 py-4">
                                 <div class="font-medium text-slate-800 line-clamp-2"><?= e($pro['name_pro']) ?></div>
                                 <div class="text-xs text-slate-500 mt-1 line-clamp-1"
-                                    title="<?= htmlspecialchars($pro['short_des']) ?>"><?= e($pro['short_des']) ?></div>
+                                    title="<?= e($pro['short_des']) ?>"><?= e($pro['short_des']) ?></div>
                             </td>
                             <td class="px-4 py-4 font-semibold text-brand-600">
                                 <?= number_format($pro['price']) ?> ₫
@@ -81,7 +81,7 @@
                                 <?php if ($pro['discount'] > 0): ?>
                                     <span
                                         class="inline-flex items-center justify-center px-2.5 py-1 text-xs font-bold rounded-full bg-red-100 text-red-600">
-                                        -<?= $pro['discount'] ?>%
+                                        -<?= e($pro['discount']) ?>%
                                     </span>
                                 <?php else: ?>
                                     <span class="text-slate-400">-</span>
@@ -96,7 +96,7 @@
                                 <?php else : ?>
                                     <span
                                         class="inline-flex items-center justify-center px-2.5 py-1 border border-green-200 text-xs font-medium rounded-full bg-green-50 text-green-700">
-                                        <?= $pro['stock'] ?>
+                                        <?= e($pro['stock']) ?>
                                     </span>
                                 <?php endif; ?>
                             </td>
@@ -110,7 +110,7 @@
                                         title="Sửa">
                                         <i class="fa-solid fa-pen-to-square"></i>
                                     </a>
-                                    <a href="./index.php?act=delete_product&id_pro=<?= e($pro['id_pro']) ?>&_token=<?= urlencode(\Codemoi\Core\Csrf::token()) ?>"
+                                    <a href="./index.php?act=delete_product&id_pro=<?= e($pro['id_pro']) ?>"
                                         class="p-2 text-red-600 bg-red-50 rounded-lg hover:bg-red-100 transition-all active:scale-90"
                                         data-confirm="Bạn có chắc chắn muốn xóa không?" title="Xóa">
                                         <i class="fa-solid fa-trash"></i>

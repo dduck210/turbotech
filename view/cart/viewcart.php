@@ -41,12 +41,12 @@
                             ?>
                                 <tr>
                                     <td class="px-4 py-3">
-                                        <a href="<?= $prodetail ?>" class="block h-16 w-16 overflow-hidden rounded-lg bg-ink-100">
+                                        <a href="<?= e($prodetail) ?>" class="block h-16 w-16 overflow-hidden rounded-lg bg-ink-100">
                                             <img src="admin/uploads/<?= e($cart[2]) ?>" alt="<?= e($cart[1]) ?>" class="h-full w-full object-cover" />
                                         </a>
                                     </td>
                                     <td class="px-4 py-3">
-                                        <a href="<?= $prodetail ?>" class="font-heading font-semibold text-ink-900 hover:text-brand-600 transition-colors"><?= e($cart[1]) ?></a>
+                                        <a href="<?= e($prodetail) ?>" class="font-heading font-semibold text-ink-900 hover:text-brand-600 transition-colors"><?= e($cart[1]) ?></a>
                                     </td>
                                     <td class="px-4 py-3 text-ink-700"><?= number_format($cart[3]) ?> ₫</td>
                                     <td class="px-4 py-3">
@@ -58,7 +58,7 @@
                                     </td>
                                     <td class="px-4 py-3 font-semibold text-ink-900"><?= number_format($cart[5]) ?> ₫</td>
                                     <td class="px-4 py-3 text-center">
-                                        <a href="<?= $removepro ?>" title="Xóa sản phẩm"
+                                        <a href="<?= e($removepro) ?>" title="Xóa sản phẩm"
                                             data-confirm="Bạn có chắc chắn muốn xóa sản phẩm này khỏi giỏ hàng?"
                                             class="inline-flex h-11 w-11 items-center justify-center rounded-full text-red-600 hover:bg-red-50 transition-colors focus:outline-none focus:ring-2 focus:ring-brand-500">
                                             <i class="fa fa-trash" aria-hidden="true"></i>

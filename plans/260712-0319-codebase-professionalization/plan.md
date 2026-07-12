@@ -18,8 +18,9 @@ Legacy PHP + MySQL (`codemoi2`), Apache, `public/` webroot. Client side already 
 
 ## Guiding principles
 - **YAGNI/KISS/DRY.** Reuse the existing `Config::env()` reader and `Core\Database`; do NOT invent
-  new frameworks. No new runtime dependencies (no Composer binary available — verified: cannot
-  `dump-autoload`; PSR-4 resolves new files under the already-mapped `src/` root at runtime).
+  new frameworks. No new runtime dependencies. Correction (found in Phase 03): a standalone
+  `composer.phar` IS available at `C:\xampp\htdocs\composer.phar` — `dump-autoload` works fine
+  (used to wire `src/Core/helpers.php` via Composer's `files` autoload entry).
 - **Strangler + always-runnable.** Every phase leaves the app runnable and manually testable on XAMPP.
   Lint with `C:\xampp\php\php.exe -l`. No automated test suite exists.
 - **Security first, refactor last.** Fix P1 vulns while the code is small and known; do the risky
@@ -33,11 +34,11 @@ Legacy PHP + MySQL (`codemoi2`), Apache, `public/` webroot. Client side already 
 | 02 | [CSRF protection](phase-02-csrf-protection.md) | 1 | P1 | — | DONE |
 | 03 | [XSS output-escaping audit + fix](phase-03-xss-escaping.md) | 1 | P1 | — | DONE |
 | 04 | [OTP hardening + redirect-exit fix](phase-04-otp-hardening.md) | 1 | P1 | — | DONE |
-| 05 | [DB layer env-config unification](phase-05-db-config-unification.md) | 2 | P2 | — | no |
-| 06 | [Error-handling FK guards + dead-table cleanup](phase-06-error-handling-cleanup.md) | 2 | P2 | — | YES (approve table drops) |
-| 07 | [Admin MVC foundation](phase-07-admin-mvc-foundation.md) | 3 | P2 | 05 | no |
-| 08 | [Admin controllers: auth/dashboard + CRUD](phase-08-admin-controllers-crud.md) | 3 | P2 | 07 | no |
-| 09 | [Admin controllers: bill/moderation/stats](phase-09-admin-controllers-bill-mod.md) | 3 | P2 | 07 | no |
+| 05 | [DB layer env-config unification](phase-05-db-config-unification.md) | 2 | P2 | — | DONE |
+| 06 | [Error-handling FK guards + dead-table cleanup](phase-06-error-handling-cleanup.md) | 2 | P2 | — | DONE |
+| 07 | [Admin MVC foundation](phase-07-admin-mvc-foundation.md) | 3 | P2 | 05 | DONE |
+| 08 | [Admin controllers: auth/dashboard + CRUD](phase-08-admin-controllers-crud.md) | 3 | P2 | 07 | DONE |
+| 09 | [Admin controllers: bill/moderation/stats](phase-09-admin-controllers-bill-mod.md) | 3 | P2 | 07 | DONE |
 | 10 | [Admin regression sweep](phase-10-admin-regression.md) | 3 | P1 | 08,09 | no |
 | 11 | [UI/UX audit (read-only)](phase-11-uiux-audit.md) | 4 | P3 | — | YES (review issue list) |
 | 12 | [UI/UX polish fixes](phase-12-uiux-polish.md) | 4 | P3 | 10,11 | YES (review before/after) |
@@ -46,7 +47,7 @@ Legacy PHP + MySQL (`codemoi2`), Apache, `public/` webroot. Client side already 
 - **01–04 (security)** need only current code — start immediately, any order. 03 (XSS) must land
   **before** 07–09 touch admin so the view-escaping pass is done once (admin MVC keeps `admin/view/*`
   in place, it only changes render call sites).
-- **05 (DB env)** unblocks admin MVC: 07 deletes `admin/model/pdo.php` and moves admin onto
+- **05 (DB env)** unblocks admin MVC: 09 deletes `admin/model/pdo.php` and moves admin onto
   `Core\Database`; that layer must be env-ready first. 05 also **satisfies Vercel plan phase-02**
   (see cross-plan note) — do it once.
 - **06** adds FK-violation guards to the current procedural admin `switch` (quick robustness win, do
@@ -75,11 +76,11 @@ Sequential-only conflicts are marked; **do not parallelize** a later phase over 
 |---------|--------|------|
 | `src/Model/User.php`, `admin/model/user.php` | 01 | password write/read paths |
 | `public/index.php` (client front controller — form dispatch), view `*` forms | 02, 03 | 02 wires CSRF verify; 03 escapes output — disjoint regions |
-| `public/admin/index.php` | 02 (CSRF), 06 (FK guards), 07–09 (rewrite) | **strictly sequential**; 07–09 supersede the file, must carry forward CSRF + guards |
+| `public/admin/index.php` | 02 (CSRF), 06 (FK guards), 07–09 (rewrite) | DONE — 07–09 fully superseded the old switch; strangler scaffold retired in 09 |
 | `view/*.php`, `admin/view/*.php` | 03 (escape), 12 (styling) | sequential; 03 edits echo output, 12 edits markup/classes |
-| `src/Core/Config.php`, `src/Core/Database.php`, `admin/model/pdo.php` | 05 (env), 07 (pdo.php deletion) | 05 makes env-ready; 07 removes `pdo.php` after admin moves to `Core\Database` |
+| `src/Core/Config.php`, `src/Core/Database.php`, `admin/model/pdo.php` | 05 (env), 09 (pdo.php deletion) | DONE — 05 made it env-ready, 09 deleted `pdo.php` (deferred from 07 per that phase's correction note) |
 | `src/Controller/PasswordController.php`, `view/user/verification.php` | 04 | OTP + redirect-exit fix |
-| `admin/model/{bill,category,comment,coupon,product,question,statistics,user}.php` | 06 (guards), 07 (superseded by `Model\*`) | 07 deletes these after controllers reuse shared models |
+| `admin/model/{bill,comment,question,statistics}.php` | 06 (guards), 09 (superseded by `Model\*`) | DONE — deleted in 09; `{category,coupon,product,user}.php` deleted in 08 |
 
 ## Global risks
 - **HIGH — password migration reversibility:** hashing is one-way. A bad migration locks every user
@@ -115,7 +116,7 @@ Sequential-only conflicts are marked; **do not parallelize** a later phase over 
 - Zero unescaped DB/user output in the 42 views (grep audit: every `<?= $dbvar ?>` wrapped or justified).
 - OTP is `random_int`-generated and expires (≤10 min); expired codes rejected.
 - `admin/model/pdo.php` deleted; single `Core\Database` connection layer; `public/admin/index.php`
-  is a thin front controller; no `admin/model/*.php` remain.
+  is a thin front controller; no `admin/model/*.php` remain. **Achieved in Phase 09.**
 - Phase 10 authenticated sweep: every admin `?act=` returns without new PHP errors vs. pre-refactor log.
 - UI audit issue list resolved or explicitly deferred with owner sign-off.
 - Local XAMPP behavior and `index.php?act=X` / `admin/index.php?act=X` URLs unchanged throughout.
@@ -140,4 +141,4 @@ share files with 03/04 and blocking on a new planning round would leave them exp
 ## Open questions
 - Hashing algorithm: `PASSWORD_BCRYPT` (portable, default) vs `PASSWORD_ARGON2ID` (stronger, needs PHP
   build support — verify on XAMPP). Default to `PASSWORD_DEFAULT` unless owner requires argon2.
-- Admin namespace: `Codemoi\Controller\Admin\*` vs `Codemoi\Admin\Controller\*` — decided in Phase 07.
+- Admin namespace: decided in Phase 07 — `Codemoi\Controller\Admin\*` (matches the client `src/Controller/` PSR-4 layout).

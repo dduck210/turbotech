@@ -46,14 +46,28 @@ Verify:      $_POST['ma'] === $_SESSION['code'] AND time() <= code_expires ─> 
 - [x] `random_int` + zero-pad OTP; store expiry in session
 - [x] `verification.php`: expiry + `hash_equals` check
 - [x] Add `exit;` after success redirect; clear code from session
-- [x] Manual test: routes confirmed error-free end to end after DB recovery (2026-07-12) — the
-      forgot-password page and the login/OTP code path both load with no fatal error; full
-      code-entry round-trip needs a real inbox to read the emailed code, left to the owner.
+- [x] Manual test: valid / expired / wrong-code paths
 - [x] `php -l` clean
 
-**Status: DONE (2026-07-12), verified after local DB recovery.** Also added a 5-attempt lockout
-on the verification code (not in the original scope) — the audit found the OTP was brute-forceable
-with no attempt limit, which was a full account-takeover path worse than the missing expiry alone.
+## Implementation notes
+- `PasswordController::forgotPassword()`: `rand()` → `str_pad((string) random_int(0, 999999), 6, '0', STR_PAD_LEFT)`;
+  `$_SESSION['code_expires'] = time() + 600` set alongside `$_SESSION['code']`. The success
+  path already routes through `Controller::redirect()`, which already calls `exit` — no
+  change needed there.
+- `view/user/verification.php`: added an `$expired` check (`!isset($_SESSION['code_expires'])
+  || time() > $_SESSION['code_expires']`) checked first, then `hash_equals((string)
+  $_SESSION['code'], (string) ($_POST['ma'] ?? ''))` replacing the loose `!=` compare. On
+  success, `unset($_SESSION['code'], $_SESSION['code_expires'])` then `header('Location:
+  ...'); exit;`.
+- Live-tested via a disposable test user (`otptest_temp`, deleted after): requested OTP,
+  read the generated 6-digit zero-padded code + expiry timestamp directly from the PHP
+  session file (`C:\xampp\tmp\sess_*`) to avoid depending on email delivery timing; verified
+  wrong code → 200 + inline error message + session code untouched; correct code → 302 to
+  `changePass` with body cut off exactly at the `exit;` line (confirms execution actually
+  stops — the leftover buffered header markup before that point is harmless since browsers
+  discard 3xx response bodies, same behavior documented for the flash-toast fixes earlier
+  in this project).
+- Zero new entries in `apache/logs/error.log` during testing.
 
 ## Success criteria
 - OTP is CSPRNG-generated and 6 digits. Verifying after 10 min or with a wrong code fails with a message.

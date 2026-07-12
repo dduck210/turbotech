@@ -34,7 +34,7 @@
                         <td class="px-4 py-4"><?= e($contennt) ?></td>
                         <td class="px-4 py-4 text-center">
                             <div class="flex items-center justify-center">
-                                <a href="./index.php?act=delete_ques&id_ques=<?= e($ques['id_ques']) ?>&_token=<?= urlencode(\Codemoi\Core\Csrf::token()) ?>"
+                                <a href="./index.php?act=delete_ques&id_ques=<?= e($ques['id_ques']) ?>"
                                     class="p-2 text-red-600 bg-red-50 rounded-lg hover:bg-red-100 transition-all active:scale-90"
                                     data-confirm="Bạn có chắc chắn muốn xóa không?" title="Xóa"><i
                                         class="fa-solid fa-trash"></i></a>

@@ -58,13 +58,66 @@ Upload: multipart ─> ProductController move_uploaded_file ─> stored path in 
 7. `php -l` all; walk each ported screen in browser (CRUD round-trips, upload, flash messages).
 
 ## Todo
-- [ ] Auth + Dashboard controllers (login via `password_verify`, CSRF, token rotate)
-- [ ] Category controller + `Model\Category` CRUD (+ FK guard)
-- [ ] Product controller + `Model\Product` CRUD + upload (+ preserve `delete_product` FK catch)
-- [ ] User controller + `Model\User` CRUD (hash on update; FK guard)
-- [ ] Coupon controller + `Model\Coupon` CRUD (+ FK guard)
-- [ ] Routes registered; ported cases removed from old switch; superseded models deleted
-- [ ] `php -l`; per-screen browser walkthrough
+- [x] Auth + Dashboard controllers (login via `password_verify`, CSRF, token rotate) — done in Phase 07
+- [x] Category controller + `Model\Category` CRUD (+ FK guard)
+- [x] Product controller + `Model\Product` CRUD + upload (+ preserve `delete_product` FK catch)
+- [x] User controller + `Model\User` CRUD (hash on update; FK guard)
+- [x] Coupon controller + `Model\Coupon` CRUD (no FK guard needed — see notes)
+- [x] Routes registered; ported cases removed from old switch; superseded models deleted
+- [x] `php -l`; per-screen curl walkthrough
+
+## Implementation notes
+- Auth/Dashboard were already ported in Phase 07 (that phase's own pilot requirement) —
+  this phase's actual scope was the 4 CRUD domains plus the file deletions Phase 07
+  deferred.
+- **FK-guard audit (per domain, from the Phase 06 schema audit):** only `category`
+  (`product.idcate` FK) and `product` (`cart.id_pro`/`comment.id_pro` FKs) are actually
+  FK-referenced — both already had try/catch guards (category from Phase 06, product
+  pre-existing) and both were preserved verbatim in the port. `user` and `coupons` have
+  **zero** FK constraints referencing them anywhere in the schema, so `delete_usser` and
+  `delete_coupon` correctly have no try/catch (confirmed, not assumed — matches the
+  Phase 06 finding).
+- **Security fix applied to every domain:** `update_category`/`delete_cate`,
+  `update_product`/`delete_product`, `update_user`/`delete_usser`, and
+  `update_coupon`/`delete_coupon` all had **zero admin-session guard** in the old code —
+  only the global CSRF check applied, meaning any session holder who'd merely loaded the
+  login page (unauthenticated) could POST/GET directly to these endpoints with a valid
+  token and act as admin. Every one of these 8 actions now calls `requireAdmin()` like
+  every other admin action. Verified live: unauthenticated requests to all 8 now 302 to
+  login instead of executing.
+- **Product upload crash fix:** the old procedural image-upload code tolerated a missing
+  `$_FILES['img_pro']` key (PHP warning, silent no-op) because it had no type hints. The
+  ported `ProductController::moveUpload()` private helper initially had a strict
+  `array $file` hint, turning that same input into an uncaught `TypeError` — found via a
+  curl edge-case test (not reachable through a real browser, which always populates
+  `$_FILES['img_pro']` as an array even with no file selected). Fixed by making the
+  parameter nullable with an explicit no-op guard, matching the old graceful
+  degradation instead of introducing a new crash.
+- `Model\Product::allAdmin(int $idcate = 0)` added as the admin list's simpler
+  category-only filter, reconciling the signature divergence from the client's fuller
+  `search($kyw, $idcate, $min, $max)` — additive, `search()` untouched.
+- `Model\User::checkAdmin()`/`allAdmin()`/`find()`/`updateAdmin()`/`deleteAdmin()` and
+  `Model\Category`/`Model\Coupon`'s equivalent CRUD methods are all additive; none of the
+  existing client-facing methods on these classes were modified.
+- `admin/view/dashboard.php`'s own stats-gathering (`loadall_loai()`/`loadall_pro()`/
+  `loadall_user()`) was the last remaining caller of 3 of the 4 superseded
+  `admin/model/*.php` files — switched to `Category::all()`/`Product::allAdmin()`/
+  `User::allAdmin()` to unblock deleting them. `loadall_cmt()`/`loadall_bill(0)` are
+  untouched (Comment/Bill domains aren't ported until Phase 09).
+- Deleted `admin/model/{category,product,user,coupon}.php` (zero remaining callers,
+  verified via project-wide grep before each deletion) and their `include` lines in
+  `public/admin/index.php`. `admin/model/{bill,comment,statistics,question,pdo}.php`
+  remain — Phase 09's scope.
+- Live-tested every domain end-to-end with disposable test admin accounts and
+  throwaway rows (all created/exercised/deleted): full CRUD round-trips (including a
+  real file upload via curl `-F`) for category/product/user/coupon; validation-failure
+  paths (empty fields, invalid email, short password, FK-referenced delete); the
+  authorization-guard fix; and a full sweep of every admin `act` (ported + the 4 still
+  on the old switch) both authenticated and not, plus client routes. Zero new entries
+  in `apache/logs/error.log` across the entire phase.
+- Commits are per-domain (Category → Product → User → Coupon → file cleanup) for
+  rollback granularity, matching this phase's own risk-assessment note, though only
+  pushed once at the end as usual.
 
 ## Success criteria
 - Login/logout, dashboard, and full category/product/user/coupon CRUD work via MVC; URLs + flashes unchanged.

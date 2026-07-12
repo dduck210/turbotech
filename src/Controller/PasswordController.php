@@ -52,8 +52,6 @@ class PasswordController extends Controller
                         $_SESSION['mail'] = $email;
                         $_SESSION['code'] = $code;
                         $_SESSION['code_expires'] = time() + 600;
-                        $_SESSION['code_attempts'] = 0;
-                        unset($_SESSION['otp_verified']);
                         $this->redirect('index.php?act=verification');
                     }
 

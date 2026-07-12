@@ -55,14 +55,47 @@ JS context     ─> json_encode($v) (already safe — leave as-is)
 - [x] Verify no double-encoding, no touched `json_encode` echoes
 - [x] `php -l` clean
 
-**Status: DONE (2026-07-12).** All 41 tracked views (client `view/*`, `public/view/comment-form.php`,
-admin `admin/view/*`) escaped; ~84 echoes wrapped in admin views alone. `dashboard.php`'s
-JS-string-literal context (`name_cate` inside `'...'`) fixed with `json_encode()` instead of `e()`
-since that's JS context, not HTML — caught during verification, not part of the original per-file
-plan. Concatenated URL variables (`$prodetail`, `$removepro`, `$linkpro`, etc.) escaped at build time
-so their later bare echo is already safe. Untracked legacy Vietnamese-named duplicate files
-(`view/sanpham/`, `admin/view/comment.php`, etc.) deliberately left untouched — dead pre-refactor
-cruft, not part of the served app.
+## Implementation notes
+- `e()` added at `src/Core/helpers.php`, autoloaded via Composer's `files` array
+  (`composer.json` → `autoload.files`) instead of manual `require_once` in each front
+  controller — `composer dump-autoload` was actually available (`composer.phar` in
+  `C:\xampp\htdocs`), so no per-bootstrap wiring was needed.
+- All 19 client `view/*.php` + `public/view/*.php` files and 23 admin `admin/view/*.php`
+  files audited; every HTML-context DB/user echo now wrapped in `e()`.
+- Stored-XSS priority target verified: `public/view/comment-form.php:58-61` — comment
+  `content`, `full_name`, `user_name`, `comment_date` all `e()`-wrapped at the listing
+  loop. `admin/view/list_comment.php` and `admin/view/list_question.php` (other
+  free-text end-user input) fixed the same way.
+- JS-context echoes (Chart.js data in `admin/view/dashboard.php`, flash-toast titles)
+  use `json_encode()` — 3 pre-existing manual-single-quote JS-injection risks in
+  `dashboard.php` were fixed by switching to `json_encode()`.
+- Documented CKEditor exception (intentionally NOT escaped, per field is
+  admin-authored rich HTML): `product.detail_des`, both at
+  `admin/view/{add,update}_product.php` (the edit textarea) and
+  `view/product/product-detail.php:150` (the client display), each with an inline
+  comment explaining why.
+- Final full-directory grep sweep of `view/` and `admin/view/` confirms every
+  remaining unescaped `<?= $var ?>`/`echo $var` is either a literal PHP-controlled
+  string (ternaries producing CSS classes, `selected` attributes, hardcoded
+  `array('0' => ..., '1' => ...)` option lists) or one of the two documented
+  CKEditor exceptions above — nothing DB/user-sourced left unescaped.
+- Live-tested: client home, product-list, admin login, admin `add_product` (session
+  guard redirect) all return expected status codes with zero new PHP
+  warnings/errors/fatals in `apache/logs/error.log` during the regression pass.
+
+## Bugs fixed opportunistically while auditing (not the primary goal of this phase)
+- `admin/view/dashboard.php`: 3 Chart.js data echoes were manually wrapped in single
+  quotes to build JS array literals — a real JS-injection risk if a category name
+  contained a quote/backslash. Switched to `json_encode()`.
+- `admin/view/add_product.php`: category `<option>` tag was missing quotes around its
+  `value` attribute entirely (`value=' . $id_cate . '` — no surrounding `"`). Fixed
+  alongside the escaping fix.
+- `view/user/login.php`'s `$noti_success` and `admin/view/list_bill.php`'s
+  `$user_detail`: dead variables, never actually set by the corresponding controller —
+  left in place but their echo points escaped anyway for defense-in-depth/consistency.
+  Same treatment applied to `admin/view/add_product.php`'s `$noticepro`.
+- `view/user/myaccount.php`: removed a hidden `<input>` that leaked the logged-in
+  user's password hash into page HTML (dead field, never read by `AccountController`).
 
 ## Success criteria
 - Grep audit: no HTML-context `<?= $dbVar ?>` remains unwrapped (each is `e()`-wrapped or justified as

@@ -23,11 +23,11 @@ if (is_array($one_coupon)) {
     <div class="p-6">
         <form action="index.php?act=update_coupon" method="POST">
 <?= \Codemoi\Core\Csrf::field() ?>
-            <input type="hidden" name="id_coupon" value="<?= isset($id_coupon) ? e($id_coupon) : '' ?>">
+            <input type="hidden" name="id_coupon" value="<?= e($id_coupon ?? '') ?>">
             <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
                 <div>
                     <label class="block text-sm font-medium text-slate-700 mb-2">Mã giảm giá (Code) *</label>
-                    <input type="text" name="code" value="<?= isset($code) ? e($code) : '' ?>" required
+                    <input type="text" name="code" value="<?= e($code ?? '') ?>" required
                         class="w-full rounded-lg border-slate-300 px-4 py-2 border focus:ring-2 focus:ring-brand-500 outline-none transition-all uppercase">
                 </div>
 
@@ -45,13 +45,13 @@ if (is_array($one_coupon)) {
                 <div>
                     <label class="block text-sm font-medium text-slate-700 mb-2">Mức giảm *</label>
                     <input type="number" name="discount_value"
-                        value="<?= isset($discount_value) ? $discount_value : '' ?>" required min="1"
+                        value="<?= e($discount_value ?? '') ?>" required min="1"
                         class="w-full rounded-lg border-slate-300 px-4 py-2 border focus:ring-2 focus:ring-brand-500 outline-none transition-all">
                 </div>
 
                 <div>
                     <label class="block text-sm font-medium text-slate-700 mb-2">Mức giảm tối đa (VNĐ)</label>
-                    <input type="number" name="max_discount" value="<?= isset($max_discount) ? $max_discount : '0' ?>"
+                    <input type="number" name="max_discount" value="<?= e($max_discount ?? '0') ?>"
                         min="0"
                         class="w-full rounded-lg border-slate-300 px-4 py-2 border focus:ring-2 focus:ring-brand-500 outline-none transition-all">
                 </div>
@@ -60,7 +60,7 @@ if (is_array($one_coupon)) {
                     <label class="block text-sm font-medium text-slate-700 mb-2">Giá trị đơn hàng tối thiểu
                         (VNĐ)</label>
                     <input type="number" name="min_order_value"
-                        value="<?= isset($min_order_value) ? $min_order_value : '0' ?>" min="0"
+                        value="<?= e($min_order_value ?? '0') ?>" min="0"
                         class="w-full rounded-lg border-slate-300 px-4 py-2 border focus:ring-2 focus:ring-brand-500 outline-none transition-all">
                 </div>
 
@@ -81,20 +81,20 @@ if (is_array($one_coupon)) {
                 <div>
                     <label class="block text-sm font-medium text-slate-700 mb-2">Thời gian bắt đầu *</label>
                     <input type="datetime-local" name="start_date"
-                        value="<?= isset($start_date_formatted) ? $start_date_formatted : '' ?>" required
+                        value="<?= e($start_date_formatted ?? '') ?>" required
                         class="w-full rounded-lg border-slate-300 px-4 py-2 border focus:ring-2 focus:ring-brand-500 outline-none transition-all">
                 </div>
 
                 <div>
                     <label class="block text-sm font-medium text-slate-700 mb-2">Thời gian kết thúc *</label>
                     <input type="datetime-local" name="end_date"
-                        value="<?= isset($end_date_formatted) ? $end_date_formatted : '' ?>" required
+                        value="<?= e($end_date_formatted ?? '') ?>" required
                         class="w-full rounded-lg border-slate-300 px-4 py-2 border focus:ring-2 focus:ring-brand-500 outline-none transition-all">
                 </div>
 
                 <div>
                     <label class="block text-sm font-medium text-slate-700 mb-2">Giới hạn số lượt dùng</label>
-                    <input type="number" name="usage_limit" value="<?= isset($usage_limit) ? $usage_limit : '0' ?>"
+                    <input type="number" name="usage_limit" value="<?= e($usage_limit ?? '0') ?>"
                         min="0"
                         class="w-full rounded-lg border-slate-300 px-4 py-2 border focus:ring-2 focus:ring-brand-500 outline-none transition-all">
                 </div>

@@ -43,6 +43,19 @@ class User
     }
 
     /**
+     * Look up an admin account by username-or-email + password, requiring
+     * `role = '1'`. Mirrors old `admin/model/user.php::check_user_admin()`.
+     *
+     * @return array|false
+     */
+    public static function checkAdmin(string $user_name, string $password)
+    {
+        $sql = "SELECT * FROM user WHERE ((user_name = ?) OR (email_user = ?)) AND role = '1'";
+        $row = Database::queryOne($sql, $user_name, $user_name);
+        return ($row && password_verify($password, $row['password'])) ? $row : false;
+    }
+
+    /**
      * Which of username/email/phone (if any) is already taken — the `user`
      * table has no unique constraint on any of the three, so without this
      * check register() would silently create duplicate accounts. Checked
@@ -112,6 +125,49 @@ class User
     {
         $sql = "UPDATE user SET password = ? WHERE email_user = ?";
         Database::execute($sql, password_hash($password, PASSWORD_DEFAULT), $email);
+    }
+
+    /**
+     * All users, newest first. Mirrors old `admin/model/user.php::loadall_user()`.
+     */
+    public static function allAdmin(): array
+    {
+        return Database::query("SELECT * FROM user ORDER BY id_user DESC");
+    }
+
+    /**
+     * Look up a single user by id. Mirrors old `loadone_user($id_user)`.
+     *
+     * @return array|false
+     */
+    public static function find(int $idUser)
+    {
+        return Database::queryOne("SELECT * FROM user WHERE id_user = ?", $idUser);
+    }
+
+    /**
+     * Admin-panel account edit: user_name/full_name/email_user/role always
+     * updated; password only touched when `$password` is non-null/non-blank
+     * (blank means "keep current password" — the edit form no longer
+     * pre-fills a real password to resubmit). Mirrors old
+     * `admin/model/user.php::update_user(...)`.
+     */
+    public static function updateAdmin(int $idUser, string $userName, string $fullName, string $emailUser, ?string $password, string $role): void
+    {
+        if ($password === null || $password === '') {
+            $sql = "UPDATE user SET user_name = ?, full_name = ?, email_user = ?, role = ? WHERE id_user = ?";
+            Database::execute($sql, $userName, $fullName, $emailUser, $role, $idUser);
+            return;
+        }
+
+        $sql = "UPDATE user SET user_name = ?, full_name = ?, email_user = ?, password = ?, role = ? WHERE id_user = ?";
+        Database::execute($sql, $userName, $fullName, $emailUser, password_hash($password, PASSWORD_DEFAULT), $role, $idUser);
+    }
+
+    /** Mirrors old `admin/model/user.php::delete_user($id_user)`. */
+    public static function deleteAdmin(int $idUser): void
+    {
+        Database::execute("DELETE FROM user WHERE id_user = ?", $idUser);
     }
 
     /**

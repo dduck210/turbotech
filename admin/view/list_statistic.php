@@ -76,7 +76,7 @@ include_once "header.php";
                             <td class="px-6 py-3 font-medium text-slate-700">
                                 <?= date('d/m/Y', strtotime($stat['order_day'])) ?></td>
                             <td class="px-6 py-3 text-center"><span
-                                    class="bg-emerald-100 text-emerald-700 px-2.5 py-0.5 rounded-full font-medium"><?= $stat['total_orders'] ?></span>
+                                    class="bg-emerald-100 text-emerald-700 px-2.5 py-0.5 rounded-full font-medium"><?= e($stat['total_orders']) ?></span>
                             </td>
                             <td class="px-6 py-3 text-right font-semibold text-emerald-600">
                                 <?= number_format($stat['total_revenue']) ?> ₫</td>
@@ -124,7 +124,7 @@ include_once "header.php";
                                     title="<?= e($stat['name_pro']) ?>"><?= e($stat['name_pro']) ?></span>
                             </td>
                             <td class="px-6 py-3 text-center"><span
-                                    class="bg-amber-100 text-amber-700 px-2.5 py-0.5 rounded-full font-medium"><?= $stat['total_sold'] ?></span>
+                                    class="bg-amber-100 text-amber-700 px-2.5 py-0.5 rounded-full font-medium"><?= e($stat['total_sold']) ?></span>
                             </td>
                             <td class="px-6 py-3 text-right font-semibold text-brand-600">
                                 <?= number_format($stat['total_revenue']) ?> ₫</td>
@@ -171,7 +171,7 @@ include_once "header.php";
                         </td>
                         <td class="px-6 py-3 font-semibold text-slate-700"><?= number_format($stat['price']) ?> ₫</td>
                         <td class="px-6 py-3 text-center font-bold <?= $qty <= 5 ? 'text-red-600' : 'text-slate-700' ?>">
-                            <?= $qty ?></td>
+                            <?= e($qty) ?></td>
                         <td class="px-6 py-3 text-center">
                             <?php if ($qty == 0): ?>
                                 <span class="bg-red-100 text-red-700 px-2.5 py-1 rounded-md text-xs font-medium"><i

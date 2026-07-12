@@ -8,11 +8,11 @@ if (is_array($one_bill)) {
 
 
 <div class="bg-emerald-50 border border-emerald-200 text-emerald-700 px-4 py-3 rounded-lg mb-4 font-semibold">
-    Chi tiết đơn hàng UTP-<?= $id_bill ?>
+    Chi tiết đơn hàng UTP-<?= e($id_bill) ?>
 </div>
 <div class="bg-slate-50 rounded-xl shadow-sm border border-slate-200 overflow-hidden mb-6 p-6">
     <div class="space-y-2 text-slate-700">
-        <p>Mã hóa đơn: UTP-<?= $id_bill ?>
+        <p>Mã hóa đơn: UTP-<?= e($id_bill) ?>
         </p>
         <p>Người đặt: <span class="fw-bold">
                 <?= e($user_name) ?>
@@ -82,7 +82,7 @@ if (is_array($one_bill)) {
             </thead>
             <tbody>
                 <?php $id = $_GET['idbill'];
-                $bill = load_cart_all($id);
+                $bill = \Codemoi\Model\Order::items((int) $id);
                 // var_dump($bill);
                 foreach ($bill as $value) {
                 ?>
@@ -96,7 +96,7 @@ if (is_array($one_bill)) {
                                 <?= number_format($value['price_pro']) ?>₫
                             </span></td>
                         <td class="px-4 py-3 quantity">
-                            <?= $value['quantity'] ?>
+                            <?= e($value['quantity']) ?>
                         </td>
                         <td class="px-4 py-3 product-subtotal"><span class="amount text-emerald-600 font-medium">
                                 <?= number_format($value['total_amount']) ?>₫

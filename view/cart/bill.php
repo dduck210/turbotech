@@ -121,12 +121,12 @@
                         ?>
                             <tr>
                                 <td class="px-4 py-3">
-                                    <a href="<?= $prodetail ?>" class="block h-16 w-16 overflow-hidden rounded-lg bg-ink-100">
-                                        <img src="<?= $img_pro ?>" alt="<?= e($cart[1]) ?>" class="h-full w-full object-cover" />
+                                    <a href="<?= e($prodetail) ?>" class="block h-16 w-16 overflow-hidden rounded-lg bg-ink-100">
+                                        <img src="<?= e($img_pro) ?>" alt="<?= e($cart[1]) ?>" class="h-full w-full object-cover" />
                                     </a>
                                 </td>
                                 <td class="px-4 py-3">
-                                    <a href="<?= $prodetail ?>" class="font-heading font-semibold text-ink-900 hover:text-brand-600 transition-colors"><?= e($cart[1]) ?></a>
+                                    <a href="<?= e($prodetail) ?>" class="font-heading font-semibold text-ink-900 hover:text-brand-600 transition-colors"><?= e($cart[1]) ?></a>
                                 </td>
                                 <td class="px-4 py-3 text-ink-700"><?= number_format($cart[3]) ?> ₫</td>
                                 <td class="px-4 py-3 text-center text-ink-700"><?= e($quantity) ?></td>

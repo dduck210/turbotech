@@ -114,7 +114,7 @@
                     <textarea
                         class="w-full rounded-lg border border-slate-200 px-4 py-2 focus:ring-2 focus:ring-brand-500 outline-none transition-all ckeditor"
                         rows="5" name="detail_des" placeholder="Mô tả đầy đủ chi tiết sản phẩm"
-                        id="detail_des"><?= e($detail_des) ?></textarea>
+                        id="detail_des"><?php /* Not escaped: CKEditor round-trips its own HTML here. */ ?><?= $detail_des ?></textarea>
                 </div>
                 <div class="wrap-btn mt-4">
                     <input type="hidden" name="id_pro" value="<?= e($id_pro) ?>">

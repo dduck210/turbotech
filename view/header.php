@@ -42,8 +42,8 @@ unset($_SESSION['flash_success'], $_SESSION['flash_error']);
                         <?php
                         foreach ($listcate ?? [] as $cate) {
                             extract($cate);
-                            $linkpro = "index.php?act=product&idcate=" . e($id_cate);
-                            echo '<a href="' . $linkpro . '" class="block px-4 py-2 text-sm text-ink-700 hover:bg-ink-50 hover:text-brand-600 focus:outline-none focus:ring-2 focus:ring-brand-500">' . e($name_cate) . '</a>';
+                            $linkpro = "index.php?act=product&idcate=" . $id_cate;
+                            echo '<a href="' . e($linkpro) . '" class="block px-4 py-2 text-sm text-ink-700 hover:bg-ink-50 hover:text-brand-600 focus:outline-none focus:ring-2 focus:ring-brand-500">' . e($name_cate) . '</a>';
                         }
                         ?>
                     </div>
@@ -83,7 +83,7 @@ unset($_SESSION['flash_success'], $_SESSION['flash_error']);
                         class="relative flex h-11 w-11 items-center justify-center rounded-full text-ink-700 transition-colors hover:bg-ink-100 focus:outline-none focus:ring-2 focus:ring-brand-500">
                         <i class="fa-solid fa-cart-shopping text-lg"></i>
                         <span
-                            class="absolute right-0.5 top-0.5 inline-flex h-5 w-5 items-center justify-center rounded-full bg-brand-600 text-[11px] font-bold text-white"><?= $count ?></span>
+                            class="absolute right-0.5 top-0.5 inline-flex h-5 w-5 items-center justify-center rounded-full bg-brand-600 text-[11px] font-bold text-white"><?= e($count) ?></span>
                     </a>
                     <div
                         class="invisible absolute right-0 top-full z-50 w-80 rounded-xl border border-ink-200 bg-white opacity-0 shadow-lg transition-all group-hover:visible group-hover:opacity-100">
@@ -212,8 +212,8 @@ unset($_SESSION['flash_success'], $_SESSION['flash_error']);
                     <?php
                     foreach ($listcate as $cate) {
                         extract($cate);
-                        $linkpro = "index.php?act=product&idcate=" . e($id_cate);
-                        echo '<a href="' . $linkpro . '" class="block rounded-lg px-3 py-2 text-sm text-ink-700 hover:bg-ink-50 hover:text-brand-600 focus:outline-none focus:ring-2 focus:ring-brand-500">' . e($name_cate) . '</a>';
+                        $linkpro = "index.php?act=product&idcate=" . $id_cate;
+                        echo '<a href="' . e($linkpro) . '" class="block rounded-lg px-3 py-2 text-sm text-ink-700 hover:bg-ink-50 hover:text-brand-600 focus:outline-none focus:ring-2 focus:ring-brand-500">' . e($name_cate) . '</a>';
                     }
                     ?>
                 </div>

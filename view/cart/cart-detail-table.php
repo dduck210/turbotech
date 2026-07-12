@@ -31,10 +31,10 @@ $total_amount = 0;
                 ?>
                     <tr>
                         <td class="px-4 py-3">
-                            <img src="<?= $img_pro ?>" alt="<?= e($cart['name_pro']) ?>" class="h-16 w-16 rounded-lg bg-ink-100 object-cover" />
+                            <img src="<?= e($img_pro) ?>" alt="<?= e($cart['name_pro']) ?>" class="h-16 w-16 rounded-lg bg-ink-100 object-cover" />
                         </td>
                         <td class="px-4 py-3">
-                            <a href="<?= $prodetail ?>" class="font-heading font-semibold text-ink-900 hover:text-brand-600 transition-colors"><?= e($cart['name_pro']) ?></a>
+                            <a href="<?= e($prodetail) ?>" class="font-heading font-semibold text-ink-900 hover:text-brand-600 transition-colors"><?= e($cart['name_pro']) ?></a>
                         </td>
                         <td class="px-4 py-3 text-ink-700"><?= number_format($cart['price_pro']) ?> ₫</td>
                         <td class="px-4 py-3 text-center text-ink-700"><?= e($cart['quantity']) ?></td>

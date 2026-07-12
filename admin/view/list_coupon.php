@@ -37,7 +37,7 @@
                         </td>
                         <td class="px-4 py-4">
                             <?php if ($coupon['discount_type'] == 1): ?>
-                            <span class="text-emerald-600 font-bold"><?= $coupon['discount_value'] ?>%</span>
+                            <span class="text-emerald-600 font-bold"><?= e($coupon['discount_value']) ?>%</span>
                             <?php if ($coupon['max_discount'] > 0): ?>
                             <div class="text-xs text-slate-500 mt-1">Tối đa:
                                 <?= number_format($coupon['max_discount']) ?>đ</div>
@@ -52,7 +52,7 @@
                                     class="font-semibold"><?= number_format($coupon['min_order_value']) ?>đ</span></div>
                             <?php if ($coupon['product_id'] > 0): ?>
                             <div class="text-brand-600 mt-1"><i class="fas fa-box text-xs mr-1"></i>Chỉ SP ID:
-                                <?= $coupon['product_id'] ?></div>
+                                <?= e($coupon['product_id']) ?></div>
                             <?php else: ?>
                             <div class="text-slate-500 mt-1"><i class="fas fa-layer-group text-xs mr-1"></i>Tất cả SP
                             </div>
@@ -65,9 +65,9 @@
                                 <?= date('d/m/Y H:i', strtotime($coupon['end_date'])) ?></div>
                         </td>
                         <td class="px-4 py-4 text-center">
-                            <span class="font-bold text-slate-700"><?= $coupon['used_count'] ?></span>
+                            <span class="font-bold text-slate-700"><?= e($coupon['used_count']) ?></span>
                             <span class="text-slate-400">/
-                                <?= $coupon['usage_limit'] > 0 ? $coupon['usage_limit'] : '&infin;' ?></span>
+                                <?= $coupon['usage_limit'] > 0 ? e($coupon['usage_limit']) : '&infin;' ?></span>
                         </td>
                         <td class="px-4 py-4 text-center">
                             <?php if ($coupon['status'] == 1): ?>
@@ -84,7 +84,7 @@
                                 <a href="index.php?act=edit_coupon&id_coupon=<?= e($coupon['id_coupon']) ?>"
                                     class="p-2 text-amber-600 bg-amber-50 rounded-lg hover:bg-amber-100 transition-all active:scale-90"
                                     title="Sửa"><i class="fas fa-edit"></i></a>
-                                <a href="index.php?act=delete_coupon&id_coupon=<?= e($coupon['id_coupon']) ?>&_token=<?= urlencode(\Codemoi\Core\Csrf::token()) ?>"
+                                <a href="index.php?act=delete_coupon&id_coupon=<?= e($coupon['id_coupon']) ?>"
                                     class="p-2 text-red-600 bg-red-50 rounded-lg hover:bg-red-100 transition-all active:scale-90"
                                     data-confirm="Bạn có chắc chắn muốn xóa mã giảm giá này?" title="Xóa"><i
                                         class="fas fa-trash"></i></a>

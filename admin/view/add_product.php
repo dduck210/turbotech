@@ -70,7 +70,7 @@
                         <?php
                         foreach ($ds_loai as $loai) {
                             extract($loai);
-                            echo '<option value=' . e($id_cate) . '>' . e($name_cate) . '</option>';
+                            echo '<option value="' . e($id_cate) . '">' . e($name_cate) . '</option>';
                         }
                         ?>
                     </select>
@@ -114,7 +114,7 @@
         <?php if (isset($noticepro) && $noticepro != ""): ?>
         <div class="mt-6 p-4 bg-green-50 border border-green-200 text-green-700 rounded-lg flex items-center">
             <i class="fas fa-check-circle mr-2"></i>
-            <?php echo e($noticepro); ?>
+            <?= e($noticepro) ?>
         </div>
         <?php endif; ?>
     </div>

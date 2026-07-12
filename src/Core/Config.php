@@ -5,13 +5,12 @@ namespace Codemoi\Core;
 /**
  * Central holder for connection settings.
  *
- * DB settings stay as literals (matches legacy `model/pdo.php:8`, a local
- * XAMPP root/no-password dev DB — not a secret).
- *
- * SMTP settings are NOT committed in source: they are read from a local
- * `.env` file (gitignored — see `.env.example` for the required keys) so
- * real credentials never enter git history. `env()` falls back to an OS
- * environment variable, then to the given default.
+ * All settings (DB, SMTP, bank) are read from a local `.env` file
+ * (gitignored — see `.env.example` for the required keys) so real
+ * credentials never enter git history. `env()` falls back to an OS
+ * environment variable, then to the given default — the DB_* constants
+ * below are those defaults, matching the local XAMPP root/no-password
+ * dev DB unchanged when no `.env` is present.
  */
 class Config
 {
@@ -22,6 +21,36 @@ class Config
     const CHARSET = 'utf8';
 
     private static ?array $env = null;
+
+    public static function dbHost(): string
+    {
+        return self::env('DB_HOST', self::DB_HOST);
+    }
+
+    public static function dbPort(): int
+    {
+        return (int) self::env('DB_PORT', '3306');
+    }
+
+    public static function dbName(): string
+    {
+        return self::env('DB_NAME', self::DB_NAME);
+    }
+
+    public static function dbUser(): string
+    {
+        return self::env('DB_USER', self::DB_USER);
+    }
+
+    public static function dbPass(): string
+    {
+        return self::env('DB_PASS', self::DB_PASS);
+    }
+
+    public static function charset(): string
+    {
+        return self::env('DB_CHARSET', self::CHARSET);
+    }
 
     public static function smtpHost(): string
     {

@@ -98,7 +98,7 @@
                             extract($bill);
                         ?>
                             <tr class="hover:bg-slate-50 transition-colors">
-                                <td class="px-4 py-4 text-slate-500 font-medium">#<?= $i ?></td>
+                                <td class="px-4 py-4 text-slate-500 font-medium">#<?= e($i) ?></td>
                                 <td class="px-4 py-4 font-medium text-slate-800"><?= e($bill['full_name']) ?></td>
                                 <td class="px-4 py-4 font-semibold text-brand-600">
                                     <?= number_format($bill['total_amount']) ?> ₫</td>
@@ -136,26 +136,26 @@
                                 <td class="px-4 py-3 text-center">
                                     <div class="flex items-center justify-center gap-2">
                                         <?php if ($bill['status'] == 0): ?>
-                                            <a href="index.php?act=approve_bill&idbill=<?= $bill['id_bill'] ?>&_token=<?= urlencode(\Codemoi\Core\Csrf::token()) ?>"
+                                            <a href="index.php?act=approve_bill&idbill=<?= e($bill['id_bill']) ?>"
                                                 class="p-2 text-blue-600 bg-blue-50 rounded-lg hover:bg-blue-100 transition-all active:scale-90"
                                                 data-confirm="Bạn có chắc chắn muốn duyệt đơn hàng này?"
                                                 title="Duyệt đơn hàng"><i class="fas fa-check"></i></a>
                                         <?php elseif ($bill['status'] == 1): ?>
-                                            <a href="index.php?act=ship_bill&idbill=<?= $bill['id_bill'] ?>&_token=<?= urlencode(\Codemoi\Core\Csrf::token()) ?>"
+                                            <a href="index.php?act=ship_bill&idbill=<?= e($bill['id_bill']) ?>"
                                                 class="p-2 text-indigo-600 bg-indigo-50 rounded-lg hover:bg-indigo-100 transition-all active:scale-90"
                                                 data-confirm="Bạn có chắc chắn muốn chuyển đơn hàng này sang giao hàng?"
                                                 title="Giao hàng"><i class="fas fa-truck"></i></a>
                                         <?php endif; ?>
 
-                                        <a href="index.php?act=edit_bill&idbill=<?= $bill['id_bill'] ?>"
+                                        <a href="index.php?act=edit_bill&idbill=<?= e($bill['id_bill']) ?>"
                                             class="p-2 text-amber-600 bg-amber-50 rounded-lg hover:bg-amber-100 transition-all active:scale-90"
                                             title="Cập nhật chi tiết"><i class="fas fa-edit"></i></a>
-                                        <a href="index.php?act=billdetail&idbill=<?= $bill['id_bill'] ?>"
+                                        <a href="index.php?act=billdetail&idbill=<?= e($bill['id_bill']) ?>"
                                             class="p-2 text-emerald-600 bg-emerald-50 rounded-lg hover:bg-emerald-100 transition-all active:scale-90"
                                             title="Xem chi tiết"><i class="fa-solid fa-circle-info"></i></a>
 
                                         <?php if ($bill['status'] == 0 || $bill['status'] == 1): ?>
-                                            <a href="index.php?act=cancel_bill&idbill=<?= $bill['id_bill'] ?>&_token=<?= urlencode(\Codemoi\Core\Csrf::token()) ?>"
+                                            <a href="index.php?act=cancel_bill&idbill=<?= e($bill['id_bill']) ?>"
                                                 class="p-2 text-red-600 bg-red-50 rounded-lg hover:bg-red-100 transition-all active:scale-90"
                                                 data-confirm="Bạn có chắc chắn muốn hủy đơn hàng này?" title="Hủy đơn"><i
                                                     class="fas fa-times"></i></a>

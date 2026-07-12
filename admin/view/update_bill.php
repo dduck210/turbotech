@@ -122,7 +122,7 @@ if (is_array($one_bill)) {
             </thead>
             <tbody>
                 <?php $id = $_GET['idbill'];
-                $bill = load_cart_all($id);
+                $bill = \Codemoi\Model\Order::items((int) $id);
                 // var_dump($bill);
                 foreach ($bill as $value) {
                 ?>
@@ -131,10 +131,10 @@ if (is_array($one_bill)) {
                                 width="80px"></img></td>
                         <td class="px-4 py-3"><a href=""
                                 class="text-brand-600 hover:text-brand-700"><?= e($value['name_pro']) ?></a></td>
-                        <td class="px-4 py-3"><span class="amount"><?= $value['price_pro'] ?> ₫</span></td>
-                        <td class="px-4 py-3 quantity"><?= $value['quantity'] ?></td>
+                        <td class="px-4 py-3"><span class="amount"><?= number_format($value['price_pro']) ?> ₫</span></td>
+                        <td class="px-4 py-3 quantity"><?= e($value['quantity']) ?></td>
                         <td class="px-4 py-3 product-subtotal"><span
-                                class="amount text-emerald-600 font-medium"><?= $value['total_amount'] ?>₫</span></td>
+                                class="amount text-emerald-600 font-medium"><?= number_format($value['total_amount']) ?>₫</span></td>
                     </tr>
                 <?php } ?>
             </tbody>

@@ -134,7 +134,7 @@
                                                 <td class="px-4 py-3"><a class="font-medium text-brand-600 hover:text-brand-700" href="#">UTP-<?= e($id_bill) ?></a></td>
                                                 <td class="px-4 py-3 text-ink-700"><?= e($order_date) ?></td>
                                                 <td class="px-4 py-3 text-ink-700"><?= e($countpro) ?></td>
-                                                <td class="px-4 py-3 text-ink-700"><?= $stt ?></td>
+                                                <td class="px-4 py-3 text-ink-700"><?= e($stt) ?></td>
                                                 <td class="px-4 py-3 font-medium text-ink-900"><?= number_format($total_amount) ?>₫</td>
                                                 <td class="px-4 py-3">
                                                     <?php if ((int) $status === 0) : ?>
@@ -198,6 +198,11 @@
                                         placeholder="Nhập họ tên của bạn" disabled
                                         class="block w-full rounded-lg border border-ink-200 bg-ink-100 px-3.5 py-2.5 text-sm text-ink-500">
                                 </div>
+                                <!-- No hidden "password" field here on purpose: AccountController::index()'s
+                                     btn_change handler reads the current password from the session, not
+                                     from POST, so this field was never actually used — and it used to echo
+                                     the account's real password hash straight into the page HTML, which is
+                                     unnecessary exposure even hashed. -->
 
                                 <div>
                                     <label for="account-details-fullname" class="block text-sm font-medium text-ink-700 mb-1.5">Họ và tên</label>

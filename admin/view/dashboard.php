@@ -2,11 +2,11 @@
 <?php if (!empty($flash_success)): ?>
 <script>document.addEventListener("DOMContentLoaded",()=>Swal.fire({toast:true,position:"top-end",icon:"success",title:<?= json_encode($flash_success) ?>,showConfirmButton:false,timer:3000}));</script>
 <?php endif; ?>
-<?php $listuser = loadall_user();
-$listcmt = loadall_cmt();
-$listbill = loadall_bill(0);
-$listpro = loadall_pro();
-$ds_loai = loadall_loai(); ?>
+<?php $listuser = \Codemoi\Model\User::allAdmin();
+$listcmt = \Codemoi\Model\Comment::allAdmin();
+$listbill = \Codemoi\Model\Order::allAdmin();
+$listpro = \Codemoi\Model\Product::allAdmin();
+$ds_loai = \Codemoi\Model\Category::all(); ?>
 
 <div class="mb-8 flex items-center justify-between">
     <h1 class="text-3xl font-bold text-slate-800">Bảng điều khiển</h1>
@@ -20,7 +20,7 @@ $ds_loai = loadall_loai(); ?>
         class="bg-white rounded-xl shadow-sm hover:shadow-md transition-shadow duration-300 p-6 border-l-4 border-brand-500 flex items-center justify-between">
         <div>
             <div class="text-xs font-bold text-brand-500 uppercase tracking-wider mb-1">Tổng doanh thu(Ngày)</div>
-            <div class="text-2xl font-bold text-slate-800"><?= number_format(ngay()) ?> đ</div>
+            <div class="text-2xl font-bold text-slate-800"><?= number_format(\Codemoi\Model\Stats::today()) ?> đ</div>
         </div>
         <div class="text-slate-300">
             <i class="fas fa-dollar-sign fa-2x"></i>
@@ -32,7 +32,7 @@ $ds_loai = loadall_loai(); ?>
         class="bg-white rounded-xl shadow-sm hover:shadow-md transition-shadow duration-300 p-6 border-l-4 border-yellow-500 flex items-center justify-between">
         <div>
             <div class="text-xs font-bold text-yellow-500 uppercase tracking-wider mb-1">Tổng doanh thu(Tuần)</div>
-            <div class="text-2xl font-bold text-slate-800"><?= number_format(tuan()) ?> đ</div>
+            <div class="text-2xl font-bold text-slate-800"><?= number_format(\Codemoi\Model\Stats::thisWeek()) ?> đ</div>
         </div>
         <div class="text-slate-300">
             <i class="fas fa-dollar-sign fa-2x"></i>
@@ -44,7 +44,7 @@ $ds_loai = loadall_loai(); ?>
         class="bg-white rounded-xl shadow-sm hover:shadow-md transition-shadow duration-300 p-6 border-l-4 border-green-500 flex items-center justify-between">
         <div>
             <div class="text-xs font-bold text-green-500 uppercase tracking-wider mb-1">Tổng doanh thu(Tháng)</div>
-            <div class="text-2xl font-bold text-slate-800"><?= number_format(thang()) ?> đ</div>
+            <div class="text-2xl font-bold text-slate-800"><?= number_format(\Codemoi\Model\Stats::thisMonth()) ?> đ</div>
         </div>
         <div class="text-slate-300">
             <i class="fas fa-dollar-sign fa-2x"></i>
@@ -56,7 +56,7 @@ $ds_loai = loadall_loai(); ?>
         class="bg-white rounded-xl shadow-sm hover:shadow-md transition-shadow duration-300 p-6 border-l-4 border-brand-500 flex items-center justify-between">
         <div>
             <div class="text-xs font-bold text-brand-500 uppercase tracking-wider mb-1">Tổng đơn</div>
-            <div class="text-2xl font-bold text-slate-800"><?= count($listbill) ?></div>
+            <div class="text-2xl font-bold text-slate-800"><?= e(count($listbill)) ?></div>
         </div>
         <div class="text-slate-300">
             <i class="fas fa-clipboard-list fa-2x"></i>
@@ -68,7 +68,7 @@ $ds_loai = loadall_loai(); ?>
         class="bg-white rounded-xl shadow-sm hover:shadow-md transition-shadow duration-300 p-6 border-l-4 border-yellow-500 flex items-center justify-between">
         <div>
             <div class="text-xs font-bold text-yellow-500 uppercase tracking-wider mb-1">Tổng khách hàng</div>
-            <div class="text-2xl font-bold text-slate-800"><?= count($listuser); ?></div>
+            <div class="text-2xl font-bold text-slate-800"><?= e(count($listuser)) ?></div>
         </div>
         <div class="text-slate-300">
             <i class="fas fa-solid fa-user fa-2x"></i>
@@ -80,7 +80,7 @@ $ds_loai = loadall_loai(); ?>
         class="bg-white rounded-xl shadow-sm hover:shadow-md transition-shadow duration-300 p-6 border-l-4 border-green-500 flex items-center justify-between">
         <div>
             <div class="text-xs font-bold text-green-500 uppercase tracking-wider mb-1">Tổng sản phẩm</div>
-            <div class="text-2xl font-bold text-slate-800"><?= count($listpro) ?></div>
+            <div class="text-2xl font-bold text-slate-800"><?= e(count($listpro)) ?></div>
         </div>
         <div class="text-slate-300">
             <i class="fas fa-brands fa-product-hunt fa-2x"></i>
@@ -92,7 +92,7 @@ $ds_loai = loadall_loai(); ?>
         class="bg-white rounded-xl shadow-sm hover:shadow-md transition-shadow duration-300 p-6 border-l-4 border-indigo-500 flex items-center justify-between">
         <div>
             <div class="text-xs font-bold text-indigo-500 uppercase tracking-wider mb-1">Tổng loại sản phẩm</div>
-            <div class="text-2xl font-bold text-slate-800"><?= count($ds_loai) ?></div>
+            <div class="text-2xl font-bold text-slate-800"><?= e(count($ds_loai)) ?></div>
         </div>
         <div class="text-slate-300">
             <i class="fas fa-solid fa-weight-hanging fa-2x"></i>
@@ -131,14 +131,14 @@ $ds_loai = loadall_loai(); ?>
                             label: 'Tháng',
                             data: [
                                 <?php for ($i = 1; $i <= $thang; $i++) {
-                                    $a = tungthang($i);
+                                    $a = \Codemoi\Model\Stats::forMonth($i);
                                     if ($i == $thang) {
                                         $dau1 = "";
                                     } else {
                                         $dau1 = ",";
                                     };
                                 ?>
-                                    <?= $a ?> <?= $dau1 ?>
+                                    <?= json_encode($a) ?> <?= $dau1 ?>
                                 <?php
                                 } ?>
                             ],
@@ -170,13 +170,13 @@ $ds_loai = loadall_loai(); ?>
             </div>
 
             <script type="text/javascript">
-                <?php $all = thonngke();
+                <?php $all = \Codemoi\Model\Stats::byCategory();
                 $dem = count($all);
                 $i = 1; ?>
 
                 var donutData = {
                     labels: [
-                        <?php foreach ($all as $value) { ?> <?= json_encode((string) $value['name_cate']) ?>,
+                        <?php foreach ($all as $value) { ?> <?= json_encode($value['name_cate']) ?>,
                         <?php
                         } ?>
                     ],
@@ -188,7 +188,7 @@ $ds_loai = loadall_loai(); ?>
                                 } else {
                                     $dau = ",";
                                 }; ?>
-                                <?= $valuee['sluong'] ?><?= $dau ?>
+                                <?= json_encode($valuee['sluong']) ?><?= $dau ?>
                             <?php $i++;
                             } ?>
                         ],

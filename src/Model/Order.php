@@ -151,6 +151,51 @@ class Order
     }
 
     /**
+     * All bills across all users, optionally filtered by status/keyword
+     * (matches `full_name`/`phone`)/date range. Mirrors old
+     * `admin/model/bill.php::loadall_bill($iduser = 0, ...)` with `$iduser`
+     * fixed at 0 (the admin list always shows every user's orders — the
+     * `$iduser` filter only matters for `allByUser()`'s client-facing use).
+     */
+    public static function allAdmin(int $status = -1, string $keyword = '', string $fromDate = '', string $toDate = ''): array
+    {
+        $sql = "SELECT * FROM bill WHERE 1";
+        $args = [];
+        if ($status > -1) {
+            $sql .= " AND status = ?";
+            $args[] = $status;
+        }
+        if ($keyword !== '') {
+            $sql .= " AND (full_name LIKE ? OR phone LIKE ?)";
+            $args[] = "%" . $keyword . "%";
+            $args[] = "%" . $keyword . "%";
+        }
+        if ($fromDate !== '') {
+            $sql .= " AND DATE(order_date) >= ?";
+            $args[] = $fromDate;
+        }
+        if ($toDate !== '') {
+            $sql .= " AND DATE(order_date) <= ?";
+            $args[] = $toDate;
+        }
+        $sql .= " ORDER BY id_bill DESC";
+
+        return Database::query($sql, ...$args);
+    }
+
+    /**
+     * Admin-panel status update (order status + payment status together).
+     * Mirrors old `admin/model/bill.php::update_bill(...)`. Unlike
+     * `cancel()`, this is an unconditional admin override — no
+     * ownership/current-state guard, since the admin controller already
+     * enforces the valid from-state per transition (approve/ship/cancel).
+     */
+    public static function updateStatus(int $idBill, string $status, string $statusPay): void
+    {
+        Database::execute("UPDATE bill SET status = ?, status_pay = ? WHERE id_bill = ?", $status, $statusPay, $idBill);
+    }
+
+    /**
      * Human-readable label for a bill status code.
      * Mirrors old `get_stt($n)`.
      */

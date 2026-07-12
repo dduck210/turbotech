@@ -4,7 +4,9 @@
 
 ## Overview
 - **Priority:** P1
-- **Status:** pending
+- **Status:** DONE — satisfied by [phase-05 of the codebase-professionalization
+  plan](../260712-0319-codebase-professionalization/phase-05-db-config-unification.md), which
+  implemented this exact scope (both plans flagged the overlap in advance; do not redo here).
 - **Description:** Make both DB connection paths read host/name/user/pass from env vars, with the
   current hardcoded values as local-dev fallback defaults so XAMPP keeps working unchanged.
 

@@ -1,5 +1,8 @@
 <?php
-include "admin/model/pdo.php";
+require_once __DIR__ . '/vendor/autoload.php';
+
+use Codemoi\Core\Database;
+
 $sql = "CREATE TABLE IF NOT EXISTS coupons (
   id_coupon int(11) NOT NULL AUTO_INCREMENT,
   code varchar(50) NOT NULL,
@@ -16,10 +19,9 @@ $sql = "CREATE TABLE IF NOT EXISTS coupons (
   PRIMARY KEY (id_coupon),
   UNIQUE KEY (code)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;";
-$conn = pdo_get_connection();
-$conn->exec($sql);
+Database::execute($sql);
 
-$conn->exec("ALTER TABLE bill
+Database::execute("ALTER TABLE bill
   ADD COLUMN IF NOT EXISTS coupon_code VARCHAR(50) DEFAULT NULL,
   ADD COLUMN IF NOT EXISTS discount_amount INT(11) NOT NULL DEFAULT 0");
 

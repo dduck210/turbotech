@@ -110,9 +110,9 @@
                         <div class="group relative overflow-hidden rounded-2xl border border-ink-200 bg-white shadow-sm transition-shadow hover:shadow-md">
                             <div class="relative aspect-square overflow-hidden bg-ink-100">
                                 <a class="block h-full w-full"
-                                    href="index.php?act=prodetail&idpro=<?php echo e($pro['id_pro']) ?>">
-                                    <img class="h-full w-full object-cover" src="admin/uploads/<?php echo e($pro['img_pro']) ?>"
-                                        alt="<?php echo e($pro['name_pro']) ?>" />
+                                    href="index.php?act=prodetail&idpro=<?= e($pro['id_pro']) ?>">
+                                    <img class="h-full w-full object-cover" src="admin/uploads/<?= e($pro['img_pro']) ?>"
+                                        alt="<?= e($pro['name_pro']) ?>" />
                                 </a>
                                 <span
                                     class="absolute top-2 right-2 inline-flex items-center rounded-full bg-brand-50 px-3 py-1 text-xs font-medium text-brand-700">Mới</span>
@@ -128,7 +128,7 @@
                             <div class="p-4">
                                 <h6 class="mb-2">
                                     <a class="font-heading font-semibold text-ink-900 line-clamp-2 transition-colors hover:text-brand-600"
-                                        href="index.php?act=prodetail&idpro=<?php echo e($pro['id_pro']) ?>"><?php echo e($pro['name_pro']) ?></a>
+                                        href="index.php?act=prodetail&idpro=<?= e($pro['id_pro']) ?>"><?= e($pro['name_pro']) ?></a>
                                 </h6>
                                 <div class="mb-3 flex items-baseline gap-2">
                                     <?php if (!isset($pro['discount']) || $pro['discount'] <= 0) { ?>
@@ -142,10 +142,10 @@
                                 <?php if ((int) $pro['stock'] > 0) { ?>
                                     <form action="index.php?act=addtocart" method="post">
 <?= \Codemoi\Core\Csrf::field() ?>
-                                        <input type="hidden" name="id_pro" value="<?php echo e($pro['id_pro']) ?>">
-                                        <input type="hidden" name="name_pro" value="<?php echo e($pro['name_pro']) ?>">
-                                        <input type="hidden" name="img_pro" value="<?php echo e($pro['img_pro']) ?>">
-                                        <input type="hidden" name="price" value="<?php echo e($pro['price']) ?>">
+                                        <input type="hidden" name="id_pro" value="<?= e($pro['id_pro']) ?>">
+                                        <input type="hidden" name="name_pro" value="<?= e($pro['name_pro']) ?>">
+                                        <input type="hidden" name="img_pro" value="<?= e($pro['img_pro']) ?>">
+                                        <input type="hidden" name="price" value="<?= e($pro['price']) ?>">
                                         <input type="submit" name="addtocart" value="Thêm vào giỏ"
                                             class="inline-flex w-full cursor-pointer items-center justify-center gap-2 rounded-lg bg-brand-600 px-5 py-2.5 text-sm font-semibold text-white shadow-sm transition-colors hover:bg-brand-700 focus:outline-none focus:ring-2 focus:ring-brand-500 focus:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50">
                                     </form>
@@ -200,10 +200,10 @@
                                 <?php if ((int) $pro['stock'] > 0) { ?>
                                     <form action="index.php?act=addtocart" method="post">
 <?= \Codemoi\Core\Csrf::field() ?>
-                                        <input type="hidden" name="id_pro" value="<?php echo e($pro['id_pro']) ?>">
-                                        <input type="hidden" name="name_pro" value="<?php echo e($pro['name_pro']) ?>">
-                                        <input type="hidden" name="img_pro" value="<?php echo e($pro['img_pro']) ?>">
-                                        <input type="hidden" name="price" value="<?php echo e($pro['price']) ?>">
+                                        <input type="hidden" name="id_pro" value="<?= e($pro['id_pro']) ?>">
+                                        <input type="hidden" name="name_pro" value="<?= e($pro['name_pro']) ?>">
+                                        <input type="hidden" name="img_pro" value="<?= e($pro['img_pro']) ?>">
+                                        <input type="hidden" name="price" value="<?= e($pro['price']) ?>">
                                         <input type="submit" name="addtocart" value="Thêm vào giỏ"
                                             class="inline-flex w-full cursor-pointer items-center justify-center gap-2 rounded-lg bg-brand-600 px-5 py-2.5 text-sm font-semibold text-white shadow-sm transition-colors hover:bg-brand-700 focus:outline-none focus:ring-2 focus:ring-brand-500 focus:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50">
                                     </form>
@@ -261,10 +261,10 @@
                                 <?php if ((int) $pro['stock'] > 0) { ?>
                                     <form action="index.php?act=addtocart" method="post">
 <?= \Codemoi\Core\Csrf::field() ?>
-                                        <input type="hidden" name="id_pro" value="<?php echo e($pro['id_pro']) ?>">
-                                        <input type="hidden" name="name_pro" value="<?php echo e($pro['name_pro']) ?>">
-                                        <input type="hidden" name="img_pro" value="<?php echo e($pro['img_pro']) ?>">
-                                        <input type="hidden" name="price" value="<?php echo e($pro['price']) ?>">
+                                        <input type="hidden" name="id_pro" value="<?= e($pro['id_pro']) ?>">
+                                        <input type="hidden" name="name_pro" value="<?= e($pro['name_pro']) ?>">
+                                        <input type="hidden" name="img_pro" value="<?= e($pro['img_pro']) ?>">
+                                        <input type="hidden" name="price" value="<?= e($pro['price']) ?>">
                                         <input type="submit" name="addtocart" value="Thêm vào giỏ"
                                             class="inline-flex w-full cursor-pointer items-center justify-center gap-2 rounded-lg bg-brand-600 px-5 py-2.5 text-sm font-semibold text-white shadow-sm transition-colors hover:bg-brand-700 focus:outline-none focus:ring-2 focus:ring-brand-500 focus:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50">
                                     </form>

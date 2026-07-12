@@ -36,7 +36,7 @@
                         data-rules="required|match:newpass" data-msg-match="Mật khẩu xác nhận không khớp"
                         class="block w-full rounded-lg border border-ink-200 bg-white px-3.5 py-2.5 text-sm text-ink-900 placeholder:text-ink-300 focus:outline-none focus:ring-2 focus:ring-brand-500 focus:border-brand-500">
                     <?php if (isset($error['fail'])) : ?>
-                        <p class="mt-1.5 text-sm text-red-600"><?php echo e($error['fail']); ?></p>
+                        <p class="mt-1.5 text-sm text-red-600"><?= e($error['fail']) ?></p>
                     <?php endif; ?>
                 </div>
 

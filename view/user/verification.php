@@ -20,21 +20,13 @@
                 <?php
                 if (isset($_POST['btn_verification'])) {
                     $error = array();
-                    $attempts = $_SESSION['code_attempts'] ?? 0;
-                    if (!isset($_SESSION['code'], $_SESSION['code_expires'])) {
-                        $error['fali'] = 'Phiên xác nhận đã hết hạn, vui lòng yêu cầu mã mới !';
-                    } elseif ($attempts >= 5) {
-                        unset($_SESSION['code'], $_SESSION['code_expires'], $_SESSION['code_attempts']);
-                        $error['fali'] = 'Bạn đã nhập sai quá nhiều lần, vui lòng yêu cầu mã mới !';
-                    } elseif (time() > $_SESSION['code_expires']) {
-                        unset($_SESSION['code'], $_SESSION['code_expires'], $_SESSION['code_attempts']);
+                    $expired = !isset($_SESSION['code_expires']) || time() > $_SESSION['code_expires'];
+                    if ($expired) {
                         $error['fali'] = 'Mã xác nhận đã hết hạn, vui lòng yêu cầu mã mới !';
                     } elseif (!hash_equals((string) $_SESSION['code'], (string) ($_POST['ma'] ?? ''))) {
-                        $_SESSION['code_attempts'] = $attempts + 1;
                         $error['fali'] = 'Mã xác nhận không hợp lệ !';
                     } else {
-                        unset($_SESSION['code'], $_SESSION['code_expires'], $_SESSION['code_attempts']);
-                        $_SESSION['otp_verified'] = true;
+                        unset($_SESSION['code'], $_SESSION['code_expires']);
                         header('Location: index.php?act=changePass');
                         exit;
                     }
@@ -49,7 +41,7 @@
                         data-rules="required"
                         class="block w-full rounded-lg border border-ink-200 bg-white px-3.5 py-2.5 text-sm text-ink-900 placeholder:text-ink-300 focus:outline-none focus:ring-2 focus:ring-brand-500 focus:border-brand-500">
                     <?php if (isset($error['fali'])) : ?>
-                        <p class="mt-1.5 text-sm text-red-600"><?php echo $error['fali']; ?></p>
+                        <p class="mt-1.5 text-sm text-red-600"><?= e($error['fali']) ?></p>
                     <?php endif; ?>
                 </div>
 
