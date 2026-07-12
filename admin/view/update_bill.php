@@ -122,7 +122,7 @@ if (is_array($one_bill)) {
             </thead>
             <tbody>
                 <?php $id = $_GET['idbill'];
-                $bill = load_cart_all($id);
+                $bill = \Codemoi\Model\Order::items((int) $id);
                 // var_dump($bill);
                 foreach ($bill as $value) {
                 ?>

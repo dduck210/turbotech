@@ -11,6 +11,7 @@ use Codemoi\Controller\Admin\CategoryController;
 use Codemoi\Controller\Admin\ProductController;
 use Codemoi\Controller\Admin\UserController;
 use Codemoi\Controller\Admin\CouponController;
+use Codemoi\Controller\Admin\BillController;
 
 // Every admin POST action goes through here — one guard covers the whole
 // panel. Failure sets a flash message and bounces back to the referring
@@ -58,6 +59,13 @@ $router->add('add_coupon', [CouponController::class, 'add']);
 $router->add('delete_coupon', [CouponController::class, 'delete']);
 $router->add('edit_coupon', [CouponController::class, 'edit']);
 $router->add('update_coupon', [CouponController::class, 'update']);
+$router->add('list_bill', [BillController::class, 'list']);
+$router->add('edit_bill', [BillController::class, 'edit']);
+$router->add('update_bill', [BillController::class, 'update']);
+$router->add('approve_bill', [BillController::class, 'approve']);
+$router->add('ship_bill', [BillController::class, 'ship']);
+$router->add('cancel_bill', [BillController::class, 'cancel']);
+$router->add('billdetail', [BillController::class, 'detail']);
 $router->setDefault([DashboardController::class, 'index']);
 
 $act = $_GET['act'] ?? '';
@@ -67,149 +75,13 @@ $portedActs = [
     'add_product', 'list_product', 'edit_product', 'update_product', 'delete_product',
     'list_user', 'edit_user', 'update_user', 'delete_usser',
     'list_coupon', 'add_coupon', 'delete_coupon', 'edit_coupon', 'update_coupon',
+    'list_bill', 'edit_bill', 'update_bill', 'approve_bill', 'ship_bill', 'cancel_bill', 'billdetail',
 ];
 
 if (in_array($act, $portedActs, true)) {
     $router->dispatch($act === '/' ? '' : $act);
 } else {
     switch ($act) {
-        //CONTROLLER HÓA ĐƠN
-
-        // show all bill
-        case 'list_bill':
-            if (isset($_SESSION['admin'])) {
-                $status = -1;
-                $keyword = "";
-                $from_date = "";
-                $to_date = "";
-                if (isset($_POST['btn_filter'])) {
-                    if (isset($_POST['status'])) {
-                        $status = (int)$_POST['status'];
-                    }
-                    if (isset($_POST['keyword'])) {
-                        $keyword = trim($_POST['keyword']);
-                    }
-                    if (isset($_POST['from_date'])) {
-                        $from_date = $_POST['from_date'];
-                    }
-                    if (isset($_POST['to_date'])) {
-                        $to_date = $_POST['to_date'];
-                    }
-                }
-                $listbill = loadall_bill(0, $status, $keyword, $from_date, $to_date);
-                $flash_error = $_SESSION['flash_error'] ?? null;
-                $flash_success = $_SESSION['flash_success'] ?? null;
-                unset($_SESSION['flash_error'], $_SESSION['flash_success']);
-                render('list_bill', [
-                    'listbill' => $listbill,
-                    'status' => $status,
-                    'keyword' => $keyword,
-                    'from_date' => $from_date,
-                    'to_date' => $to_date,
-                    'flash_error' => $flash_error,
-                    'flash_success' => $flash_success
-                ]);
-            } else {
-                header("location: index.php?act=login");
-            }
-            break;
-        //     xóa bill: 
-        // case 'removebill':
-        //     if (isset($_GET['idbill']) && ($_GET['idbill'])) {
-        //         $idbill = $_GET['idbill'];
-        //         remove_bill($idbill);
-        //     }
-        //     $listbill = loadall_bill(0);
-        //     include "view/hoadon/list.php";
-        //     break;
-        case 'edit_bill':
-            if (isset($_SESSION['admin'])) {
-                $one_bill = (isset($_GET['idbill']) && ($_GET['idbill']) > 0)
-                    ? loadone_bill($_GET['idbill'])
-                    : false;
-
-                if (!is_array($one_bill)) {
-                    $_SESSION['flash_error'] = 'Không tìm thấy đơn hàng này.';
-                    header('location:index.php?act=list_bill');
-                    break;
-                }
-
-                render(
-                    'update_bill',
-                    ['one_bill' => $one_bill]
-                );
-            } else {
-                header("location: index.php?act=login");
-            }
-
-            break;
-        case 'update_bill':
-            if (isset($_POST['btn_update']) && ($_POST['btn_update'])) {
-                $id_bill = $_POST['id_bill'];
-                $status = $_POST['status'];
-                $status_pay = $_POST['status_pay'];
-                if ($status == 3) {
-                    $status_pay = 1;
-                }
-                update_bill($id_bill, $status, $status_pay);
-                $_SESSION['flash_success'] = 'Cập nhật đơn hàng thành công!';
-                header('location:index.php?act=list_bill');
-            }
-            break;
-        case 'approve_bill':
-            if (isset($_GET['idbill']) && ($_GET['idbill'] > 0)) {
-                $idbill = $_GET['idbill'];
-                $bill = loadone_bill($idbill);
-                if ($bill && $bill['status'] == 0) {
-                    update_bill($idbill, '1', $bill['status_pay']);
-                    $_SESSION['flash_success'] = 'Đã duyệt đơn hàng thành công!';
-                }
-            }
-            header('location:index.php?act=list_bill');
-            break;
-        case 'ship_bill':
-            if (isset($_GET['idbill']) && ($_GET['idbill'] > 0)) {
-                $idbill = $_GET['idbill'];
-                $bill = loadone_bill($idbill);
-                if ($bill && $bill['status'] == 1) {
-                    update_bill($idbill, '2', $bill['status_pay']);
-                    $_SESSION['flash_success'] = 'Đã chuyển sang đang giao hàng!';
-                }
-            }
-            header('location:index.php?act=list_bill');
-            break;
-        case 'cancel_bill':
-            if (isset($_GET['idbill']) && ($_GET['idbill'] > 0)) {
-                $idbill = $_GET['idbill'];
-                $bill = loadone_bill($idbill);
-                if ($bill && ($bill['status'] == 0 || $bill['status'] == 1)) {
-                    update_bill($idbill, '4', $bill['status_pay']);
-                    $_SESSION['flash_success'] = 'Đã hủy đơn hàng!';
-                }
-            }
-            header('location:index.php?act=list_bill');
-            break;
-        case 'billdetail':
-            if (isset($_SESSION['admin'])) {
-                $one_bill = (isset($_GET['idbill']) && ($_GET['idbill']) > 0)
-                    ? loadone_bill($_GET['idbill'])
-                    : false;
-
-                if (!is_array($one_bill)) {
-                    $_SESSION['flash_error'] = 'Không tìm thấy đơn hàng này.';
-                    header('location:index.php?act=list_bill');
-                    break;
-                }
-
-                render(
-                    'billdetail',
-                    ['one_bill' => $one_bill]
-                );
-            } else {
-                header("location: index.php?act=login");
-            }
-
-            break;
         //CONTROLLER BÌNH LUẬN
         //show list: 
         case 'list_cmt':

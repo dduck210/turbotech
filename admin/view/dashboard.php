@@ -4,7 +4,7 @@
 <?php endif; ?>
 <?php $listuser = \Codemoi\Model\User::allAdmin();
 $listcmt = loadall_cmt();
-$listbill = loadall_bill(0);
+$listbill = \Codemoi\Model\Order::allAdmin();
 $listpro = \Codemoi\Model\Product::allAdmin();
 $ds_loai = \Codemoi\Model\Category::all(); ?>
 
