@@ -33,7 +33,7 @@ Legacy PHP + MySQL (`codemoi2`), Apache, `public/` webroot. Client side already 
 | 01 | [Password hashing + migration](phase-01-password-hashing.md) | 1 | P1 | — | DONE |
 | 02 | [CSRF protection](phase-02-csrf-protection.md) | 1 | P1 | — | DONE |
 | 03 | [XSS output-escaping audit + fix](phase-03-xss-escaping.md) | 1 | P1 | — | DONE |
-| 04 | [OTP hardening + redirect-exit fix](phase-04-otp-hardening.md) | 1 | P1 | — | no |
+| 04 | [OTP hardening + redirect-exit fix](phase-04-otp-hardening.md) | 1 | P1 | — | DONE |
 | 05 | [DB layer env-config unification](phase-05-db-config-unification.md) | 2 | P2 | — | no |
 | 06 | [Error-handling FK guards + dead-table cleanup](phase-06-error-handling-cleanup.md) | 2 | P2 | — | YES (approve table drops) |
 | 07 | [Admin MVC foundation](phase-07-admin-mvc-foundation.md) | 3 | P2 | 05 | no |

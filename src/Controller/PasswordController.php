@@ -40,7 +40,7 @@ class PasswordController extends Controller
                     $error = 'Không tìm thấy tài khoản với email hoặc số điện thoại này';
                 } else {
                     $email = $account['email_user'];
-                    $code = substr((string) rand(0, 999999), 0, 6);
+                    $code = str_pad((string) random_int(0, 999999), 6, '0', STR_PAD_LEFT);
                     $title = "Tìm lại mật khẩu của bạn";
                     $content = "<p>Xin chào, chúng tôi đã nhận được yêu cầu đặt lại mật khẩu Turbotech của bạn.<br>
                                 Nhập mã sau đây để đặt lại mật khẩu: <span style='color: black; font-weight: 600'>" . $code . "</span></p>";
@@ -51,6 +51,7 @@ class PasswordController extends Controller
                     if ($sent) {
                         $_SESSION['mail'] = $email;
                         $_SESSION['code'] = $code;
+                        $_SESSION['code_expires'] = time() + 600;
                         $this->redirect('index.php?act=verification');
                     }
 

@@ -20,10 +20,15 @@
                 <?php
                 if (isset($_POST['btn_verification'])) {
                     $error = array();
-                    if ($_POST['ma'] != $_SESSION['code']) {
+                    $expired = !isset($_SESSION['code_expires']) || time() > $_SESSION['code_expires'];
+                    if ($expired) {
+                        $error['fali'] = 'Mã xác nhận đã hết hạn, vui lòng yêu cầu mã mới !';
+                    } elseif (!hash_equals((string) $_SESSION['code'], (string) ($_POST['ma'] ?? ''))) {
                         $error['fali'] = 'Mã xác nhận không hợp lệ !';
                     } else {
+                        unset($_SESSION['code'], $_SESSION['code_expires']);
                         header('Location: index.php?act=changePass');
+                        exit;
                     }
                 }
                 ?>

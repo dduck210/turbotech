@@ -43,11 +43,31 @@ Verify:      $_POST['ma'] === $_SESSION['code'] AND time() <= code_expires ─> 
 4. `php -l`; manual test: request OTP, verify within window (works), wait past expiry / wrong code (rejected).
 
 ## Todo
-- [ ] `random_int` + zero-pad OTP; store expiry in session
-- [ ] `verification.php`: expiry + `hash_equals` check
-- [ ] Add `exit;` after success redirect; clear code from session
-- [ ] Manual test: valid / expired / wrong-code paths
-- [ ] `php -l` clean
+- [x] `random_int` + zero-pad OTP; store expiry in session
+- [x] `verification.php`: expiry + `hash_equals` check
+- [x] Add `exit;` after success redirect; clear code from session
+- [x] Manual test: valid / expired / wrong-code paths
+- [x] `php -l` clean
+
+## Implementation notes
+- `PasswordController::forgotPassword()`: `rand()` → `str_pad((string) random_int(0, 999999), 6, '0', STR_PAD_LEFT)`;
+  `$_SESSION['code_expires'] = time() + 600` set alongside `$_SESSION['code']`. The success
+  path already routes through `Controller::redirect()`, which already calls `exit` — no
+  change needed there.
+- `view/user/verification.php`: added an `$expired` check (`!isset($_SESSION['code_expires'])
+  || time() > $_SESSION['code_expires']`) checked first, then `hash_equals((string)
+  $_SESSION['code'], (string) ($_POST['ma'] ?? ''))` replacing the loose `!=` compare. On
+  success, `unset($_SESSION['code'], $_SESSION['code_expires'])` then `header('Location:
+  ...'); exit;`.
+- Live-tested via a disposable test user (`otptest_temp`, deleted after): requested OTP,
+  read the generated 6-digit zero-padded code + expiry timestamp directly from the PHP
+  session file (`C:\xampp\tmp\sess_*`) to avoid depending on email delivery timing; verified
+  wrong code → 200 + inline error message + session code untouched; correct code → 302 to
+  `changePass` with body cut off exactly at the `exit;` line (confirms execution actually
+  stops — the leftover buffered header markup before that point is harmless since browsers
+  discard 3xx response bodies, same behavior documented for the flash-toast fixes earlier
+  in this project).
+- Zero new entries in `apache/logs/error.log` during testing.
 
 ## Success criteria
 - OTP is CSPRNG-generated and 6 digits. Verifying after 10 min or with a wrong code fails with a message.
