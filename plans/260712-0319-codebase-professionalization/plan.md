@@ -37,7 +37,7 @@ Legacy PHP + MySQL (`codemoi2`), Apache, `public/` webroot. Client side already 
 | 05 | [DB layer env-config unification](phase-05-db-config-unification.md) | 2 | P2 | — | DONE |
 | 06 | [Error-handling FK guards + dead-table cleanup](phase-06-error-handling-cleanup.md) | 2 | P2 | — | DONE |
 | 07 | [Admin MVC foundation](phase-07-admin-mvc-foundation.md) | 3 | P2 | 05 | DONE |
-| 08 | [Admin controllers: auth/dashboard + CRUD](phase-08-admin-controllers-crud.md) | 3 | P2 | 07 | no |
+| 08 | [Admin controllers: auth/dashboard + CRUD](phase-08-admin-controllers-crud.md) | 3 | P2 | 07 | DONE |
 | 09 | [Admin controllers: bill/moderation/stats](phase-09-admin-controllers-bill-mod.md) | 3 | P2 | 07 | no |
 | 10 | [Admin regression sweep](phase-10-admin-regression.md) | 3 | P1 | 08,09 | no |
 | 11 | [UI/UX audit (read-only)](phase-11-uiux-audit.md) | 4 | P3 | — | YES (review issue list) |
@@ -80,7 +80,7 @@ Sequential-only conflicts are marked; **do not parallelize** a later phase over 
 | `view/*.php`, `admin/view/*.php` | 03 (escape), 12 (styling) | sequential; 03 edits echo output, 12 edits markup/classes |
 | `src/Core/Config.php`, `src/Core/Database.php`, `admin/model/pdo.php` | 05 (env), 09 (pdo.php deletion) | 05 makes env-ready; **correction (07):** `pdo.php` deletion deferred to end of 09, not 07 — 36 of 39 admin actions still depend on it until every domain is ported (strangler) |
 | `src/Controller/PasswordController.php`, `view/user/verification.php` | 04 | OTP + redirect-exit fix |
-| `admin/model/{bill,category,comment,coupon,product,question,statistics,user}.php` | 06 (guards), 08–09 (superseded by `Model\*`) | 08–09 delete these after controllers reuse shared models |
+| `admin/model/{bill,comment,question,statistics}.php` | 06 (guards), 09 (superseded by `Model\*`) | 09 deletes these after bill/comment/question/statistics controllers reuse shared models — `{category,coupon,product,user}.php` already deleted in 08 |
 
 ## Global risks
 - **HIGH — password migration reversibility:** hashing is one-way. A bad migration locks every user
