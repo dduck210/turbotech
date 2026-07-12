@@ -28,10 +28,10 @@
                 <tbody class="divide-y divide-slate-100">
                     <?php foreach ($listuser as $user) : ?>
                     <tr class="hover:bg-slate-50 transition-colors">
-                        <td class="px-4 py-4 text-slate-500 font-medium">#<?= $user['id_user'] ?></td>
-                        <td class="px-4 py-4 font-medium text-slate-800"><?= $user['user_name'] ?></td>
-                        <td class="px-4 py-4"><?= $user['full_name'] ?></td>
-                        <td class="px-4 py-4"><?= $user['email_user'] ?></td>
+                        <td class="px-4 py-4 text-slate-500 font-medium">#<?= e($user['id_user']) ?></td>
+                        <td class="px-4 py-4 font-medium text-slate-800"><?= e($user['user_name']) ?></td>
+                        <td class="px-4 py-4"><?= e($user['full_name']) ?></td>
+                        <td class="px-4 py-4"><?= e($user['email_user']) ?></td>
                         <td class="px-4 py-4 text-center"><?php if ($user['role'] == 1) {
                                                 echo "<span class='inline-flex items-center justify-center px-2.5 py-1 text-xs font-bold rounded-full bg-red-100 text-red-600'>Admin</span>";
                                             } else {
@@ -42,7 +42,7 @@
                                 <a href="./index.php?act=edit_user&id_user=<?= $user['id_user'] ?>"
                                     class="p-2 text-yellow-600 bg-yellow-50 rounded-lg hover:bg-yellow-100 transition-all active:scale-90"
                                     title="Sửa"><i class="fa-solid fa-pen-to-square"></i></a>
-                                <a href="./index.php?act=delete_usser&id_user=<?= $user['id_user'] ?>"
+                                <a href="./index.php?act=delete_usser&id_user=<?= e($user['id_user']) ?>&_token=<?= urlencode(\Codemoi\Core\Csrf::token()) ?>"
                                     class="p-2 text-red-600 bg-red-50 rounded-lg hover:bg-red-100 transition-all active:scale-90"
                                     data-confirm="Bạn có chắc chắn muốn xóa không?" title="Xóa"><i
                                         class="fa-solid fa-trash"></i></a>

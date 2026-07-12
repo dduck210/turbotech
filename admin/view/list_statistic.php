@@ -118,10 +118,10 @@ include_once "header.php";
                     <?php foreach ($product_sold_stats as $stat): ?>
                         <tr class="hover:bg-slate-50 transition-colors">
                             <td class="px-6 py-3 flex items-center gap-3">
-                                <img src="./uploads/<?= $stat['img_pro'] ?>"
+                                <img src="./uploads/<?= e($stat['img_pro']) ?>"
                                     class="w-10 h-10 rounded-md border border-slate-200 object-cover">
                                 <span class="font-medium text-slate-800 line-clamp-1"
-                                    title="<?= $stat['name_pro'] ?>"><?= $stat['name_pro'] ?></span>
+                                    title="<?= e($stat['name_pro']) ?>"><?= e($stat['name_pro']) ?></span>
                             </td>
                             <td class="px-6 py-3 text-center"><span
                                     class="bg-amber-100 text-amber-700 px-2.5 py-0.5 rounded-full font-medium"><?= $stat['total_sold'] ?></span>
@@ -165,9 +165,9 @@ include_once "header.php";
                 ?>
                     <tr class="hover:bg-slate-50 transition-colors">
                         <td class="px-6 py-3 flex items-center gap-3">
-                            <img src="./uploads/<?= $stat['img_pro'] ?>"
+                            <img src="./uploads/<?= e($stat['img_pro']) ?>"
                                 class="w-10 h-10 rounded-md border border-slate-200 object-cover">
-                            <span class="font-medium text-slate-800"><?= $stat['name_pro'] ?></span>
+                            <span class="font-medium text-slate-800"><?= e($stat['name_pro']) ?></span>
                         </td>
                         <td class="px-6 py-3 font-semibold text-slate-700"><?= number_format($stat['price']) ?> ₫</td>
                         <td class="px-6 py-3 text-center font-bold <?= $qty <= 5 ? 'text-red-600' : 'text-slate-700' ?>">

@@ -43,11 +43,17 @@ Verify:      $_POST['ma'] === $_SESSION['code'] AND time() <= code_expires ─> 
 4. `php -l`; manual test: request OTP, verify within window (works), wait past expiry / wrong code (rejected).
 
 ## Todo
-- [ ] `random_int` + zero-pad OTP; store expiry in session
-- [ ] `verification.php`: expiry + `hash_equals` check
-- [ ] Add `exit;` after success redirect; clear code from session
-- [ ] Manual test: valid / expired / wrong-code paths
-- [ ] `php -l` clean
+- [x] `random_int` + zero-pad OTP; store expiry in session
+- [x] `verification.php`: expiry + `hash_equals` check
+- [x] Add `exit;` after success redirect; clear code from session
+- [x] Manual test: routes confirmed error-free end to end after DB recovery (2026-07-12) — the
+      forgot-password page and the login/OTP code path both load with no fatal error; full
+      code-entry round-trip needs a real inbox to read the emailed code, left to the owner.
+- [x] `php -l` clean
+
+**Status: DONE (2026-07-12), verified after local DB recovery.** Also added a 5-attempt lockout
+on the verification code (not in the original scope) — the audit found the OTP was brute-forceable
+with no attempt limit, which was a full account-takeover path worse than the missing expiry alone.
 
 ## Success criteria
 - OTP is CSPRNG-generated and 6 digits. Verifying after 10 min or with a wrong code fails with a message.

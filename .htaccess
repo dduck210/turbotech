@@ -1,13 +1,22 @@
-# Safety net for deployments where the web server's document root is
-# pointed at the project root instead of public/ (the correct setup).
-# In that misconfiguration this blocks direct HTTP access to source code,
-# vendor/, .env, and database dumps instead of leaving them world-readable.
-# The public/.htaccess below overrides this for the folder that should
-# actually be served.
-<IfModule mod_authz_core.c>
-    Require all denied
-</IfModule>
-<IfModule !mod_authz_core.c>
-    Order deny,allow
-    Deny from all
+# The document root for this project is meant to be public/, but on XAMPP
+# the whole project folder sits under htdocs, so http://localhost/<folder>
+# would otherwise serve the project root directly. This transparently
+# forwards every request into public/ instead — the browser never needs a
+# /public/ segment in the URL, and it works unchanged on any machine no
+# matter what the project folder is named or where htdocs points, because
+# the rewrite is relative to this .htaccess's own directory.
+#
+# This also keeps everything OUTSIDE public/ (.env, vendor/, src/,
+# admin/model/, scripts/, Turbotech.sql, composer.json, ...) unreachable
+# over HTTP: a request for e.g. /.env is rewritten to public/.env, which
+# doesn't exist, so it 404s instead of serving the real file at the
+# project root.
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+
+    # Already targeting public/ (a direct link, or a request this rule
+    # already rewrote) — leave it alone, let Apache serve it normally.
+    RewriteRule ^public/ - [L]
+
+    RewriteRule ^(.*)$ public/$1 [L]
 </IfModule>

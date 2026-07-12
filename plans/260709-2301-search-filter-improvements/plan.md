@@ -1,7 +1,7 @@
 ---
 title: "Storefront Product Search & Filter Improvements"
 description: "Secure + unify product search (name, brand/category, price) into one combined GET filter."
-status: pending
+status: done
 priority: P1
 effort: 3h
 branch: feat/search-filter-improvements

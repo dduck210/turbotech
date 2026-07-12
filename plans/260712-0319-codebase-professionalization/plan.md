@@ -31,8 +31,8 @@ Legacy PHP + MySQL (`codemoi2`), Apache, `public/` webroot. Client side already 
 |---|-------|----|----------|-----------|---------------|
 | 01 | [Password hashing + migration](phase-01-password-hashing.md) | 1 | P1 | — | DONE |
 | 02 | [CSRF protection](phase-02-csrf-protection.md) | 1 | P1 | — | DONE |
-| 03 | [XSS output-escaping audit + fix](phase-03-xss-escaping.md) | 1 | P1 | — | no |
-| 04 | [OTP hardening + redirect-exit fix](phase-04-otp-hardening.md) | 1 | P1 | — | no |
+| 03 | [XSS output-escaping audit + fix](phase-03-xss-escaping.md) | 1 | P1 | — | DONE |
+| 04 | [OTP hardening + redirect-exit fix](phase-04-otp-hardening.md) | 1 | P1 | — | DONE |
 | 05 | [DB layer env-config unification](phase-05-db-config-unification.md) | 2 | P2 | — | no |
 | 06 | [Error-handling FK guards + dead-table cleanup](phase-06-error-handling-cleanup.md) | 2 | P2 | — | YES (approve table drops) |
 | 07 | [Admin MVC foundation](phase-07-admin-mvc-foundation.md) | 3 | P2 | 05 | no |
@@ -119,6 +119,23 @@ Sequential-only conflicts are marked; **do not parallelize** a later phase over 
 - Phase 10 authenticated sweep: every admin `?act=` returns without new PHP errors vs. pre-refactor log.
 - UI audit issue list resolved or explicitly deferred with owner sign-off.
 - Local XAMPP behavior and `index.php?act=X` / `admin/index.php?act=X` URLs unchanged throughout.
+
+## Unplanned critical fixes (found during Phase 03/04 execution, 2026-07-12)
+A security review ahead of Phase 03/04 surfaced three vulnerabilities worse than anything those two
+phases were scoped for, chaining into pre-auth admin takeover. Fixed opportunistically since they
+share files with 03/04 and blocking on a new planning round would leave them exploitable:
+- **Broken access control** — 13 mutating `act` cases in `public/admin/index.php` (delete/update for
+  product, category, user, bill, comment, question, coupon) had no `$_SESSION['admin']` check at all,
+  independent of CSRF. Fixed: guard added to every case, matching the existing pattern.
+- **Unrestricted file upload** — `add_product` wrote the uploaded file before checking its extension;
+  `update_product` had no extension check or auth check at all. Fixed: validate-then-upload order,
+  extension allow-list added to `update_product`; `.htaccess` (`php_flag engine off` + deny `.ph*`)
+  added to `public/uploads/` and `public/admin/uploads/` as defense in depth.
+- **IDOR** — `AccountController::index()` trusted `$_POST['id_user']` over the session's own identity,
+  letting any logged-in shopper overwrite another account's profile. Fixed: always use the session's
+  `id_user`. Avatar upload also got the same extension allow-list as the admin product upload.
+- Also fixed the `delete_cate` uncaught-FK-violation crash (small piece of Phase 06's scope, same file
+  as the access-control fix — not the full dead-table cleanup, just this one guard).
 
 ## Open questions
 - Hashing algorithm: `PASSWORD_BCRYPT` (portable, default) vs `PASSWORD_ARGON2ID` (stronger, needs PHP

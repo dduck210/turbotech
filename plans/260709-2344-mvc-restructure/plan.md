@@ -1,7 +1,7 @@
 ---
 title: "MVC Restructure — Turbotech client app (classes + namespaces + Router)"
 description: "Convert procedural PHP client app to lightweight custom MVC on PSR-4, no behavior/URL/schema change."
-status: pending
+status: done (phases 1-5; phase 6 superseded by 260712-0319-codebase-professionalization phases 07-10)
 priority: P2
 effort: 9h (client) + 3h (admin, deferred)
 branch: refactor/mvc-restructure

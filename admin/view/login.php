@@ -71,7 +71,7 @@
                     <div class="mt-6 text-center text-green-500 font-medium text-sm">
                         <?php
                         if (isset($noti_success) && $noti_success != "") {
-                            echo $noti_success;
+                            echo e($noti_success);
                         }
                         ?>
                     </div>

@@ -64,7 +64,7 @@ include_once "header.php";
                         class="w-full rounded-lg border-slate-300 px-4 py-2 border focus:ring-2 focus:ring-brand-500 outline-none transition-all bg-white">
                         <option value="0">Tất cả sản phẩm</option>
                         <?php foreach ($listpro as $pro): ?>
-                            <option value="<?= $pro['id_pro'] ?>"><?= $pro['name_pro'] ?></option>
+                            <option value="<?= e($pro['id_pro']) ?>"><?= e($pro['name_pro']) ?></option>
                         <?php endforeach; ?>
                     </select>
                 </div>

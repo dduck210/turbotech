@@ -176,7 +176,7 @@ $ds_loai = loadall_loai(); ?>
 
                 var donutData = {
                     labels: [
-                        <?php foreach ($all as $value) { ?> '<?= $value['name_cate'] ?>',
+                        <?php foreach ($all as $value) { ?> <?= json_encode((string) $value['name_cate']) ?>,
                         <?php
                         } ?>
                     ],

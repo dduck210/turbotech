@@ -23,11 +23,11 @@ if (is_array($one_coupon)) {
     <div class="p-6">
         <form action="index.php?act=update_coupon" method="POST">
 <?= \Codemoi\Core\Csrf::field() ?>
-            <input type="hidden" name="id_coupon" value="<?= isset($id_coupon) ? $id_coupon : '' ?>">
+            <input type="hidden" name="id_coupon" value="<?= isset($id_coupon) ? e($id_coupon) : '' ?>">
             <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
                 <div>
                     <label class="block text-sm font-medium text-slate-700 mb-2">Mã giảm giá (Code) *</label>
-                    <input type="text" name="code" value="<?= isset($code) ? $code : '' ?>" required
+                    <input type="text" name="code" value="<?= isset($code) ? e($code) : '' ?>" required
                         class="w-full rounded-lg border-slate-300 px-4 py-2 border focus:ring-2 focus:ring-brand-500 outline-none transition-all uppercase">
                 </div>
 
@@ -71,9 +71,9 @@ if (is_array($one_coupon)) {
                         <option value="0" <?= (!isset($product_id) || $product_id == 0) ? 'selected' : '' ?>>Tất cả sản
                             phẩm</option>
                         <?php foreach ($listpro as $pro): ?>
-                            <option value="<?= $pro['id_pro'] ?>"
+                            <option value="<?= e($pro['id_pro']) ?>"
                                 <?= (isset($product_id) && $product_id == $pro['id_pro']) ? 'selected' : '' ?>>
-                                <?= $pro['name_pro'] ?></option>
+                                <?= e($pro['name_pro']) ?></option>
                         <?php endforeach; ?>
                     </select>
                 </div>

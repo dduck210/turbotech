@@ -29,9 +29,9 @@
                     foreach ($ds_loai as $loai) {
                         extract($loai);
                         if ($idcate == $id_cate) {
-                            echo '<option value="' . $id_cate . '" selected>' . $name_cate . '</option>';
+                            echo '<option value="' . e($id_cate) . '" selected>' . e($name_cate) . '</option>';
                         } else {
-                            echo '<option value="' . $id_cate . '">' . $name_cate . '</option>';
+                            echo '<option value="' . e($id_cate) . '">' . e($name_cate) . '</option>';
                         }
                     }
                     ?>
@@ -60,19 +60,19 @@
                 <tbody class="divide-y divide-slate-100">
                     <?php foreach ($listpro as $pro) : ?>
                         <tr class="hover:bg-slate-50 transition-colors">
-                            <td class="px-4 py-4 text-center text-slate-500 font-medium">#<?= $pro['id_pro'] ?></td>
+                            <td class="px-4 py-4 text-center text-slate-500 font-medium">#<?= e($pro['id_pro']) ?></td>
                             <td class="px-4 py-4">
                                 <div
                                     class="w-14 h-14 rounded-lg border border-slate-200 overflow-hidden bg-white flex items-center justify-center">
-                                    <img src="./uploads/<?= $pro['img_pro'] ?>"
+                                    <img src="./uploads/<?= e($pro['img_pro']) ?>"
                                         alt="<?= htmlspecialchars($pro['name_pro']) ?>"
                                         class="max-w-full max-h-full object-cover">
                                 </div>
                             </td>
                             <td class="px-4 py-4">
-                                <div class="font-medium text-slate-800 line-clamp-2"><?= $pro['name_pro'] ?></div>
+                                <div class="font-medium text-slate-800 line-clamp-2"><?= e($pro['name_pro']) ?></div>
                                 <div class="text-xs text-slate-500 mt-1 line-clamp-1"
-                                    title="<?= htmlspecialchars($pro['short_des']) ?>"><?= $pro['short_des'] ?></div>
+                                    title="<?= htmlspecialchars($pro['short_des']) ?>"><?= e($pro['short_des']) ?></div>
                             </td>
                             <td class="px-4 py-4 font-semibold text-brand-600">
                                 <?= number_format($pro['price']) ?> ₫
@@ -105,12 +105,12 @@
                             </td>
                             <td class="px-4 py-4 text-center">
                                 <div class="flex items-center justify-center gap-2">
-                                    <a href="./index.php?act=edit_product&id_pro=<?= $pro['id_pro'] ?>"
+                                    <a href="./index.php?act=edit_product&id_pro=<?= e($pro['id_pro']) ?>"
                                         class="p-2 text-yellow-600 bg-yellow-50 rounded-lg hover:bg-yellow-100 transition-all active:scale-90"
                                         title="Sửa">
                                         <i class="fa-solid fa-pen-to-square"></i>
                                     </a>
-                                    <a href="./index.php?act=delete_product&id_pro=<?= $pro['id_pro'] ?>"
+                                    <a href="./index.php?act=delete_product&id_pro=<?= e($pro['id_pro']) ?>&_token=<?= urlencode(\Codemoi\Core\Csrf::token()) ?>"
                                         class="p-2 text-red-600 bg-red-50 rounded-lg hover:bg-red-100 transition-all active:scale-90"
                                         data-confirm="Bạn có chắc chắn muốn xóa không?" title="Xóa">
                                         <i class="fa-solid fa-trash"></i>

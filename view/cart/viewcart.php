@@ -36,23 +36,23 @@
                         <tbody class="divide-y divide-ink-100">
                             <?php foreach ($_SESSION['mycart'] as $key => $cart) {
                                 $total_amount = $total_amount + $cart[5];
-                                $removepro = "index.php?act=removecart&idcart=" . $key;
-                                $prodetail = "index.php?act=prodetail&idpro=" . $cart[0];
+                                $removepro = "index.php?act=removecart&idcart=" . e($key);
+                                $prodetail = "index.php?act=prodetail&idpro=" . e($cart[0]);
                             ?>
                                 <tr>
                                     <td class="px-4 py-3">
                                         <a href="<?= $prodetail ?>" class="block h-16 w-16 overflow-hidden rounded-lg bg-ink-100">
-                                            <img src="admin/uploads/<?= $cart[2] ?>" alt="<?= $cart[1] ?>" class="h-full w-full object-cover" />
+                                            <img src="admin/uploads/<?= e($cart[2]) ?>" alt="<?= e($cart[1]) ?>" class="h-full w-full object-cover" />
                                         </a>
                                     </td>
                                     <td class="px-4 py-3">
-                                        <a href="<?= $prodetail ?>" class="font-heading font-semibold text-ink-900 hover:text-brand-600 transition-colors"><?= $cart[1] ?></a>
+                                        <a href="<?= $prodetail ?>" class="font-heading font-semibold text-ink-900 hover:text-brand-600 transition-colors"><?= e($cart[1]) ?></a>
                                     </td>
                                     <td class="px-4 py-3 text-ink-700"><?= number_format($cart[3]) ?> ₫</td>
                                     <td class="px-4 py-3">
                                         <div class="mx-auto w-20">
-                                            <label for="<?= $key ?>" class="sr-only">Số lượng</label>
-                                            <input type="number" name="quantity" id="<?= $key ?>" value="<?= $cart[4] ?>" onchange="saveCart(this);"
+                                            <label for="<?= e($key) ?>" class="sr-only">Số lượng</label>
+                                            <input type="number" name="quantity" id="<?= e($key) ?>" value="<?= e($cart[4]) ?>" onchange="saveCart(this);"
                                                 class="block w-full rounded-lg border border-ink-200 bg-white px-2 py-2 text-center text-sm text-ink-900 focus:outline-none focus:ring-2 focus:ring-brand-500 focus:border-brand-500" />
                                         </div>
                                     </td>

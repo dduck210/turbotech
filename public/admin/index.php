@@ -1,6 +1,7 @@
 <?php
 session_start();
 require_once __DIR__ . '/../../vendor/autoload.php';
+require_once __DIR__ . '/../../src/Core/helpers.php';
 require_once __DIR__ . '/../../admin/controller/controller.php';
 
 use Codemoi\Core\Csrf;
@@ -10,6 +11,24 @@ use Codemoi\Core\Csrf;
 // page instead of a white-screen 403 (list_* pages already display
 // $_SESSION['flash_error']).
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && !Csrf::verify($_POST['_token'] ?? null)) {
+    $_SESSION['flash_error'] = 'Phiên làm việc đã hết hạn, vui lòng thử lại.';
+    header('Location: ' . ($_SERVER['HTTP_REFERER'] ?? 'index.php'));
+    exit;
+}
+
+// These delete/approve/ship/cancel actions are plain GET links (not forms),
+// so the POST-only check above doesn't cover them — without this, an
+// <img src="admin/index.php?act=delete_product&..."> on any page an admin
+// visits would trigger the action via their session cookie (CSRF-via-GET).
+$get_mutating_actions = [
+    'delete_cate', 'delete_product', 'delete_usser', 'approve_bill',
+    'ship_bill', 'cancel_bill', 'delete_cmt', 'delete_ques', 'delete_coupon',
+];
+if (
+    $_SERVER['REQUEST_METHOD'] === 'GET'
+    && in_array($_GET['act'] ?? '', $get_mutating_actions, true)
+    && !Csrf::verify($_GET['_token'] ?? null)
+) {
     $_SESSION['flash_error'] = 'Phiên làm việc đã hết hạn, vui lòng thử lại.';
     header('Location: ' . ($_SERVER['HTTP_REFERER'] ?? 'index.php'));
     exit;
@@ -94,10 +113,11 @@ if (isset($_GET['act'])) {
             if (isset($_SESSION['admin'])) {
                 $ds_loai = loadall_loai();
                 $flash_success = $_SESSION['flash_success'] ?? null;
-                unset($_SESSION['flash_success']);
+                $flash_error = $_SESSION['flash_error'] ?? null;
+                unset($_SESSION['flash_success'], $_SESSION['flash_error']);
                 render(
                     'list_category',
-                    ['ds_loai' => $ds_loai, 'flash_success' => $flash_success]
+                    ['ds_loai' => $ds_loai, 'flash_success' => $flash_success, 'flash_error' => $flash_error]
                 );
             } else {
                 header("location: index.php?act=login");
@@ -121,26 +141,44 @@ if (isset($_GET['act'])) {
 
             break;
         case "update_category":
-            if (isset($_POST['btn_update']) && ($_POST['btn_update'])) {
-                $id_cate = $_POST['id_cate'];
-                $name_cate = trim($_POST['name_cate']);
-                if ($name_cate === '') {
-                    echo '<script>document.addEventListener("DOMContentLoaded",()=>Swal.fire({toast:true,position:"top-end",icon:"error",title:"Vui lòng nhập tên loại !",showConfirmButton:false,timer:3000}));</script>';
-                    $one_loai = loadone_loai($id_cate);
-                    render('update_category', ['one_loai' => $one_loai]);
-                    break;
+            if (isset($_SESSION['admin'])) {
+                if (isset($_POST['btn_update']) && ($_POST['btn_update'])) {
+                    $id_cate = $_POST['id_cate'];
+                    $name_cate = trim($_POST['name_cate']);
+                    if ($name_cate === '') {
+                        echo '<script>document.addEventListener("DOMContentLoaded",()=>Swal.fire({toast:true,position:"top-end",icon:"error",title:"Vui lòng nhập tên loại !",showConfirmButton:false,timer:3000}));</script>';
+                        $one_loai = loadone_loai($id_cate);
+                        render('update_category', ['one_loai' => $one_loai]);
+                        break;
+                    }
+                    capnhat_loai($id_cate, $name_cate);
+                    $_SESSION['flash_success'] = 'Cập nhật loại thành công!';
                 }
-                capnhat_loai($id_cate, $name_cate);
-                $_SESSION['flash_success'] = 'Cập nhật loại thành công!';
+                header('location:index.php?act=list_category');
+            } else {
+                header("location: index.php?act=login");
             }
-            header('location:index.php?act=list_category');
             break;
         case "delete_cate":
-            if (isset($_GET['id_cate']) && ($_GET['id_cate'] > 0)) {
-                $id_cate = $_GET['id_cate'];
-                xoa_loai($id_cate);
+            if (isset($_SESSION['admin'])) {
+                if (isset($_GET['id_cate']) && ($_GET['id_cate'] > 0)) {
+                    $id_cate = $_GET['id_cate'];
+                    try {
+                        xoa_loai($id_cate);
+                    } catch (PDOException $e) {
+                        // SQLSTATE 23000: category still referenced by a product
+                        // (lk_cate_product) — block instead of a raw fatal error.
+                        if ($e->getCode() === '23000') {
+                            $_SESSION['flash_error'] = 'Không thể xoá loại này vì vẫn còn sản phẩm thuộc loại đó.';
+                        } else {
+                            throw $e;
+                        }
+                    }
+                }
+                header('location:index.php?act=list_category');
+            } else {
+                header("location: index.php?act=login");
             }
-            header('location:index.php?act=list_category');
             break;
 
         // CONTROLLER SẢN PHẨM:
@@ -157,22 +195,23 @@ if (isset($_GET['act'])) {
                     $idcate = $_POST['idcate'];
                     $stock = $_POST['stock'] ?? 0;
                     $stock_message = trim($_POST['stock_message'] ?? '') ?: null;
-                    $img_pro = $_FILES['img_pro']['name'];
+                    $img_pro = basename($_FILES['img_pro']['name']);
                     $target_dir = "./uploads/";
-                    $target_file = $target_dir . basename($_FILES["img_pro"]["name"]);
-                    $extension = pathinfo($img_pro, PATHINFO_EXTENSION);
+                    $target_file = $target_dir . $img_pro;
+                    $extension = strtolower(pathinfo($img_pro, PATHINFO_EXTENSION));
 
                     $allowed_extensions = array("jpg", "jpeg", "png", "gif");
 
-                    (move_uploaded_file($_FILES["img_pro"]["tmp_name"], $target_file));
                     if ($name_pro == null || $price == null || $short_des == null || $idcate == null) {
                         echo '<script>document.addEventListener("DOMContentLoaded",()=>Swal.fire({toast:true,position:"top-end",icon:"error",title:"Vui lòng nhập đầy đủ nội dung !",showConfirmButton:false,timer:3000}));</script>';
                     } elseif ($price <= 0) {
                         echo '<script>document.addEventListener("DOMContentLoaded",()=>Swal.fire({toast:true,position:"top-end",icon:"error",title:"Giá nhập không đúng !",showConfirmButton:false,timer:3000}));</script>';
                     } elseif ($stock < 0) {
                         echo '<script>document.addEventListener("DOMContentLoaded",()=>Swal.fire({toast:true,position:"top-end",icon:"error",title:"Số lượng tồn kho không đúng !",showConfirmButton:false,timer:3000}));</script>';
-                    } elseif (!in_array($extension, $allowed_extensions)) {
+                    } elseif (!in_array($extension, $allowed_extensions, true) || preg_match('/\.(php|phtml|pht)/i', $img_pro)) {
                         echo '<script>document.addEventListener("DOMContentLoaded",()=>Swal.fire({toast:true,position:"top-end",icon:"error",title:"File ảnh không phù hợp !",showConfirmButton:false,timer:3000}));</script>';
+                    } elseif (!move_uploaded_file($_FILES["img_pro"]["tmp_name"], $target_file)) {
+                        echo '<script>document.addEventListener("DOMContentLoaded",()=>Swal.fire({toast:true,position:"top-end",icon:"error",title:"Tải ảnh lên thất bại !",showConfirmButton:false,timer:3000}));</script>';
                     } else {
                         add_pro($name_pro, $price, $discount, $img_pro, $short_des, $detail_des, $idcate, $stock, $stock_message);
                         echo '<script>document.addEventListener("DOMContentLoaded",()=>Swal.fire({toast:true,position:"top-end",icon:"success",title:"Thêm sản phẩm thành công !",showConfirmButton:false,timer:3000}));</script>';
@@ -229,43 +268,60 @@ if (isset($_GET['act'])) {
 
             break;
         case "update_product":
-            if (isset($_POST['btn_update']) && $_POST['btn_update'] > 0) {
-                $id_pro = $_POST['id_pro'];
-                $idcate = $_POST['idcate'];
-                $name_pro = $_POST['name_pro'];
-                $price = $_POST['price'];
-                $discount = $_POST['discount'];
-                $short_des = $_POST['short_des'];
-                $detail_des = $_POST['detail_des'];
-                $stock = $_POST['stock'] ?? 0;
-                $stock_message = trim($_POST['stock_message'] ?? '') ?: null;
-                $img_pro = $_FILES['img_pro']['name'];
-                $target_dir = "./uploads/";
-                $target_file = $target_dir . basename($_FILES["img_pro"]["name"]);
-                (move_uploaded_file($_FILES["img_pro"]["tmp_name"], $target_file));
-                update_pro($id_pro, $name_pro, $price, $discount, $short_des, $detail_des, $img_pro, $idcate, $stock, $stock_message);
-                $_SESSION['flash_success'] = 'Cập nhật sản phẩm thành công!';
-                header('location:index.php?act=list_product');
+            if (isset($_SESSION['admin'])) {
+                if (isset($_POST['btn_update']) && $_POST['btn_update'] > 0) {
+                    $id_pro = $_POST['id_pro'];
+                    $idcate = $_POST['idcate'];
+                    $name_pro = $_POST['name_pro'];
+                    $price = $_POST['price'];
+                    $discount = $_POST['discount'];
+                    $short_des = $_POST['short_des'];
+                    $detail_des = $_POST['detail_des'];
+                    $stock = $_POST['stock'] ?? 0;
+                    $stock_message = trim($_POST['stock_message'] ?? '') ?: null;
+                    $img_pro = '';
+                    if (!empty($_FILES['img_pro']['tmp_name'])) {
+                        $new_name = basename($_FILES['img_pro']['name']);
+                        $extension = strtolower(pathinfo($new_name, PATHINFO_EXTENSION));
+                        $allowed_extensions = array("jpg", "jpeg", "png", "gif");
+                        if (in_array($extension, $allowed_extensions, true) && !preg_match('/\.(php|phtml|pht)/i', $new_name)) {
+                            $target_dir = "./uploads/";
+                            $target_file = $target_dir . $new_name;
+                            if (move_uploaded_file($_FILES["img_pro"]["tmp_name"], $target_file)) {
+                                $img_pro = $new_name;
+                            }
+                        }
+                    }
+                    update_pro($id_pro, $name_pro, $price, $discount, $short_des, $detail_des, $img_pro, $idcate, $stock, $stock_message);
+                    $_SESSION['flash_success'] = 'Cập nhật sản phẩm thành công!';
+                    header('location:index.php?act=list_product');
+                }
+            } else {
+                header("location: index.php?act=login");
             }
             break;
         case "delete_product":
-            if (isset($_GET['id_pro']) && ($_GET['id_pro']) > 0) {
-                $id_pro = $_GET['id_pro'];
-                try {
-                    remove_pro($id_pro);
-                } catch (PDOException $e) {
-                    // SQLSTATE 23000: product already referenced by an order
-                    // line in `cart` (lk_pro_cart) — deleting it would break
-                    // that order's history, so block it with a clear message
-                    // instead of the raw fatal error.
-                    if ($e->getCode() === '23000') {
-                        $_SESSION['flash_error'] = 'Không thể xoá sản phẩm này vì đã có đơn hàng liên quan.';
-                    } else {
-                        throw $e;
+            if (isset($_SESSION['admin'])) {
+                if (isset($_GET['id_pro']) && ($_GET['id_pro']) > 0) {
+                    $id_pro = $_GET['id_pro'];
+                    try {
+                        remove_pro($id_pro);
+                    } catch (PDOException $e) {
+                        // SQLSTATE 23000: product already referenced by an order
+                        // line in `cart` (lk_pro_cart) — deleting it would break
+                        // that order's history, so block it with a clear message
+                        // instead of the raw fatal error.
+                        if ($e->getCode() === '23000') {
+                            $_SESSION['flash_error'] = 'Không thể xoá sản phẩm này vì đã có đơn hàng liên quan.';
+                        } else {
+                            throw $e;
+                        }
                     }
                 }
+                header('location:index.php?act=list_product');
+            } else {
+                header("location: index.php?act=login");
             }
-            header('location:index.php?act=list_product');
             break;
 
         // CONTROLLER NGƯỜI DÙNG: 
@@ -303,43 +359,51 @@ if (isset($_GET['act'])) {
 
             break;
         case 'update_user':
-            if (isset($_POST['btn_update']) && ($_POST['btn_update'])) {
-                $id_user = $_POST['id_user'];
-                $user_name = trim($_POST['user_name']);
-                $full_name = trim($_POST['full_name']);
-                $email_user = trim($_POST['email_user']);
-                $password = $_POST['password'];
-                $role = $_POST['role'];
-                if ($user_name === '' || $full_name === '') {
-                    echo '<script>document.addEventListener("DOMContentLoaded",()=>Swal.fire({toast:true,position:"top-end",icon:"error",title:"Vui lòng nhập đầy đủ nội dung !",showConfirmButton:false,timer:3000}));</script>';
-                    $user = loadone_user($id_user);
-                    render('update_user', ['user' => $user]);
-                    break;
-                } elseif (!filter_var($email_user, FILTER_VALIDATE_EMAIL)) {
-                    echo '<script>document.addEventListener("DOMContentLoaded",()=>Swal.fire({toast:true,position:"top-end",icon:"error",title:"Email không hợp lệ !",showConfirmButton:false,timer:3000}));</script>';
-                    $user = loadone_user($id_user);
-                    render('update_user', ['user' => $user]);
-                    break;
-                } elseif ($password !== '' && strlen($password) < 6) {
-                    // Blank is allowed (means "keep current password");
-                    // only enforce the minimum length when actually changing it.
-                    echo '<script>document.addEventListener("DOMContentLoaded",()=>Swal.fire({toast:true,position:"top-end",icon:"error",title:"Mật khẩu phải có ít nhất 6 ký tự !",showConfirmButton:false,timer:3000}));</script>';
-                    $user = loadone_user($id_user);
-                    render('update_user', ['user' => $user]);
-                    break;
+            if (isset($_SESSION['admin'])) {
+                if (isset($_POST['btn_update']) && ($_POST['btn_update'])) {
+                    $id_user = $_POST['id_user'];
+                    $user_name = trim($_POST['user_name']);
+                    $full_name = trim($_POST['full_name']);
+                    $email_user = trim($_POST['email_user']);
+                    $password = $_POST['password'];
+                    $role = $_POST['role'];
+                    if ($user_name === '' || $full_name === '') {
+                        echo '<script>document.addEventListener("DOMContentLoaded",()=>Swal.fire({toast:true,position:"top-end",icon:"error",title:"Vui lòng nhập đầy đủ nội dung !",showConfirmButton:false,timer:3000}));</script>';
+                        $user = loadone_user($id_user);
+                        render('update_user', ['user' => $user]);
+                        break;
+                    } elseif (!filter_var($email_user, FILTER_VALIDATE_EMAIL)) {
+                        echo '<script>document.addEventListener("DOMContentLoaded",()=>Swal.fire({toast:true,position:"top-end",icon:"error",title:"Email không hợp lệ !",showConfirmButton:false,timer:3000}));</script>';
+                        $user = loadone_user($id_user);
+                        render('update_user', ['user' => $user]);
+                        break;
+                    } elseif ($password !== '' && strlen($password) < 6) {
+                        // Blank is allowed (means "keep current password");
+                        // only enforce the minimum length when actually changing it.
+                        echo '<script>document.addEventListener("DOMContentLoaded",()=>Swal.fire({toast:true,position:"top-end",icon:"error",title:"Mật khẩu phải có ít nhất 6 ký tự !",showConfirmButton:false,timer:3000}));</script>';
+                        $user = loadone_user($id_user);
+                        render('update_user', ['user' => $user]);
+                        break;
+                    }
+                    update_user($id_user, $user_name, $full_name, $email_user, $password === '' ? null : $password, $role);
+                    $_SESSION['flash_success'] = 'Cập nhật tài khoản thành công!';
                 }
-                update_user($id_user, $user_name, $full_name, $email_user, $password === '' ? null : $password, $role);
-                $_SESSION['flash_success'] = 'Cập nhật tài khoản thành công!';
+                header('location: index.php?act=list_user');
+            } else {
+                header("location: index.php?act=login");
             }
-            header('location: index.php?act=list_user');
             break;
         // Xóa người dùng
         case "delete_usser":
-            if (isset($_GET['id_user']) && ($_GET['id_user'] > 0)) {
-                $id_user = $_GET['id_user'];
-                delete_user($id_user);
+            if (isset($_SESSION['admin'])) {
+                if (isset($_GET['id_user']) && ($_GET['id_user'] > 0)) {
+                    $id_user = $_GET['id_user'];
+                    delete_user($id_user);
+                }
+                header('location:index.php?act=list_user');
+            } else {
+                header("location: index.php?act=login");
             }
-            header('location:index.php?act=list_user');
             break;
 
         //CONTROLLER HÓA ĐƠN
@@ -413,50 +477,66 @@ if (isset($_GET['act'])) {
 
             break;
         case 'update_bill':
-            if (isset($_POST['btn_update']) && ($_POST['btn_update'])) {
-                $id_bill = $_POST['id_bill'];
-                $status = $_POST['status'];
-                $status_pay = $_POST['status_pay'];
-                if ($status == 3) {
-                    $status_pay = 1;
+            if (isset($_SESSION['admin'])) {
+                if (isset($_POST['btn_update']) && ($_POST['btn_update'])) {
+                    $id_bill = $_POST['id_bill'];
+                    $status = $_POST['status'];
+                    $status_pay = $_POST['status_pay'];
+                    if ($status == 3) {
+                        $status_pay = 1;
+                    }
+                    update_bill($id_bill, $status, $status_pay);
+                    $_SESSION['flash_success'] = 'Cập nhật đơn hàng thành công!';
+                    header('location:index.php?act=list_bill');
                 }
-                update_bill($id_bill, $status, $status_pay);
-                $_SESSION['flash_success'] = 'Cập nhật đơn hàng thành công!';
-                header('location:index.php?act=list_bill');
+            } else {
+                header("location: index.php?act=login");
             }
             break;
         case 'approve_bill':
-            if (isset($_GET['idbill']) && ($_GET['idbill'] > 0)) {
-                $idbill = $_GET['idbill'];
-                $bill = loadone_bill($idbill);
-                if ($bill && $bill['status'] == 0) {
-                    update_bill($idbill, '1', $bill['status_pay']);
-                    $_SESSION['flash_success'] = 'Đã duyệt đơn hàng thành công!';
+            if (isset($_SESSION['admin'])) {
+                if (isset($_GET['idbill']) && ($_GET['idbill'] > 0)) {
+                    $idbill = $_GET['idbill'];
+                    $bill = loadone_bill($idbill);
+                    if ($bill && $bill['status'] == 0) {
+                        update_bill($idbill, '1', $bill['status_pay']);
+                        $_SESSION['flash_success'] = 'Đã duyệt đơn hàng thành công!';
+                    }
                 }
+                header('location:index.php?act=list_bill');
+            } else {
+                header("location: index.php?act=login");
             }
-            header('location:index.php?act=list_bill');
             break;
         case 'ship_bill':
-            if (isset($_GET['idbill']) && ($_GET['idbill'] > 0)) {
-                $idbill = $_GET['idbill'];
-                $bill = loadone_bill($idbill);
-                if ($bill && $bill['status'] == 1) {
-                    update_bill($idbill, '2', $bill['status_pay']);
-                    $_SESSION['flash_success'] = 'Đã chuyển sang đang giao hàng!';
+            if (isset($_SESSION['admin'])) {
+                if (isset($_GET['idbill']) && ($_GET['idbill'] > 0)) {
+                    $idbill = $_GET['idbill'];
+                    $bill = loadone_bill($idbill);
+                    if ($bill && $bill['status'] == 1) {
+                        update_bill($idbill, '2', $bill['status_pay']);
+                        $_SESSION['flash_success'] = 'Đã chuyển sang đang giao hàng!';
+                    }
                 }
+                header('location:index.php?act=list_bill');
+            } else {
+                header("location: index.php?act=login");
             }
-            header('location:index.php?act=list_bill');
             break;
         case 'cancel_bill':
-            if (isset($_GET['idbill']) && ($_GET['idbill'] > 0)) {
-                $idbill = $_GET['idbill'];
-                $bill = loadone_bill($idbill);
-                if ($bill && ($bill['status'] == 0 || $bill['status'] == 1)) {
-                    update_bill($idbill, '4', $bill['status_pay']);
-                    $_SESSION['flash_success'] = 'Đã hủy đơn hàng!';
+            if (isset($_SESSION['admin'])) {
+                if (isset($_GET['idbill']) && ($_GET['idbill'] > 0)) {
+                    $idbill = $_GET['idbill'];
+                    $bill = loadone_bill($idbill);
+                    if ($bill && ($bill['status'] == 0 || $bill['status'] == 1)) {
+                        update_bill($idbill, '4', $bill['status_pay']);
+                        $_SESSION['flash_success'] = 'Đã hủy đơn hàng!';
+                    }
                 }
+                header('location:index.php?act=list_bill');
+            } else {
+                header("location: index.php?act=login");
             }
-            header('location:index.php?act=list_bill');
             break;
         case 'billdetail':
             if (isset($_SESSION['admin'])) {
@@ -495,11 +575,15 @@ if (isset($_GET['act'])) {
             break;
         //xóa bì-nh luận: 
         case 'delete_cmt':
-            if (isset($_GET['idcmt']) && ($_GET['idcmt']) > 0) {
-                $id_cmt = $_GET['idcmt'];
-                remove_cmt($id_cmt);
+            if (isset($_SESSION['admin'])) {
+                if (isset($_GET['idcmt']) && ($_GET['idcmt']) > 0) {
+                    $id_cmt = $_GET['idcmt'];
+                    remove_cmt($id_cmt);
+                }
+                header('location: index.php?act=list_cmt');
+            } else {
+                header("location: index.php?act=login");
             }
-            header('location: index.php?act=list_cmt');
             break;
 
         //CONTROLLER THỐNG KÊ
@@ -540,11 +624,15 @@ if (isset($_GET['act'])) {
             break;
         //xóa hỏi đáp: 
         case 'delete_ques':
-            if (isset($_GET['id_ques']) && ($_GET['id_ques']) > 0) {
-                $id_ques = $_GET['id_ques'];
-                delete_ques($id_ques);
+            if (isset($_SESSION['admin'])) {
+                if (isset($_GET['id_ques']) && ($_GET['id_ques']) > 0) {
+                    $id_ques = $_GET['id_ques'];
+                    delete_ques($id_ques);
+                }
+                header('location: index.php?act=list_ques');
+            } else {
+                header("location: index.php?act=login");
             }
-            header('location: index.php?act=list_ques');
             break;
 
         case 'list_coupon':
@@ -582,12 +670,16 @@ if (isset($_GET['act'])) {
             break;
 
         case 'delete_coupon':
-            if (isset($_GET['id_coupon']) && ($_GET['id_coupon']) > 0) {
-                $id_coupon = $_GET['id_coupon'];
-                delete_coupon($id_coupon);
-                $_SESSION['flash_success'] = 'Xóa mã thành công!';
+            if (isset($_SESSION['admin'])) {
+                if (isset($_GET['id_coupon']) && ($_GET['id_coupon']) > 0) {
+                    $id_coupon = $_GET['id_coupon'];
+                    delete_coupon($id_coupon);
+                    $_SESSION['flash_success'] = 'Xóa mã thành công!';
+                }
+                header('location: index.php?act=list_coupon');
+            } else {
+                header("location: index.php?act=login");
             }
-            header('location: index.php?act=list_coupon');
             break;
 
         case 'edit_coupon':
@@ -604,22 +696,26 @@ if (isset($_GET['act'])) {
             break;
 
         case 'update_coupon':
-            if (isset($_POST['btn_update'])) {
-                $id_coupon = $_POST['id_coupon'];
-                $code = $_POST['code'];
-                $discount_type = $_POST['discount_type'];
-                $discount_value = $_POST['discount_value'];
-                $max_discount = $_POST['max_discount'];
-                $min_order_value = $_POST['min_order_value'];
-                $product_id = $_POST['product_id'];
-                $start_date = $_POST['start_date'];
-                $end_date = $_POST['end_date'];
-                $usage_limit = $_POST['usage_limit'];
-                $status = $_POST['status'];
-                update_coupon($id_coupon, $code, $discount_type, $discount_value, $max_discount, $min_order_value, $product_id, $start_date, $end_date, $usage_limit, $status);
-                $_SESSION['flash_success'] = 'Cập nhật mã giảm giá thành công!';
+            if (isset($_SESSION['admin'])) {
+                if (isset($_POST['btn_update'])) {
+                    $id_coupon = $_POST['id_coupon'];
+                    $code = $_POST['code'];
+                    $discount_type = $_POST['discount_type'];
+                    $discount_value = $_POST['discount_value'];
+                    $max_discount = $_POST['max_discount'];
+                    $min_order_value = $_POST['min_order_value'];
+                    $product_id = $_POST['product_id'];
+                    $start_date = $_POST['start_date'];
+                    $end_date = $_POST['end_date'];
+                    $usage_limit = $_POST['usage_limit'];
+                    $status = $_POST['status'];
+                    update_coupon($id_coupon, $code, $discount_type, $discount_value, $max_discount, $min_order_value, $product_id, $start_date, $end_date, $usage_limit, $status);
+                    $_SESSION['flash_success'] = 'Cập nhật mã giảm giá thành công!';
+                }
+                header('location: index.php?act=list_coupon');
+            } else {
+                header("location: index.php?act=login");
             }
-            header('location: index.php?act=list_coupon');
             break;
 
         default:

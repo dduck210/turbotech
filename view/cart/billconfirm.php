@@ -28,11 +28,11 @@
         <dl class="space-y-2 text-sm">
             <div class="flex items-center justify-between">
                 <dt class="text-ink-500">Mã đơn hàng</dt>
-                <dd class="font-semibold text-ink-900">UTP-<?= $id_bill ?></dd>
+                <dd class="font-semibold text-ink-900">UTP-<?= e($id_bill) ?></dd>
             </div>
             <div class="flex items-center justify-between">
                 <dt class="text-ink-500">Thời gian đặt hàng</dt>
-                <dd class="font-semibold text-ink-900"><?= $order_date ?></dd>
+                <dd class="font-semibold text-ink-900"><?= e($order_date) ?></dd>
             </div>
             <?php if (!empty($coupon_code)) : ?>
                 <div class="flex items-center justify-between">
@@ -64,27 +64,27 @@
             <div class="space-y-4">
                 <div>
                     <label for="billconfirm-user-name" class="block text-sm font-medium text-ink-700 mb-1.5">Tài khoản người dùng</label>
-                    <input id="billconfirm-user-name" name="" type="text" value="<?= $user_name ?>" disabled
+                    <input id="billconfirm-user-name" name="" type="text" value="<?= e($user_name) ?>" disabled
                         class="block w-full rounded-lg border border-ink-200 bg-ink-50 px-3.5 py-2.5 text-sm font-semibold text-ink-500 cursor-not-allowed" />
                 </div>
                 <div>
                     <label for="billconfirm-full-name" class="block text-sm font-medium text-ink-700 mb-1.5">Họ tên người đặt</label>
-                    <input id="billconfirm-full-name" name="full_name" type="text" value="<?= $full_name ?>" readonly
+                    <input id="billconfirm-full-name" name="full_name" type="text" value="<?= e($full_name) ?>" readonly
                         class="block w-full rounded-lg border border-ink-200 bg-ink-50 px-3.5 py-2.5 text-sm font-semibold text-ink-900" />
                 </div>
                 <div>
                     <label for="billconfirm-address" class="block text-sm font-medium text-ink-700 mb-1.5">Địa chỉ</label>
-                    <input id="billconfirm-address" name="address" type="text" value="<?= $address ?>" readonly
+                    <input id="billconfirm-address" name="address" type="text" value="<?= e($address) ?>" readonly
                         class="block w-full rounded-lg border border-ink-200 bg-ink-50 px-3.5 py-2.5 text-sm font-semibold text-ink-900" />
                 </div>
                 <div>
                     <label for="billconfirm-email" class="block text-sm font-medium text-ink-700 mb-1.5">Email</label>
-                    <input id="billconfirm-email" name="email" type="email" value="<?= $email ?>" readonly
+                    <input id="billconfirm-email" name="email" type="email" value="<?= e($email) ?>" readonly
                         class="block w-full rounded-lg border border-ink-200 bg-ink-50 px-3.5 py-2.5 text-sm font-semibold text-ink-900" />
                 </div>
                 <div>
                     <label for="billconfirm-phone" class="block text-sm font-medium text-ink-700 mb-1.5">Điện thoại</label>
-                    <input id="billconfirm-phone" name="phone" type="text" value="0<?= $phone ?>" readonly
+                    <input id="billconfirm-phone" name="phone" type="text" value="0<?= e($phone) ?>" readonly
                         class="block w-full rounded-lg border border-ink-200 bg-ink-50 px-3.5 py-2.5 text-sm font-semibold text-ink-900" />
                 </div>
             </div>

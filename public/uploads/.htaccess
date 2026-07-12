@@ -1,0 +1,14 @@
+# Uploaded files must never execute as PHP, whatever validation gaps exist
+# upstream — this is the last line of defense against a webshell upload.
+<IfModule mod_php.c>
+    php_flag engine off
+</IfModule>
+<FilesMatch "\.ph(p[3457]?|t|tml)$">
+    <IfModule mod_authz_core.c>
+        Require all denied
+    </IfModule>
+    <IfModule !mod_authz_core.c>
+        Order deny,allow
+        Deny from all
+    </IfModule>
+</FilesMatch>

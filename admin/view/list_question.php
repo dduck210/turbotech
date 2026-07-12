@@ -27,14 +27,14 @@
                     <?php
                                 foreach ($listques as $ques) : extract($ques); ?>
                     <tr class="hover:bg-slate-50 transition-colors">
-                        <td class="px-4 py-4 text-slate-500 font-medium">#<?= $id_ques ?></td>
-                        <td class="px-4 py-4 font-medium text-slate-800"><?= $name ?></td>
-                        <td class="px-4 py-4"><?= $email ?></td>
-                        <td class="px-4 py-4"><?= $phone ?></td>
-                        <td class="px-4 py-4"><?= $contennt ?></td>
+                        <td class="px-4 py-4 text-slate-500 font-medium">#<?= e($id_ques) ?></td>
+                        <td class="px-4 py-4 font-medium text-slate-800"><?= e($name) ?></td>
+                        <td class="px-4 py-4"><?= e($email) ?></td>
+                        <td class="px-4 py-4"><?= e($phone) ?></td>
+                        <td class="px-4 py-4"><?= e($contennt) ?></td>
                         <td class="px-4 py-4 text-center">
                             <div class="flex items-center justify-center">
-                                <a href="./index.php?act=delete_ques&id_ques=<?= $ques['id_ques'] ?>"
+                                <a href="./index.php?act=delete_ques&id_ques=<?= e($ques['id_ques']) ?>&_token=<?= urlencode(\Codemoi\Core\Csrf::token()) ?>"
                                     class="p-2 text-red-600 bg-red-50 rounded-lg hover:bg-red-100 transition-all active:scale-90"
                                     data-confirm="Bạn có chắc chắn muốn xóa không?" title="Xóa"><i
                                         class="fa-solid fa-trash"></i></a>

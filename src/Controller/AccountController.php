@@ -31,7 +31,7 @@ class AccountController extends Controller
         $user = Auth::user();
 
         if (isset($_POST['btn_change']) && $_POST['btn_change']) {
-            $id_user = $_POST['id_user'] ?? $user['id_user'];
+            $id_user = $user['id_user'];
             $full_name = trim($_POST['full_name'] ?? '');
             $user_name = $user['user_name'];
             $password = $user['password'];
@@ -46,10 +46,17 @@ class AccountController extends Controller
             if ($full_name === '' || !filter_var($email_user, FILTER_VALIDATE_EMAIL) || $province === '' || $ward === '' || $address_detail === '') {
                 echo '<script>document.addEventListener("DOMContentLoaded",()=>Swal.fire({toast:true,position:"top-end",icon:"error",title:"Vui lòng nhập đầy đủ và đúng định dạng thông tin !",showConfirmButton:false,timer:3000}));</script>';
             } else {
-                $img_user = $_FILES['img_user']['name'] ?? '';
+                $img_user = '';
                 if (!empty($_FILES['img_user']['tmp_name'])) {
-                    $target_file = 'uploads/' . basename($_FILES['img_user']['name']);
-                    move_uploaded_file($_FILES['img_user']['tmp_name'], $target_file);
+                    $new_name = basename($_FILES['img_user']['name']);
+                    $extension = strtolower(pathinfo($new_name, PATHINFO_EXTENSION));
+                    $allowed_extensions = ['jpg', 'jpeg', 'png', 'gif'];
+                    if (in_array($extension, $allowed_extensions, true) && !preg_match('/\.(php|phtml|pht)/i', $new_name)) {
+                        $target_file = 'uploads/' . $new_name;
+                        if (move_uploaded_file($_FILES['img_user']['tmp_name'], $target_file)) {
+                            $img_user = $new_name;
+                        }
+                    }
                 }
 
                 User::update($id_user, $img_user, $full_name, $sex, $email_user, $address, $phone_user);

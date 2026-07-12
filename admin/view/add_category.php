@@ -36,7 +36,7 @@
             <h3 class="text-emerald-500 text-sm mt-3 font-semibold">
                 <?php
         if (isset($notice) && $notice != "") {
-          echo $notice;
+          echo e($notice);
         }
         ?>
             </h3>

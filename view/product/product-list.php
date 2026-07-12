@@ -33,14 +33,14 @@
                     <?php foreach ($listcate as $cate) {
                         extract($cate);
                         $isActiveCate = (isset($_GET['idcate']) && ($_GET['idcate']) == $id_cate);
-                        $linkpro = "index.php?act=product&idcate=" . $id_cate;
+                        $linkpro = "index.php?act=product&idcate=" . e($id_cate);
                         $cateLinkClass = $isActiveCate
                             ? 'flex items-center gap-2 rounded-lg bg-brand-50 px-3 py-2 text-sm font-semibold text-brand-700'
                             : 'flex items-center gap-2 rounded-lg px-3 py-2 text-sm text-ink-700 hover:bg-ink-50 hover:text-brand-600 transition-colors';
                     ?>
                         <li>
                             <a href="<?= $linkpro ?>" class="<?= $cateLinkClass ?>">
-                                <i class="fa-sharp fa-solid fa-angles-right text-xs"></i> <?= $name_cate ?>
+                                <i class="fa-sharp fa-solid fa-angles-right text-xs"></i> <?= e($name_cate) ?>
                             </a>
                         </li>
                     <?php } ?>
@@ -61,16 +61,16 @@
                 <div class="space-y-4">
                     <?php foreach ($list_topsp as $topsp) { ?>
                         <div class="flex gap-3">
-                            <a href="index.php?act=prodetail&idpro=<?= $topsp['id_pro'] ?>"
+                            <a href="index.php?act=prodetail&idpro=<?= e($topsp['id_pro']) ?>"
                                 class="shrink-0 h-16 w-16 rounded-lg bg-ink-100 overflow-hidden">
-                                <img src="admin/uploads/<?= $topsp['img_pro'] ?>"
+                                <img src="admin/uploads/<?= e($topsp['img_pro']) ?>"
                                     alt="Ảnh sản phẩm <?= htmlspecialchars($topsp['name_pro']) ?>"
                                     class="h-full w-full object-cover">
                             </a>
                             <div class="min-w-0">
                                 <h6 class="text-sm font-medium text-ink-900 line-clamp-2">
-                                    <a href="index.php?act=prodetail&idpro=<?= $topsp['id_pro'] ?>"
-                                        class="hover:text-brand-600 transition-colors"><?= $topsp['name_pro'] ?></a>
+                                    <a href="index.php?act=prodetail&idpro=<?= e($topsp['id_pro']) ?>"
+                                        class="hover:text-brand-600 transition-colors"><?= e($topsp['name_pro']) ?></a>
                                 </h6>
                                 <div class="mt-1">
                                     <?php if ($topsp['discount'] <= 0) { ?>
@@ -126,9 +126,9 @@
                             class="block w-full rounded-lg border border-ink-200 bg-white px-3.5 py-2.5 text-sm text-ink-900 focus:outline-none focus:ring-2 focus:ring-brand-500 focus:border-brand-500">
                             <option value="0">Tất cả thương hiệu</option>
                             <?php foreach ($listcate as $cate) { ?>
-                                <option value="<?= $cate['id_cate'] ?>"
+                                <option value="<?= e($cate['id_cate']) ?>"
                                     <?= (isset($_GET['idcate']) && $_GET['idcate'] == $cate['id_cate']) ? 'selected' : '' ?>>
-                                    <?= $cate['name_cate'] ?>
+                                    <?= e($cate['name_cate']) ?>
                                 </option>
                             <?php } ?>
                         </select>
@@ -168,14 +168,14 @@
                 <?php foreach ($listpro as $pro) { ?>
                     <div class="rounded-2xl border border-ink-200 bg-white shadow-sm hover:shadow-md transition-shadow overflow-hidden">
                         <div class="relative aspect-square bg-ink-100 overflow-hidden">
-                            <a href="index.php?act=prodetail&idpro=<?php echo $pro['id_pro'] ?>">
-                                <img src="admin/uploads/<?php echo $pro['img_pro'] ?>"
+                            <a href="index.php?act=prodetail&idpro=<?php echo e($pro['id_pro']) ?>">
+                                <img src="admin/uploads/<?php echo e($pro['img_pro']) ?>"
                                     alt="Ảnh sản phẩm <?= htmlspecialchars($pro['name_pro']) ?>"
                                     class="h-full w-full object-cover">
                             </a>
                             <?php if ($pro['discount'] > 0) { ?>
                                 <span class="absolute top-2 left-2 rounded-full bg-red-600 text-white text-xs font-bold px-2 py-1">
-                                    -<?= $pro['discount'] ?>%
+                                    -<?= e($pro['discount']) ?>%
                                 </span>
                             <?php } ?>
                             <?php if ((int) $pro['stock'] <= 0) { ?>
@@ -186,9 +186,9 @@
                         </div>
                         <div class="p-4">
                             <h6 class="font-heading font-semibold text-ink-900 line-clamp-2 mb-2">
-                                <a href="index.php?act=prodetail&idpro=<?php echo $pro['id_pro'] ?>"
+                                <a href="index.php?act=prodetail&idpro=<?php echo e($pro['id_pro']) ?>"
                                     class="hover:text-brand-600 transition-colors">
-                                    <?php echo $pro['name_pro'] ?>
+                                    <?php echo e($pro['name_pro']) ?>
                                 </a>
                             </h6>
                             <div class="mb-3">
@@ -208,10 +208,10 @@
                             <?php if ((int) $pro['stock'] > 0) { ?>
                                 <form action="index.php?act=addtocart" method="post">
 <?= \Codemoi\Core\Csrf::field() ?>
-                                    <input type="hidden" name="id_pro" value="<?php echo $pro['id_pro'] ?>">
-                                    <input type="hidden" name="name_pro" value="<?php echo $pro['name_pro'] ?>">
-                                    <input type="hidden" name="img_pro" value="<?php echo $pro['img_pro'] ?>">
-                                    <input type="hidden" name="price" value="<?php echo $pro['price'] ?>">
+                                    <input type="hidden" name="id_pro" value="<?php echo e($pro['id_pro']) ?>">
+                                    <input type="hidden" name="name_pro" value="<?php echo e($pro['name_pro']) ?>">
+                                    <input type="hidden" name="img_pro" value="<?php echo e($pro['img_pro']) ?>">
+                                    <input type="hidden" name="price" value="<?php echo e($pro['price']) ?>">
                                     <input type="submit" name="addtocart" value="Thêm vào giỏ"
                                         class="w-full inline-flex items-center justify-center gap-2 rounded-lg bg-brand-600 px-5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-brand-700 transition-colors focus:outline-none focus:ring-2 focus:ring-brand-500 focus:ring-offset-2 cursor-pointer">
                                 </form>

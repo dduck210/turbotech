@@ -1,5 +1,8 @@
     <?php include_once "header.php" ?>
     <?php /** @var array $ds_loai */ ?>
+    <?php if (!empty($flash_error)): ?>
+    <script>document.addEventListener("DOMContentLoaded",()=>Swal.fire({toast:true,position:"top-end",icon:"error",title:<?= json_encode($flash_error) ?>,showConfirmButton:false,timer:4000}));</script>
+    <?php endif; ?>
     <?php if (!empty($flash_success)): ?>
     <script>document.addEventListener("DOMContentLoaded",()=>Swal.fire({toast:true,position:"top-end",icon:"success",title:<?= json_encode($flash_success) ?>,showConfirmButton:false,timer:3000}));</script>
     <?php endif; ?>
@@ -26,14 +29,14 @@
                         <?php
                         foreach ($ds_loai as $loai) : ?>
                             <tr class="hover:bg-slate-50 transition-colors">
-                                <td class="px-4 py-4 text-slate-500 font-medium">#<?= $loai['id_cate'] ?></td>
-                                <td class="px-4 py-4 font-medium text-slate-800"><?= $loai['name_cate'] ?></td>
+                                <td class="px-4 py-4 text-slate-500 font-medium">#<?= e($loai['id_cate']) ?></td>
+                                <td class="px-4 py-4 font-medium text-slate-800"><?= e($loai['name_cate']) ?></td>
                                 <td class="px-4 py-4 text-center">
                                     <div class="flex items-center justify-center gap-2">
-                                        <a href="index.php?act=edit_category&id_cate=<?= $loai['id_cate'] ?>"
+                                        <a href="index.php?act=edit_category&id_cate=<?= e($loai['id_cate']) ?>"
                                             class="p-2 text-yellow-600 bg-yellow-50 rounded-lg hover:bg-yellow-100 transition-all active:scale-90"
                                             title="Sửa"><i class="fa-solid fa-pen-to-square"></i></a>
-                                        <a href="index.php?act=delete_cate&id_cate=<?= $loai['id_cate'] ?>"
+                                        <a href="index.php?act=delete_cate&id_cate=<?= e($loai['id_cate']) ?>&_token=<?= urlencode(\Codemoi\Core\Csrf::token()) ?>"
                                             class="p-2 text-red-600 bg-red-50 rounded-lg hover:bg-red-100 transition-all active:scale-90"
                                             data-confirm="Bạn có chắc chắn muốn xóa không?" title="Xóa"><i
                                                 class="fa-solid fa-trash"></i></a>

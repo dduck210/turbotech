@@ -15,18 +15,18 @@ if (is_array($one_bill)) {
         <p>Mã hóa đơn: UTP-<?= $id_bill ?>
         </p>
         <p>Người đặt: <span class="fw-bold">
-                <?= $user_name ?>
+                <?= e($user_name) ?>
             </span></p>
-        <p>Họ tên: <?= $full_name ?>
+        <p>Họ tên: <?= e($full_name) ?>
         </p>
-        <p>Email: <?= $email ?></p>
-        <p>Địa chỉ nhận hàng: <?= $address ?>
+        <p>Email: <?= e($email) ?></p>
+        <p>Địa chỉ nhận hàng: <?= e($address) ?>
         </p>
-        <p>Số điện thoại: 0<?= $phone ?></p>
-        <p>Ngày đặt: <?= $order_date ?>
+        <p>Số điện thoại: 0<?= e($phone) ?></p>
+        <p>Ngày đặt: <?= e($order_date) ?>
         </p>
         <?php if (!empty($coupon_code)) : ?>
-            <p>Mã giảm giá: <span class="text-emerald-600 font-bold"><?= $coupon_code ?>
+            <p>Mã giảm giá: <span class="text-emerald-600 font-bold"><?= e($coupon_code) ?>
                     (-<?= number_format($discount_amount) ?>₫)</span></p>
         <?php endif; ?>
         <p>Thành tiền: <span class="text-slate-800 font-bold">
@@ -87,10 +87,10 @@ if (is_array($one_bill)) {
                 foreach ($bill as $value) {
                 ?>
                     <tr class="border-b border-slate-100 hover:bg-slate-50 transition-colors">
-                        <td class="px-4 py-3"><img src="../admin/uploads/<?= $value['img_pro'] ?>" alt="Ultraphone Product"
+                        <td class="px-4 py-3"><img src="../admin/uploads/<?= e($value['img_pro']) ?>" alt="Ultraphone Product"
                                 width="80px"></img></td>
                         <td class="px-4 py-3">
-                            <?= $value['name_pro'] ?>
+                            <?= e($value['name_pro']) ?>
                         </td>
                         <td class="px-4 py-3"><span class="amount">
                                 <?= number_format($value['price_pro']) ?>₫

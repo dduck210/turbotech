@@ -48,12 +48,21 @@ JS context     ─> json_encode($v) (already safe — leave as-is)
 5. `php -l` all touched views; browser-render key pages to confirm no broken markup / double-encoding.
 
 ## Todo
-- [ ] `e()` helper + load in both front controllers
-- [ ] Enumerate echoed vars per view (record counts: client 19, admin 23)
-- [ ] Escape client views (comment flow first)
-- [ ] Escape admin views
-- [ ] Verify no double-encoding, no touched `json_encode` echoes
-- [ ] `php -l` clean
+- [x] `e()` helper + load in both front controllers
+- [x] Enumerate echoed vars per view (record counts: client 19, admin 23)
+- [x] Escape client views (comment flow first)
+- [x] Escape admin views
+- [x] Verify no double-encoding, no touched `json_encode` echoes
+- [x] `php -l` clean
+
+**Status: DONE (2026-07-12).** All 41 tracked views (client `view/*`, `public/view/comment-form.php`,
+admin `admin/view/*`) escaped; ~84 echoes wrapped in admin views alone. `dashboard.php`'s
+JS-string-literal context (`name_cate` inside `'...'`) fixed with `json_encode()` instead of `e()`
+since that's JS context, not HTML — caught during verification, not part of the original per-file
+plan. Concatenated URL variables (`$prodetail`, `$removepro`, `$linkpro`, etc.) escaped at build time
+so their later bare echo is already safe. Untracked legacy Vietnamese-named duplicate files
+(`view/sanpham/`, `admin/view/comment.php`, etc.) deliberately left untouched — dead pre-refactor
+cruft, not part of the served app.
 
 ## Success criteria
 - Grep audit: no HTML-context `<?= $dbVar ?>` remains unwrapped (each is `e()`-wrapped or justified as

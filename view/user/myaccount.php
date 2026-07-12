@@ -87,8 +87,8 @@
                     <!-- Dashboard -->
                     <div id="account-dashboard" data-tab-panel role="tabpanel" aria-labelledby="account-dashboard-tab"
                         class="account-tab-panel rounded-2xl border border-ink-200 bg-white shadow-sm p-6">
-                        <p class="text-ink-700">Xin chào, <b class="text-ink-900"><?= $_SESSION['user']['full_name'] ?></b>
-                            (không phải <?= $_SESSION['user']['full_name'] ?>?
+                        <p class="text-ink-700">Xin chào, <b class="text-ink-900"><?= e($_SESSION['user']['full_name']) ?></b>
+                            (không phải <?= e($_SESSION['user']['full_name']) ?>?
                             <a href="index.php?act=logout" data-confirm="Bạn chắc chắc muốn đăng xuất tài khoản?"
                                 class="font-semibold text-brand-600 hover:text-brand-700">Đăng xuất</a>)
                         </p>
@@ -131,17 +131,17 @@
                                             $countpro = \Codemoi\Model\Order::itemCount($id_bill);
                                         ?>
                                             <tr class="hover:bg-ink-50">
-                                                <td class="px-4 py-3"><a class="font-medium text-brand-600 hover:text-brand-700" href="#">UTP-<?= $id_bill ?></a></td>
-                                                <td class="px-4 py-3 text-ink-700"><?= $order_date ?></td>
-                                                <td class="px-4 py-3 text-ink-700"><?= $countpro ?></td>
+                                                <td class="px-4 py-3"><a class="font-medium text-brand-600 hover:text-brand-700" href="#">UTP-<?= e($id_bill) ?></a></td>
+                                                <td class="px-4 py-3 text-ink-700"><?= e($order_date) ?></td>
+                                                <td class="px-4 py-3 text-ink-700"><?= e($countpro) ?></td>
                                                 <td class="px-4 py-3 text-ink-700"><?= $stt ?></td>
                                                 <td class="px-4 py-3 font-medium text-ink-900"><?= number_format($total_amount) ?>₫</td>
                                                 <td class="px-4 py-3">
                                                     <?php if ((int) $status === 0) : ?>
                                                         <form action="index.php?act=cancelorder" method="post"
-                                                            data-confirm="Bạn chắc chắn muốn hủy đơn hàng UTP-<?= $id_bill ?>?">
+                                                            data-confirm="Bạn chắc chắn muốn hủy đơn hàng UTP-<?= e($id_bill) ?>?">
                                                             <?= \Codemoi\Core\Csrf::field() ?>
-                                                            <input type="hidden" name="id_bill" value="<?= $id_bill ?>">
+                                                            <input type="hidden" name="id_bill" value="<?= e($id_bill) ?>">
                                                             <button type="submit"
                                                                 class="inline-flex items-center justify-center gap-1.5 rounded-lg border border-red-200 px-3 py-1.5 text-xs font-semibold text-red-600 hover:bg-red-50 focus:outline-none focus:ring-2 focus:ring-brand-500">
                                                                 <i class="fa-solid fa-xmark" aria-hidden="true"></i> Hủy đơn
@@ -166,11 +166,11 @@
                         <div class="mt-4 grid grid-cols-1 gap-6 sm:grid-cols-2">
                             <div>
                                 <h3 class="font-heading font-semibold text-ink-900">Địa chỉ thanh toán</h3>
-                                <address class="mt-2 not-italic text-sm text-ink-700"><?= $_SESSION['user']['address'] ?></address>
+                                <address class="mt-2 not-italic text-sm text-ink-700"><?= e($_SESSION['user']['address']) ?></address>
                             </div>
                             <div>
                                 <h3 class="font-heading font-semibold text-ink-900">Địa chỉ nhận hàng</h3>
-                                <address class="mt-2 not-italic text-sm text-ink-700"><?= $_SESSION['user']['address'] ?></address>
+                                <address class="mt-2 not-italic text-sm text-ink-700"><?= e($_SESSION['user']['address']) ?></address>
                             </div>
                         </div>
                     </div>
@@ -181,7 +181,7 @@
                         <form action="index.php?act=myaccount" method="post" enctype="multipart/form-data" data-validate novalidate>
 <?= \Codemoi\Core\Csrf::field() ?>
                             <div class="mb-6 text-center">
-                                <img src="uploads/<?= $_SESSION['user']['img_user'] ?>" alt="Avatar người dùng"
+                                <img src="uploads/<?= e($_SESSION['user']['img_user']) ?>" alt="Avatar người dùng"
                                     class="mx-auto h-24 w-24 rounded-full border border-ink-200 object-cover">
                             </div>
 
@@ -194,15 +194,14 @@
 
                                 <div>
                                     <label for="account-details-username" class="block text-sm font-medium text-ink-700 mb-1.5">Tên đăng nhập</label>
-                                    <input type="text" name="user_name" id="account-details-username" value="<?= $_SESSION['user']['user_name'] ?>"
+                                    <input type="text" name="user_name" id="account-details-username" value="<?= e($_SESSION['user']['user_name']) ?>"
                                         placeholder="Nhập họ tên của bạn" disabled
                                         class="block w-full rounded-lg border border-ink-200 bg-ink-100 px-3.5 py-2.5 text-sm text-ink-500">
                                 </div>
-                                <input type="hidden" name="password" value="<?= $_SESSION['user']['password'] ?>" disabled>
 
                                 <div>
                                     <label for="account-details-fullname" class="block text-sm font-medium text-ink-700 mb-1.5">Họ và tên</label>
-                                    <input type="text" name="full_name" id="account-details-fullname" value="<?= $_SESSION['user']['full_name'] ?>"
+                                    <input type="text" name="full_name" id="account-details-fullname" value="<?= e($_SESSION['user']['full_name']) ?>"
                                         placeholder="Nhập họ tên của bạn"
                                         data-rules="required|min:2|max:100"
                                         class="block w-full rounded-lg border border-ink-200 bg-white px-3.5 py-2.5 text-sm text-ink-900 placeholder:text-ink-300 focus:outline-none focus:ring-2 focus:ring-brand-500 focus:border-brand-500">
@@ -221,7 +220,7 @@
 
                                 <div>
                                     <label for="account-details-email" class="block text-sm font-medium text-ink-700 mb-1.5">Email</label>
-                                    <input type="email" name="email_user" id="account-details-email" value="<?= $_SESSION['user']['email_user'] ?>"
+                                    <input type="email" name="email_user" id="account-details-email" value="<?= e($_SESSION['user']['email_user']) ?>"
                                         placeholder="Nhập địa chỉ email của bạn"
                                         data-rules="required|email"
                                         class="block w-full rounded-lg border border-ink-200 bg-white px-3.5 py-2.5 text-sm text-ink-900 placeholder:text-ink-300 focus:outline-none focus:ring-2 focus:ring-brand-500 focus:border-brand-500">
@@ -256,14 +255,14 @@
 
                                 <div>
                                     <label for="account-details-phone" class="block text-sm font-medium text-ink-700 mb-1.5">Số điện thoại</label>
-                                    <input type="text" name="phone_user" id="account-details-phone" value="<?= $_SESSION['user']['phone_user'] ?>"
+                                    <input type="text" name="phone_user" id="account-details-phone" value="<?= e($_SESSION['user']['phone_user']) ?>"
                                         placeholder="Nhập số điện thoại nhận hàng của bạn"
                                         data-rules="required|phone"
                                         class="block w-full rounded-lg border border-ink-200 bg-white px-3.5 py-2.5 text-sm text-ink-900 placeholder:text-ink-300 focus:outline-none focus:ring-2 focus:ring-brand-500 focus:border-brand-500">
                                 </div>
 
                                 <div class="pt-2">
-                                    <input type="hidden" name="id_user" value="<?= $_SESSION['user']['id_user'] ?>">
+                                    <input type="hidden" name="id_user" value="<?= e($_SESSION['user']['id_user']) ?>">
                                     <button type="submit" name="btn_change" value="Lưu thay đổi"
                                         class="inline-flex items-center justify-center gap-2 rounded-lg bg-brand-600 px-5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-brand-700 transition-colors focus:outline-none focus:ring-2 focus:ring-brand-500 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed">
                                         Lưu thay đổi
@@ -281,7 +280,7 @@
                             <div class="space-y-4">
                                 <div>
                                     <label for="account-password-username" class="block text-sm font-medium text-ink-700 mb-1.5">Tên đăng nhập</label>
-                                    <input type="text" name="user_name" id="account-password-username" value="<?= $_SESSION['user']['user_name'] ?>"
+                                    <input type="text" name="user_name" id="account-password-username" value="<?= e($_SESSION['user']['user_name']) ?>"
                                         placeholder="Nhập họ tên của bạn" disabled
                                         class="block w-full rounded-lg border border-ink-200 bg-ink-100 px-3.5 py-2.5 text-sm text-ink-500">
                                 </div>
@@ -299,7 +298,7 @@
                                 </div>
 
                                 <div class="pt-2">
-                                    <input type="hidden" name="id_user" value="<?= $_SESSION['user']['id_user'] ?>">
+                                    <input type="hidden" name="id_user" value="<?= e($_SESSION['user']['id_user']) ?>">
                                     <button type="submit" name="btn_pass" value="Lưu thay đổi"
                                         class="inline-flex items-center justify-center gap-2 rounded-lg bg-brand-600 px-5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-brand-700 transition-colors focus:outline-none focus:ring-2 focus:ring-brand-500 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed">
                                         Lưu thay đổi

@@ -16,7 +16,7 @@
     <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-12 md:py-16">
         <?php if (isset($noti_success) && $noti_success != "") : ?>
             <div class="mx-auto mb-6 max-w-md rounded-lg border border-green-200 bg-green-50 p-3 text-sm text-green-700">
-                <?php echo $noti_success; ?>
+                <?php echo e($noti_success); ?>
             </div>
         <?php endif; ?>
 

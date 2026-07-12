@@ -31,9 +31,9 @@
                     $listcoupon = $listcoupon ?? [];
                     foreach ($listcoupon as $coupon): ?>
                     <tr class="border-b border-slate-100 hover:bg-slate-50 transition-colors">
-                        <td class="px-4 py-4 font-medium text-slate-900">#<?= $coupon['id_coupon'] ?></td>
+                        <td class="px-4 py-4 font-medium text-slate-900">#<?= e($coupon['id_coupon']) ?></td>
                         <td class="px-4 py-4"><span
-                                class="bg-brand-100 text-brand-700 px-3 py-1 rounded-md font-mono font-bold"><?= $coupon['code'] ?></span>
+                                class="bg-brand-100 text-brand-700 px-3 py-1 rounded-md font-mono font-bold"><?= e($coupon['code']) ?></span>
                         </td>
                         <td class="px-4 py-4">
                             <?php if ($coupon['discount_type'] == 1): ?>
@@ -81,10 +81,10 @@
                         </td>
                         <td class="px-4 py-4 text-center">
                             <div class="flex items-center justify-center gap-2">
-                                <a href="index.php?act=edit_coupon&id_coupon=<?= $coupon['id_coupon'] ?>"
+                                <a href="index.php?act=edit_coupon&id_coupon=<?= e($coupon['id_coupon']) ?>"
                                     class="p-2 text-amber-600 bg-amber-50 rounded-lg hover:bg-amber-100 transition-all active:scale-90"
                                     title="Sửa"><i class="fas fa-edit"></i></a>
-                                <a href="index.php?act=delete_coupon&id_coupon=<?= $coupon['id_coupon'] ?>"
+                                <a href="index.php?act=delete_coupon&id_coupon=<?= e($coupon['id_coupon']) ?>&_token=<?= urlencode(\Codemoi\Core\Csrf::token()) ?>"
                                     class="p-2 text-red-600 bg-red-50 rounded-lg hover:bg-red-100 transition-all active:scale-90"
                                     data-confirm="Bạn có chắc chắn muốn xóa mã giảm giá này?" title="Xóa"><i
                                         class="fas fa-trash"></i></a>

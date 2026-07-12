@@ -1,0 +1,59 @@
+<!-- phần active trang đang được hiển thị-->
+<div class="border-b border-ink-200 bg-white py-4">
+    <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        <ul class="flex items-center gap-2 text-sm text-ink-500">
+            <li><a class="hover:text-brand-600" href="index.php">Trang chủ</a></li>
+            <li aria-hidden="true">/</li>
+            <li class="font-medium text-ink-900">Hỏi đáp</li>
+        </ul>
+    </div>
+</div>
+<!--end phần active trang đang được hiển thị-->
+
+<!-- show form hỏi đáp -->
+<div class="py-12 md:py-16">
+    <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        <div class="flex justify-center">
+            <div class="w-full lg:w-1/2">
+                <!-- form hỏi đáp-->
+                <form action="index.php?act=question" method="post" data-validate novalidate class="rounded-2xl border border-ink-200 bg-white p-6 shadow-sm sm:p-8">
+                    <h2 class="text-center font-heading text-2xl font-bold text-ink-900">Hỏi đáp</h2>
+                    <div class="mt-6 grid grid-cols-1 gap-5">
+                        <div>
+                            <label for="hoidap-name" class="mb-1.5 block text-sm font-medium text-ink-700">Họ và tên</label>
+                            <input type="text" id="hoidap-name" name="name"
+                                data-rules="required|min:2|max:100"
+                                class="block w-full rounded-lg border border-ink-200 bg-white px-3.5 py-2.5 text-sm text-ink-900 placeholder:text-ink-300 focus:outline-none focus:ring-2 focus:ring-brand-500 focus:border-brand-500"
+                                placeholder="Nhập họ và tên của bạn">
+                        </div>
+                        <div>
+                            <label for="hoidap-email" class="mb-1.5 block text-sm font-medium text-ink-700">Email</label>
+                            <input type="email" id="hoidap-email" name="email"
+                                data-rules="required|email"
+                                class="block w-full rounded-lg border border-ink-200 bg-white px-3.5 py-2.5 text-sm text-ink-900 placeholder:text-ink-300 focus:outline-none focus:ring-2 focus:ring-brand-500 focus:border-brand-500"
+                                placeholder="Nhập  địa chỉ email của bạn">
+                        </div>
+                        <div>
+                            <label for="hoidap-phone" class="mb-1.5 block text-sm font-medium text-ink-700">Số điện thoại</label>
+                            <input type="text" id="hoidap-phone" name="phone"
+                                data-rules="required|phone"
+                                class="block w-full rounded-lg border border-ink-200 bg-white px-3.5 py-2.5 text-sm text-ink-900 placeholder:text-ink-300 focus:outline-none focus:ring-2 focus:ring-brand-500 focus:border-brand-500"
+                                placeholder="Nhập số điện thoại của bạn">
+                        </div>
+                        <div>
+                            <label for="hoidap-content" class="mb-1.5 block text-sm font-medium text-ink-700">Câu hỏi</label>
+                            <textarea id="hoidap-content" name="contennt" rows="5"
+                                data-rules="required|min:10"
+                                class="block w-full rounded-lg border border-ink-200 bg-white px-3.5 py-2.5 text-sm text-ink-900 placeholder:text-ink-300 focus:outline-none focus:ring-2 focus:ring-brand-500 focus:border-brand-500"
+                                placeholder="Nhập câu hỏi của bạn..."></textarea>
+                        </div>
+                        <div class="flex justify-center sm:justify-end">
+                            <input type="submit" name="btn_question" value="Gửi"
+                                class="inline-flex cursor-pointer items-center justify-center gap-2 rounded-lg bg-brand-600 px-5 py-2.5 text-sm font-semibold text-white shadow-sm transition-colors hover:bg-brand-700 focus:outline-none focus:ring-2 focus:ring-brand-500 focus:ring-offset-2">
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

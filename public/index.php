@@ -1,6 +1,7 @@
 <?php
 
 require __DIR__ . '/../vendor/autoload.php';
+require_once __DIR__ . '/../src/Core/helpers.php';
 
 use Codemoi\Controller\AccountController;
 use Codemoi\Controller\AuthController;

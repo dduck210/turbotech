@@ -26,14 +26,14 @@
                     <?php
                                 foreach ($listcmt as $cmt) : extract($cmt); ?>
                     <tr class="hover:bg-slate-50 transition-colors">
-                        <td class="px-4 py-4 text-slate-500 font-medium">#<?= $id_cmt ?></td>
-                        <td class="px-4 py-4 font-medium text-slate-800"><?= $user_name ?></td>
-                        <td class="px-4 py-4"><?= $name_pro ?></td>
-                        <td class="px-4 py-4"><?= $content ?></td>
-                        <td class="px-4 py-4"><?= $comment_date ?></td>
+                        <td class="px-4 py-4 text-slate-500 font-medium">#<?= e($id_cmt) ?></td>
+                        <td class="px-4 py-4 font-medium text-slate-800"><?= e($user_name) ?></td>
+                        <td class="px-4 py-4"><?= e($name_pro) ?></td>
+                        <td class="px-4 py-4"><?= e($content) ?></td>
+                        <td class="px-4 py-4"><?= e($comment_date) ?></td>
                         <td class="px-4 py-4 text-center">
                             <div class="flex items-center justify-center">
-                                <a href="index.php?act=delete_cmt&idcmt=<?= $id_cmt ?>"
+                                <a href="index.php?act=delete_cmt&idcmt=<?= e($id_cmt) ?>&_token=<?= urlencode(\Codemoi\Core\Csrf::token()) ?>"
                                     class="p-2 text-red-600 bg-red-50 rounded-lg hover:bg-red-100 transition-all active:scale-90"
                                     data-confirm="Bạn có chắc chắn muốn xóa?" title="Xóa"><i
                                         class="fa-solid fa-trash"></i></a>

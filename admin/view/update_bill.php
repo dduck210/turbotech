@@ -21,28 +21,28 @@ if (is_array($one_bill)) {
                         đơn</label>
                     <input type="text" name="id_bill"
                         class="w-full rounded-lg border border-slate-200 px-4 py-2 focus:ring-2 focus:ring-brand-500 outline-none transition-all bg-slate-50"
-                        value="<?= $id_bill ?>" disabled>
+                        value="<?= e($id_bill) ?>" disabled>
                 </div>
                 <div class="mb-4">
                     <label for="formGroupExampleInput" class="block text-sm font-medium text-slate-700 mb-1">Người
                         đặt</label>
                     <input type="text" name="user_name"
                         class="w-full rounded-lg border border-slate-200 px-4 py-2 focus:ring-2 focus:ring-brand-500 outline-none transition-all bg-slate-50"
-                        placeholder="Mã sản phẩm" value="<?= $user_name ?>" disabled>
+                        placeholder="Mã sản phẩm" value="<?= e($user_name) ?>" disabled>
                 </div>
                 <div class="mb-4">
                     <label for="formGroupExampleInput" class="block text-sm font-medium text-slate-700 mb-1">Địa chỉ
                         nhận hàng</label>
                     <input type="text" name="user_name"
                         class="w-full rounded-lg border border-slate-200 px-4 py-2 focus:ring-2 focus:ring-brand-500 outline-none transition-all bg-slate-50"
-                        placeholder="Mã sản phẩm" value="<?= $address ?>" disabled>
+                        placeholder="Mã sản phẩm" value="<?= e($address) ?>" disabled>
                 </div>
                 <div class="mb-4">
                     <label for="formGroupExampleInput" class="block text-sm font-medium text-slate-700 mb-1">Ngày
                         đặt</label>
                     <input type="text" name="order_date"
                         class="w-full rounded-lg border border-slate-200 px-4 py-2 focus:ring-2 focus:ring-brand-500 outline-none transition-all bg-slate-50"
-                        placeholder="Ngày đặt hàng" value="<?= $order_date ?>" disabled>
+                        placeholder="Ngày đặt hàng" value="<?= e($order_date) ?>" disabled>
                 </div>
                 <div class="mb-4">
                     <label for="formGroupExampleInput" class="block text-sm font-medium text-slate-700 mb-1">Thành
@@ -93,7 +93,7 @@ if (is_array($one_bill)) {
                 </div>
 
                 <div class="wrap-btn mt-4">
-                    <input type="hidden" name="id_bill" value="<?= $id_bill ?>">
+                    <input type="hidden" name="id_bill" value="<?= e($id_bill) ?>">
                     <input type="submit" name="btn_update"
                         class="bg-brand-600 hover:bg-brand-700 text-white font-medium rounded-lg px-4 py-2 transition-all active:scale-[0.97] inline-block"
                         value="Cập nhật">
@@ -127,10 +127,10 @@ if (is_array($one_bill)) {
                 foreach ($bill as $value) {
                 ?>
                     <tr class="border-b border-slate-100 hover:bg-slate-50 transition-colors">
-                        <td class="px-4 py-3"><img src="../admin/uploads/<?= $value['img_pro'] ?>" alt="Ultraphone Product"
+                        <td class="px-4 py-3"><img src="../admin/uploads/<?= e($value['img_pro']) ?>" alt="Ultraphone Product"
                                 width="80px"></img></td>
                         <td class="px-4 py-3"><a href=""
-                                class="text-brand-600 hover:text-brand-700"><?= $value['name_pro'] ?></a></td>
+                                class="text-brand-600 hover:text-brand-700"><?= e($value['name_pro']) ?></a></td>
                         <td class="px-4 py-3"><span class="amount"><?= $value['price_pro'] ?> ₫</span></td>
                         <td class="px-4 py-3 quantity"><?= $value['quantity'] ?></td>
                         <td class="px-4 py-3 product-subtotal"><span

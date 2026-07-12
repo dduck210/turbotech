@@ -125,7 +125,8 @@ Xem doanh thu theo khoảng ngày tuỳ chọn, sản phẩm bán chạy nhất 
 ## C.2. Cài đặt lần đầu
 1. Đặt source code vào `C:\xampp\htdocs\codemoi1` (hoặc thư mục bất kỳ trong `htdocs`).
 2. Chạy `composer install` tại thư mục gốc để sinh `vendor/`.
-3. Tạo database, import `Turbotech.sql` (tạo DB tên `codemoi2` theo cấu hình mặc định).
+3. Import `Turbotech.sql`: `mysql -u root < Turbotech.sql` — file tự tạo database `codemoi2` (nếu
+   chưa có) và nạp toàn bộ schema + dữ liệu sản phẩm laptop mẫu, không cần bước nào khác.
 4. Copy `.env.example` → `.env`, điền:
    - `SMTP_HOST/USERNAME/PASSWORD/PORT/FROM_EMAIL/FROM_NAME` — dùng để gửi email OTP/xác nhận đơn (Gmail App Password, KHÔNG dùng mật khẩu Gmail thường).
    - `BANK_CODE/BANK_ACCOUNT_NO/BANK_ACCOUNT_NAME` — tài khoản nhận tiền hiển thị trên mã QR VietQR (`BANK_CODE` lấy từ danh sách https://api.vietqr.io/v2/banks).
@@ -134,24 +135,19 @@ Xem doanh thu theo khoảng ngày tuỳ chọn, sản phẩm bán chạy nhất 
    - `admin/model/pdo.php` (dùng riêng cho Admin, phong cách thủ tục cũ) — mặc định `host=127.0.0.1, db=codemoi2`.
    Nếu đổi thông tin DB, phải sửa **cả hai file** để client và admin cùng trỏ đúng.
 
-## C.3. Cấu hình Apache — bắt buộc trỏ vào `public/`
-Webroot thực sự là thư mục **`public/`**, KHÔNG phải thư mục gốc dự án. Thêm vào
-`C:\xampp\apache\conf\extra\httpd-vhosts.conf`:
-```apache
-Alias /codemoi1 "C:/xampp/htdocs/codemoi1/public"
-<Directory "C:/xampp/htdocs/codemoi1/public">
-    Options -Indexes FollowSymLinks
-    AllowOverride All
-    Require all granted
-</Directory>
-```
-Khởi động lại Apache, truy cập `http://localhost/codemoi1/`.
+## C.3. Cấu hình Apache — không cần cấu hình gì thêm
+Webroot thực sự là thư mục **`public/`**, KHÔNG phải thư mục gốc dự án, nhưng bạn **không cần** tạo
+vhost/Alias thủ công. `.htaccess` ở gốc dự án dùng `mod_rewrite` để tự động chuyển mọi request vào
+`public/` phía sau — chỉ cần đặt source code vào bất kỳ thư mục nào trong `htdocs` rồi truy cập
+`http://localhost/<tên-thư-mục>/` là chạy được ngay, trên máy nào cũng vậy, không phụ thuộc tên
+thư mục hay cấu hình Apache riêng. Yêu cầu duy nhất: XAMPP Apache có `mod_rewrite` bật sẵn (mặc định)
+và `AllowOverride All` cho `htdocs` (mặc định của XAMPP).
 
-Nếu trỏ document root thẳng vào thư mục gốc dự án (không qua `public/`) — dù là do quên cấu hình
-hay do giải nén source code ở máy khác — file `.htaccess` ở gốc dự án sẽ **chặn truy cập (403)**
-thay vì để lộ source code/CSDL ra ngoài; đây là lớp an toàn dự phòng, không phải cách chạy đúng.
+Các file nhạy cảm ngoài `public/` (`.env`, `vendor/`, `src/`, `admin/model/`, `Turbotech.sql`...)
+không bao giờ lộ ra ngoài qua HTTP: request tới các đường dẫn đó bị rewrite vào `public/<path>`,
+nơi chúng không tồn tại, nên trả về 404 thay vì phục vụ file thật.
 
-Test nhanh không cần sửa Apache: `php -S localhost:8000 -t public` rồi vào `http://localhost:8000/`.
+Test nhanh không cần Apache: `php -S localhost:8000 -t public` rồi vào `http://localhost:8000/`.
 
 ## C.4. Cấu trúc thư mục & vai trò từng phần
 Xem chi tiết đầy đủ (bảng route, danh sách file backend/frontend) tại:
