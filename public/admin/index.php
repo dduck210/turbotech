@@ -10,6 +10,7 @@ use Codemoi\Controller\Admin\DashboardController;
 use Codemoi\Controller\Admin\CategoryController;
 use Codemoi\Controller\Admin\ProductController;
 use Codemoi\Controller\Admin\UserController;
+use Codemoi\Controller\Admin\CouponController;
 
 // Every admin POST action goes through here — one guard covers the whole
 // panel. Failure sets a flash message and bounces back to the referring
@@ -56,6 +57,11 @@ $router->add('list_user', [UserController::class, 'list']);
 $router->add('edit_user', [UserController::class, 'edit']);
 $router->add('update_user', [UserController::class, 'update']);
 $router->add('delete_usser', [UserController::class, 'delete']);
+$router->add('list_coupon', [CouponController::class, 'list']);
+$router->add('add_coupon', [CouponController::class, 'add']);
+$router->add('delete_coupon', [CouponController::class, 'delete']);
+$router->add('edit_coupon', [CouponController::class, 'edit']);
+$router->add('update_coupon', [CouponController::class, 'update']);
 $router->setDefault([DashboardController::class, 'index']);
 
 $act = $_GET['act'] ?? '';
@@ -64,6 +70,7 @@ $portedActs = [
     'add_category', 'list_category', 'edit_category', 'update_category', 'delete_cate',
     'add_product', 'list_product', 'edit_product', 'update_product', 'delete_product',
     'list_user', 'edit_user', 'update_user', 'delete_usser',
+    'list_coupon', 'add_coupon', 'delete_coupon', 'edit_coupon', 'update_coupon',
 ];
 
 if (in_array($act, $portedActs, true)) {
@@ -275,80 +282,6 @@ if (in_array($act, $portedActs, true)) {
             header('location: index.php?act=list_ques');
             break;
 
-        case 'list_coupon':
-            if (isset($_SESSION['admin'])) {
-                $listcoupon = loadall_coupon();
-                $flash_success = $_SESSION['flash_success'] ?? null;
-                unset($_SESSION['flash_success']);
-                render('list_coupon', ['listcoupon' => $listcoupon, 'flash_success' => $flash_success]);
-            } else {
-                header("location: index.php?act=login");
-            }
-            break;
-
-        case 'add_coupon':
-            if (isset($_SESSION['admin'])) {
-                if (isset($_POST['btn_add'])) {
-                    $code = $_POST['code'];
-                    $discount_type = $_POST['discount_type'];
-                    $discount_value = $_POST['discount_value'];
-                    $max_discount = $_POST['max_discount'];
-                    $min_order_value = $_POST['min_order_value'];
-                    $product_id = $_POST['product_id'];
-                    $start_date = $_POST['start_date'];
-                    $end_date = $_POST['end_date'];
-                    $usage_limit = $_POST['usage_limit'];
-                    $status = $_POST['status'];
-                    insert_coupon($code, $discount_type, $discount_value, $max_discount, $min_order_value, $product_id, $start_date, $end_date, $usage_limit, $status);
-                    echo '<script>document.addEventListener("DOMContentLoaded",()=>Swal.fire({toast:true,position:"top-end",icon:"success",title:"Thêm mã giảm giá thành công!",showConfirmButton:false,timer:3000}));</script>';
-                }
-                $listpro = loadall_pro(); // To select product to apply
-                render('add_coupon', ['listpro' => $listpro]);
-            } else {
-                header("location: index.php?act=login");
-            }
-            break;
-
-        case 'delete_coupon':
-            if (isset($_GET['id_coupon']) && ($_GET['id_coupon']) > 0) {
-                $id_coupon = $_GET['id_coupon'];
-                delete_coupon($id_coupon);
-                $_SESSION['flash_success'] = 'Xóa mã thành công!';
-            }
-            header('location: index.php?act=list_coupon');
-            break;
-
-        case 'edit_coupon':
-            if (isset($_SESSION['admin'])) {
-                if (isset($_GET['id_coupon']) && ($_GET['id_coupon']) > 0) {
-                    $id_coupon = $_GET['id_coupon'];
-                    $one_coupon = loadone_coupon($id_coupon);
-                }
-                $listpro = loadall_pro();
-                render('update_coupon', ['one_coupon' => $one_coupon, 'listpro' => $listpro]);
-            } else {
-                header("location: index.php?act=login");
-            }
-            break;
-
-        case 'update_coupon':
-            if (isset($_POST['btn_update'])) {
-                $id_coupon = $_POST['id_coupon'];
-                $code = $_POST['code'];
-                $discount_type = $_POST['discount_type'];
-                $discount_value = $_POST['discount_value'];
-                $max_discount = $_POST['max_discount'];
-                $min_order_value = $_POST['min_order_value'];
-                $product_id = $_POST['product_id'];
-                $start_date = $_POST['start_date'];
-                $end_date = $_POST['end_date'];
-                $usage_limit = $_POST['usage_limit'];
-                $status = $_POST['status'];
-                update_coupon($id_coupon, $code, $discount_type, $discount_value, $max_discount, $min_order_value, $product_id, $start_date, $end_date, $usage_limit, $status);
-                $_SESSION['flash_success'] = 'Cập nhật mã giảm giá thành công!';
-            }
-            header('location: index.php?act=list_coupon');
-            break;
 
         default:
             // Unreachable in practice: $portedActs above already routes

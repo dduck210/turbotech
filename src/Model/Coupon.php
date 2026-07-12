@@ -87,4 +87,64 @@ class Coupon
     {
         Database::execute("UPDATE coupons SET used_count = used_count + 1 WHERE id_coupon = ?", $id_coupon);
     }
+
+    /**
+     * All coupons, newest first. Mirrors old
+     * `admin/model/coupon.php::loadall_coupon()`.
+     */
+    public static function allAdmin(): array
+    {
+        return Database::query("SELECT * FROM coupons ORDER BY id_coupon DESC");
+    }
+
+    /**
+     * Look up a single coupon by id. Mirrors old `loadone_coupon($id_coupon)`.
+     *
+     * @return array|false
+     */
+    public static function find(int $idCoupon)
+    {
+        return Database::queryOne("SELECT * FROM coupons WHERE id_coupon = ?", $idCoupon);
+    }
+
+    /** Mirrors old `insert_coupon(...)`. */
+    public static function create(
+        string $code,
+        int $discountType,
+        float $discountValue,
+        float $maxDiscount,
+        float $minOrderValue,
+        int $productId,
+        string $startDate,
+        string $endDate,
+        int $usageLimit,
+        int $status
+    ): void {
+        $sql = "INSERT INTO coupons(code, discount_type, discount_value, max_discount, min_order_value, product_id, start_date, end_date, usage_limit, status) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        Database::execute($sql, $code, $discountType, $discountValue, $maxDiscount, $minOrderValue, $productId, $startDate, $endDate, $usageLimit, $status);
+    }
+
+    /** Mirrors old `update_coupon(...)`. */
+    public static function update(
+        int $idCoupon,
+        string $code,
+        int $discountType,
+        float $discountValue,
+        float $maxDiscount,
+        float $minOrderValue,
+        int $productId,
+        string $startDate,
+        string $endDate,
+        int $usageLimit,
+        int $status
+    ): void {
+        $sql = "UPDATE coupons SET code = ?, discount_type = ?, discount_value = ?, max_discount = ?, min_order_value = ?, product_id = ?, start_date = ?, end_date = ?, usage_limit = ?, status = ? WHERE id_coupon = ?";
+        Database::execute($sql, $code, $discountType, $discountValue, $maxDiscount, $minOrderValue, $productId, $startDate, $endDate, $usageLimit, $status, $idCoupon);
+    }
+
+    /** Mirrors old `admin/model/coupon.php::delete_coupon($id_coupon)`. */
+    public static function delete(int $idCoupon): void
+    {
+        Database::execute("DELETE FROM coupons WHERE id_coupon = ?", $idCoupon);
+    }
 }
