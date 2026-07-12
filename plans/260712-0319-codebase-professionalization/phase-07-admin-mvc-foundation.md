@@ -67,16 +67,77 @@ public/admin/index.php (thin bootstrap: session, autoload, CSRF verify, e() help
    other screens still work via the old switch.
 
 ## Todo
-- [ ] `AdminController` base (guard + CSRF + flash + render)
-- [ ] `Core\View` base-dir parameterization (client default preserved)
-- [ ] Admin bootstrap + Router in `public/admin/index.php` (strangler fallthrough)
-- [ ] Move admin reads to `Core\Database`; delete `admin/model/pdo.php`
-- [ ] Smoke: login + dashboard via new path; rest via old switch
-- [ ] `php -l` clean
+- [x] `AdminController` base (guard + flash + render)
+- [x] `Core\View` base-dir parameterization (client default preserved)
+- [x] Admin bootstrap + Router in `public/admin/index.php` (strangler fallthrough)
+- [x] Move admin reads to `Core\Database` — **partial, see correction below**
+- [x] Smoke: login + dashboard via new path; rest via old switch
+- [x] `php -l` clean
+
+## Correction to scope (found during implementation)
+`admin/model/pdo.php` was **not** deleted this phase, and the plan's own wording
+contradicts itself on this: the Overview says strangler-style "old switch stays live
+until each case is ported," but 36 of the 39 admin actions still live in the old switch
+and every one of them — including `admin/view/dashboard.php`, which the ported
+`DashboardController` still delegates to — calls global procedural functions
+(`loadall_user()`, `loadall_cmt()`, etc.) built on `pdo_query()`/`pdo_execute()` from
+`pdo.php`. Deleting it now would break the entire unported majority, not just the
+3 ported actions. Deferring the actual deletion to the end of Phase 09, once every
+`admin/model/*.php` function has been ported onto `Model\*`/`Core\Database` — this
+phase only completed the part that's actually achievable now: `pdo.php`'s own
+connection settings became env-driven back in Phase 05, and the one new admin data
+read added this phase (`AuthController::login()`'s credential check) goes through
+`Model\User::checkAdmin()` → `Core\Database`, not `pdo_query`.
+
+## Implementation notes
+- `Core\View::render()` and `Core\Controller::view()` gained an optional `$baseDir`
+  parameter (default `'view'`, preserving client behavior exactly). Admin controllers
+  pass `'admin/view'`.
+- `src/Controller/Admin/AdminController.php` (new, abstract base): `requireAdmin()`
+  guard (redirects to `?act=login` if `$_SESSION['admin']` unset), `render()` (auto-
+  injects `flash_success`/`flash_error` read-and-unset from session, then delegates to
+  `view($template, $data, 'admin/view')`). CSRF verification was intentionally **not**
+  duplicated onto this base — it already runs once, globally, at the very top of
+  `public/admin/index.php` for every POST regardless of route, ported or not; moving
+  it onto a base class only some controllers extend would create two enforcement
+  points instead of one.
+- `src/Controller/Admin/AuthController.php` (new): `login()` and `logout()`, ported
+  from the old `'login'`/`'logout'` switch cases. Uses the new
+  `Model\User::checkAdmin()` (additive method, mirrors `admin/model/user.php`'s
+  `check_user_admin()` but via `Database::queryOne()`). Bonus fix: the old login case
+  used bare `header('Location: ...')` with no `exit` (same latent bug class fixed for
+  the client OTP flow in Phase 04) — `Controller::redirect()` always calls `exit`, so
+  this is fixed for free by the port.
+- `src/Controller/Admin/DashboardController.php` (new): `index()` — guard + render,
+  ported from the `'/'`/`'dashboard'` cases and the default/no-`act` fallback (all
+  three rendered the identical dashboard in the old code). The view's own stats-
+  gathering code is untouched (see the scope correction above).
+- `public/admin/index.php`: registers the 3 ported routes plus a `Router` default
+  handler on `DashboardController`; `$portedActs` gates which requests go through the
+  new `Router::dispatch()` path vs. fall through to the (now `else`-wrapped) old
+  switch, which had its `'/'`/`'dashboard'`/`'login'`/`'logout'` cases removed (now
+  dead code, superseded) and its `default:`/outer-`else` fallback simplified to
+  `$router->dispatch($act)` (unreachable in practice — `$portedActs` already routes
+  every empty/unregistered `act` through the Router before the switch runs — kept only
+  as a defensive fallback).
+- `admin/view/login.php`: removed a dead `$noti_success` echo block (same
+  never-actually-set pattern as `view/user/login.php`'s `$noti_success`, found in
+  Phase 03) while rewiring this exact form's flash flow.
+- Live-tested end-to-end with two disposable test admin accounts (created, exercised,
+  deleted after): no-act/`act=dashboard` without a session → redirect to login; wrong
+  password → flash-error toast; correct login → redirect + `Csrf::rotate()` + flash-
+  success toast on the next dashboard render; an unported action (`list_category`,
+  `list_product`, `list_bill`, `list_user`, `list_coupon`, `list_comment`,
+  `list_question`, `list_thongke`) still works via the strangler fallback both
+  authenticated and not; logout clears the session and re-guards dashboard access.
+  Client routes (`index.php`, `product-list`, `login`) unaffected by the `View`/
+  `Controller` base-dir change. Zero new entries in `apache/logs/error.log` across the
+  entire sweep.
 
 ## Success criteria
 - Admin login + at least dashboard run through the new MVC path; all other admin screens still function.
-- `admin/model/pdo.php` deleted; no `pdo_*` calls remain. Client app unaffected (shared `Model\*` reads intact).
+- `admin/model/pdo.php` deleted; no `pdo_*` calls remain — **deferred to end of Phase 09**, see
+  "Correction to scope" above. Client app unaffected (shared `Model\*` reads intact) — verified.
 
 ## Risk assessment
 - **High/Med — shared-model coupling:** additive admin methods on `Model\*` must not alter client reads.

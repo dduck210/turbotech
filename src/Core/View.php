@@ -24,16 +24,19 @@ class View
     /**
      * Render a template file with the given data.
      *
-     * @param string $template Template path relative to `view/`, without
+     * @param string $template Template path relative to `$baseDir`, without
      *                         the `.php` extension, e.g. `'product/product-list'`
      *                         resolves to `view/product/product-list.php`.
      * @param array $data Associative array of variables made available to
      *                    the template under their array keys.
+     * @param string $baseDir Directory (relative to the project root) templates
+     *                        resolve under. Defaults to the client `view/` dir;
+     *                        admin controllers pass `'admin/view'`.
      * @throws RuntimeException if the resolved template file does not exist.
      */
-    public static function render(string $template, array $data = []): void
+    public static function render(string $template, array $data = [], string $baseDir = 'view'): void
     {
-        $path = self::resolvePath($template);
+        $path = self::resolvePath($template, $baseDir);
 
         if (!is_file($path)) {
             throw new RuntimeException("View template not found: {$template} (resolved to {$path})");
@@ -44,13 +47,13 @@ class View
 
     /**
      * Resolve a template name to an absolute filesystem path under the
-     * project root's `view/` directory.
+     * project root's `$baseDir` directory.
      */
-    private static function resolvePath(string $template): string
+    private static function resolvePath(string $template, string $baseDir): string
     {
         $root = dirname(__DIR__, 2);
 
-        return $root . '/view/' . $template . '.php';
+        return $root . '/' . $baseDir . '/' . $template . '.php';
     }
 
     /**

@@ -43,6 +43,19 @@ class User
     }
 
     /**
+     * Look up an admin account by username-or-email + password, requiring
+     * `role = '1'`. Mirrors old `admin/model/user.php::check_user_admin()`.
+     *
+     * @return array|false
+     */
+    public static function checkAdmin(string $user_name, string $password)
+    {
+        $sql = "SELECT * FROM user WHERE ((user_name = ?) OR (email_user = ?)) AND role = '1'";
+        $row = Database::queryOne($sql, $user_name, $user_name);
+        return ($row && password_verify($password, $row['password'])) ? $row : false;
+    }
+
+    /**
      * Which of username/email/phone (if any) is already taken — the `user`
      * table has no unique constraint on any of the three, so without this
      * check register() would silently create duplicate accounts. Checked

@@ -67,14 +67,6 @@
                         <input type="submit" name="btn_login" value="Đăng nhập"
                             class="w-full bg-slate-900 hover:bg-brand-600 text-white font-semibold rounded-xl px-4 py-3.5 mt-4 transition-all active:scale-[0.98] cursor-pointer shadow-lg shadow-slate-900/20 hover:shadow-brand-500/30">
                     </form>
-
-                    <div class="mt-6 text-center text-green-500 font-medium text-sm">
-                        <?php
-                        if (isset($noti_success) && $noti_success != "") {
-                            echo $noti_success;
-                        }
-                        ?>
-                    </div>
                 </div>
             </div>
         </div>

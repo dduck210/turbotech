@@ -12,12 +12,14 @@ abstract class Controller
     /**
      * Render a view template, delegating to `Core\View::render`.
      *
-     * @param string $template Template path relative to `view/`, e.g. `'product/product-list'`.
+     * @param string $template Template path relative to `$baseDir`, e.g. `'product/product-list'`.
      * @param array $data Variables to expose to the template.
+     * @param string $baseDir Defaults to the client `view/` dir; admin controllers
+     *                        pass `'admin/view'` (see `Controller\Admin\AdminController`).
      */
-    protected function view(string $template, array $data = []): void
+    protected function view(string $template, array $data = [], string $baseDir = 'view'): void
     {
-        View::render($template, $data);
+        View::render($template, $data, $baseDir);
     }
 
     /**

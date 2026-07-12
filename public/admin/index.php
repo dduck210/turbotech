@@ -4,6 +4,9 @@ require_once __DIR__ . '/../../vendor/autoload.php';
 require_once __DIR__ . '/../../admin/controller/controller.php';
 
 use Codemoi\Core\Csrf;
+use Codemoi\Core\Router;
+use Codemoi\Controller\Admin\AuthController;
+use Codemoi\Controller\Admin\DashboardController;
 
 // Every admin POST action goes through here — one guard covers the whole
 // panel. Failure sets a flash message and bounces back to the referring
@@ -27,50 +30,24 @@ include __DIR__ . '/../../admin/model/statistics.php';
 include __DIR__ . '/../../admin/model/question.php';
 include __DIR__ . '/../../admin/model/coupon.php';
 // controller
-if (isset($_GET['act'])) {
-    $act = $_GET['act'];
+// Strangler routing: 'dashboard'/'login'/'logout' (plus the empty/'/'
+// no-act fallback, which always rendered the dashboard too) are ported
+// onto the Codemoi\Controller\Admin\* MVC scaffold. Every other `act`
+// still falls through to the original switch below until Phase 08/09
+// port each domain onto the same scaffold.
+$router = new Router();
+$router->add('dashboard', [DashboardController::class, 'index']);
+$router->add('login', [AuthController::class, 'login']);
+$router->add('logout', [AuthController::class, 'logout']);
+$router->setDefault([DashboardController::class, 'index']);
+
+$act = $_GET['act'] ?? '';
+$portedActs = ['dashboard', '/', 'login', 'logout', ''];
+
+if (in_array($act, $portedActs, true)) {
+    $router->dispatch($act === '/' ? '' : $act);
+} else {
     switch ($act) {
-        case '/':
-
-        case 'dashboard':
-            if (isset($_SESSION['admin'])) {
-                render('dashboard');
-            } else {
-                header("location: index.php?act=login");
-            }
-            // render('dashboard');
-            break;
-        case 'logout':
-            session_unset();
-            header('Location: index.php?act=login');
-            break;
-        case 'login':
-            if (isset($_SESSION['admin'])) {
-                header('location: index.php');
-            } else {
-                if (isset($_POST['btn_login']) && $_POST['btn_login']) {
-                    $user_name = $_POST['user_name'];
-                    $password = $_POST['password'];
-                    if ($user_name == null || $password == null) {
-                        echo '<script>document.addEventListener("DOMContentLoaded",()=>Swal.fire({toast:true,position:"top-end",icon:"error",title:"Điền đầy đủ thông tin !",showConfirmButton:false,timer:3000}));</script>';
-                    } else {
-                        $check = check_user_admin($user_name, $password);
-                        if (is_array($check)) {
-                            $_SESSION['admin'] = $check;
-                            Csrf::rotate();
-                            $_SESSION['flash_success'] = 'Đăng nhập thành công!';
-                            header('Location: index.php');
-                        } else {
-                            echo '<script>document.addEventListener("DOMContentLoaded",()=>Swal.fire({toast:true,position:"top-end",icon:"error",title:"Tài khoản sai hoặc không tồn tại!",showConfirmButton:false,timer:3000}));</script>';
-                        }
-                    }
-                }
-                $flash_error = $_SESSION['flash_error'] ?? null;
-                unset($_SESSION['flash_error']);
-                render('login', ['flash_error' => $flash_error]);
-            }
-            break;
-
         // CONTROLLER LOẠI:
         case "add_category":
             if (isset($_SESSION['admin'])) {
@@ -635,23 +612,10 @@ if (isset($_GET['act'])) {
             break;
 
         default:
-            if (isset($_SESSION['admin'])) {
-                $flash_success = $_SESSION['flash_success'] ?? null;
-                unset($_SESSION['flash_success']);
-                render('dashboard', ['flash_success' => $flash_success]);
-            } else {
-                header("location: index.php?act=login");
-            }
-            // render('dashboard');
+            // Unreachable in practice: $portedActs above already routes
+            // every unregistered/empty `act` to DashboardController via
+            // Router::dispatch()'s default handler before this switch runs.
+            $router->dispatch($act);
     }
-} else {
-    if (isset($_SESSION['admin'])) {
-        $flash_success = $_SESSION['flash_success'] ?? null;
-        unset($_SESSION['flash_success']);
-        render('dashboard', ['flash_success' => $flash_success]);
-    } else {
-        header("location: index.php?act=login");
-    }
-    // render('dashboard');
 }
 
