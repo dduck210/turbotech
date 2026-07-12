@@ -36,12 +36,15 @@ produces `reports/uiux-audit.md`. Fixes happen in Phase 12 only for owner-approv
 5. Compile `reports/uiux-audit.md` with prioritized, actionable items. Present to owner for triage.
 
 ## Todo
-- [ ] Tailwind token-drift comparison
-- [ ] Client pages responsive/visual pass (desktop + mobile)
-- [ ] Admin pages responsive/visual pass (desktop + mobile)
-- [ ] Empty-state review (coupons/cart/search)
-- [ ] AJAX loading-state review
-- [ ] `reports/uiux-audit.md` compiled + owner triage
+- [x] Tailwind token-drift comparison — found real drift (heading font, neutral color scale)
+- [x] Client/admin responsive-class comparison (no browser available in this environment — code-level
+      pass via template grep + rendered-HTML inspection, not visual screenshots; see report for caveat)
+- [x] Empty-state review (coupons/cart/search) — all functional, one polish gap found (admin coupons)
+- [x] AJAX loading-state review (coupon apply, cart qty edit) — both missing feedback, flagged
+- [x] `reports/uiux-audit.md` compiled — awaiting owner triage (see report's checklist)
+
+**Status: AUDIT DONE (2026-07-13), pending owner triage.** 6 findings, all Low-Medium severity — no
+broken/blank UI found. Report: `reports/uiux-audit.md`.
 
 ## Success criteria
 - A prioritized issue list exists; owner has marked which items proceed to Phase 12.
