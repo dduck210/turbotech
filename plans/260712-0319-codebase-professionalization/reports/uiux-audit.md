@@ -53,24 +53,26 @@ already correct in prior work and is NOT re-flagged here.
 - **Proposed fix:** Reuse the client's empty-state card pattern in `list_coupon.php` (and any other
   admin list view without one) for visual consistency — small, mechanical, low-risk Phase 12 item.
 
-### 5. [Low] Admin views have far less mobile-specific tuning than the client
+### 5. ~~Admin views have far less mobile-specific tuning than the client~~ — false positive, no fix needed
 - **Where:** all `admin/view/*.php` vs `view/*.php` + `view/*/*.php`
-- **What:** Client templates use `sm:`/`md:`/`lg:` responsive prefixes 297 times total (123 `sm:`
-  alone). Admin templates use them only 55 times total (2 `sm:`). Admin is effectively desktop-only in
-  practice — the viewport meta tag is present (so it won't break outright on mobile), but layouts aren't
-  meaningfully adapted for narrow screens.
-- **Impact:** Low priority — admin is realistically used by staff on desktop, not a customer-facing
-  concern. Flagging for completeness per the audit brief, not recommending action unless staff have
-  actually reported using it on mobile.
+- **Correction (2026-07-13):** The initial audit compared raw counts of `sm:`/`md:`/`lg:` prefixes
+  (client: 297, admin: 55) and concluded admin was under-tuned for mobile. On closer read, admin already
+  has a complete, working mobile layout: `admin/view/nav.php:30-32` implements a slide-in sidebar drawer
+  (`hidden md:flex` + `fixed inset-y-0`) with a hamburger toggle (`admin/view/topbar.php:4`) and backdrop,
+  fully wired in `admin/view/footer.php:58-74` (toggle + click-outside-to-close). All CRUD forms
+  (`add_product.php`, `update_product.php`, `add_coupon.php`, `update_coupon.php`) already use
+  `grid-cols-1 md:grid-cols-2` (mobile-first stacking). Tables already scroll horizontally (see #6). Admin
+  uses fewer breakpoint prefixes because its layout is structurally simpler (one sidebar + stacking
+  grids) than the client's much larger, more varied surface area — not because it's undertuned. No
+  action taken.
 
-### 6. [Low] `list_statistic.php` is missing the horizontal-scroll wrapper every sibling list view has
-- **Where:** `admin/view/list_statistic.php` (0 occurrences of `overflow-x-auto`) vs every other
-  `admin/view/list_*.php` (each has exactly 1)
-- **What:** All other admin list/table views wrap their `<table>` in a `overflow-x-auto` container so
-  wide tables scroll horizontally on narrow viewports instead of breaking the layout. `list_statistic.php`
-  (which also renders wide data tables — top-sellers, inventory) doesn't have this wrapper.
-- **Proposed fix:** Add the same `overflow-x-auto` wrapper used in the other list views. Small,
-  mechanical, safe Phase 12 fix.
+### 6. ~~`list_statistic.php` missing horizontal-scroll wrapper~~ — false positive, no fix needed
+- **Where:** `admin/view/list_statistic.php`
+- **Correction (2026-07-13):** The initial audit grepped only for the literal string `overflow-x-auto`
+  and found 0 matches, flagging this as missing. On closer read, all 3 tables in this file are already
+  wrapped in `<div class="p-0 overflow-auto max-h-[...]">` — `overflow-auto` (not `overflow-x-auto`)
+  handles horizontal scroll too, plus adds a sticky header + vertical scroll the other list views don't
+  have. This is a more sophisticated pattern than the sibling views, not a missing one. No action taken.
 
 ## Not flagged (checked, found correct)
 - Confirm-dialog + SweetAlert2 toast system — already correct per prior work, not re-audited.
@@ -78,11 +80,16 @@ already correct in prior work and is NOT re-flagged here.
   intentional messaging, not broken/blank.
 - Viewport meta tag present in both client (`view/head.php`) and admin (`admin/view/header.php`) layouts.
 
-## Owner triage
-Please mark which items should proceed to Phase 12:
-- [ ] #1 — unify admin/client design tokens (large diff, 22 files)
-- [ ] #2 — coupon-apply loading state (small)
-- [ ] #3 — cart-qty-edit loading state (small)
-- [ ] #4 — admin empty-state polish (small)
-- [ ] #5 — admin mobile responsiveness (skip unless staff use mobile)
-- [ ] #6 — `list_statistic.php` overflow wrapper (trivial, safe to just do)
+## Owner triage — resolved 2026-07-13 (owner: fix everything)
+- [x] #1 — unified admin/client design tokens: added `ink-*` scale (400/600/800 completed the scale in
+      both token files) + `Manrope` heading font to `admin-tailwind-input.css`; mechanically replaced
+      `slate-*` → `ink-*` across all 22 admin views (identical hex values, zero visual change from the
+      rename itself); rebuilt both compiled CSS bundles via `tailwindcss.exe`
+- [x] #2 — coupon-apply button now disables + shows "Đang áp dụng..." during the AJAX call (also added
+      the same treatment to the remove-coupon button for consistency)
+- [x] #3 — cart quantity input now dims/disables immediately on change, before the AJAX round-trip
+- [x] #4 — `list_coupon.php`'s empty state upgraded to the icon+heading+description card pattern
+- [x] #5 — investigated further, turned out to be a false positive (see corrected finding above) — no
+      change needed, admin's mobile layout was already complete
+- [x] #6 — investigated further, turned out to be a false positive (see corrected finding above) — no
+      change needed, `list_statistic.php`'s tables already scroll correctly

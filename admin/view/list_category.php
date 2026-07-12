@@ -9,7 +9,7 @@
 
 
     <div class="mb-8 flex items-center justify-between">
-        <h1 class="text-3xl font-bold text-slate-800">Quản Lý Danh Mục</h1>
+        <h1 class="text-3xl font-bold text-ink-800">Quản Lý Danh Mục</h1>
     </div>
 
     <div class="bg-white rounded-xl shadow-sm hover:shadow-md transition-shadow duration-300 overflow-hidden mb-6">
@@ -18,19 +18,19 @@
                 <table class="w-full text-left border-collapse" id="dataTable" width="100%" cellspacing="0">
                     <thead>
                         <tr
-                            class="bg-slate-50 border-y border-slate-100 text-slate-600 text-sm font-semibold tracking-wide uppercase">
+                            class="bg-ink-50 border-y border-ink-100 text-ink-600 text-sm font-semibold tracking-wide uppercase">
                             <th class="px-4 py-4">Mã loại</th>
                             <th class="px-4 py-4">Tên loại</th>
                             <th class="px-4 py-4 text-center">Thao Tác</th>
                         </tr>
                     </thead>
 
-                    <tbody class="divide-y divide-slate-100">
+                    <tbody class="divide-y divide-ink-100">
                         <?php
                         foreach ($ds_loai as $loai) : ?>
-                            <tr class="hover:bg-slate-50 transition-colors">
-                                <td class="px-4 py-4 text-slate-500 font-medium">#<?= e($loai['id_cate']) ?></td>
-                                <td class="px-4 py-4 font-medium text-slate-800"><?= e($loai['name_cate']) ?></td>
+                            <tr class="hover:bg-ink-50 transition-colors">
+                                <td class="px-4 py-4 text-ink-500 font-medium">#<?= e($loai['id_cate']) ?></td>
+                                <td class="px-4 py-4 font-medium text-ink-800"><?= e($loai['name_cate']) ?></td>
                                 <td class="px-4 py-4 text-center">
                                     <div class="flex items-center justify-center gap-2">
                                         <a href="index.php?act=edit_category&id_cate=<?= e($loai['id_cate']) ?>"
@@ -61,9 +61,9 @@
 
             setTimeout(function() {
                 $('.dataTables_length select').addClass(
-                    'px-3 py-1 border border-slate-200 rounded-lg focus:ring-2 focus:ring-brand-500 mx-2');
+                    'px-3 py-1 border border-ink-200 rounded-lg focus:ring-2 focus:ring-brand-500 mx-2');
                 $('.dataTables_filter input').addClass(
-                    'px-4 py-2 border border-slate-200 rounded-lg focus:ring-2 focus:ring-brand-500 ml-2');
+                    'px-4 py-2 border border-ink-200 rounded-lg focus:ring-2 focus:ring-brand-500 ml-2');
             }, 100);
         });
     </script>

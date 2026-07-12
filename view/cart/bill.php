@@ -203,6 +203,8 @@
             var btn = document.getElementById('coupon-remove-btn');
             if (!btn) return;
             btn.addEventListener('click', function() {
+                btn.disabled = true;
+                btn.classList.add('opacity-60', 'cursor-not-allowed');
                 $.ajax({
                     url: '?act=removecoupon',
                     type: 'POST',
@@ -218,6 +220,11 @@
                         msgEl.innerHTML = '';
                         document.getElementById('coupon-discount-row').classList.add('hidden');
                         document.getElementById('coupon-total').textContent = formatVnd(subtotal);
+                    },
+                    error: function() {
+                        btn.disabled = false;
+                        btn.classList.remove('opacity-60', 'cursor-not-allowed');
+                        Swal.fire({toast: true, position: 'top-end', icon: 'error', title: 'Không thể xoá mã giảm giá, vui lòng thử lại!', showConfirmButton: false, timer: 3000});
                     }
                 });
             });
@@ -225,6 +232,18 @@
 
         document.getElementById('coupon-apply-btn')?.addEventListener('click', function() {
             var code = document.getElementById('coupon-code').value.trim();
+            var btn = this;
+            var originalLabel = btn.textContent;
+            btn.disabled = true;
+            btn.textContent = 'Đang áp dụng...';
+            btn.classList.add('opacity-60', 'cursor-not-allowed');
+
+            function resetButton() {
+                btn.disabled = false;
+                btn.textContent = originalLabel;
+                btn.classList.remove('opacity-60', 'cursor-not-allowed');
+            }
+
             $.ajax({
                 url: '?act=applycoupon',
                 type: 'POST',
@@ -233,6 +252,7 @@
                     _token: $('meta[name="csrf-token"]').attr('content')
                 },
                 success: function(data) {
+                    resetButton();
                     var match = /<!--COUPON_RESULT:(.*?):END-->/.exec(data);
                     if (!match) return;
                     var result = JSON.parse(match[1]);
@@ -252,6 +272,7 @@
                     }
                 },
                 error: function() {
+                    resetButton();
                     Swal.fire({toast: true, position: 'top-end', icon: 'error', title: 'Không thể áp dụng mã giảm giá, vui lòng thử lại!', showConfirmButton: false, timer: 3000});
                 }
             });

@@ -9,30 +9,30 @@ $categoriesActive = in_array($current_act, ['add_category', 'list_category', 'ed
 function nav_link_class(bool $active): string
 {
     return $active
-        ? 'flex items-center px-3 py-2.5 rounded-lg bg-slate-800 text-white transition-colors group'
-        : 'flex items-center px-3 py-2.5 rounded-lg hover:bg-slate-800 text-slate-300 transition-colors group';
+        ? 'flex items-center px-3 py-2.5 rounded-lg bg-ink-800 text-white transition-colors group'
+        : 'flex items-center px-3 py-2.5 rounded-lg hover:bg-ink-800 text-ink-300 transition-colors group';
 }
 
 function nav_icon_class(bool $active): string
 {
     return $active
         ? 'w-6 text-center text-brand-500 transition-colors'
-        : 'w-6 text-center text-slate-400 group-hover:text-white transition-colors';
+        : 'w-6 text-center text-ink-400 group-hover:text-white transition-colors';
 }
 
 function nav_submenu_toggle_class(bool $active): string
 {
     return $active
-        ? 'px-3 py-2.5 rounded-lg bg-slate-800 text-white transition-colors flex items-center justify-between cursor-pointer group'
-        : 'px-3 py-2.5 rounded-lg hover:bg-slate-800 text-slate-300 transition-colors flex items-center justify-between cursor-pointer group';
+        ? 'px-3 py-2.5 rounded-lg bg-ink-800 text-white transition-colors flex items-center justify-between cursor-pointer group'
+        : 'px-3 py-2.5 rounded-lg hover:bg-ink-800 text-ink-300 transition-colors flex items-center justify-between cursor-pointer group';
 }
 ?>
-<div id="mobile-sidebar-backdrop" class="hidden fixed inset-0 bg-slate-900/50 z-30 md:hidden"></div>
+<div id="mobile-sidebar-backdrop" class="hidden fixed inset-0 bg-ink-900/50 z-30 md:hidden"></div>
 <aside id="mobile-sidebar-nav"
-    class="w-64 bg-slate-900 text-slate-300 shrink-0 hidden md:flex flex-col shadow-2xl fixed inset-y-0 left-0 z-40 md:relative md:inset-auto md:z-20">
+    class="w-64 bg-ink-900 text-ink-300 shrink-0 hidden md:flex flex-col shadow-2xl fixed inset-y-0 left-0 z-40 md:relative md:inset-auto md:z-20">
     <!-- Logo -->
     <a href="index.php?act=admin"
-        class="flex items-center justify-center h-20 border-b border-slate-800 hover:bg-slate-800/50 transition-colors group">
+        class="flex items-center justify-center h-20 border-b border-ink-800 hover:bg-ink-800/50 transition-colors group">
         <div
             class="bg-brand-600 text-white p-2.5 rounded-xl group-hover:scale-110 transition-transform shadow-lg shadow-brand-500/30 flex items-center justify-center">
             <i class="fas fa-laugh-wink text-xl"></i>
@@ -42,13 +42,13 @@ function nav_submenu_toggle_class(bool $active): string
 
     <!-- Nav Links -->
     <div class="flex-1 overflow-y-auto py-6 px-4 space-y-1">
-        <div class="text-xs font-semibold text-slate-500 uppercase tracking-wider mb-2 mt-2 px-3">Main</div>
+        <div class="text-xs font-semibold text-ink-500 uppercase tracking-wider mb-2 mt-2 px-3">Main</div>
         <a href="index.php?act=admin" class="<?= nav_link_class($current_act === 'dashboard') ?>">
             <i class="fas fa-tachometer-alt <?= nav_icon_class($current_act === 'dashboard') ?>"></i>
             <span class="ml-3 font-medium">Bảng điều khiển</span>
         </a>
 
-        <div class="text-xs font-semibold text-slate-500 uppercase tracking-wider mb-2 mt-6 px-3">Quản lý</div>
+        <div class="text-xs font-semibold text-ink-500 uppercase tracking-wider mb-2 mt-6 px-3">Quản lý</div>
 
         <!-- Products -->
         <div class="space-y-1">
@@ -58,17 +58,17 @@ function nav_submenu_toggle_class(bool $active): string
                     <span class="ml-3 font-medium">Sản Phẩm</span>
                 </div>
                 <i id="submenu-products-chevron"
-                    class="fas fa-chevron-down text-xs text-slate-500 transition-transform duration-300 <?= $productsActive ? 'rotate-180' : '' ?>"></i>
+                    class="fas fa-chevron-down text-xs text-ink-500 transition-transform duration-300 <?= $productsActive ? 'rotate-180' : '' ?>"></i>
             </div>
             <div id="submenu-products"
                 class="grid transition-[grid-template-rows] duration-300 ease-in-out <?= $productsActive ? 'grid-rows-[1fr]' : 'grid-rows-[0fr]' ?>">
                 <div class="overflow-hidden">
                     <div class="pl-11 pr-3 py-2 space-y-2 text-sm">
                         <a href="index.php?act=add_product"
-                            class="block <?= $current_act === 'add_product' ? 'text-white font-semibold' : 'text-slate-400 hover:text-white' ?> transition-colors py-1">Thêm
+                            class="block <?= $current_act === 'add_product' ? 'text-white font-semibold' : 'text-ink-400 hover:text-white' ?> transition-colors py-1">Thêm
                             sản phẩm</a>
                         <a href="index.php?act=list_product"
-                            class="block <?= $current_act === 'list_product' ? 'text-white font-semibold' : 'text-slate-400 hover:text-white' ?> transition-colors py-1">Danh
+                            class="block <?= $current_act === 'list_product' ? 'text-white font-semibold' : 'text-ink-400 hover:text-white' ?> transition-colors py-1">Danh
                             sách sản phẩm</a>
                     </div>
                 </div>
@@ -84,17 +84,17 @@ function nav_submenu_toggle_class(bool $active): string
                     <span class="ml-3 font-medium">Danh Mục</span>
                 </div>
                 <i id="submenu-categories-chevron"
-                    class="fas fa-chevron-down text-xs text-slate-500 transition-transform duration-300 <?= $categoriesActive ? 'rotate-180' : '' ?>"></i>
+                    class="fas fa-chevron-down text-xs text-ink-500 transition-transform duration-300 <?= $categoriesActive ? 'rotate-180' : '' ?>"></i>
             </div>
             <div id="submenu-categories"
                 class="grid transition-[grid-template-rows] duration-300 ease-in-out <?= $categoriesActive ? 'grid-rows-[1fr]' : 'grid-rows-[0fr]' ?>">
                 <div class="overflow-hidden">
                     <div class="pl-11 pr-3 py-2 space-y-2 text-sm">
                         <a href="index.php?act=add_category"
-                            class="block <?= $current_act === 'add_category' ? 'text-white font-semibold' : 'text-slate-400 hover:text-white' ?> transition-colors py-1">Thêm
+                            class="block <?= $current_act === 'add_category' ? 'text-white font-semibold' : 'text-ink-400 hover:text-white' ?> transition-colors py-1">Thêm
                             danh mục</a>
                         <a href="index.php?act=list_category"
-                            class="block <?= $current_act === 'list_category' ? 'text-white font-semibold' : 'text-slate-400 hover:text-white' ?> transition-colors py-1">Danh
+                            class="block <?= $current_act === 'list_category' ? 'text-white font-semibold' : 'text-ink-400 hover:text-white' ?> transition-colors py-1">Danh
                             sách danh mục</a>
                     </div>
                 </div>

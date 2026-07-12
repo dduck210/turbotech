@@ -11,7 +11,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link
-        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700&display=swap"
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Manrope:wght@600;700;800&display=swap"
         rel="stylesheet">
 
     <!-- SweetAlert2 -->
@@ -24,7 +24,7 @@
 </head>
 
 <body
-    class="bg-slate-900 text-slate-800 antialiased flex items-center justify-center min-h-screen relative overflow-hidden">
+    class="bg-ink-900 text-ink-800 antialiased flex items-center justify-center min-h-screen relative overflow-hidden">
     <?php if (!empty($flash_error)): ?>
     <script>document.addEventListener("DOMContentLoaded",()=>Swal.fire({toast:true,position:"top-end",icon:"error",title:<?= json_encode($flash_error) ?>,showConfirmButton:false,timer:4000}));</script>
     <?php endif; ?>
@@ -37,7 +37,7 @@
             <div class="flex flex-col lg:flex-row">
                 <!-- Image Section -->
                 <div
-                    class="hidden lg:flex lg:w-1/2 bg-slate-50 items-center justify-center p-12 relative overflow-hidden group">
+                    class="hidden lg:flex lg:w-1/2 bg-ink-50 items-center justify-center p-12 relative overflow-hidden group">
                     <div class="absolute inset-0 bg-linear-to-br from-brand-50 to-purple-50 opacity-50"></div>
                     <img src="uploads/anhad.png" alt="logo Turbotech"
                         class="w-full max-w-sm relative z-10 drop-shadow-2xl group-hover:scale-105 transition-transform duration-700">
@@ -46,32 +46,32 @@
                 <!-- Form Section -->
                 <div class="w-full lg:w-1/2 p-8 md:p-12 lg:p-16 flex flex-col justify-center">
                     <div class="text-center mb-8">
-                        <h1 class="text-3xl font-bold text-slate-800 mb-2 font-heading">Trang quản trị</h1>
-                        <p class="text-slate-500">Chào mừng trở lại Turbotech!</p>
+                        <h1 class="text-3xl font-bold text-ink-800 mb-2 font-heading">Trang quản trị</h1>
+                        <p class="text-ink-500">Chào mừng trở lại Turbotech!</p>
                     </div>
 
                     <form class="space-y-6" action="index.php?act=login" method="post" data-validate novalidate>
 <?= \Codemoi\Core\Csrf::field() ?>
                         <div>
-                            <label class="block text-sm font-medium text-slate-700 mb-2">Tài khoản</label>
+                            <label class="block text-sm font-medium text-ink-700 mb-2">Tài khoản</label>
                             <input type="text" name="user_name" placeholder="Nhập tài khoản" data-rules="required"
-                                class="w-full rounded-xl border border-slate-200 px-5 py-3 focus:ring-2 focus:ring-brand-500 focus:border-brand-500 outline-none transition-all bg-slate-50 focus:bg-white text-slate-800">
+                                class="w-full rounded-xl border border-ink-200 px-5 py-3 focus:ring-2 focus:ring-brand-500 focus:border-brand-500 outline-none transition-all bg-ink-50 focus:bg-white text-ink-800">
                         </div>
 
                         <div>
-                            <label class="block text-sm font-medium text-slate-700 mb-2">Mật khẩu</label>
+                            <label class="block text-sm font-medium text-ink-700 mb-2">Mật khẩu</label>
                             <input type="password" name="password" placeholder="Nhập mật khẩu" data-rules="required"
-                                class="w-full rounded-xl border border-slate-200 px-5 py-3 focus:ring-2 focus:ring-brand-500 focus:border-brand-500 outline-none transition-all bg-slate-50 focus:bg-white text-slate-800">
+                                class="w-full rounded-xl border border-ink-200 px-5 py-3 focus:ring-2 focus:ring-brand-500 focus:border-brand-500 outline-none transition-all bg-ink-50 focus:bg-white text-ink-800">
                         </div>
 
                         <input type="submit" name="btn_login" value="Đăng nhập"
-                            class="w-full bg-slate-900 hover:bg-brand-600 text-white font-semibold rounded-xl px-4 py-3.5 mt-4 transition-all active:scale-[0.98] cursor-pointer shadow-lg shadow-slate-900/20 hover:shadow-brand-500/30">
+                            class="w-full bg-ink-900 hover:bg-brand-600 text-white font-semibold rounded-xl px-4 py-3.5 mt-4 transition-all active:scale-[0.98] cursor-pointer shadow-lg shadow-ink-900/20 hover:shadow-brand-500/30">
                     </form>
                 </div>
             </div>
         </div>
 
-        <div class="text-center text-slate-400 text-sm mt-8 font-medium tracking-wide">
+        <div class="text-center text-ink-400 text-sm mt-8 font-medium tracking-wide">
             &copy; 2026 Turbotech Admin. Premium Access.
         </div>
     </div>

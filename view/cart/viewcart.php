@@ -118,6 +118,12 @@
         // var code = document.getElementById("code").value;
         var code = $(obj).attr("id");
 
+        // Disable immediately so there's visible feedback during the AJAX
+        // round-trip before the eventual location.reload() — otherwise the
+        // input just sits there with no indication anything is happening.
+        obj.disabled = true;
+        obj.classList.add('opacity-60', 'cursor-not-allowed');
+
         $.ajax({
             url: "?act=edit",
             type: "POST",
@@ -138,6 +144,8 @@
                 location.reload();
             },
             error: function() {
+                obj.disabled = false;
+                obj.classList.remove('opacity-60', 'cursor-not-allowed');
                 Swal.fire({toast: true, position: 'top-end', icon: 'error', title: 'Có lỗi xảy ra, vui lòng thử lại!', showConfirmButton: false, timer: 3000});
             }
         });

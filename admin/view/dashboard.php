@@ -9,7 +9,7 @@ $listpro = \Codemoi\Model\Product::allAdmin();
 $ds_loai = \Codemoi\Model\Category::all(); ?>
 
 <div class="mb-8 flex items-center justify-between">
-    <h1 class="text-3xl font-bold text-slate-800">Bảng điều khiển</h1>
+    <h1 class="text-3xl font-bold text-ink-800">Bảng điều khiển</h1>
 </div>
 
 <!-- Content Row -->
@@ -20,9 +20,9 @@ $ds_loai = \Codemoi\Model\Category::all(); ?>
         class="bg-white rounded-xl shadow-sm hover:shadow-md transition-shadow duration-300 p-6 border-l-4 border-brand-500 flex items-center justify-between">
         <div>
             <div class="text-xs font-bold text-brand-500 uppercase tracking-wider mb-1">Tổng doanh thu(Ngày)</div>
-            <div class="text-2xl font-bold text-slate-800"><?= number_format(\Codemoi\Model\Stats::today()) ?> đ</div>
+            <div class="text-2xl font-bold text-ink-800"><?= number_format(\Codemoi\Model\Stats::today()) ?> đ</div>
         </div>
-        <div class="text-slate-300">
+        <div class="text-ink-300">
             <i class="fas fa-dollar-sign fa-2x"></i>
         </div>
     </div>
@@ -32,9 +32,9 @@ $ds_loai = \Codemoi\Model\Category::all(); ?>
         class="bg-white rounded-xl shadow-sm hover:shadow-md transition-shadow duration-300 p-6 border-l-4 border-yellow-500 flex items-center justify-between">
         <div>
             <div class="text-xs font-bold text-yellow-500 uppercase tracking-wider mb-1">Tổng doanh thu(Tuần)</div>
-            <div class="text-2xl font-bold text-slate-800"><?= number_format(\Codemoi\Model\Stats::thisWeek()) ?> đ</div>
+            <div class="text-2xl font-bold text-ink-800"><?= number_format(\Codemoi\Model\Stats::thisWeek()) ?> đ</div>
         </div>
-        <div class="text-slate-300">
+        <div class="text-ink-300">
             <i class="fas fa-dollar-sign fa-2x"></i>
         </div>
     </div>
@@ -44,9 +44,9 @@ $ds_loai = \Codemoi\Model\Category::all(); ?>
         class="bg-white rounded-xl shadow-sm hover:shadow-md transition-shadow duration-300 p-6 border-l-4 border-green-500 flex items-center justify-between">
         <div>
             <div class="text-xs font-bold text-green-500 uppercase tracking-wider mb-1">Tổng doanh thu(Tháng)</div>
-            <div class="text-2xl font-bold text-slate-800"><?= number_format(\Codemoi\Model\Stats::thisMonth()) ?> đ</div>
+            <div class="text-2xl font-bold text-ink-800"><?= number_format(\Codemoi\Model\Stats::thisMonth()) ?> đ</div>
         </div>
-        <div class="text-slate-300">
+        <div class="text-ink-300">
             <i class="fas fa-dollar-sign fa-2x"></i>
         </div>
     </div>
@@ -56,9 +56,9 @@ $ds_loai = \Codemoi\Model\Category::all(); ?>
         class="bg-white rounded-xl shadow-sm hover:shadow-md transition-shadow duration-300 p-6 border-l-4 border-brand-500 flex items-center justify-between">
         <div>
             <div class="text-xs font-bold text-brand-500 uppercase tracking-wider mb-1">Tổng đơn</div>
-            <div class="text-2xl font-bold text-slate-800"><?= e(count($listbill)) ?></div>
+            <div class="text-2xl font-bold text-ink-800"><?= e(count($listbill)) ?></div>
         </div>
-        <div class="text-slate-300">
+        <div class="text-ink-300">
             <i class="fas fa-clipboard-list fa-2x"></i>
         </div>
     </div>
@@ -68,9 +68,9 @@ $ds_loai = \Codemoi\Model\Category::all(); ?>
         class="bg-white rounded-xl shadow-sm hover:shadow-md transition-shadow duration-300 p-6 border-l-4 border-yellow-500 flex items-center justify-between">
         <div>
             <div class="text-xs font-bold text-yellow-500 uppercase tracking-wider mb-1">Tổng khách hàng</div>
-            <div class="text-2xl font-bold text-slate-800"><?= e(count($listuser)) ?></div>
+            <div class="text-2xl font-bold text-ink-800"><?= e(count($listuser)) ?></div>
         </div>
-        <div class="text-slate-300">
+        <div class="text-ink-300">
             <i class="fas fa-solid fa-user fa-2x"></i>
         </div>
     </div>
@@ -80,9 +80,9 @@ $ds_loai = \Codemoi\Model\Category::all(); ?>
         class="bg-white rounded-xl shadow-sm hover:shadow-md transition-shadow duration-300 p-6 border-l-4 border-green-500 flex items-center justify-between">
         <div>
             <div class="text-xs font-bold text-green-500 uppercase tracking-wider mb-1">Tổng sản phẩm</div>
-            <div class="text-2xl font-bold text-slate-800"><?= e(count($listpro)) ?></div>
+            <div class="text-2xl font-bold text-ink-800"><?= e(count($listpro)) ?></div>
         </div>
-        <div class="text-slate-300">
+        <div class="text-ink-300">
             <i class="fas fa-brands fa-product-hunt fa-2x"></i>
         </div>
     </div>
@@ -92,9 +92,9 @@ $ds_loai = \Codemoi\Model\Category::all(); ?>
         class="bg-white rounded-xl shadow-sm hover:shadow-md transition-shadow duration-300 p-6 border-l-4 border-indigo-500 flex items-center justify-between">
         <div>
             <div class="text-xs font-bold text-indigo-500 uppercase tracking-wider mb-1">Tổng loại sản phẩm</div>
-            <div class="text-2xl font-bold text-slate-800"><?= e(count($ds_loai)) ?></div>
+            <div class="text-2xl font-bold text-ink-800"><?= e(count($ds_loai)) ?></div>
         </div>
-        <div class="text-slate-300">
+        <div class="text-ink-300">
             <i class="fas fa-solid fa-weight-hanging fa-2x"></i>
         </div>
     </div>
@@ -105,7 +105,7 @@ $ds_loai = \Codemoi\Model\Category::all(); ?>
     <div class="lg:col-span-2">
         <div
             class="bg-white rounded-xl shadow-sm hover:shadow-md transition-shadow duration-300 h-full flex flex-col overflow-hidden">
-            <div class="px-6 py-4 border-b border-slate-100 bg-slate-50/50">
+            <div class="px-6 py-4 border-b border-ink-100 bg-ink-50/50">
                 <h6 class="m-0 font-bold text-brand-600">Biểu đồ thống kê Doanh thu</h6>
             </div>
             <div class="p-6 grow">
@@ -162,7 +162,7 @@ $ds_loai = \Codemoi\Model\Category::all(); ?>
     <div>
         <div
             class="bg-white rounded-xl shadow-sm hover:shadow-md transition-shadow duration-300 h-full flex flex-col overflow-hidden border-t-4 border-red-500">
-            <div class="px-6 py-4 border-b border-slate-100 bg-slate-50/50">
+            <div class="px-6 py-4 border-b border-ink-100 bg-ink-50/50">
                 <h6 class="m-0 font-bold text-red-500">Thống kê danh mục</h6>
             </div>
             <div class="p-6 grow">

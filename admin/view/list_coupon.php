@@ -3,7 +3,7 @@
 <script>document.addEventListener("DOMContentLoaded",()=>Swal.fire({toast:true,position:"top-end",icon:"success",title:<?= json_encode($flash_success) ?>,showConfirmButton:false,timer:3000}));</script>
 <?php endif; ?>
 <div class="mb-8 flex items-center justify-between">
-    <h1 class="text-3xl font-bold text-slate-800">Quản Lý Mã Giảm Giá</h1>
+    <h1 class="text-3xl font-bold text-ink-800">Quản Lý Mã Giảm Giá</h1>
     <a href="index.php?act=add_coupon"
         class="bg-brand-600 hover:bg-brand-700 text-white font-medium rounded-lg px-5 py-2.5 transition-all shadow-sm flex items-center gap-2">
         <i class="fas fa-plus"></i> Thêm mã mới
@@ -15,7 +15,7 @@
         <div class="overflow-x-auto">
             <table class="w-full text-left border-collapse">
                 <thead>
-                    <tr class="bg-slate-50 text-slate-700 uppercase text-xs font-semibold border-b border-slate-200">
+                    <tr class="bg-ink-50 text-ink-700 uppercase text-xs font-semibold border-b border-ink-200">
                         <th class="px-4 py-3">ID</th>
                         <th class="px-4 py-3">Mã giảm giá</th>
                         <th class="px-4 py-3">Mức giảm</th>
@@ -30,8 +30,8 @@
                     <?php 
                     $listcoupon = $listcoupon ?? [];
                     foreach ($listcoupon as $coupon): ?>
-                    <tr class="border-b border-slate-100 hover:bg-slate-50 transition-colors">
-                        <td class="px-4 py-4 font-medium text-slate-900">#<?= e($coupon['id_coupon']) ?></td>
+                    <tr class="border-b border-ink-100 hover:bg-ink-50 transition-colors">
+                        <td class="px-4 py-4 font-medium text-ink-900">#<?= e($coupon['id_coupon']) ?></td>
                         <td class="px-4 py-4"><span
                                 class="bg-brand-100 text-brand-700 px-3 py-1 rounded-md font-mono font-bold"><?= e($coupon['code']) ?></span>
                         </td>
@@ -39,7 +39,7 @@
                             <?php if ($coupon['discount_type'] == 1): ?>
                             <span class="text-emerald-600 font-bold"><?= e($coupon['discount_value']) ?>%</span>
                             <?php if ($coupon['max_discount'] > 0): ?>
-                            <div class="text-xs text-slate-500 mt-1">Tối đa:
+                            <div class="text-xs text-ink-500 mt-1">Tối đa:
                                 <?= number_format($coupon['max_discount']) ?>đ</div>
                             <?php endif; ?>
                             <?php else: ?>
@@ -47,26 +47,26 @@
                                 class="text-emerald-600 font-bold"><?= number_format($coupon['discount_value']) ?>đ</span>
                             <?php endif; ?>
                         </td>
-                        <td class="px-4 py-4 text-sm text-slate-600">
+                        <td class="px-4 py-4 text-sm text-ink-600">
                             <div>Đơn từ: <span
                                     class="font-semibold"><?= number_format($coupon['min_order_value']) ?>đ</span></div>
                             <?php if ($coupon['product_id'] > 0): ?>
                             <div class="text-brand-600 mt-1"><i class="fas fa-box text-xs mr-1"></i>Chỉ SP ID:
                                 <?= e($coupon['product_id']) ?></div>
                             <?php else: ?>
-                            <div class="text-slate-500 mt-1"><i class="fas fa-layer-group text-xs mr-1"></i>Tất cả SP
+                            <div class="text-ink-500 mt-1"><i class="fas fa-layer-group text-xs mr-1"></i>Tất cả SP
                             </div>
                             <?php endif; ?>
                         </td>
-                        <td class="px-4 py-4 text-xs text-slate-600">
-                            <div><span class="font-semibold text-slate-500">Từ:</span>
+                        <td class="px-4 py-4 text-xs text-ink-600">
+                            <div><span class="font-semibold text-ink-500">Từ:</span>
                                 <?= date('d/m/Y H:i', strtotime($coupon['start_date'])) ?></div>
-                            <div class="mt-1"><span class="font-semibold text-slate-500">Đến:</span>
+                            <div class="mt-1"><span class="font-semibold text-ink-500">Đến:</span>
                                 <?= date('d/m/Y H:i', strtotime($coupon['end_date'])) ?></div>
                         </td>
                         <td class="px-4 py-4 text-center">
-                            <span class="font-bold text-slate-700"><?= e($coupon['used_count']) ?></span>
-                            <span class="text-slate-400">/
+                            <span class="font-bold text-ink-700"><?= e($coupon['used_count']) ?></span>
+                            <span class="text-ink-400">/
                                 <?= $coupon['usage_limit'] > 0 ? e($coupon['usage_limit']) : '&infin;' ?></span>
                         </td>
                         <td class="px-4 py-4 text-center">
@@ -94,7 +94,11 @@
                     <?php endforeach; ?>
                     <?php if (empty($listcoupon)): ?>
                     <tr>
-                        <td colspan="8" class="px-4 py-8 text-center text-slate-500">Chưa có mã giảm giá nào.</td>
+                        <td colspan="8" class="px-4 py-16 text-center">
+                            <i class="fas fa-tag text-5xl text-ink-300" aria-hidden="true"></i>
+                            <p class="mt-4 font-semibold text-ink-700">Chưa có mã giảm giá nào</p>
+                            <p class="mt-1 text-sm text-ink-500">Bấm "Thêm mã mới" ở trên để tạo mã giảm giá đầu tiên.</p>
+                        </td>
                     </tr>
                     <?php endif; ?>
                 </tbody>

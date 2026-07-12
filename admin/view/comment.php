@@ -4,15 +4,15 @@
 <div id="layoutSidenav_content">
 
     <div class="container-fluid px-4">
-        <div class="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden mb-6 mt-4">
-            <div class="px-6 py-4 border-b border-slate-200 bg-slate-50/50 font-semibold text-slate-800">
+        <div class="bg-white rounded-xl shadow-sm border border-ink-200 overflow-hidden mb-6 mt-4">
+            <div class="px-6 py-4 border-b border-ink-200 bg-ink-50/50 font-semibold text-ink-800">
                 <i class="fas fa-table me-1"></i>
                 Danh sách bình luận
             </div>
             <div class="p-6">
                 <div class="overflow-x-auto">
-                    <table class="w-full text-left text-sm text-slate-600" id="datatablesSimple">
-                        <thead class="bg-slate-50 text-slate-700 uppercase text-xs font-semibold">
+                    <table class="w-full text-left text-sm text-ink-600" id="datatablesSimple">
+                        <thead class="bg-ink-50 text-ink-700 uppercase text-xs font-semibold">
                             <tr>
                                 <th class="px-4 py-3">Mã bình luận</th>
                                 <th class="px-4 py-3">Người bình luận</th>
@@ -22,7 +22,7 @@
                                 <th class="px-4 py-3 text-center">Thao tác</th>
                             </tr>
                         </thead>
-                        <tfoot class="bg-slate-50 text-slate-700 uppercase text-xs font-semibold">
+                        <tfoot class="bg-ink-50 text-ink-700 uppercase text-xs font-semibold">
                             <tr>
                                 <th class="px-4 py-3">Mã bình luận</th>
                                 <th class="px-4 py-3">Người bình luận</th>
@@ -35,7 +35,7 @@
                         <tbody>
                             <?php
                             foreach ($listcmt as $cmt): extract($cmt); ?>
-                                <tr class="border-b border-slate-100 hover:bg-slate-50 transition-colors">
+                                <tr class="border-b border-ink-100 hover:bg-ink-50 transition-colors">
                                     <td class="px-4 py-3"><?= $id_cmt ?></td>
                                     <td class="px-4 py-3"><?= $user_name ?></td>
                                     <td class="px-4 py-3"><?= $name_pro ?></td>

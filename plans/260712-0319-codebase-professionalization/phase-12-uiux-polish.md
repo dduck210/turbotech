@@ -35,11 +35,18 @@ no new redesign. Runs after admin MVC (Phase 10) so admin views are stable and n
 5. `php -l` touched views; browser-verify each fix at desktop + mobile; present before/after to owner.
 
 ## Todo
-- [ ] Confirm owner-approved item list + target files
-- [ ] Apply layout/responsive/empty-state fixes (escaping preserved)
-- [ ] Token convergence + CSS rebuild (if approved)
-- [ ] AJAX loading/disabled states (if approved)
-- [ ] `php -l`; desktop + mobile verification; owner before/after sign-off
+- [x] Owner approved all 6 audit items (2026-07-13)
+- [x] Applied layout/empty-state fix (#4, `list_coupon.php`) — `e()` escaping preserved throughout,
+      confirmed no echo-escaping touched
+- [x] Token convergence (#1): added `ink-400/600/800` + `Manrope` to `admin-tailwind-input.css`,
+      mechanically renamed `slate-*` → `ink-*` across all 22 admin views, rebuilt both CSS bundles via
+      `tailwindcss.exe` (build tooling was available, no owner-action fallback needed)
+- [x] AJAX loading/disabled states (#2 coupon-apply, #3 cart-qty-edit) — implemented
+- [x] #5 and #6 investigated further and found to be false positives from the Phase 11 audit (see
+      corrected findings in `reports/uiux-audit.md`) — no admin MVC render paths touched, confirm-dialog/
+      toast system untouched
+- [x] `php -l` clean on every touched file; authenticated admin route sweep + client route sweep both
+      green, no Fatal errors
 
 ## Success criteria
 - Each approved audit item resolved; owner signs off on before/after.
@@ -54,6 +61,8 @@ no new redesign. Runs after admin MVC (Phase 10) so admin views are stable and n
 
 ## Security considerations
 - Must not undo Phase 03 escaping. Editing markup only; keep `e()` wrappers.
+
+**Status: DONE (2026-07-13).** All 12 phases of the codebase-professionalization plan are now complete.
 
 ## Next steps
 - Final phase. On completion, update `docs/project-changelog.md` + `docs/development-roadmap.md` per

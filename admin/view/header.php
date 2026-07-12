@@ -10,7 +10,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link
-        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700&display=swap"
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Manrope:wght@600;700;800&display=swap"
         rel="stylesheet">
 
     <!-- FontAwesome -->
@@ -29,12 +29,12 @@
     <script src="//cdn.ckeditor.com/4.20.0/standard/ckeditor.js"></script>
 </head>
 
-<body class="bg-slate-50 text-slate-800 font-sans">
+<body class="bg-ink-50 text-ink-800 font-sans">
     <div class="flex h-screen overflow-hidden">
         <?php include_once "nav.php"; ?>
         <!-- Main Content Wrapper -->
         <div class="flex-1 flex flex-col overflow-hidden">
             <?php include_once "topbar.php"; ?>
             <!-- Main Scrollable Content -->
-            <main class="flex-1 overflow-y-auto bg-slate-50/50 p-4 md:p-6 lg:p-8">
+            <main class="flex-1 overflow-y-auto bg-ink-50/50 p-4 md:p-6 lg:p-8">
                 <div class="animate-admin-fade-in">

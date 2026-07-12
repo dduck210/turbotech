@@ -10,8 +10,8 @@ if (is_array($one_bill)) {
 <div class="bg-emerald-50 border border-emerald-200 text-emerald-700 px-4 py-3 rounded-lg mb-4 font-semibold">
     Chi tiết đơn hàng UTP-<?= e($id_bill) ?>
 </div>
-<div class="bg-slate-50 rounded-xl shadow-sm border border-slate-200 overflow-hidden mb-6 p-6">
-    <div class="space-y-2 text-slate-700">
+<div class="bg-ink-50 rounded-xl shadow-sm border border-ink-200 overflow-hidden mb-6 p-6">
+    <div class="space-y-2 text-ink-700">
         <p>Mã hóa đơn: UTP-<?= e($id_bill) ?>
         </p>
         <p>Người đặt: <span class="fw-bold">
@@ -29,7 +29,7 @@ if (is_array($one_bill)) {
             <p>Mã giảm giá: <span class="text-emerald-600 font-bold"><?= e($coupon_code) ?>
                     (-<?= number_format($discount_amount) ?>₫)</span></p>
         <?php endif; ?>
-        <p>Thành tiền: <span class="text-slate-800 font-bold">
+        <p>Thành tiền: <span class="text-ink-800 font-bold">
                 <?= number_format($total_amount) ?>₫
             </span></p>
         <p>Phương thức thanh toán:
@@ -68,10 +68,10 @@ if (is_array($one_bill)) {
     </div>
 </div>
 
-<div class="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden mb-6">
+<div class="bg-white rounded-xl shadow-sm border border-ink-200 overflow-hidden mb-6">
     <div class="overflow-x-auto">
-        <table class="w-full text-left text-sm text-slate-600">
-            <thead class="bg-slate-50 text-slate-700 uppercase text-xs font-semibold">
+        <table class="w-full text-left text-sm text-ink-600">
+            <thead class="bg-ink-50 text-ink-700 uppercase text-xs font-semibold">
                 <tr>
                     <th class="px-4 py-3">Hình ảnh</th>
                     <th class="px-4 py-3">Sản phẩm</th>
@@ -86,7 +86,7 @@ if (is_array($one_bill)) {
                 // var_dump($bill);
                 foreach ($bill as $value) {
                 ?>
-                    <tr class="border-b border-slate-100 hover:bg-slate-50 transition-colors">
+                    <tr class="border-b border-ink-100 hover:bg-ink-50 transition-colors">
                         <td class="px-4 py-3"><img src="../admin/uploads/<?= e($value['img_pro']) ?>" alt="Ultraphone Product"
                                 width="80px"></img></td>
                         <td class="px-4 py-3">

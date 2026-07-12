@@ -9,33 +9,33 @@
 
 
     <div class="mb-8 flex items-center justify-between">
-        <h1 class="text-3xl font-bold text-slate-800">Quản Lý Hóa Đơn</h1>
+        <h1 class="text-3xl font-bold text-ink-800">Quản Lý Hóa Đơn</h1>
     </div>
 
     <div class="bg-white rounded-xl shadow-sm hover:shadow-md transition-shadow duration-300 overflow-hidden mb-6">
         <div class="p-6">
-            <div class="mb-6 bg-slate-50 p-5 rounded-xl border border-slate-200">
-                <div class="text-slate-700 font-semibold mb-4"><i class="fas fa-filter mr-2 text-brand-500"></i>Công cụ
+            <div class="mb-6 bg-ink-50 p-5 rounded-xl border border-ink-200">
+                <div class="text-ink-700 font-semibold mb-4"><i class="fas fa-filter mr-2 text-brand-500"></i>Công cụ
                     tìm kiếm & Lọc đơn hàng</div>
                 <form action="./index.php?act=list_bill" method="POST"
                     class="flex flex-col lg:flex-row gap-4 items-end">
 <?= \Codemoi\Core\Csrf::field() ?>
                     <!-- Search Keyword -->
                     <div class="w-full lg:flex-1">
-                        <label class="block text-xs font-medium text-slate-500 mb-1 uppercase tracking-wider">Từ khóa
+                        <label class="block text-xs font-medium text-ink-500 mb-1 uppercase tracking-wider">Từ khóa
                             tìm kiếm</label>
                         <input type="text" name="keyword"
                             value="<?= isset($keyword) ? htmlspecialchars($keyword) : '' ?>"
                             placeholder="Tên khách hàng, SĐT..."
-                            class="w-full px-4 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-brand-500 focus:border-brand-500 transition-colors bg-white">
+                            class="w-full px-4 py-2 border border-ink-300 rounded-lg focus:ring-2 focus:ring-brand-500 focus:border-brand-500 transition-colors bg-white">
                     </div>
 
                     <!-- Status -->
                     <div class="w-full lg:w-48">
-                        <label class="block text-xs font-medium text-slate-500 mb-1 uppercase tracking-wider">Trạng
+                        <label class="block text-xs font-medium text-ink-500 mb-1 uppercase tracking-wider">Trạng
                             thái</label>
                         <select name="status"
-                            class="w-full px-4 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-brand-500 focus:border-brand-500 transition-colors bg-white">
+                            class="w-full px-4 py-2 border border-ink-300 rounded-lg focus:ring-2 focus:ring-brand-500 focus:border-brand-500 transition-colors bg-white">
                             <option value="-1" <?= (!isset($status) || $status == -1) ? 'selected' : '' ?>>Tất cả
                             </option>
                             <option value="0" <?= (isset($status) && $status == 0) ? 'selected' : '' ?>>Mới</option>
@@ -51,25 +51,25 @@
                     <!-- Date Range -->
                     <div class="w-full lg:w-auto flex flex-col sm:flex-row gap-3">
                         <div>
-                            <label class="block text-xs font-medium text-slate-500 mb-1 uppercase tracking-wider">Từ
+                            <label class="block text-xs font-medium text-ink-500 mb-1 uppercase tracking-wider">Từ
                                 ngày</label>
                             <input type="date" name="from_date"
                                 value="<?= isset($from_date) ? htmlspecialchars($from_date) : '' ?>"
-                                class="w-full px-4 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-brand-500 focus:border-brand-500 transition-colors bg-white text-slate-700">
+                                class="w-full px-4 py-2 border border-ink-300 rounded-lg focus:ring-2 focus:ring-brand-500 focus:border-brand-500 transition-colors bg-white text-ink-700">
                         </div>
                         <div>
-                            <label class="block text-xs font-medium text-slate-500 mb-1 uppercase tracking-wider">Đến
+                            <label class="block text-xs font-medium text-ink-500 mb-1 uppercase tracking-wider">Đến
                                 ngày</label>
                             <input type="date" name="to_date"
                                 value="<?= isset($to_date) ? htmlspecialchars($to_date) : '' ?>"
-                                class="w-full px-4 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-brand-500 focus:border-brand-500 transition-colors bg-white text-slate-700">
+                                class="w-full px-4 py-2 border border-ink-300 rounded-lg focus:ring-2 focus:ring-brand-500 focus:border-brand-500 transition-colors bg-white text-ink-700">
                         </div>
                     </div>
 
                     <!-- Filter Button -->
                     <div class="w-full lg:w-auto">
                         <button type="submit" name="btn_filter"
-                            class="w-full px-6 py-2.5 bg-slate-800 text-white font-medium rounded-lg hover:bg-slate-900 focus:ring-4 focus:ring-slate-300 transition-all cursor-pointer whitespace-nowrap shadow-sm">
+                            class="w-full px-6 py-2.5 bg-ink-800 text-white font-medium rounded-lg hover:bg-ink-900 focus:ring-4 focus:ring-ink-300 transition-all cursor-pointer whitespace-nowrap shadow-sm">
                             <i class="fas fa-search mr-2"></i>Tìm kiếm
                         </button>
                     </div>
@@ -80,7 +80,7 @@
                 <table class="w-full text-left border-collapse" id="table1">
                     <thead>
                         <tr
-                            class="bg-slate-50 border-y border-slate-100 text-slate-600 text-sm font-semibold tracking-wide uppercase">
+                            class="bg-ink-50 border-y border-ink-100 text-ink-600 text-sm font-semibold tracking-wide uppercase">
                             <th class="px-4 py-4">STT</th>
                             <th scope="col" class="px-4 py-4">Người đặt</th>
                             <th scope="col" class="px-4 py-4">Thành tiền</th>
@@ -92,14 +92,14 @@
                         </tr>
                     </thead>
 
-                    <tbody class="divide-y divide-slate-100">
+                    <tbody class="divide-y divide-ink-100">
                         <?php $i = 1;
                         foreach ($listbill as $bill) :
                             extract($bill);
                         ?>
-                            <tr class="hover:bg-slate-50 transition-colors">
-                                <td class="px-4 py-4 text-slate-500 font-medium">#<?= e($i) ?></td>
-                                <td class="px-4 py-4 font-medium text-slate-800"><?= e($bill['full_name']) ?></td>
+                            <tr class="hover:bg-ink-50 transition-colors">
+                                <td class="px-4 py-4 text-ink-500 font-medium">#<?= e($i) ?></td>
+                                <td class="px-4 py-4 font-medium text-ink-800"><?= e($bill['full_name']) ?></td>
                                 <td class="px-4 py-4 font-semibold text-brand-600">
                                     <?= number_format($bill['total_amount']) ?> ₫</td>
                                 <td class="px-4 py-4"><?php if ($bill['payment'] == 1) {
@@ -131,7 +131,7 @@
                                                                     } else {
                                                                         echo "Lỗi trạng thái";
                                                                     } ?></td>
-                                <td class="px-4 py-4 text-slate-500"><?= e($bill['order_date']) ?></td>
+                                <td class="px-4 py-4 text-ink-500"><?= e($bill['order_date']) ?></td>
 
                                 <td class="px-4 py-3 text-center">
                                     <div class="flex items-center justify-center gap-2">
@@ -181,9 +181,9 @@
 
             setTimeout(function() {
                 $('.dataTables_length select').addClass(
-                    'px-3 py-1 border border-slate-200 rounded-lg focus:ring-2 focus:ring-brand-500 mx-2');
+                    'px-3 py-1 border border-ink-200 rounded-lg focus:ring-2 focus:ring-brand-500 mx-2');
                 $('.dataTables_filter input').addClass(
-                    'px-4 py-2 border border-slate-200 rounded-lg focus:ring-2 focus:ring-brand-500 ml-2');
+                    'px-4 py-2 border border-ink-200 rounded-lg focus:ring-2 focus:ring-brand-500 ml-2');
             }, 100);
         });
     </script>

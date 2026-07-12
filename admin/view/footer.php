@@ -2,8 +2,8 @@
                 </main>
 
                 <!-- Footer -->
-                <footer class="bg-white border-t border-slate-200 py-4 px-6 shrink-0 z-10">
-                    <div class="text-center text-sm text-slate-500 font-medium">
+                <footer class="bg-white border-t border-ink-200 py-4 px-6 shrink-0 z-10">
+                    <div class="text-center text-sm text-ink-500 font-medium">
                         &copy; 2026 Turbotech Admin.
                     </div>
                 </footer>
@@ -13,7 +13,7 @@
                 <!-- Custom confirm dialog (replaces the native browser confirm() popup) —
          logic lives in assets/js/confirm-dialog.js; markup stays here so its
          classes are seen by Tailwind's content scan. -->
-                <div id="confirm-dialog-overlay" class="hidden fixed inset-0 z-50 bg-slate-900/50 p-4">
+                <div id="confirm-dialog-overlay" class="hidden fixed inset-0 z-50 bg-ink-900/50 p-4">
                     <div class="flex h-full w-full items-center justify-center">
                         <div class="w-full max-w-sm rounded-2xl bg-white p-6 shadow-xl">
                             <div class="mb-4 flex items-center gap-3">
@@ -21,12 +21,12 @@
                                     class="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-amber-100 text-amber-600">
                                     <i class="fas fa-exclamation-triangle" aria-hidden="true"></i>
                                 </div>
-                                <h3 class="text-base font-semibold text-slate-900">Xác nhận</h3>
+                                <h3 class="text-base font-semibold text-ink-900">Xác nhận</h3>
                             </div>
-                            <p id="confirm-dialog-message" class="mb-6 text-sm text-slate-600"></p>
+                            <p id="confirm-dialog-message" class="mb-6 text-sm text-ink-600"></p>
                             <div class="flex justify-end gap-3">
                                 <button type="button" id="confirm-dialog-cancel"
-                                    class="rounded-lg border border-slate-200 bg-white px-4 py-2 text-sm font-semibold text-slate-900 transition-colors hover:bg-slate-50 focus:outline-none focus:ring-2 focus:ring-brand-500">Hủy</button>
+                                    class="rounded-lg border border-ink-200 bg-white px-4 py-2 text-sm font-semibold text-ink-900 transition-colors hover:bg-ink-50 focus:outline-none focus:ring-2 focus:ring-brand-500">Hủy</button>
                                 <button type="button" id="confirm-dialog-ok"
                                     class="rounded-lg bg-red-600 px-4 py-2 text-sm font-semibold text-white transition-colors hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2">Xác
                                     nhận</button>
