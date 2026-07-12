@@ -56,7 +56,7 @@ $ds_loai = loadall_loai(); ?>
         class="bg-white rounded-xl shadow-sm hover:shadow-md transition-shadow duration-300 p-6 border-l-4 border-brand-500 flex items-center justify-between">
         <div>
             <div class="text-xs font-bold text-brand-500 uppercase tracking-wider mb-1">Tổng đơn</div>
-            <div class="text-2xl font-bold text-slate-800"><?= count($listbill) ?></div>
+            <div class="text-2xl font-bold text-slate-800"><?= e(count($listbill)) ?></div>
         </div>
         <div class="text-slate-300">
             <i class="fas fa-clipboard-list fa-2x"></i>
@@ -68,7 +68,7 @@ $ds_loai = loadall_loai(); ?>
         class="bg-white rounded-xl shadow-sm hover:shadow-md transition-shadow duration-300 p-6 border-l-4 border-yellow-500 flex items-center justify-between">
         <div>
             <div class="text-xs font-bold text-yellow-500 uppercase tracking-wider mb-1">Tổng khách hàng</div>
-            <div class="text-2xl font-bold text-slate-800"><?= count($listuser); ?></div>
+            <div class="text-2xl font-bold text-slate-800"><?= e(count($listuser)) ?></div>
         </div>
         <div class="text-slate-300">
             <i class="fas fa-solid fa-user fa-2x"></i>
@@ -80,7 +80,7 @@ $ds_loai = loadall_loai(); ?>
         class="bg-white rounded-xl shadow-sm hover:shadow-md transition-shadow duration-300 p-6 border-l-4 border-green-500 flex items-center justify-between">
         <div>
             <div class="text-xs font-bold text-green-500 uppercase tracking-wider mb-1">Tổng sản phẩm</div>
-            <div class="text-2xl font-bold text-slate-800"><?= count($listpro) ?></div>
+            <div class="text-2xl font-bold text-slate-800"><?= e(count($listpro)) ?></div>
         </div>
         <div class="text-slate-300">
             <i class="fas fa-brands fa-product-hunt fa-2x"></i>
@@ -92,7 +92,7 @@ $ds_loai = loadall_loai(); ?>
         class="bg-white rounded-xl shadow-sm hover:shadow-md transition-shadow duration-300 p-6 border-l-4 border-indigo-500 flex items-center justify-between">
         <div>
             <div class="text-xs font-bold text-indigo-500 uppercase tracking-wider mb-1">Tổng loại sản phẩm</div>
-            <div class="text-2xl font-bold text-slate-800"><?= count($ds_loai) ?></div>
+            <div class="text-2xl font-bold text-slate-800"><?= e(count($ds_loai)) ?></div>
         </div>
         <div class="text-slate-300">
             <i class="fas fa-solid fa-weight-hanging fa-2x"></i>
@@ -138,7 +138,7 @@ $ds_loai = loadall_loai(); ?>
                                         $dau1 = ",";
                                     };
                                 ?>
-                                    <?= $a ?> <?= $dau1 ?>
+                                    <?= json_encode($a) ?> <?= $dau1 ?>
                                 <?php
                                 } ?>
                             ],
@@ -176,7 +176,7 @@ $ds_loai = loadall_loai(); ?>
 
                 var donutData = {
                     labels: [
-                        <?php foreach ($all as $value) { ?> '<?= $value['name_cate'] ?>',
+                        <?php foreach ($all as $value) { ?> <?= json_encode($value['name_cate']) ?>,
                         <?php
                         } ?>
                     ],
@@ -188,7 +188,7 @@ $ds_loai = loadall_loai(); ?>
                                 } else {
                                     $dau = ",";
                                 }; ?>
-                                <?= $valuee['sluong'] ?><?= $dau ?>
+                                <?= json_encode($valuee['sluong']) ?><?= $dau ?>
                             <?php $i++;
                             } ?>
                         ],

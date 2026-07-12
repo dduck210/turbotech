@@ -27,8 +27,8 @@
         <!-- Image -->
         <div class="rounded-2xl border border-ink-200 bg-white overflow-hidden">
             <div class="aspect-square bg-ink-100 overflow-hidden">
-                <img src="admin/uploads/<?= $one_pro['img_pro']; ?>"
-                    alt="Ảnh sản phẩm <?= htmlspecialchars($one_pro['name_pro']) ?>"
+                <img src="admin/uploads/<?= e($one_pro['img_pro']) ?>"
+                    alt="Ảnh sản phẩm <?= e($one_pro['name_pro']) ?>"
                     class="h-full w-full object-cover">
             </div>
         </div>
@@ -36,10 +36,10 @@
         <!-- Info -->
         <div>
             <h1 class="font-heading text-2xl md:text-3xl font-bold text-ink-900 mb-2">
-                <a href="index.php?act=prodetail&idpro=<?php echo $one_pro['id_pro'] ?>"
-                    class="hover:text-brand-600 transition-colors"><?= $one_pro['name_pro'] ?></a>
+                <a href="index.php?act=prodetail&idpro=<?= e($one_pro['id_pro']) ?>"
+                    class="hover:text-brand-600 transition-colors"><?= e($one_pro['name_pro']) ?></a>
             </h1>
-            <p class="text-sm text-ink-500 mb-4">Lượt xem: <?= $one_pro['view'] ?></p>
+            <p class="text-sm text-ink-500 mb-4">Lượt xem: <?= e($one_pro['view']) ?></p>
 
             <div class="mb-4">
                 <?php if ($one_pro['discount'] <= 0) { ?>
@@ -65,7 +65,7 @@
             </div>
 
             <div class="text-ink-700 leading-relaxed mb-6">
-                <p><?= $one_pro['short_des'] ?></p>
+                <p><?= e($one_pro['short_des']) ?></p>
             </div>
 
             <!-- Add to cart form: field names / values byte-identical to before.
@@ -91,10 +91,10 @@
                                 </div>
                             </div>
                         </div>
-                        <input type="hidden" name="id_pro" value="<?php echo $one_pro['id_pro'] ?>">
-                        <input type="hidden" name="name_pro" value="<?php echo $one_pro['name_pro'] ?>">
-                        <input type="hidden" name="img_pro" value="<?php echo $one_pro['img_pro'] ?>">
-                        <input type="hidden" name="price" value="<?php echo $one_pro['price'] ?>">
+                        <input type="hidden" name="id_pro" value="<?= e($one_pro['id_pro']) ?>">
+                        <input type="hidden" name="name_pro" value="<?= e($one_pro['name_pro']) ?>">
+                        <input type="hidden" name="img_pro" value="<?= e($one_pro['img_pro']) ?>">
+                        <input type="hidden" name="price" value="<?= e($one_pro['price']) ?>">
                         <input type="submit" name="addtocart" value="Thêm giỏ hàng"
                             class="inline-flex items-center justify-center gap-2 rounded-lg bg-brand-600 px-5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-brand-700 transition-colors focus:outline-none focus:ring-2 focus:ring-brand-500 focus:ring-offset-2 cursor-pointer">
                     </div>
@@ -145,6 +145,8 @@
             <div class="text-ink-700 leading-relaxed">
                 <p>
                     <strong class="text-lg text-ink-900">Thông số kỹ thuật:</strong><br>
+                    <?php /* Not escaped: authored by admins via the CKEditor rich-text field
+                             (admin/view/{add,update}_product.php), intentionally stores HTML. */ ?>
                     <?= $one_pro['detail_des'] ?>
                 </p>
             </div>
@@ -156,7 +158,7 @@
             <script>
                 $(document).ready(function() {
                     $("#comment").load("./view/comment-form.php", {
-                        idpro: <?= $one_pro['id_pro'] ?>,
+                        idpro: <?= json_encode($one_pro['id_pro']) ?>,
                     });
                 });
             </script>
@@ -180,20 +182,20 @@
         <?php foreach ($similar_pro as $pro) { ?>
             <div class="rounded-2xl border border-ink-200 bg-white shadow-sm hover:shadow-md transition-shadow overflow-hidden">
                 <div class="relative aspect-square bg-ink-100 overflow-hidden">
-                    <a href="index.php?act=prodetail&idpro=<?php echo $pro['id_pro']; ?>">
-                        <img src="admin/uploads/<?php echo $pro['img_pro']; ?>"
-                            alt="Ảnh sản phẩm <?= htmlspecialchars($pro['name_pro']) ?>"
+                    <a href="index.php?act=prodetail&idpro=<?= e($pro['id_pro']) ?>">
+                        <img src="admin/uploads/<?= e($pro['img_pro']) ?>"
+                            alt="Ảnh sản phẩm <?= e($pro['name_pro']) ?>"
                             class="h-full w-full object-cover">
                     </a>
                     <?php if ((int) $pro['stock'] <= 0) { ?>
-                        <span class="absolute top-2 right-2 rounded-full bg-ink-900/80 text-white text-xs font-bold px-2 py-1"><?= htmlspecialchars($pro['stock_message'] ?: 'Hết hàng') ?></span>
+                        <span class="absolute top-2 right-2 rounded-full bg-ink-900/80 text-white text-xs font-bold px-2 py-1"><?= e($pro['stock_message'] ?: 'Hết hàng') ?></span>
                     <?php } ?>
                 </div>
                 <div class="p-4">
                     <h6 class="font-heading font-semibold text-ink-900 line-clamp-2 mb-2">
-                        <a href="index.php?act=prodetail&idpro=<?php echo $pro['id_pro'] ?>"
+                        <a href="index.php?act=prodetail&idpro=<?= e($pro['id_pro']) ?>"
                             class="hover:text-brand-600 transition-colors">
-                            <?php echo $pro['name_pro']; ?>
+                            <?= e($pro['name_pro']) ?>
                         </a>
                     </h6>
                     <div class="mb-3">
@@ -204,10 +206,10 @@
                     <?php if ((int) $pro['stock'] > 0) { ?>
                         <form action="index.php?act=addtocart" method="post">
 <?= \Codemoi\Core\Csrf::field() ?>
-                            <input type="hidden" name="id_pro" value="<?php echo $pro['id_pro'] ?>">
-                            <input type="hidden" name="name_pro" value="<?php echo $pro['name_pro'] ?>">
-                            <input type="hidden" name="img_pro" value="<?php echo $pro['img_pro'] ?>">
-                            <input type="hidden" name="price" value="<?php echo $pro['price'] ?>">
+                            <input type="hidden" name="id_pro" value="<?= e($pro['id_pro']) ?>">
+                            <input type="hidden" name="name_pro" value="<?= e($pro['name_pro']) ?>">
+                            <input type="hidden" name="img_pro" value="<?= e($pro['img_pro']) ?>">
+                            <input type="hidden" name="price" value="<?= e($pro['price']) ?>">
                             <input type="submit" name="addtocart" value="Thêm vào giỏ"
                                 class="w-full inline-flex items-center justify-center gap-2 rounded-lg bg-brand-600 px-5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-brand-700 transition-colors focus:outline-none focus:ring-2 focus:ring-brand-500 focus:ring-offset-2 cursor-pointer">
                         </form>

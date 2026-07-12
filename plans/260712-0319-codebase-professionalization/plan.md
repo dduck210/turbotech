@@ -18,8 +18,9 @@ Legacy PHP + MySQL (`codemoi2`), Apache, `public/` webroot. Client side already 
 
 ## Guiding principles
 - **YAGNI/KISS/DRY.** Reuse the existing `Config::env()` reader and `Core\Database`; do NOT invent
-  new frameworks. No new runtime dependencies (no Composer binary available — verified: cannot
-  `dump-autoload`; PSR-4 resolves new files under the already-mapped `src/` root at runtime).
+  new frameworks. No new runtime dependencies. Correction (found in Phase 03): a standalone
+  `composer.phar` IS available at `C:\xampp\htdocs\composer.phar` — `dump-autoload` works fine
+  (used to wire `src/Core/helpers.php` via Composer's `files` autoload entry).
 - **Strangler + always-runnable.** Every phase leaves the app runnable and manually testable on XAMPP.
   Lint with `C:\xampp\php\php.exe -l`. No automated test suite exists.
 - **Security first, refactor last.** Fix P1 vulns while the code is small and known; do the risky
@@ -31,7 +32,7 @@ Legacy PHP + MySQL (`codemoi2`), Apache, `public/` webroot. Client side already 
 |---|-------|----|----------|-----------|---------------|
 | 01 | [Password hashing + migration](phase-01-password-hashing.md) | 1 | P1 | — | DONE |
 | 02 | [CSRF protection](phase-02-csrf-protection.md) | 1 | P1 | — | DONE |
-| 03 | [XSS output-escaping audit + fix](phase-03-xss-escaping.md) | 1 | P1 | — | no |
+| 03 | [XSS output-escaping audit + fix](phase-03-xss-escaping.md) | 1 | P1 | — | DONE |
 | 04 | [OTP hardening + redirect-exit fix](phase-04-otp-hardening.md) | 1 | P1 | — | no |
 | 05 | [DB layer env-config unification](phase-05-db-config-unification.md) | 2 | P2 | — | no |
 | 06 | [Error-handling FK guards + dead-table cleanup](phase-06-error-handling-cleanup.md) | 2 | P2 | — | YES (approve table drops) |

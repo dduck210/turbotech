@@ -43,7 +43,7 @@ unset($_SESSION['flash_success'], $_SESSION['flash_error']);
                         foreach ($listcate ?? [] as $cate) {
                             extract($cate);
                             $linkpro = "index.php?act=product&idcate=" . $id_cate;
-                            echo '<a href="' . $linkpro . '" class="block px-4 py-2 text-sm text-ink-700 hover:bg-ink-50 hover:text-brand-600 focus:outline-none focus:ring-2 focus:ring-brand-500">' . $name_cate . '</a>';
+                            echo '<a href="' . e($linkpro) . '" class="block px-4 py-2 text-sm text-ink-700 hover:bg-ink-50 hover:text-brand-600 focus:outline-none focus:ring-2 focus:ring-brand-500">' . e($name_cate) . '</a>';
                         }
                         ?>
                     </div>
@@ -83,7 +83,7 @@ unset($_SESSION['flash_success'], $_SESSION['flash_error']);
                         class="relative flex h-11 w-11 items-center justify-center rounded-full text-ink-700 transition-colors hover:bg-ink-100 focus:outline-none focus:ring-2 focus:ring-brand-500">
                         <i class="fa-solid fa-cart-shopping text-lg"></i>
                         <span
-                            class="absolute right-0.5 top-0.5 inline-flex h-5 w-5 items-center justify-center rounded-full bg-brand-600 text-[11px] font-bold text-white"><?= $count ?></span>
+                            class="absolute right-0.5 top-0.5 inline-flex h-5 w-5 items-center justify-center rounded-full bg-brand-600 text-[11px] font-bold text-white"><?= e($count) ?></span>
                     </a>
                     <div
                         class="invisible absolute right-0 top-full z-50 w-80 rounded-xl border border-ink-200 bg-white opacity-0 shadow-lg transition-all group-hover:visible group-hover:opacity-100">
@@ -93,16 +93,16 @@ unset($_SESSION['flash_success'], $_SESSION['flash_error']);
                             <ul class="max-h-80 divide-y divide-ink-100 overflow-y-auto">
                                 <?php foreach ($_SESSION['mycart'] as $cart) { ?>
                                     <li class="flex gap-3 p-3">
-                                        <a href="index.php?act=prodetail&idpro=<?= $cart[0] ?>"
+                                        <a href="index.php?act=prodetail&idpro=<?= e($cart[0]) ?>"
                                             class="relative h-14 w-14 shrink-0 overflow-hidden rounded-lg bg-ink-100">
-                                            <img src="admin/uploads/<?= $cart[2] ?>" alt="<?= $cart[1] ?>"
+                                            <img src="admin/uploads/<?= e($cart[2]) ?>" alt="<?= e($cart[1]) ?>"
                                                 class="h-full w-full object-cover" />
                                             <span
-                                                class="absolute bottom-0 right-0 rounded-tl-md bg-ink-900/80 px-1 text-[10px] font-semibold text-white"><?= $cart[4] ?>x</span>
+                                                class="absolute bottom-0 right-0 rounded-tl-md bg-ink-900/80 px-1 text-[10px] font-semibold text-white"><?= e($cart[4]) ?>x</span>
                                         </a>
                                         <div class="min-w-0 flex-1">
-                                            <a href="index.php?act=prodetail&idpro=<?= $cart[0] ?>"
-                                                class="line-clamp-2 text-sm font-medium text-ink-900 hover:text-brand-600 focus:outline-none focus:ring-2 focus:ring-brand-500"><?= $cart[1] ?></a>
+                                            <a href="index.php?act=prodetail&idpro=<?= e($cart[0]) ?>"
+                                                class="line-clamp-2 text-sm font-medium text-ink-900 hover:text-brand-600 focus:outline-none focus:ring-2 focus:ring-brand-500"><?= e($cart[1]) ?></a>
                                             <p class="mt-1 text-sm font-semibold text-brand-600"><?= number_format($cart[3]) ?>₫</p>
                                         </div>
                                     </li>
@@ -134,12 +134,12 @@ unset($_SESSION['flash_success'], $_SESSION['flash_error']);
                         <a href="#"
                             class="flex h-11 items-center gap-2 rounded-full px-3 text-sm font-medium text-ink-700 transition-colors hover:bg-ink-100 focus:outline-none focus:ring-2 focus:ring-brand-500">
                             <?php if (isset($_SESSION['user']['img_user']) && $_SESSION['user']['img_user'] != '') { ?>
-                                <img src="uploads/<?= $_SESSION['user']['img_user'] ?>" alt=""
+                                <img src="uploads/<?= e($_SESSION['user']['img_user']) ?>" alt=""
                                     class="h-7 w-7 rounded-full object-cover" />
                             <?php } else { ?>
                                 <i class="fa-solid fa-user text-lg"></i>
                             <?php } ?>
-                            <span class="hidden max-w-32 truncate sm:inline"><?= $_SESSION['user']['full_name'] ?></span>
+                            <span class="hidden max-w-32 truncate sm:inline"><?= e($_SESSION['user']['full_name']) ?></span>
                         </a>
                     <?php } ?>
                     <div
@@ -213,7 +213,7 @@ unset($_SESSION['flash_success'], $_SESSION['flash_error']);
                     foreach ($listcate as $cate) {
                         extract($cate);
                         $linkpro = "index.php?act=product&idcate=" . $id_cate;
-                        echo '<a href="' . $linkpro . '" class="block rounded-lg px-3 py-2 text-sm text-ink-700 hover:bg-ink-50 hover:text-brand-600 focus:outline-none focus:ring-2 focus:ring-brand-500">' . $name_cate . '</a>';
+                        echo '<a href="' . e($linkpro) . '" class="block rounded-lg px-3 py-2 text-sm text-ink-700 hover:bg-ink-50 hover:text-brand-600 focus:outline-none focus:ring-2 focus:ring-brand-500">' . e($name_cate) . '</a>';
                     }
                     ?>
                 </div>
@@ -243,7 +243,7 @@ unset($_SESSION['flash_success'], $_SESSION['flash_error']);
                     <?php } ?>
                     <a href="index.php?act=myaccount"
                         class="flex items-center gap-2 rounded-lg px-3 py-2.5 text-sm font-medium text-ink-700 hover:bg-ink-50 focus:outline-none focus:ring-2 focus:ring-brand-500"><i
-                            class="fa-solid fa-circle-info w-4"></i> Thông tin tài khoản (<?= $_SESSION['user']['full_name'] ?>)</a>
+                            class="fa-solid fa-circle-info w-4"></i> Thông tin tài khoản (<?= e($_SESSION['user']['full_name']) ?>)</a>
                     <a href="index.php?act=logout"
                         data-confirm="Bạn chắc chắc muốn đăng xuất tài khoản?"
                         class="flex items-center gap-2 rounded-lg px-3 py-2.5 text-sm font-medium text-ink-700 hover:bg-ink-50 focus:outline-none focus:ring-2 focus:ring-brand-500"><i

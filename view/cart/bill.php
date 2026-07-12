@@ -19,12 +19,12 @@
                 <div class="space-y-4">
                     <div>
                         <label for="bill-user-name" class="block text-sm font-medium text-ink-700 mb-1.5">Tài khoản người dùng</label>
-                        <input id="bill-user-name" name="user_name" type="text" value="<?= $user_name ?>" disabled
+                        <input id="bill-user-name" name="user_name" type="text" value="<?= e($user_name) ?>" disabled
                             class="block w-full rounded-lg border border-ink-200 bg-ink-50 px-3.5 py-2.5 text-sm font-semibold text-ink-500 cursor-not-allowed" />
                     </div>
                     <div>
                         <label for="bill-full-name" class="block text-sm font-medium text-ink-700 mb-1.5">Họ tên người đặt</label>
-                        <input id="bill-full-name" name="full_name" type="text" placeholder="Nhập họ tên người nhận" value="<?= $full_name ?>"
+                        <input id="bill-full-name" name="full_name" type="text" placeholder="Nhập họ tên người nhận" value="<?= e($full_name) ?>"
                             data-rules="required|min:2|max:100"
                             class="block w-full rounded-lg border border-ink-200 bg-white px-3.5 py-2.5 text-sm text-ink-900 placeholder:text-ink-300 focus:outline-none focus:ring-2 focus:ring-brand-500 focus:border-brand-500" />
                     </div>
@@ -53,19 +53,19 @@
                     </div>
                     <div>
                         <label for="bill-email" class="block text-sm font-medium text-ink-700 mb-1.5">Email</label>
-                        <input id="bill-email" name="email" type="email" placeholder="Nhập email người nhận" value="<?= $email_user ?>"
+                        <input id="bill-email" name="email" type="email" placeholder="Nhập email người nhận" value="<?= e($email_user) ?>"
                             data-rules="required|email"
                             class="block w-full rounded-lg border border-ink-200 bg-white px-3.5 py-2.5 text-sm text-ink-900 placeholder:text-ink-300 focus:outline-none focus:ring-2 focus:ring-brand-500 focus:border-brand-500" />
                     </div>
                     <div>
                         <label for="bill-phone" class="block text-sm font-medium text-ink-700 mb-1.5">Điện thoại</label>
-                        <input id="bill-phone" name="phone" type="text" placeholder="Nhập số điện thoại người nhận" value="<?= $phone_user ?>"
+                        <input id="bill-phone" name="phone" type="text" placeholder="Nhập số điện thoại người nhận" value="<?= e($phone_user) ?>"
                             data-rules="required|phone"
                             class="block w-full rounded-lg border border-ink-200 bg-white px-3.5 py-2.5 text-sm text-ink-900 placeholder:text-ink-300 focus:outline-none focus:ring-2 focus:ring-brand-500 focus:border-brand-500" />
                     </div>
                     <?php if (isset($_COOKIE['error'])) : ?>
                         <p class="rounded-lg border border-green-200 bg-green-50 p-3 text-sm font-semibold text-green-700">
-                            <?= $_COOKIE['error'] ?>
+                            <?= e($_COOKIE['error']) ?>
                         </p>
                     <?php endif ?>
                 </div>
@@ -121,15 +121,15 @@
                         ?>
                             <tr>
                                 <td class="px-4 py-3">
-                                    <a href="<?= $prodetail ?>" class="block h-16 w-16 overflow-hidden rounded-lg bg-ink-100">
-                                        <img src="<?= $img_pro ?>" alt="<?= $cart[1] ?>" class="h-full w-full object-cover" />
+                                    <a href="<?= e($prodetail) ?>" class="block h-16 w-16 overflow-hidden rounded-lg bg-ink-100">
+                                        <img src="<?= e($img_pro) ?>" alt="<?= e($cart[1]) ?>" class="h-full w-full object-cover" />
                                     </a>
                                 </td>
                                 <td class="px-4 py-3">
-                                    <a href="<?= $prodetail ?>" class="font-heading font-semibold text-ink-900 hover:text-brand-600 transition-colors"><?= $cart[1] ?></a>
+                                    <a href="<?= e($prodetail) ?>" class="font-heading font-semibold text-ink-900 hover:text-brand-600 transition-colors"><?= e($cart[1]) ?></a>
                                 </td>
                                 <td class="px-4 py-3 text-ink-700"><?= number_format($cart[3]) ?> ₫</td>
-                                <td class="px-4 py-3 text-center text-ink-700"><?= $quantity ?></td>
+                                <td class="px-4 py-3 text-center text-ink-700"><?= e($quantity) ?></td>
                                 <td class="px-4 py-3 font-semibold text-ink-900"><?= number_format($total) ?> ₫</td>
                             </tr>
                         <?php $i += 1;

@@ -28,14 +28,14 @@
                             phẩm</label>
                         <input type="text" name="id_pro"
                             class="w-full rounded-lg border border-slate-200 px-4 py-2 focus:ring-2 focus:ring-brand-500 outline-none transition-all"
-                            value="<?= $id_pro ?>" disabled>
+                            value="<?= e($id_pro) ?>" disabled>
                     </div>
                     <div class="mb-4">
                         <label for="formGroupExampleInput" class="block text-sm font-medium text-slate-700 mb-1">Tên sản
                             phẩm</label>
                         <input type="text" name="name_pro" data-rules="required|min:2|max:255"
                             class="w-full rounded-lg border border-slate-200 px-4 py-2 focus:ring-2 focus:ring-brand-500 outline-none transition-all"
-                            placeholder="Tên sản phẩm" value="<?= $name_pro ?>">
+                            placeholder="Tên sản phẩm" value="<?= e($name_pro) ?>">
                     </div>
                 </div>
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -44,14 +44,14 @@
                             class="block text-sm font-medium text-slate-700 mb-1">Giá</label>
                         <input type="text" name="price" data-rules="required|number|minval:1"
                             class="w-full rounded-lg border border-slate-200 px-4 py-2 focus:ring-2 focus:ring-brand-500 outline-none transition-all"
-                            placeholder="Giá sản phẩm" value="<?= $price ?>">
+                            placeholder="Giá sản phẩm" value="<?= e($price) ?>">
                     </div>
                     <div class="mb-4">
                         <label for="formGroupExampleInput" class="block text-sm font-medium text-slate-700 mb-1">Giảm
                             giá</label>
                         <input type="text" name="discount" data-rules="number|minval:0"
                             class="w-full rounded-lg border border-slate-200 px-4 py-2 focus:ring-2 focus:ring-brand-500 outline-none transition-all"
-                            placeholder="Nhập số % mà sản phẩm được giảm giá" value="<?= $discount ?>">
+                            placeholder="Nhập số % mà sản phẩm được giảm giá" value="<?= e($discount) ?>">
                     </div>
                 </div>
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -60,7 +60,7 @@
                             lượng tồn kho</label>
                         <input type="number" name="stock" min="0" data-rules="required|number|minval:0"
                             class="w-full rounded-lg border border-slate-200 px-4 py-2 focus:ring-2 focus:ring-brand-500 outline-none transition-all"
-                            placeholder="Nhập số lượng hàng tồn kho" value="<?= $stock ?>">
+                            placeholder="Nhập số lượng hàng tồn kho" value="<?= e($stock) ?>">
                     </div>
                     <div class="mb-4">
                         <label for="formGroupExampleInput" class="block text-sm font-medium text-slate-700 mb-1">Thông
@@ -85,9 +85,9 @@
                                 extract($loai);
 
                                 if ($idcate == $id_cate) {
-                                    echo '<option value="' . $id_cate . '" selected>' . $name_cate . '</option>';
+                                    echo '<option value="' . e($id_cate) . '" selected>' . e($name_cate) . '</option>';
                                 } else {
-                                    echo '<option value="' . $id_cate . '">' . $name_cate . '</option>';
+                                    echo '<option value="' . e($id_cate) . '">' . e($name_cate) . '</option>';
                                 }
                             }
                             ?>
@@ -95,7 +95,7 @@
                     </div>
                     <div class="mb-4">
                         <label for="formGroupExampleInput" class="block text-sm font-medium text-slate-700 mb-1">Hình
-                            ảnh (<?= $img_pro ?>)</label>
+                            ảnh (<?= e($img_pro) ?>)</label>
                         <input type="file" name="img_pro"
                             class="w-full rounded-lg border border-slate-200 px-4 py-2 focus:ring-2 focus:ring-brand-500 outline-none transition-all bg-white">
                     </div>
@@ -107,17 +107,17 @@
                         ngắn</label>
                     <input type="text" name="short_des" data-rules="required|min:5|max:500"
                         class="w-full rounded-lg border border-slate-200 px-4 py-2 focus:ring-2 focus:ring-brand-500 outline-none transition-all"
-                        placeholder="Mô tả tóm tắt sản phẩm" value="<?= $short_des ?>">
+                        placeholder="Mô tả tóm tắt sản phẩm" value="<?= e($short_des) ?>">
                 </div>
                 <div class="mb-4 mt-3">
                     <label for="comment" class="block text-sm font-medium text-slate-700 mb-1">Mô tả chi tiết</label>
                     <textarea
                         class="w-full rounded-lg border border-slate-200 px-4 py-2 focus:ring-2 focus:ring-brand-500 outline-none transition-all ckeditor"
                         rows="5" name="detail_des" placeholder="Mô tả đầy đủ chi tiết sản phẩm"
-                        id="detail_des"><?= $detail_des ?></textarea>
+                        id="detail_des"><?php /* Not escaped: CKEditor round-trips its own HTML here. */ ?><?= $detail_des ?></textarea>
                 </div>
                 <div class="wrap-btn mt-4">
-                    <input type="hidden" name="id_pro" value="<?= $id_pro ?>">
+                    <input type="hidden" name="id_pro" value="<?= e($id_pro) ?>">
                     <input type="submit" name="btn_update"
                         class="bg-brand-600 hover:bg-brand-700 text-white font-medium rounded-lg px-4 py-2 transition-all active:scale-[0.97] inline-block"
                         value="Cập nhật">
