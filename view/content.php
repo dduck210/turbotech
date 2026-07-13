@@ -135,7 +135,7 @@
                     <!-- Phần show sản phẩm mới nhất -->
                     <?php
                     foreach ($prohome as $pro) { ?>
-                        <div class="group relative overflow-hidden rounded-2xl border border-ink-200 bg-ink-200/70 backdrop-blur-xl shadow-sm transition-shadow hover:shadow-md">
+                        <div class="group card-glow relative overflow-hidden rounded-2xl border border-ink-200 bg-ink-200/70 backdrop-blur-xl shadow-sm">
                             <div class="relative aspect-square overflow-hidden bg-ink-100">
                                 <a class="block h-full w-full"
                                     href="index.php?act=prodetail&idpro=<?= e($pro['id_pro']) ?>">
@@ -194,7 +194,7 @@
                     <!-- Sản phẩm bán chạy -->
                     <?php
                     foreach ($list_bestsp as $pro) { ?>
-                        <div class="group relative overflow-hidden rounded-2xl border border-ink-200 bg-ink-200/70 backdrop-blur-xl shadow-sm transition-shadow hover:shadow-md">
+                        <div class="group card-glow relative overflow-hidden rounded-2xl border border-ink-200 bg-ink-200/70 backdrop-blur-xl shadow-sm">
                             <div class="relative aspect-square overflow-hidden bg-ink-100">
                                 <a class="block h-full w-full" href="index.php?act=prodetail&idpro=<?= e($pro['id_pro']) ?>">
                                     <img class="h-full w-full object-cover" src="admin/uploads/<?= e($pro['img_pro']) ?>"
@@ -254,7 +254,7 @@
                     <!-- Phần show sản phẩm nổi bật -->
                     <?php
                     foreach ($list_topsp as $pro) { ?>
-                        <div class="group relative overflow-hidden rounded-2xl border border-ink-200 bg-ink-200/70 backdrop-blur-xl shadow-sm transition-shadow hover:shadow-md">
+                        <div class="group card-glow relative overflow-hidden rounded-2xl border border-ink-200 bg-ink-200/70 backdrop-blur-xl shadow-sm">
                             <div class="relative aspect-square overflow-hidden bg-ink-100">
                                 <a class="block h-full w-full" href="index.php?act=prodetail&idpro=<?= e($pro['id_pro']) ?>">
                                     <img class="h-full w-full object-cover" src="admin/uploads/<?= e($pro['img_pro']) ?>"

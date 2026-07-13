@@ -165,7 +165,7 @@
             <!-- Product grid (product-card recipe) -->
             <div class="grid grid-cols-2 md:grid-cols-3 gap-4 md:gap-6">
                 <?php foreach ($listpro as $pro) { ?>
-                    <div class="rounded-2xl border border-ink-200 bg-ink-200/70 backdrop-blur-xl shadow-sm hover:shadow-md transition-shadow overflow-hidden">
+                    <div class="card-glow rounded-2xl border border-ink-200 bg-ink-200/70 backdrop-blur-xl shadow-sm overflow-hidden">
                         <div class="relative aspect-square bg-ink-100 overflow-hidden">
                             <a href="index.php?act=prodetail&idpro=<?= e($pro['id_pro']) ?>">
                                 <img src="admin/uploads/<?= e($pro['img_pro']) ?>"

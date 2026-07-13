@@ -17,7 +17,7 @@ $ds_loai = \Codemoi\Model\Category::all(); ?>
 
     <!-- Earnings (Daily) -->
     <div
-        class="bg-ink-200/70 backdrop-blur-xl rounded-xl shadow-sm hover:shadow-md transition-shadow duration-300 p-6 border-l-4 border-brand-500 flex items-center justify-between">
+        class="card-glow bg-ink-200/70 backdrop-blur-xl rounded-xl shadow-sm p-6 border-l-4 border-brand-500 flex items-center justify-between">
         <div>
             <div class="text-xs font-bold text-brand-500 uppercase tracking-wider mb-1">Tổng doanh thu(Ngày)</div>
             <div class="text-2xl font-bold text-ink-800"><?= number_format(\Codemoi\Model\Stats::today()) ?> đ</div>
@@ -29,7 +29,7 @@ $ds_loai = \Codemoi\Model\Category::all(); ?>
 
     <!-- Earnings (Weekly) -->
     <div
-        class="bg-ink-200/70 backdrop-blur-xl rounded-xl shadow-sm hover:shadow-md transition-shadow duration-300 p-6 border-l-4 border-yellow-500 flex items-center justify-between">
+        class="card-glow bg-ink-200/70 backdrop-blur-xl rounded-xl shadow-sm p-6 border-l-4 border-yellow-500 flex items-center justify-between">
         <div>
             <div class="text-xs font-bold text-yellow-500 uppercase tracking-wider mb-1">Tổng doanh thu(Tuần)</div>
             <div class="text-2xl font-bold text-ink-800"><?= number_format(\Codemoi\Model\Stats::thisWeek()) ?> đ</div>
@@ -41,7 +41,7 @@ $ds_loai = \Codemoi\Model\Category::all(); ?>
 
     <!-- Earnings (Monthly) -->
     <div
-        class="bg-ink-200/70 backdrop-blur-xl rounded-xl shadow-sm hover:shadow-md transition-shadow duration-300 p-6 border-l-4 border-green-500 flex items-center justify-between">
+        class="card-glow bg-ink-200/70 backdrop-blur-xl rounded-xl shadow-sm p-6 border-l-4 border-green-500 flex items-center justify-between">
         <div>
             <div class="text-xs font-bold text-green-500 uppercase tracking-wider mb-1">Tổng doanh thu(Tháng)</div>
             <div class="text-2xl font-bold text-ink-800"><?= number_format(\Codemoi\Model\Stats::thisMonth()) ?> đ</div>
@@ -53,7 +53,7 @@ $ds_loai = \Codemoi\Model\Category::all(); ?>
 
     <!-- Total Orders -->
     <div
-        class="bg-ink-200/70 backdrop-blur-xl rounded-xl shadow-sm hover:shadow-md transition-shadow duration-300 p-6 border-l-4 border-brand-500 flex items-center justify-between">
+        class="card-glow bg-ink-200/70 backdrop-blur-xl rounded-xl shadow-sm p-6 border-l-4 border-brand-500 flex items-center justify-between">
         <div>
             <div class="text-xs font-bold text-brand-500 uppercase tracking-wider mb-1">Tổng đơn</div>
             <div class="text-2xl font-bold text-ink-800"><?= e(count($listbill)) ?></div>
@@ -65,7 +65,7 @@ $ds_loai = \Codemoi\Model\Category::all(); ?>
 
     <!-- Total Customers -->
     <div
-        class="bg-ink-200/70 backdrop-blur-xl rounded-xl shadow-sm hover:shadow-md transition-shadow duration-300 p-6 border-l-4 border-yellow-500 flex items-center justify-between">
+        class="card-glow bg-ink-200/70 backdrop-blur-xl rounded-xl shadow-sm p-6 border-l-4 border-yellow-500 flex items-center justify-between">
         <div>
             <div class="text-xs font-bold text-yellow-500 uppercase tracking-wider mb-1">Tổng khách hàng</div>
             <div class="text-2xl font-bold text-ink-800"><?= e(count($listuser)) ?></div>
@@ -77,7 +77,7 @@ $ds_loai = \Codemoi\Model\Category::all(); ?>
 
     <!-- Total Products -->
     <div
-        class="bg-ink-200/70 backdrop-blur-xl rounded-xl shadow-sm hover:shadow-md transition-shadow duration-300 p-6 border-l-4 border-green-500 flex items-center justify-between">
+        class="card-glow bg-ink-200/70 backdrop-blur-xl rounded-xl shadow-sm p-6 border-l-4 border-green-500 flex items-center justify-between">
         <div>
             <div class="text-xs font-bold text-green-500 uppercase tracking-wider mb-1">Tổng sản phẩm</div>
             <div class="text-2xl font-bold text-ink-800"><?= e(count($listpro)) ?></div>
@@ -89,7 +89,7 @@ $ds_loai = \Codemoi\Model\Category::all(); ?>
 
     <!-- Total Categories -->
     <div
-        class="bg-ink-200/70 backdrop-blur-xl rounded-xl shadow-sm hover:shadow-md transition-shadow duration-300 p-6 border-l-4 border-indigo-500 flex items-center justify-between">
+        class="card-glow bg-ink-200/70 backdrop-blur-xl rounded-xl shadow-sm p-6 border-l-4 border-indigo-500 flex items-center justify-between">
         <div>
             <div class="text-xs font-bold text-indigo-500 uppercase tracking-wider mb-1">Tổng loại sản phẩm</div>
             <div class="text-2xl font-bold text-ink-800"><?= e(count($ds_loai)) ?></div>
@@ -104,7 +104,7 @@ $ds_loai = \Codemoi\Model\Category::all(); ?>
     <!-- Area Graph -->
     <div class="lg:col-span-2">
         <div
-            class="bg-ink-200/70 backdrop-blur-xl rounded-xl shadow-sm hover:shadow-md transition-shadow duration-300 h-full flex flex-col overflow-hidden">
+            class="card-glow bg-ink-200/70 backdrop-blur-xl rounded-xl shadow-sm h-full flex flex-col overflow-hidden">
             <div class="px-6 py-4 border-b border-ink-100 bg-ink-50/50">
                 <h6 class="m-0 font-bold text-brand-600">Biểu đồ thống kê Doanh thu</h6>
             </div>
@@ -161,7 +161,7 @@ $ds_loai = \Codemoi\Model\Category::all(); ?>
     <!-- Pie Graph -->
     <div>
         <div
-            class="bg-ink-200/70 backdrop-blur-xl rounded-xl shadow-sm hover:shadow-md transition-shadow duration-300 h-full flex flex-col overflow-hidden border-t-4 border-red-500">
+            class="card-glow bg-ink-200/70 backdrop-blur-xl rounded-xl shadow-sm h-full flex flex-col overflow-hidden border-t-4 border-red-500">
             <div class="px-6 py-4 border-b border-ink-100 bg-ink-50/50">
                 <h6 class="m-0 font-bold text-red-500">Thống kê danh mục</h6>
             </div>
