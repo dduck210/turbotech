@@ -35,86 +35,94 @@
             </div>
         </div>
 
-        <div class="mt-14 grid grid-cols-1 gap-6 md:grid-cols-2">
-            <!-- Begin Hero Banner Item -->
-            <div class="card-glow glass relative flex min-h-[240px] items-end overflow-hidden rounded-2xl bg-cover bg-center sm:min-h-[340px]"
-                style="background-image:linear-gradient(0deg, rgba(5,6,10,.85), rgba(5,6,10,.15)), url('./assets/images/slider/anhmoi.jpg')">
-                <div class="relative z-10 p-6 sm:p-8">
-                    <a class="btn-glow inline-flex items-center justify-center gap-2 rounded-lg px-5 py-2.5 text-sm font-semibold text-white"
-                        href="index.php?act=product">Mua ngay</a>
-                </div>
+        <!-- Trust stats bar (new) -->
+        <div class="mt-12 grid grid-cols-3 gap-4 sm:gap-8 animate-fade-up" style="animation-delay:.1s">
+            <div class="text-center">
+                <div class="font-heading text-3xl font-extrabold text-gradient sm:text-4xl">500+</div>
+                <div class="mt-1 text-xs text-ink-500 sm:text-sm">Khách hàng tin dùng</div>
             </div>
-            <!-- Hero Banner Item End Here -->
-            <!-- Begin Hero Banner Item -->
-            <div class="card-glow glass relative flex min-h-[240px] items-end overflow-hidden rounded-2xl bg-cover bg-center sm:min-h-[340px]"
-                style="background-image:linear-gradient(0deg, rgba(5,6,10,.85), rgba(5,6,10,.15)), url('./assets/images/slider/anhmoi2.jpg')">
-                <div class="relative z-10 p-6 sm:p-8">
-                    <a class="btn-glow inline-flex items-center justify-center gap-2 rounded-lg px-5 py-2.5 text-sm font-semibold text-white"
-                        href="index.php?act=product">Mua ngay</a>
-                </div>
+            <div class="text-center border-x border-ink-200">
+                <div class="font-heading text-3xl font-extrabold text-gradient sm:text-4xl">50+</div>
+                <div class="mt-1 text-xs text-ink-500 sm:text-sm">Mẫu laptop chính hãng</div>
             </div>
-            <!-- Hero Banner Item End Here -->
+            <div class="text-center">
+                <div class="font-heading text-3xl font-extrabold text-gradient sm:text-4xl">24/7</div>
+                <div class="mt-1 text-xs text-ink-500 sm:text-sm">Hỗ trợ kỹ thuật</div>
+            </div>
         </div>
     </div>
 </section>
 <!-- HERO End Here -->
 
-<!-- FREE SHIP -->
-<section class="border-y border-ink-200 bg-ink-200/70 backdrop-blur-xl py-12 md:py-16">
-    <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <div class="grid grid-cols-2 gap-6 sm:grid-cols-4">
-            <!-- Begin Shipping Information Item -->
-            <div class="flex flex-col items-center gap-3 text-center">
-                <div class="flex h-14 w-14 items-center justify-center rounded-full bg-brand-500/10 text-2xl text-brand-400 ring-1 ring-brand-500/30">
-                    <i class="fa fa-truck" aria-hidden="true"></i>
-                </div>
-                <div>
-                    <h5 class="font-heading font-semibold text-ink-900">Miễn phí Ship</h5>
-                    <span class="text-sm text-ink-500">Miễn phí Ship khu vực Việt Nam</span>
-                </div>
+<!-- FEATURED BANNERS (was: two "Mua ngay" tiles -> now part of the bento showcase below) -->
+<section class="mx-auto max-w-7xl px-4 pb-4 sm:px-6 lg:px-8">
+    <div class="grid grid-cols-1 gap-6 md:grid-cols-2">
+        <div class="card-glow glass group relative flex min-h-[240px] items-end overflow-hidden rounded-2xl bg-cover bg-center sm:min-h-[340px]"
+            style="background-image:linear-gradient(0deg, rgba(5,6,10,.85), rgba(5,6,10,.15)), url('./assets/images/slider/anhmoi.jpg')">
+            <div class="relative z-10 p-6 sm:p-8">
+                <a class="btn-glow inline-flex items-center justify-center gap-2 rounded-lg px-5 py-2.5 text-sm font-semibold text-white"
+                    href="index.php?act=product">Mua ngay</a>
             </div>
-            <!-- Shipping Information Item End Here -->
-            <!-- Begin Shipping Information Item -->
-            <div class="flex flex-col items-center gap-3 text-center">
-                <div class="flex h-14 w-14 items-center justify-center rounded-full bg-brand-500/10 text-2xl text-brand-400 ring-1 ring-brand-500/30">
-                    <i class="fa fa-credit-card" aria-hidden="true"></i>
-                </div>
-                <div>
-                    <h5 class="font-heading font-semibold text-ink-900">Thanh toán khi nhận hàng</h5>
-                    <span class="text-sm text-ink-500">Tùy chọn tiền mặt khi nhận hàng</span>
-                </div>
+        </div>
+        <div class="card-glow glass group relative flex min-h-[240px] items-end overflow-hidden rounded-2xl bg-cover bg-center sm:min-h-[340px]"
+            style="background-image:linear-gradient(0deg, rgba(5,6,10,.85), rgba(5,6,10,.15)), url('./assets/images/slider/anhmoi2.jpg')">
+            <div class="relative z-10 p-6 sm:p-8">
+                <a class="btn-glow inline-flex items-center justify-center gap-2 rounded-lg px-5 py-2.5 text-sm font-semibold text-white"
+                    href="index.php?act=product">Mua ngay</a>
             </div>
-            <!-- Shipping Information Item End Here -->
-            <!-- Begin Shipping Information Item -->
-            <div class="flex flex-col items-center gap-3 text-center">
-                <div class="flex h-14 w-14 items-center justify-center rounded-full bg-brand-500/10 text-2xl text-brand-400 ring-1 ring-brand-500/30">
-                    <i class="fa fa-calendar" aria-hidden="true"></i>
-                </div>
-                <div>
-                    <h5 class="font-heading font-semibold text-ink-900">Bảo hành 12 tháng</h5>
-                    <span class="text-sm text-ink-500">Đổi trả trong vòng 7 ngày</span>
-                </div>
-            </div>
-            <!-- Shipping Information Item End Here -->
-            <!-- Begin Shipping Information Item -->
-            <div class="flex flex-col items-center gap-3 text-center">
-                <div class="flex h-14 w-14 items-center justify-center rounded-full bg-brand-500/10 text-2xl text-brand-400 ring-1 ring-brand-500/30">
-                    <i class="fas fa-star-of-life" aria-hidden="true"></i>
-                </div>
-                <div>
-                    <h5 class="font-heading font-semibold text-ink-900">Hỗ trợ trực tuyến 24/7</h5>
-                    <span class="text-sm text-ink-500">Chúng tôi luôn sẵn sàng hỗ trợ</span>
-                </div>
-            </div>
-            <!-- Shipping Information Item End Here -->
         </div>
     </div>
 </section>
-<!-- FREE SHIP End Here -->
+<!-- FEATURED BANNERS End Here -->
+
+<!-- WHY US — bento glass grid (was: plain 4-column icon row) -->
+<section class="py-12 md:py-16">
+    <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        <div class="mx-auto mb-10 max-w-xl text-center">
+            <span class="text-xs font-semibold uppercase tracking-wider text-accent-400">Vì sao chọn Turbotech</span>
+            <h2 class="mt-2 font-heading text-2xl font-bold sm:text-3xl">Cam kết chất lượng &amp; dịch vụ</h2>
+        </div>
+        <div class="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-4">
+            <div class="card-glow glass rounded-2xl p-6 text-center">
+                <div class="mx-auto flex h-14 w-14 items-center justify-center rounded-2xl bg-brand-500/10 text-2xl text-brand-400 ring-1 ring-brand-500/30">
+                    <i class="fa fa-truck" aria-hidden="true"></i>
+                </div>
+                <h5 class="mt-4 font-heading font-semibold text-ink-900">Miễn phí Ship</h5>
+                <span class="mt-1 block text-sm text-ink-500">Miễn phí Ship khu vực Việt Nam</span>
+            </div>
+            <div class="card-glow glass rounded-2xl p-6 text-center">
+                <div class="mx-auto flex h-14 w-14 items-center justify-center rounded-2xl bg-brand-500/10 text-2xl text-brand-400 ring-1 ring-brand-500/30">
+                    <i class="fa fa-credit-card" aria-hidden="true"></i>
+                </div>
+                <h5 class="mt-4 font-heading font-semibold text-ink-900">Thanh toán khi nhận hàng</h5>
+                <span class="mt-1 block text-sm text-ink-500">Tùy chọn tiền mặt khi nhận hàng</span>
+            </div>
+            <div class="card-glow glass rounded-2xl p-6 text-center">
+                <div class="mx-auto flex h-14 w-14 items-center justify-center rounded-2xl bg-brand-500/10 text-2xl text-brand-400 ring-1 ring-brand-500/30">
+                    <i class="fa fa-calendar" aria-hidden="true"></i>
+                </div>
+                <h5 class="mt-4 font-heading font-semibold text-ink-900">Bảo hành 12 tháng</h5>
+                <span class="mt-1 block text-sm text-ink-500">Đổi trả trong vòng 7 ngày</span>
+            </div>
+            <div class="card-glow glass rounded-2xl p-6 text-center">
+                <div class="mx-auto flex h-14 w-14 items-center justify-center rounded-2xl bg-brand-500/10 text-2xl text-brand-400 ring-1 ring-brand-500/30">
+                    <i class="fas fa-star-of-life" aria-hidden="true"></i>
+                </div>
+                <h5 class="mt-4 font-heading font-semibold text-ink-900">Hỗ trợ trực tuyến 24/7</h5>
+                <span class="mt-1 block text-sm text-ink-500">Chúng tôi luôn sẵn sàng hỗ trợ</span>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- WHY US End Here -->
 
 <!-- PHẦN SẢN PHẨM TRANG HOME -->
 <section class="py-12 md:py-16">
     <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        <div class="mx-auto mb-8 max-w-xl text-center">
+            <span class="text-xs font-semibold uppercase tracking-wider text-accent-400">Sản phẩm</span>
+            <h2 class="mt-2 font-heading text-2xl font-bold sm:text-3xl">Khám phá laptop <span class="text-gradient">phù hợp với bạn</span></h2>
+        </div>
         <!-- Tab nav: plain vanilla-JS click handler (home-tab-trigger/home-tab-panel, script at
              the bottom of this file) — Bootstrap's data-bs-toggle="tab" data-api does NOT actually
              fire in this theme's bundled plugins.min.js (verified: bootstrap object loads but the
@@ -139,8 +147,14 @@
                             <div class="relative aspect-square overflow-hidden bg-ink-100">
                                 <a class="block h-full w-full"
                                     href="index.php?act=prodetail&idpro=<?= e($pro['id_pro']) ?>">
-                                    <img class="h-full w-full object-cover" src="admin/uploads/<?= e($pro['img_pro']) ?>"
+                                    <img class="h-full w-full object-cover transition-transform duration-500 group-hover:scale-110" src="admin/uploads/<?= e($pro['img_pro']) ?>"
                                         alt="<?= e($pro['name_pro']) ?>" />
+                                </a>
+                                <a href="index.php?act=prodetail&idpro=<?= e($pro['id_pro']) ?>"
+                                    class="absolute inset-0 flex items-center justify-center bg-ink-50/60 opacity-0 backdrop-blur-sm transition-opacity duration-300 group-hover:opacity-100">
+                                    <span class="btn-glow inline-flex items-center gap-2 rounded-full px-4 py-2 text-xs font-semibold text-white">
+                                        <i class="fa-solid fa-eye" aria-hidden="true"></i> Xem chi tiết
+                                    </span>
                                 </a>
                                 <span
                                     class="absolute top-2 right-2 inline-flex items-center rounded-full bg-brand-500/10 px-3 py-1 text-xs font-medium text-brand-700">Mới</span>
@@ -197,8 +211,14 @@
                         <div class="group card-glow relative overflow-hidden rounded-2xl border border-ink-200 bg-ink-200/70 backdrop-blur-xl shadow-sm">
                             <div class="relative aspect-square overflow-hidden bg-ink-100">
                                 <a class="block h-full w-full" href="index.php?act=prodetail&idpro=<?= e($pro['id_pro']) ?>">
-                                    <img class="h-full w-full object-cover" src="admin/uploads/<?= e($pro['img_pro']) ?>"
+                                    <img class="h-full w-full object-cover transition-transform duration-500 group-hover:scale-110" src="admin/uploads/<?= e($pro['img_pro']) ?>"
                                         alt="<?= e($pro['name_pro']) ?>" />
+                                </a>
+                                <a href="index.php?act=prodetail&idpro=<?= e($pro['id_pro']) ?>"
+                                    class="absolute inset-0 flex items-center justify-center bg-ink-50/60 opacity-0 backdrop-blur-sm transition-opacity duration-300 group-hover:opacity-100">
+                                    <span class="btn-glow inline-flex items-center gap-2 rounded-full px-4 py-2 text-xs font-semibold text-white">
+                                        <i class="fa-solid fa-eye" aria-hidden="true"></i> Xem chi tiết
+                                    </span>
                                 </a>
                                 <span
                                     class="absolute top-2 right-2 inline-flex items-center rounded-full bg-brand-500/10 px-3 py-1 text-xs font-medium text-brand-700">Hot</span>
@@ -257,8 +277,14 @@
                         <div class="group card-glow relative overflow-hidden rounded-2xl border border-ink-200 bg-ink-200/70 backdrop-blur-xl shadow-sm">
                             <div class="relative aspect-square overflow-hidden bg-ink-100">
                                 <a class="block h-full w-full" href="index.php?act=prodetail&idpro=<?= e($pro['id_pro']) ?>">
-                                    <img class="h-full w-full object-cover" src="admin/uploads/<?= e($pro['img_pro']) ?>"
+                                    <img class="h-full w-full object-cover transition-transform duration-500 group-hover:scale-110" src="admin/uploads/<?= e($pro['img_pro']) ?>"
                                         alt="<?= e($pro['name_pro']) ?>" />
+                                </a>
+                                <a href="index.php?act=prodetail&idpro=<?= e($pro['id_pro']) ?>"
+                                    class="absolute inset-0 flex items-center justify-center bg-ink-50/60 opacity-0 backdrop-blur-sm transition-opacity duration-300 group-hover:opacity-100">
+                                    <span class="btn-glow inline-flex items-center gap-2 rounded-full px-4 py-2 text-xs font-semibold text-white">
+                                        <i class="fa-solid fa-eye" aria-hidden="true"></i> Xem chi tiết
+                                    </span>
                                 </a>
                                 <span
                                     class="absolute top-2 right-2 inline-flex items-center rounded-full bg-brand-500/10 px-3 py-1 text-xs font-medium text-brand-700">Nổi
@@ -315,17 +341,21 @@
 
 <!-- Begin Turbotech Product With Content Area -->
 <section class="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
-    <div class="relative flex min-h-[280px] items-center overflow-hidden rounded-2xl bg-ink-100 bg-cover bg-center sm:min-h-[420px]"
-        style="background-image:url('./assets/images/banner/pcgami.png')">
-        <div class="relative z-10 ml-auto w-full max-w-md p-6 text-right sm:p-10">
-            <h2 class="font-heading text-2xl font-bold text-white sm:text-3xl">PC Gaming</h2>
-            <p class="mt-3 text-sm text-white/90 sm:text-base">
+    <div class="card-glow relative flex min-h-[280px] items-center overflow-hidden rounded-2xl bg-ink-100 bg-cover bg-center sm:min-h-[420px]"
+        style="background-image:linear-gradient(100deg, rgba(5,6,10,.92) 30%, rgba(5,6,10,.35)), url('./assets/images/banner/pcgami.png')">
+        <div class="pointer-events-none absolute -top-24 -left-24 h-72 w-72 rounded-full bg-brand-600/30 blur-3xl animate-glow-pulse" aria-hidden="true"></div>
+        <div class="relative z-10 w-full max-w-md p-6 sm:p-10">
+            <span class="glass inline-flex items-center gap-2 rounded-full px-3 py-1 text-xs font-semibold uppercase tracking-wider text-accent-400">
+                <i class="fa-solid fa-desktop" aria-hidden="true"></i> PC Gaming
+            </span>
+            <h2 class="mt-4 font-heading text-2xl font-bold sm:text-3xl">Sức mạnh <span class="text-gradient">không giới hạn</span></h2>
+            <p class="mt-3 text-sm text-ink-600 sm:text-base">
                 Cung cấp giải pháp PC và Laptop chính hãng, cấu hình tùy biến mạnh mẽ theo nhu cầu thực tế. Cam kết chất
                 lượng dịch vụ, bảo hành dài hạn và hỗ trợ kỹ thuật tận tâm.
             </p>
             <div class="mt-5">
-                <a class="inline-flex items-center justify-center gap-2 rounded-lg bg-brand-600 px-5 py-2.5 text-sm font-semibold text-white shadow-sm transition-colors hover:bg-brand-700 focus:outline-none focus:ring-2 focus:ring-brand-500 focus:ring-offset-2"
-                    href="index.php?act=product&idcate=8">Mua ngay</a>
+                <a class="btn-glow inline-flex items-center justify-center gap-2 rounded-lg px-5 py-2.5 text-sm font-semibold text-white"
+                    href="index.php?act=product&idcate=8">Mua ngay <i class="fa-solid fa-arrow-right" aria-hidden="true"></i></a>
             </div>
         </div>
     </div>
@@ -335,14 +365,20 @@
 <!-- Banner sale -->
 <section class="mx-auto max-w-7xl px-4 pb-12 sm:px-6 lg:px-8 md:pb-16">
     <div class="grid grid-cols-1 gap-6 md:grid-cols-2">
-        <div class="overflow-hidden rounded-2xl border border-ink-200 shadow-sm transition-shadow hover:shadow-md">
+        <div class="card-glow group relative overflow-hidden rounded-2xl border border-ink-200">
             <a href="index.php?act=product&idcate=12">
-                <img class="h-56 w-full object-cover" src="./assets/images/banner/lapmsi.jpg" alt="Tubotech" />
+                <img class="h-56 w-full object-cover transition-transform duration-500 group-hover:scale-105" src="./assets/images/banner/lapmsi.jpg" alt="Tubotech" />
+                <div class="absolute inset-0 flex items-end bg-gradient-to-t from-ink-50/90 via-transparent to-transparent p-5">
+                    <span class="font-heading text-lg font-semibold text-ink-900">MSI Series <i class="fa-solid fa-arrow-right ml-1 text-brand-400" aria-hidden="true"></i></span>
+                </div>
             </a>
         </div>
-        <div class="overflow-hidden rounded-2xl border border-ink-200 shadow-sm transition-shadow hover:shadow-md">
+        <div class="card-glow group relative overflow-hidden rounded-2xl border border-ink-200">
             <a href="index.php?act=product&idcate=11">
-                <img class="h-56 w-full object-cover" src="./assets/images/banner/lenovo.jpg" alt="Tubotech" />
+                <img class="h-56 w-full object-cover transition-transform duration-500 group-hover:scale-105" src="./assets/images/banner/lenovo.jpg" alt="Tubotech" />
+                <div class="absolute inset-0 flex items-end bg-gradient-to-t from-ink-50/90 via-transparent to-transparent p-5">
+                    <span class="font-heading text-lg font-semibold text-ink-900">Lenovo Series <i class="fa-solid fa-arrow-right ml-1 text-brand-400" aria-hidden="true"></i></span>
+                </div>
             </a>
         </div>
     </div>
