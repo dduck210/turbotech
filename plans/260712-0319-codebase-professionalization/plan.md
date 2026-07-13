@@ -1,7 +1,7 @@
 ---
 title: "Codebase Professionalization — Turbotech/Codemoi (security, cleanup, admin MVC, UI polish)"
 description: "Harden security (passwords/CSRF/XSS/OTP), unify DB layer, refactor procedural admin to MVC matching the client, and polish UI/UX — phased, low-regression, on legacy PHP+MySQL."
-status: pending
+status: done
 priority: P1
 effort: 30h
 branch: main
@@ -137,6 +137,26 @@ share files with 03/04 and blocking on a new planning round would leave them exp
   `id_user`. Avatar upload also got the same extension allow-list as the admin product upload.
 - Also fixed the `delete_cate` uncaught-FK-violation crash (small piece of Phase 06's scope, same file
   as the access-control fix — not the full dead-table cleanup, just this one guard).
+
+## Post-plan hardening (found in a fresh full-codebase review after all 12 phases closed, 2026-07-13)
+An independent from-scratch security review (not scoped to any single phase) found one more Critical
+and several Medium/Low issues, all fixed:
+- **Critical — checkout price trust**: `CartController::add()` stored `price`/`name_pro`/`img_pro`
+  straight from POST (hidden form fields) instead of re-fetching the real product row, letting anyone
+  add items to their cart at a self-chosen price that flowed unmodified through order totals and the QR
+  payment amount. Predates this whole plan (present since the original client MVC port) — fixed:
+  `Product::one($id_pro)` is now always the source of truth for stored cart-line values.
+- **Session fixation**: no `session_regenerate_id()` on login (client or admin), logout only
+  `session_unset()` instead of destroying the session. Fixed both.
+- **Password-change hardening**: the logged-in account-settings password change required no current-
+  password confirmation and no minimum length (inconsistent with every other password-setting path).
+  Forgot-password reset also lacked a minimum length. Fixed both.
+- **No top-level exception handler**: an uncaught `PDOException`/`TypeError` would leak a raw stack
+  trace to the browser whenever `display_errors` is on. Added `registerErrorHandler()` (logs
+  server-side, generic page to the visitor) in `src/Core/helpers.php`, wired into both front controllers.
+- **Low**: admin role/bill-status updates had no allow-list on the submitted value; product-add wrote
+  the uploaded file before validating the rest of the form (orphaned-file risk, not a security issue);
+  client-side `removecart` was a GET link with no CSRF token, unlike its admin-side equivalents.
 
 ## Open questions
 - Hashing algorithm: `PASSWORD_BCRYPT` (portable, default) vs `PASSWORD_ARGON2ID` (stronger, needs PHP
