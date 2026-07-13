@@ -17,18 +17,26 @@ unset($_SESSION['flash_success'], $_SESSION['flash_error']);
 <script>document.addEventListener("DOMContentLoaded",()=>Swal.fire({toast:true,position:"top-end",icon:"error",title:<?= json_encode($flash_error) ?>,showConfirmButton:false,timer:3000}));</script>
 <?php endif; ?>
 
+<!-- Announcement bar (new) -->
+<div class="relative overflow-hidden bg-linear-to-r from-brand-700 via-brand-600 to-accent-600 py-2 text-center text-xs font-semibold tracking-wide text-white sm:text-sm">
+    <i class="fa-solid fa-truck-fast mr-2" aria-hidden="true"></i> Miễn phí vận chuyển toàn quốc — Bảo hành chính hãng 12 tháng
+</div>
+
 <header class="sticky top-0 z-40 border-b border-ink-200 bg-ink-200/90 backdrop-blur-xl backdrop-blur">
     <div class="mx-auto max-w-7xl px-3 sm:px-6 lg:px-8">
         <div class="flex h-16 items-center justify-between gap-1 sm:gap-3">
             <!-- Logo -->
-            <a href="index.php" class="flex shrink-0 items-center gap-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-brand-500">
-                <img src="./assets/images/menu/logo/logo4.png" alt="Logo Turbotech" class="h-8 w-auto sm:h-10" />
+            <a href="index.php" class="group flex shrink-0 items-center gap-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-brand-500">
+                <span class="relative">
+                    <span class="absolute inset-0 -z-10 rounded-full bg-brand-600/40 blur-xl transition-opacity group-hover:opacity-80"></span>
+                    <img src="./assets/images/menu/logo/logo4.png" alt="Logo Turbotech" class="h-8 w-auto sm:h-10" />
+                </span>
             </a>
 
             <!-- Desktop nav -->
             <nav class="hidden items-center gap-1 lg:flex">
                 <a href="index.php"
-                    class="rounded-lg px-3 py-2 text-sm font-medium text-ink-700 transition-colors hover:bg-ink-50 hover:text-brand-600 focus:outline-none focus:ring-2 focus:ring-brand-500">Trang
+                    class="relative rounded-lg px-3 py-2 text-sm font-medium text-ink-700 transition-colors after:absolute after:bottom-0 after:left-3 after:right-3 after:h-0.5 after:origin-left after:scale-x-0 after:rounded-full after:bg-linear-to-r after:from-brand-500 after:to-accent-500 after:transition-transform hover:text-brand-400 hover:after:scale-x-100 focus:outline-none focus:ring-2 focus:ring-brand-500">Trang
                     chủ</a>
 
                 <div class="group relative">
@@ -50,13 +58,13 @@ unset($_SESSION['flash_success'], $_SESSION['flash_error']);
                 </div>
 
                 <a href="index.php?act=introduce"
-                    class="rounded-lg px-3 py-2 text-sm font-medium text-ink-700 transition-colors hover:bg-ink-50 hover:text-brand-600 focus:outline-none focus:ring-2 focus:ring-brand-500">Giới
+                    class="relative rounded-lg px-3 py-2 text-sm font-medium text-ink-700 transition-colors after:absolute after:bottom-0 after:left-3 after:right-3 after:h-0.5 after:origin-left after:scale-x-0 after:rounded-full after:bg-linear-to-r after:from-brand-500 after:to-accent-500 after:transition-transform hover:text-brand-400 hover:after:scale-x-100 focus:outline-none focus:ring-2 focus:ring-brand-500">Giới
                     thiệu</a>
                 <a href="index.php?act=contact"
-                    class="rounded-lg px-3 py-2 text-sm font-medium text-ink-700 transition-colors hover:bg-ink-50 hover:text-brand-600 focus:outline-none focus:ring-2 focus:ring-brand-500">Liên
+                    class="relative rounded-lg px-3 py-2 text-sm font-medium text-ink-700 transition-colors after:absolute after:bottom-0 after:left-3 after:right-3 after:h-0.5 after:origin-left after:scale-x-0 after:rounded-full after:bg-linear-to-r after:from-brand-500 after:to-accent-500 after:transition-transform hover:text-brand-400 hover:after:scale-x-100 focus:outline-none focus:ring-2 focus:ring-brand-500">Liên
                     hệ</a>
                 <a href="index.php?act=question"
-                    class="rounded-lg px-3 py-2 text-sm font-medium text-ink-700 transition-colors hover:bg-ink-50 hover:text-brand-600 focus:outline-none focus:ring-2 focus:ring-brand-500">Hỏi
+                    class="relative rounded-lg px-3 py-2 text-sm font-medium text-ink-700 transition-colors after:absolute after:bottom-0 after:left-3 after:right-3 after:h-0.5 after:origin-left after:scale-x-0 after:rounded-full after:bg-linear-to-r after:from-brand-500 after:to-accent-500 after:transition-transform hover:text-brand-400 hover:after:scale-x-100 focus:outline-none focus:ring-2 focus:ring-brand-500">Hỏi
                     đáp</a>
             </nav>
 

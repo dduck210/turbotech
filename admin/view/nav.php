@@ -9,8 +9,8 @@ $categoriesActive = in_array($current_act, ['add_category', 'list_category', 'ed
 function nav_link_class(bool $active): string
 {
     return $active
-        ? 'flex items-center px-3 py-2.5 rounded-lg bg-ink-200 text-white transition-colors group'
-        : 'flex items-center px-3 py-2.5 rounded-lg hover:bg-ink-200 text-ink-600 transition-colors group';
+        ? 'flex items-center px-3 py-2.5 rounded-lg bg-linear-to-r from-brand-600/25 to-accent-600/10 border-l-2 border-brand-500 text-white transition-colors group'
+        : 'flex items-center px-3 py-2.5 rounded-lg border-l-2 border-transparent hover:bg-ink-200 text-ink-600 transition-colors group';
 }
 
 function nav_icon_class(bool $active): string
@@ -23,8 +23,8 @@ function nav_icon_class(bool $active): string
 function nav_submenu_toggle_class(bool $active): string
 {
     return $active
-        ? 'px-3 py-2.5 rounded-lg bg-ink-200 text-white transition-colors flex items-center justify-between cursor-pointer group'
-        : 'px-3 py-2.5 rounded-lg hover:bg-ink-200 text-ink-600 transition-colors flex items-center justify-between cursor-pointer group';
+        ? 'px-3 py-2.5 rounded-lg bg-linear-to-r from-brand-600/25 to-accent-600/10 border-l-2 border-brand-500 text-white transition-colors flex items-center justify-between cursor-pointer group'
+        : 'px-3 py-2.5 rounded-lg border-l-2 border-transparent hover:bg-ink-200 text-ink-600 transition-colors flex items-center justify-between cursor-pointer group';
 }
 ?>
 <div id="mobile-sidebar-backdrop" class="hidden fixed inset-0 bg-ink-100/50 z-30 md:hidden"></div>
@@ -32,12 +32,12 @@ function nav_submenu_toggle_class(bool $active): string
     class="w-64 bg-ink-100 text-ink-600 shrink-0 hidden md:flex flex-col shadow-2xl fixed inset-y-0 left-0 z-40 md:relative md:inset-auto md:z-20">
     <!-- Logo -->
     <a href="index.php?act=admin"
-        class="flex items-center justify-center h-20 border-b border-ink-800 hover:bg-ink-200/50 transition-colors group">
+        class="flex items-center justify-center h-20 border-b border-ink-300 hover:bg-ink-200/50 transition-colors group">
         <div
-            class="bg-brand-600 text-white p-2.5 rounded-xl group-hover:scale-110 transition-transform shadow-lg shadow-brand-500/30 flex items-center justify-center">
+            class="btn-glow text-white p-2.5 rounded-xl group-hover:scale-110 transition-transform flex items-center justify-center">
             <i class="fas fa-laugh-wink text-xl"></i>
         </div>
-        <span class="ml-3 font-heading font-bold text-lg text-white tracking-wide">Turbotech Admin</span>
+        <span class="ml-3 font-heading font-bold text-lg text-gradient tracking-wide">Turbotech Admin</span>
     </a>
 
     <!-- Nav Links -->
