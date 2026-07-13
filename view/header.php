@@ -17,7 +17,7 @@ unset($_SESSION['flash_success'], $_SESSION['flash_error']);
 <script>document.addEventListener("DOMContentLoaded",()=>Swal.fire({toast:true,position:"top-end",icon:"error",title:<?= json_encode($flash_error) ?>,showConfirmButton:false,timer:3000}));</script>
 <?php endif; ?>
 
-<header class="sticky top-0 z-40 border-b border-ink-200 bg-white/90 backdrop-blur">
+<header class="sticky top-0 z-40 border-b border-ink-200 bg-ink-800/90 backdrop-blur-xl backdrop-blur">
     <div class="mx-auto max-w-7xl px-3 sm:px-6 lg:px-8">
         <div class="flex h-16 items-center justify-between gap-1 sm:gap-3">
             <!-- Logo -->
@@ -38,7 +38,7 @@ unset($_SESSION['flash_success'], $_SESSION['flash_error']);
                         <i class="fa-solid fa-chevron-down text-xs"></i>
                     </a>
                     <div
-                        class="invisible absolute left-0 top-full z-50 w-56 rounded-xl border border-ink-200 bg-white py-2 opacity-0 shadow-lg transition-all group-hover:visible group-hover:opacity-100">
+                        class="invisible absolute left-0 top-full z-50 w-56 rounded-xl border border-ink-200 bg-ink-800/70 backdrop-blur-xl py-2 opacity-0 shadow-lg transition-all group-hover:visible group-hover:opacity-100">
                         <?php
                         foreach ($listcate ?? [] as $cate) {
                             extract($cate);
@@ -67,7 +67,7 @@ unset($_SESSION['flash_success'], $_SESSION['flash_error']);
                 <div class="relative w-full">
                     <input id="header-search" name="kyw" type="text" required
                         placeholder="Nhập từ khóa tìm kiếm ..."
-                        class="block w-full rounded-full border border-ink-200 bg-ink-50 py-2.5 pl-4 pr-11 text-sm text-ink-900 placeholder:text-ink-300 focus:border-brand-500 focus:bg-white focus:outline-none focus:ring-2 focus:ring-brand-500" />
+                        class="block w-full rounded-full border border-ink-200 bg-ink-50 py-2.5 pl-4 pr-11 text-sm text-ink-900 placeholder:text-ink-300 focus:border-brand-500 focus:bg-ink-800/70 backdrop-blur-xl focus:outline-none focus:ring-2 focus:ring-brand-500" />
                     <button type="submit" name="btn_search" aria-label="Tìm kiếm"
                         class="absolute right-1 top-1/2 flex h-9 w-9 -translate-y-1/2 items-center justify-center rounded-full text-ink-500 transition-colors hover:bg-ink-100 hover:text-brand-600 focus:outline-none focus:ring-2 focus:ring-brand-500">
                         <i class="fa-solid fa-magnifying-glass"></i>
@@ -86,7 +86,7 @@ unset($_SESSION['flash_success'], $_SESSION['flash_error']);
                             class="absolute right-0.5 top-0.5 inline-flex h-5 w-5 items-center justify-center rounded-full bg-brand-600 text-[11px] font-bold text-white"><?= e($count) ?></span>
                     </a>
                     <div
-                        class="invisible absolute right-0 top-full z-50 w-80 rounded-xl border border-ink-200 bg-white opacity-0 shadow-lg transition-all group-hover:visible group-hover:opacity-100">
+                        class="invisible absolute right-0 top-full z-50 w-80 rounded-xl border border-ink-200 bg-ink-800/70 backdrop-blur-xl opacity-0 shadow-lg transition-all group-hover:visible group-hover:opacity-100">
                         <?php if (empty($_SESSION['mycart'])) { ?>
                             <p class="p-6 text-center text-sm text-ink-500">Bạn chưa thêm sản phẩm nào vào giỏ hàng !</p>
                         <?php } else { ?>
@@ -143,7 +143,7 @@ unset($_SESSION['flash_success'], $_SESSION['flash_error']);
                         </a>
                     <?php } ?>
                     <div
-                        class="invisible absolute right-0 top-full z-50 w-56 rounded-xl border border-ink-200 bg-white py-2 opacity-0 shadow-lg transition-all group-hover:visible group-hover:opacity-100">
+                        class="invisible absolute right-0 top-full z-50 w-56 rounded-xl border border-ink-200 bg-ink-800/70 backdrop-blur-xl py-2 opacity-0 shadow-lg transition-all group-hover:visible group-hover:opacity-100">
                         <?php if (!isset($_SESSION['user'])) { ?>
                             <a href="index.php?act=login"
                                 class="flex items-center gap-2 px-4 py-2 text-sm text-ink-700 hover:bg-ink-50 hover:text-brand-600 focus:outline-none focus:ring-2 focus:ring-brand-500"><i
@@ -187,7 +187,7 @@ unset($_SESSION['flash_success'], $_SESSION['flash_error']);
             <div class="relative w-full">
                 <input id="header-search-mobile" name="kyw" type="text" required
                     placeholder="Nhập từ khóa tìm kiếm ..."
-                    class="block w-full rounded-full border border-ink-200 bg-ink-50 py-2.5 pl-4 pr-11 text-sm text-ink-900 placeholder:text-ink-300 focus:border-brand-500 focus:bg-white focus:outline-none focus:ring-2 focus:ring-brand-500" />
+                    class="block w-full rounded-full border border-ink-200 bg-ink-50 py-2.5 pl-4 pr-11 text-sm text-ink-900 placeholder:text-ink-300 focus:border-brand-500 focus:bg-ink-800/70 backdrop-blur-xl focus:outline-none focus:ring-2 focus:ring-brand-500" />
                 <button type="submit" name="btn_search" aria-label="Tìm kiếm"
                     class="absolute right-1 top-1/2 flex h-9 w-9 -translate-y-1/2 items-center justify-center rounded-full text-ink-500 transition-colors hover:bg-ink-100 hover:text-brand-600 focus:outline-none focus:ring-2 focus:ring-brand-500">
                     <i class="fa-solid fa-magnifying-glass"></i>
@@ -197,7 +197,7 @@ unset($_SESSION['flash_success'], $_SESSION['flash_error']);
     </div>
 
     <!-- Mobile nav -->
-    <nav id="mobile-menu" class="hidden border-t border-ink-200 bg-white lg:hidden">
+    <nav id="mobile-menu" class="hidden border-t border-ink-200 bg-ink-800/70 backdrop-blur-xl lg:hidden">
         <div class="mx-auto max-w-7xl space-y-1 px-4 py-4 sm:px-6">
             <a href="index.php"
                 class="block rounded-lg px-3 py-2.5 text-sm font-medium text-ink-700 hover:bg-ink-50 focus:outline-none focus:ring-2 focus:ring-brand-500">Trang

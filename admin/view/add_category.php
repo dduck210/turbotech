@@ -5,7 +5,7 @@
     <h1 class="text-3xl font-bold text-ink-800">Thêm Loại</h1>
 </div>
 
-<div class="bg-white rounded-xl shadow-sm hover:shadow-md transition-shadow duration-300 overflow-hidden mb-6">
+<div class="bg-ink-800/70 backdrop-blur-xl rounded-xl shadow-sm hover:shadow-md transition-shadow duration-300 overflow-hidden mb-6">
     <div class="p-6">
         <div class="form-addcate">
             <form action="./index.php?act=add_category" method="post" data-validate novalidate>

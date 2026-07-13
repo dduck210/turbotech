@@ -26,7 +26,7 @@
         <aside class="order-2 lg:order-1 space-y-6">
 
             <!-- Categories -->
-            <div class="rounded-2xl border border-ink-200 bg-white p-5">
+            <div class="rounded-2xl border border-ink-200 bg-ink-800/70 backdrop-blur-xl p-5">
                 <h5 class="font-heading font-semibold text-ink-900 mb-4">Danh mục</h5>
                 <ul class="space-y-1">
                     <?php foreach ($listcate as $cate) {
@@ -55,7 +55,7 @@
 
             <!-- Recommended products (was slick slider "jb-list-product_slider" — dropped per
                  design-system's legacy-plugin removal guidance, replaced with a plain vertical list) -->
-            <div class="rounded-2xl border border-ink-200 bg-white p-5">
+            <div class="rounded-2xl border border-ink-200 bg-ink-800/70 backdrop-blur-xl p-5">
                 <h4 class="font-heading font-semibold text-ink-900 mb-4">Được đề xuất</h4>
                 <div class="space-y-4">
                     <?php foreach ($list_topsp as $topsp) { ?>
@@ -109,19 +109,19 @@
                 </p>
             </div>
 
-            <form action="index.php" method="get" class="rounded-2xl border border-ink-200 bg-white p-5 mb-8">
+            <form action="index.php" method="get" class="rounded-2xl border border-ink-200 bg-ink-800/70 backdrop-blur-xl p-5 mb-8">
                 <input type="hidden" name="act" value="product">
                 <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 items-end">
                     <div>
                         <label for="kyw" class="block text-sm font-medium text-ink-700 mb-1.5">Từ khóa</label>
                         <input type="text" id="kyw" name="kyw" placeholder="Nhập tên sản phẩm..."
                             value="<?= isset($_GET['kyw']) ? htmlspecialchars($_GET['kyw']) : '' ?>"
-                            class="block w-full rounded-lg border border-ink-200 bg-white px-3.5 py-2.5 text-sm text-ink-900 placeholder:text-ink-300 focus:outline-none focus:ring-2 focus:ring-brand-500 focus:border-brand-500">
+                            class="block w-full rounded-lg border border-ink-200 bg-ink-800/70 backdrop-blur-xl px-3.5 py-2.5 text-sm text-ink-900 placeholder:text-ink-300 focus:outline-none focus:ring-2 focus:ring-brand-500 focus:border-brand-500">
                     </div>
                     <div>
                         <label for="idcate" class="block text-sm font-medium text-ink-700 mb-1.5">Thương hiệu</label>
                         <select id="idcate" name="idcate"
-                            class="block w-full rounded-lg border border-ink-200 bg-white px-3.5 py-2.5 text-sm text-ink-900 focus:outline-none focus:ring-2 focus:ring-brand-500 focus:border-brand-500">
+                            class="block w-full rounded-lg border border-ink-200 bg-ink-800/70 backdrop-blur-xl px-3.5 py-2.5 text-sm text-ink-900 focus:outline-none focus:ring-2 focus:ring-brand-500 focus:border-brand-500">
                             <option value="0">Tất cả thương hiệu</option>
                             <?php foreach ($listcate as $cate) { ?>
                                 <option value="<?= $cate['id_cate'] ?>"
@@ -135,14 +135,14 @@
                         <label for="min_price" class="block text-sm font-medium text-ink-700 mb-1.5">Giá từ</label>
                         <input type="number" id="min_price" name="min_price" min="0" placeholder="Giá từ"
                             value="<?= isset($_GET['min_price']) ? htmlspecialchars($_GET['min_price']) : '' ?>"
-                            class="block w-full rounded-lg border border-ink-200 bg-white px-3.5 py-2.5 text-sm text-ink-900 placeholder:text-ink-300 focus:outline-none focus:ring-2 focus:ring-brand-500 focus:border-brand-500">
+                            class="block w-full rounded-lg border border-ink-200 bg-ink-800/70 backdrop-blur-xl px-3.5 py-2.5 text-sm text-ink-900 placeholder:text-ink-300 focus:outline-none focus:ring-2 focus:ring-brand-500 focus:border-brand-500">
                     </div>
                     <div>
                         <label for="max_price" class="block text-sm font-medium text-ink-700 mb-1.5">Đến giá</label>
                         <div class="flex gap-2">
                             <input type="number" id="max_price" name="max_price" min="0" placeholder="Đến giá"
                                 value="<?= isset($_GET['max_price']) ? htmlspecialchars($_GET['max_price']) : '' ?>"
-                                class="block w-full rounded-lg border border-ink-200 bg-white px-3.5 py-2.5 text-sm text-ink-900 placeholder:text-ink-300 focus:outline-none focus:ring-2 focus:ring-brand-500 focus:border-brand-500">
+                                class="block w-full rounded-lg border border-ink-200 bg-ink-800/70 backdrop-blur-xl px-3.5 py-2.5 text-sm text-ink-900 placeholder:text-ink-300 focus:outline-none focus:ring-2 focus:ring-brand-500 focus:border-brand-500">
                             <input type="submit" name="btn-search" value="Tìm kiếm"
                                 class="inline-flex items-center justify-center gap-2 rounded-lg bg-brand-600 px-5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-brand-700 transition-colors focus:outline-none focus:ring-2 focus:ring-brand-500 focus:ring-offset-2 whitespace-nowrap cursor-pointer">
                         </div>
@@ -152,7 +152,7 @@
 
             <!-- Empty state: same empty($listpro) trigger condition, restyled per design-system recipe -->
             <?php if (empty($listpro)) { ?>
-                <div class="rounded-2xl border border-ink-200 bg-white py-16 text-center mb-8">
+                <div class="rounded-2xl border border-ink-200 bg-ink-800/70 backdrop-blur-xl py-16 text-center mb-8">
                     <i class="fa-solid fa-face-sad-tear text-5xl text-ink-300" aria-hidden="true"></i>
                     <h1 class="mt-4 font-heading text-xl font-semibold text-ink-900">Không tìm thấy sản phẩm phù hợp</h1>
                     <p class="mt-2 text-sm text-ink-500 max-w-md mx-auto">
@@ -164,7 +164,7 @@
             <!-- Product grid (product-card recipe) -->
             <div class="grid grid-cols-2 md:grid-cols-3 gap-4 md:gap-6">
                 <?php foreach ($listpro as $pro) { ?>
-                    <div class="rounded-2xl border border-ink-200 bg-white shadow-sm hover:shadow-md transition-shadow overflow-hidden">
+                    <div class="rounded-2xl border border-ink-200 bg-ink-800/70 backdrop-blur-xl shadow-sm hover:shadow-md transition-shadow overflow-hidden">
                         <div class="relative aspect-square bg-ink-100 overflow-hidden">
                             <a href="index.php?act=prodetail&idpro=<?php echo $pro['id_pro'] ?>">
                                 <img src="admin/uploads/<?php echo $pro['img_pro'] ?>"

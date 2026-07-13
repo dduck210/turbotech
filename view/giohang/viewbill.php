@@ -16,7 +16,7 @@
     }
     ?>
     <!-- mã đơn hàng -->
-    <div class="mb-6 rounded-2xl border border-ink-200 bg-white p-6 shadow-sm">
+    <div class="mb-6 rounded-2xl border border-ink-200 bg-ink-800/70 backdrop-blur-xl p-6 shadow-sm">
         <h2 class="font-heading text-lg font-semibold text-ink-900 mb-4">Thông tin đơn hàng</h2>
         <dl class="space-y-2 text-sm">
             <div class="flex items-center justify-between">
@@ -45,7 +45,7 @@
     </div>
     <!-- thông tin đặt hàng -->
     <form action="index.php?act=billconfirm" method="post">
-        <div class="mb-6 rounded-2xl border border-ink-200 bg-white p-6 shadow-sm">
+        <div class="mb-6 rounded-2xl border border-ink-200 bg-ink-800/70 backdrop-blur-xl p-6 shadow-sm">
             <h2 class="font-heading text-lg font-semibold text-ink-900 mb-4">Thông tin đặt hàng</h2>
             <div class="space-y-4">
                 <div>
@@ -76,7 +76,7 @@
             </div>
         </div>
         <!-- phương thức thanh toán -->
-        <div class="mb-6 rounded-2xl border border-ink-200 bg-white p-6 shadow-sm">
+        <div class="mb-6 rounded-2xl border border-ink-200 bg-ink-800/70 backdrop-blur-xl p-6 shadow-sm">
             <h2 class="font-heading text-lg font-semibold text-ink-900 mb-4">Phương thức thanh toán</h2>
             <label class="flex min-h-11 items-center gap-3 rounded-lg border border-ink-200 px-4 py-3">
                 <input class="h-4 w-4 text-brand-600 focus:ring-2 focus:ring-brand-500" type="radio" name="payment" id="inlineRadio1" checked>
@@ -98,7 +98,7 @@
 
         <div class="mt-6 flex justify-end">
             <a href="index.php?act=product"
-                class="inline-flex items-center justify-center gap-2 rounded-lg border border-ink-200 bg-white px-5 py-2.5 text-sm font-semibold text-ink-900 hover:bg-ink-50 transition-colors focus:outline-none focus:ring-2 focus:ring-brand-500">
+                class="inline-flex items-center justify-center gap-2 rounded-lg border border-ink-200 bg-ink-800/70 backdrop-blur-xl px-5 py-2.5 text-sm font-semibold text-ink-900 hover:bg-ink-50 transition-colors focus:outline-none focus:ring-2 focus:ring-brand-500">
                 Xem thêm sản phẩm <i class="fa-solid fa-magnifying-glass" aria-hidden="true"></i>
             </a>
         </div>

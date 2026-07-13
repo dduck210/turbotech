@@ -56,7 +56,7 @@ unset($_SESSION['flash_success']);
     ?>
     <div class="product_comments_block space-y-4 p-4">
         <?php foreach ($listcmt as $cmt) : extract($cmt); ?>
-            <div class="comment_details same-stuff rounded-2xl border border-ink-200 bg-white p-4 shadow-sm">
+            <div class="comment_details same-stuff rounded-2xl border border-ink-200 bg-ink-800/70 backdrop-blur-xl p-4 shadow-sm">
                 <div class="flex flex-wrap items-baseline gap-2">
                     <span class="user-id font-heading font-semibold text-ink-900"><?= e($full_name) ?> (<?= e($user_name) ?>)</span>
                     <em class="text-xs text-ink-500 not-italic"><?= e($comment_date) ?></em>
@@ -68,10 +68,10 @@ unset($_SESSION['flash_success']);
 
         <div class="comment-btn-area mt-3">
             <?php if ($canReview) { ?>
-                <form action="<?= e($_SERVER['PHP_SELF']) ?>" method="post" data-validate novalidate class="rounded-2xl border border-ink-200 bg-white p-4 shadow-sm">
+                <form action="<?= e($_SERVER['PHP_SELF']) ?>" method="post" data-validate novalidate class="rounded-2xl border border-ink-200 bg-ink-800/70 backdrop-blur-xl p-4 shadow-sm">
                     <?= \Codemoi\Core\Csrf::field() ?>
                     <label for="content_cmt" class="mb-1.5 block text-sm font-medium text-ink-700">Bình luận của bạn</label>
-                    <textarea id="content_cmt" name="content_cmt" data-rules="required|min:2" class="area-cmt block w-full rounded-lg border border-ink-200 bg-white px-3.5 py-2.5 text-sm text-ink-900 placeholder:text-ink-300 focus:outline-none focus:ring-2 focus:ring-brand-500 focus:border-brand-500" cols="60" rows="3" placeholder="Nhập bình luận của bạn"></textarea>
+                    <textarea id="content_cmt" name="content_cmt" data-rules="required|min:2" class="area-cmt block w-full rounded-lg border border-ink-200 bg-ink-800/70 backdrop-blur-xl px-3.5 py-2.5 text-sm text-ink-900 placeholder:text-ink-300 focus:outline-none focus:ring-2 focus:ring-brand-500 focus:border-brand-500" cols="60" rows="3" placeholder="Nhập bình luận của bạn"></textarea>
                     <input type="hidden" name="idpro" value="<?= e($idpro) ?>">
                     <div class="mt-3">
                         <input type="submit" name="btn_cmt" value="Gửi" class="ip-cmt inline-flex cursor-pointer items-center justify-center gap-2 rounded-lg bg-brand-600 px-5 py-2.5 text-sm font-semibold text-white shadow-sm transition-colors hover:bg-brand-700 focus:outline-none focus:ring-2 focus:ring-brand-500 focus:ring-offset-2">

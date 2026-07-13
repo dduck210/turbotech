@@ -12,7 +12,7 @@
         <h1 class="text-3xl font-bold text-ink-800">Quản Lý Hóa Đơn</h1>
     </div>
 
-    <div class="bg-white rounded-xl shadow-sm hover:shadow-md transition-shadow duration-300 overflow-hidden mb-6">
+    <div class="bg-ink-800/70 backdrop-blur-xl rounded-xl shadow-sm hover:shadow-md transition-shadow duration-300 overflow-hidden mb-6">
         <div class="p-6">
             <div class="mb-6 bg-ink-50 p-5 rounded-xl border border-ink-200">
                 <div class="text-ink-700 font-semibold mb-4"><i class="fas fa-filter mr-2 text-brand-500"></i>Công cụ
@@ -27,7 +27,7 @@
                         <input type="text" name="keyword"
                             value="<?= isset($keyword) ? htmlspecialchars($keyword) : '' ?>"
                             placeholder="Tên khách hàng, SĐT..."
-                            class="w-full px-4 py-2 border border-ink-300 rounded-lg focus:ring-2 focus:ring-brand-500 focus:border-brand-500 transition-colors bg-white">
+                            class="w-full px-4 py-2 border border-ink-300 rounded-lg focus:ring-2 focus:ring-brand-500 focus:border-brand-500 transition-colors bg-ink-800/70 backdrop-blur-xl">
                     </div>
 
                     <!-- Status -->
@@ -35,7 +35,7 @@
                         <label class="block text-xs font-medium text-ink-500 mb-1 uppercase tracking-wider">Trạng
                             thái</label>
                         <select name="status"
-                            class="w-full px-4 py-2 border border-ink-300 rounded-lg focus:ring-2 focus:ring-brand-500 focus:border-brand-500 transition-colors bg-white">
+                            class="w-full px-4 py-2 border border-ink-300 rounded-lg focus:ring-2 focus:ring-brand-500 focus:border-brand-500 transition-colors bg-ink-800/70 backdrop-blur-xl">
                             <option value="-1" <?= (!isset($status) || $status == -1) ? 'selected' : '' ?>>Tất cả
                             </option>
                             <option value="0" <?= (isset($status) && $status == 0) ? 'selected' : '' ?>>Mới</option>
@@ -55,14 +55,14 @@
                                 ngày</label>
                             <input type="date" name="from_date"
                                 value="<?= isset($from_date) ? htmlspecialchars($from_date) : '' ?>"
-                                class="w-full px-4 py-2 border border-ink-300 rounded-lg focus:ring-2 focus:ring-brand-500 focus:border-brand-500 transition-colors bg-white text-ink-700">
+                                class="w-full px-4 py-2 border border-ink-300 rounded-lg focus:ring-2 focus:ring-brand-500 focus:border-brand-500 transition-colors bg-ink-800/70 backdrop-blur-xl text-ink-700">
                         </div>
                         <div>
                             <label class="block text-xs font-medium text-ink-500 mb-1 uppercase tracking-wider">Đến
                                 ngày</label>
                             <input type="date" name="to_date"
                                 value="<?= isset($to_date) ? htmlspecialchars($to_date) : '' ?>"
-                                class="w-full px-4 py-2 border border-ink-300 rounded-lg focus:ring-2 focus:ring-brand-500 focus:border-brand-500 transition-colors bg-white text-ink-700">
+                                class="w-full px-4 py-2 border border-ink-300 rounded-lg focus:ring-2 focus:ring-brand-500 focus:border-brand-500 transition-colors bg-ink-800/70 backdrop-blur-xl text-ink-700">
                         </div>
                     </div>
 

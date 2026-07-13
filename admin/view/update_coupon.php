@@ -16,7 +16,7 @@ if (is_array($one_coupon)) {
     </a>
 </div>
 
-<div class="bg-white rounded-xl shadow-sm border border-ink-200 overflow-hidden mb-6">
+<div class="bg-ink-800/70 backdrop-blur-xl rounded-xl shadow-sm border border-ink-200 overflow-hidden mb-6">
     <div class="px-6 py-4 border-b border-ink-200 bg-ink-50/50 font-semibold text-ink-800">
         Thông tin mã giảm giá
     </div>
@@ -34,7 +34,7 @@ if (is_array($one_coupon)) {
                 <div>
                     <label class="block text-sm font-medium text-ink-700 mb-2">Loại giảm giá</label>
                     <select name="discount_type"
-                        class="w-full rounded-lg border-ink-300 px-4 py-2 border focus:ring-2 focus:ring-brand-500 outline-none transition-all bg-white">
+                        class="w-full rounded-lg border-ink-300 px-4 py-2 border focus:ring-2 focus:ring-brand-500 outline-none transition-all bg-ink-800/70 backdrop-blur-xl">
                         <option value="1" <?= (isset($discount_type) && $discount_type == 1) ? 'selected' : '' ?>>Giảm
                             theo phần trăm (%)</option>
                         <option value="2" <?= (isset($discount_type) && $discount_type == 2) ? 'selected' : '' ?>>Giảm
@@ -67,7 +67,7 @@ if (is_array($one_coupon)) {
                 <div>
                     <label class="block text-sm font-medium text-ink-700 mb-2">Áp dụng cho mặt hàng</label>
                     <select name="product_id"
-                        class="w-full rounded-lg border-ink-300 px-4 py-2 border focus:ring-2 focus:ring-brand-500 outline-none transition-all bg-white">
+                        class="w-full rounded-lg border-ink-300 px-4 py-2 border focus:ring-2 focus:ring-brand-500 outline-none transition-all bg-ink-800/70 backdrop-blur-xl">
                         <option value="0" <?= (!isset($product_id) || $product_id == 0) ? 'selected' : '' ?>>Tất cả sản
                             phẩm</option>
                         <?php foreach ($listpro as $pro): ?>
@@ -102,7 +102,7 @@ if (is_array($one_coupon)) {
                 <div>
                     <label class="block text-sm font-medium text-ink-700 mb-2">Trạng thái</label>
                     <select name="status"
-                        class="w-full rounded-lg border-ink-300 px-4 py-2 border focus:ring-2 focus:ring-brand-500 outline-none transition-all bg-white">
+                        class="w-full rounded-lg border-ink-300 px-4 py-2 border focus:ring-2 focus:ring-brand-500 outline-none transition-all bg-ink-800/70 backdrop-blur-xl">
                         <option value="1" <?= (isset($status) && $status == 1) ? 'selected' : '' ?>>Đang hoạt động
                         </option>
                         <option value="0" <?= (isset($status) && $status == 0) ? 'selected' : '' ?>>Tạm tắt</option>

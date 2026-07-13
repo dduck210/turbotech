@@ -12,7 +12,7 @@ include_once "header.php";
     <h1 class="text-3xl font-bold text-ink-800">Thống Kê Báo Cáo</h1>
 </div>
 
-<div class="mb-6 bg-white p-5 rounded-xl border border-ink-200 shadow-sm">
+<div class="mb-6 bg-ink-800/70 backdrop-blur-xl p-5 rounded-xl border border-ink-200 shadow-sm">
     <form action="./index.php?act=list_thongke" method="POST" class="flex flex-col md:flex-row gap-4 items-end">
 <?= \Codemoi\Core\Csrf::field() ?>
         <div class="flex-1 text-ink-700 font-semibold">
@@ -52,7 +52,7 @@ include_once "header.php";
 
 <div class="grid grid-cols-1 xl:grid-cols-2 gap-6 mb-8">
     <!-- Revenue Stats -->
-    <div class="bg-white rounded-xl shadow-sm border border-ink-200 overflow-hidden flex flex-col">
+    <div class="bg-ink-800/70 backdrop-blur-xl rounded-xl shadow-sm border border-ink-200 overflow-hidden flex flex-col">
         <div class="px-6 py-4 border-b border-ink-200 bg-ink-50/50 flex justify-between items-center">
             <h2 class="font-semibold text-ink-800"><i class="fas fa-chart-line text-emerald-500 mr-2"></i>Doanh thu
                 theo ngày</h2>
@@ -100,7 +100,7 @@ include_once "header.php";
     </div>
 
     <!-- Top Selling Products -->
-    <div class="bg-white rounded-xl shadow-sm border border-ink-200 overflow-hidden flex flex-col">
+    <div class="bg-ink-800/70 backdrop-blur-xl rounded-xl shadow-sm border border-ink-200 overflow-hidden flex flex-col">
         <div class="px-6 py-4 border-b border-ink-200 bg-ink-50/50 flex justify-between items-center">
             <h2 class="font-semibold text-ink-800"><i class="fas fa-fire text-amber-500 mr-2"></i>Sản phẩm bán chạy
             </h2>
@@ -143,7 +143,7 @@ include_once "header.php";
 </div>
 
 <!-- Inventory Stats -->
-<div class="bg-white rounded-xl shadow-sm border border-ink-200 overflow-hidden mb-8">
+<div class="bg-ink-800/70 backdrop-blur-xl rounded-xl shadow-sm border border-ink-200 overflow-hidden mb-8">
     <div class="px-6 py-4 border-b border-ink-200 bg-ink-50/50 flex justify-between items-center">
         <h2 class="font-semibold text-ink-800"><i class="fas fa-boxes text-blue-500 mr-2"></i>Tình trạng tồn kho (Tất
             cả sản phẩm)</h2>

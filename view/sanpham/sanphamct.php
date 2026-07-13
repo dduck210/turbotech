@@ -24,7 +24,7 @@
     <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12">
 
         <!-- Image -->
-        <div class="rounded-2xl border border-ink-200 bg-white overflow-hidden">
+        <div class="rounded-2xl border border-ink-200 bg-ink-800/70 backdrop-blur-xl overflow-hidden">
             <div class="aspect-square bg-ink-100 overflow-hidden">
                 <img src="admin/uploads/<?= $one_pro['img_pro']; ?>"
                     alt="Ảnh sản phẩm <?= htmlspecialchars($one_pro['name_pro']) ?>"
@@ -176,7 +176,7 @@
     <h4 class="font-heading text-xl font-semibold text-ink-900 mb-6">Các sản phẩm cùng loại</h4>
     <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-6">
         <?php foreach ($similar_pro as $pro) { ?>
-            <div class="rounded-2xl border border-ink-200 bg-white shadow-sm hover:shadow-md transition-shadow overflow-hidden">
+            <div class="rounded-2xl border border-ink-200 bg-ink-800/70 backdrop-blur-xl shadow-sm hover:shadow-md transition-shadow overflow-hidden">
                 <div class="relative aspect-square bg-ink-100 overflow-hidden">
                     <a href="index.php?act=prodetail&idpro=<?php echo $pro['id_pro']; ?>">
                         <img src="admin/uploads/<?php echo $pro['img_pro']; ?>"

@@ -33,7 +33,7 @@
     <div class="bg-shape bg-purple-600 w-[400px] h-[400px] bottom-[-100px] right-[-100px]"></div>
 
     <div class="container mx-auto px-4 w-full max-w-5xl relative z-10">
-        <div class="bg-white/95 backdrop-blur-xl rounded-3xl shadow-2xl overflow-hidden border border-white/20">
+        <div class="bg-ink-800/95 backdrop-blur-xl backdrop-blur-xl rounded-3xl shadow-2xl overflow-hidden border border-white/20">
             <div class="flex flex-col lg:flex-row">
                 <!-- Image Section -->
                 <div
@@ -55,13 +55,13 @@
                         <div>
                             <label class="block text-sm font-medium text-ink-700 mb-2">Tài khoản</label>
                             <input type="text" name="user_name" placeholder="Nhập tài khoản" data-rules="required"
-                                class="w-full rounded-xl border border-ink-200 px-5 py-3 focus:ring-2 focus:ring-brand-500 focus:border-brand-500 outline-none transition-all bg-ink-50 focus:bg-white text-ink-800">
+                                class="w-full rounded-xl border border-ink-200 px-5 py-3 focus:ring-2 focus:ring-brand-500 focus:border-brand-500 outline-none transition-all bg-ink-50 focus:bg-ink-800/70 backdrop-blur-xl text-ink-800">
                         </div>
 
                         <div>
                             <label class="block text-sm font-medium text-ink-700 mb-2">Mật khẩu</label>
                             <input type="password" name="password" placeholder="Nhập mật khẩu" data-rules="required"
-                                class="w-full rounded-xl border border-ink-200 px-5 py-3 focus:ring-2 focus:ring-brand-500 focus:border-brand-500 outline-none transition-all bg-ink-50 focus:bg-white text-ink-800">
+                                class="w-full rounded-xl border border-ink-200 px-5 py-3 focus:ring-2 focus:ring-brand-500 focus:border-brand-500 outline-none transition-all bg-ink-50 focus:bg-ink-800/70 backdrop-blur-xl text-ink-800">
                         </div>
 
                         <input type="submit" name="btn_login" value="Đăng nhập"

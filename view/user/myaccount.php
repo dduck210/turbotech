@@ -6,7 +6,7 @@
  */
 ?>
 <!-- Breadcrumb -->
-<div class="border-b border-ink-200 bg-white">
+<div class="border-b border-ink-200 bg-ink-800/70 backdrop-blur-xl">
     <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-3">
         <nav aria-label="Breadcrumb" class="text-sm text-ink-500">
             <ol class="flex items-center gap-2">
@@ -37,7 +37,7 @@
 
             <!-- Sidebar nav -->
             <div class="lg:col-span-1">
-                <nav aria-label="Điều hướng tài khoản" class="rounded-2xl border border-ink-200 bg-white shadow-sm overflow-hidden">
+                <nav aria-label="Điều hướng tài khoản" class="rounded-2xl border border-ink-200 bg-ink-800/70 backdrop-blur-xl shadow-sm overflow-hidden">
                     <ul class="divide-y divide-ink-200" id="account-page-tab" role="tablist">
                         <li>
                             <a href="#account-dashboard" data-tab-target="account-dashboard" role="tab" aria-selected="true"
@@ -86,7 +86,7 @@
 
                     <!-- Dashboard -->
                     <div id="account-dashboard" data-tab-panel role="tabpanel" aria-labelledby="account-dashboard-tab"
-                        class="account-tab-panel rounded-2xl border border-ink-200 bg-white shadow-sm p-6">
+                        class="account-tab-panel rounded-2xl border border-ink-200 bg-ink-800/70 backdrop-blur-xl shadow-sm p-6">
                         <p class="text-ink-700">Xin chào, <b class="text-ink-900"><?= e($_SESSION['user']['full_name']) ?></b>
                             (không phải <?= e($_SESSION['user']['full_name']) ?>?
                             <a href="index.php?act=logout" data-confirm="Bạn chắc chắc muốn đăng xuất tài khoản?"
@@ -99,7 +99,7 @@
 
                     <!-- Orders -->
                     <div id="account-orders" data-tab-panel role="tabpanel" aria-labelledby="account-orders-tab"
-                        class="account-tab-panel hidden rounded-2xl border border-ink-200 bg-white shadow-sm p-6">
+                        class="account-tab-panel hidden rounded-2xl border border-ink-200 bg-ink-800/70 backdrop-blur-xl shadow-sm p-6">
                         <h2 class="mb-4 font-heading text-lg font-semibold text-ink-900">Đơn hàng của tôi</h2>
                         <?php if (!empty($cancelMessage)) : ?>
                             <div class="mb-4 rounded-lg border border-ink-200 bg-ink-50 p-3 text-sm text-ink-700"><?= htmlspecialchars($cancelMessage) ?></div>
@@ -161,7 +161,7 @@
 
                     <!-- Address -->
                     <div id="account-address" data-tab-panel role="tabpanel" aria-labelledby="account-address-tab"
-                        class="account-tab-panel hidden rounded-2xl border border-ink-200 bg-white shadow-sm p-6">
+                        class="account-tab-panel hidden rounded-2xl border border-ink-200 bg-ink-800/70 backdrop-blur-xl shadow-sm p-6">
                         <p class="text-sm text-ink-500">Địa chỉ của bạn được sử dụng để đặt và nhận hàng.</p>
                         <div class="mt-4 grid grid-cols-1 gap-6 sm:grid-cols-2">
                             <div>
@@ -177,7 +177,7 @@
 
                     <!-- Account details -->
                     <div id="account-details" data-tab-panel role="tabpanel" aria-labelledby="account-details-tab"
-                        class="account-tab-panel hidden rounded-2xl border border-ink-200 bg-white shadow-sm p-6">
+                        class="account-tab-panel hidden rounded-2xl border border-ink-200 bg-ink-800/70 backdrop-blur-xl shadow-sm p-6">
                         <form action="index.php?act=myaccount" method="post" enctype="multipart/form-data" data-validate novalidate>
 <?= \Codemoi\Core\Csrf::field() ?>
                             <div class="mb-6 text-center">
@@ -209,13 +209,13 @@
                                     <input type="text" name="full_name" id="account-details-fullname" value="<?= e($_SESSION['user']['full_name']) ?>"
                                         placeholder="Nhập họ tên của bạn"
                                         data-rules="required|min:2|max:100"
-                                        class="block w-full rounded-lg border border-ink-200 bg-white px-3.5 py-2.5 text-sm text-ink-900 placeholder:text-ink-300 focus:outline-none focus:ring-2 focus:ring-brand-500 focus:border-brand-500">
+                                        class="block w-full rounded-lg border border-ink-200 bg-ink-800/70 backdrop-blur-xl px-3.5 py-2.5 text-sm text-ink-900 placeholder:text-ink-300 focus:outline-none focus:ring-2 focus:ring-brand-500 focus:border-brand-500">
                                 </div>
 
                                 <div>
                                     <label for="account-details-sex" class="block text-sm font-medium text-ink-700 mb-1.5">Giới tính</label>
                                     <select name="sex" id="account-details-sex" required
-                                        class="block w-full rounded-lg border border-ink-200 bg-white px-3.5 py-2.5 text-sm text-ink-900 focus:outline-none focus:ring-2 focus:ring-brand-500 focus:border-brand-500">
+                                        class="block w-full rounded-lg border border-ink-200 bg-ink-800/70 backdrop-blur-xl px-3.5 py-2.5 text-sm text-ink-900 focus:outline-none focus:ring-2 focus:ring-brand-500 focus:border-brand-500">
                                         <?php $sexarr = array('0' => 'Nam', '1' => 'Nữ'); ?>
                                         <?php foreach ($sexarr as $key => $value) { ?>
                                             <option value="<?php echo $key; ?>" <?php echo $key ==  $_SESSION['user']['sex'] ? ' selected' : ''; ?>><?php echo $value; ?></option>
@@ -228,7 +228,7 @@
                                     <input type="email" name="email_user" id="account-details-email" value="<?= e($_SESSION['user']['email_user']) ?>"
                                         placeholder="Nhập địa chỉ email của bạn"
                                         data-rules="required|email"
-                                        class="block w-full rounded-lg border border-ink-200 bg-white px-3.5 py-2.5 text-sm text-ink-900 placeholder:text-ink-300 focus:outline-none focus:ring-2 focus:ring-brand-500 focus:border-brand-500">
+                                        class="block w-full rounded-lg border border-ink-200 bg-ink-800/70 backdrop-blur-xl px-3.5 py-2.5 text-sm text-ink-900 placeholder:text-ink-300 focus:outline-none focus:ring-2 focus:ring-brand-500 focus:border-brand-500">
                                 </div>
 
                                 <div>
@@ -236,7 +236,7 @@
                                     <select name="province" id="account-details-province" data-address-province
                                         data-existing-address="<?= htmlspecialchars($_SESSION['user']['address'] ?? '') ?>"
                                         data-rules="required" data-msg-required="Vui lòng chọn tỉnh/thành phố"
-                                        class="block w-full rounded-lg border border-ink-200 bg-white px-3.5 py-2.5 text-sm text-ink-900 focus:outline-none focus:ring-2 focus:ring-brand-500 focus:border-brand-500">
+                                        class="block w-full rounded-lg border border-ink-200 bg-ink-800/70 backdrop-blur-xl px-3.5 py-2.5 text-sm text-ink-900 focus:outline-none focus:ring-2 focus:ring-brand-500 focus:border-brand-500">
                                         <option value="">Đang tải danh sách...</option>
                                     </select>
                                 </div>
@@ -245,7 +245,7 @@
                                     <label for="account-details-ward" class="block text-sm font-medium text-ink-700 mb-1.5">Xã/Phường</label>
                                     <select name="ward" id="account-details-ward" data-address-ward
                                         data-rules="required" data-msg-required="Vui lòng chọn xã/phường"
-                                        class="block w-full rounded-lg border border-ink-200 bg-white px-3.5 py-2.5 text-sm text-ink-900 focus:outline-none focus:ring-2 focus:ring-brand-500 focus:border-brand-500" disabled>
+                                        class="block w-full rounded-lg border border-ink-200 bg-ink-800/70 backdrop-blur-xl px-3.5 py-2.5 text-sm text-ink-900 focus:outline-none focus:ring-2 focus:ring-brand-500 focus:border-brand-500" disabled>
                                         <option value="">Chọn tỉnh/thành phố trước</option>
                                     </select>
                                 </div>
@@ -255,7 +255,7 @@
                                     <input type="text" name="address_detail" id="account-details-address" data-address-detail
                                         placeholder="Số nhà, tên đường..."
                                         data-rules="required|min:3|max:255"
-                                        class="block w-full rounded-lg border border-ink-200 bg-white px-3.5 py-2.5 text-sm text-ink-900 placeholder:text-ink-300 focus:outline-none focus:ring-2 focus:ring-brand-500 focus:border-brand-500">
+                                        class="block w-full rounded-lg border border-ink-200 bg-ink-800/70 backdrop-blur-xl px-3.5 py-2.5 text-sm text-ink-900 placeholder:text-ink-300 focus:outline-none focus:ring-2 focus:ring-brand-500 focus:border-brand-500">
                                 </div>
 
                                 <div>
@@ -263,7 +263,7 @@
                                     <input type="text" name="phone_user" id="account-details-phone" value="<?= e($_SESSION['user']['phone_user']) ?>"
                                         placeholder="Nhập số điện thoại nhận hàng của bạn"
                                         data-rules="required|phone"
-                                        class="block w-full rounded-lg border border-ink-200 bg-white px-3.5 py-2.5 text-sm text-ink-900 placeholder:text-ink-300 focus:outline-none focus:ring-2 focus:ring-brand-500 focus:border-brand-500">
+                                        class="block w-full rounded-lg border border-ink-200 bg-ink-800/70 backdrop-blur-xl px-3.5 py-2.5 text-sm text-ink-900 placeholder:text-ink-300 focus:outline-none focus:ring-2 focus:ring-brand-500 focus:border-brand-500">
                                 </div>
 
                                 <div class="pt-2">
@@ -279,7 +279,7 @@
 
                     <!-- Password -->
                     <div id="account-password" data-tab-panel role="tabpanel" aria-labelledby="account-password-tab"
-                        class="account-tab-panel hidden rounded-2xl border border-ink-200 bg-white shadow-sm p-6">
+                        class="account-tab-panel hidden rounded-2xl border border-ink-200 bg-ink-800/70 backdrop-blur-xl shadow-sm p-6">
                         <form action="index.php?act=myaccount" method="post" data-validate novalidate>
 <?= \Codemoi\Core\Csrf::field() ?>
                             <div class="space-y-4">
@@ -293,19 +293,19 @@
                                     <label for="account-password-oldpass" class="block text-sm font-medium text-ink-700 mb-1.5">Mật khẩu hiện tại</label>
                                     <input type="password" id="account-password-oldpass" name="oldpass" placeholder="Nhập mật khẩu hiện tại"
                                         data-rules="required"
-                                        class="block w-full rounded-lg border border-ink-200 bg-white px-3.5 py-2.5 text-sm text-ink-900 placeholder:text-ink-300 focus:outline-none focus:ring-2 focus:ring-brand-500 focus:border-brand-500">
+                                        class="block w-full rounded-lg border border-ink-200 bg-ink-800/70 backdrop-blur-xl px-3.5 py-2.5 text-sm text-ink-900 placeholder:text-ink-300 focus:outline-none focus:ring-2 focus:ring-brand-500 focus:border-brand-500">
                                 </div>
                                 <div>
                                     <label for="account-password-newpass" class="block text-sm font-medium text-ink-700 mb-1.5">Mật khẩu mới</label>
                                     <input type="password" id="account-password-newpass" name="newpass" placeholder="Nhập mật khẩu mới"
                                         data-rules="required|min:6"
-                                        class="block w-full rounded-lg border border-ink-200 bg-white px-3.5 py-2.5 text-sm text-ink-900 placeholder:text-ink-300 focus:outline-none focus:ring-2 focus:ring-brand-500 focus:border-brand-500">
+                                        class="block w-full rounded-lg border border-ink-200 bg-ink-800/70 backdrop-blur-xl px-3.5 py-2.5 text-sm text-ink-900 placeholder:text-ink-300 focus:outline-none focus:ring-2 focus:ring-brand-500 focus:border-brand-500">
                                 </div>
                                 <div>
                                     <label for="account-password-confpass" class="block text-sm font-medium text-ink-700 mb-1.5">Xác nhận mật khẩu mới</label>
                                     <input type="password" id="account-password-confpass" name="repass" placeholder="Nhập lại mật khẩu mới"
                                         data-rules="required|match:newpass" data-msg-match="Mật khẩu xác nhận không khớp"
-                                        class="block w-full rounded-lg border border-ink-200 bg-white px-3.5 py-2.5 text-sm text-ink-900 placeholder:text-ink-300 focus:outline-none focus:ring-2 focus:ring-brand-500 focus:border-brand-500">
+                                        class="block w-full rounded-lg border border-ink-200 bg-ink-800/70 backdrop-blur-xl px-3.5 py-2.5 text-sm text-ink-900 placeholder:text-ink-300 focus:outline-none focus:ring-2 focus:ring-brand-500 focus:border-brand-500">
                                 </div>
 
                                 <div class="pt-2">

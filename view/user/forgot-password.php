@@ -3,7 +3,7 @@
 /** @var string|null $error Validation/lookup error message, if any. */
 ?>
 <!-- Breadcrumb -->
-<div class="border-b border-ink-200 bg-white">
+<div class="border-b border-ink-200 bg-ink-800/70 backdrop-blur-xl">
     <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-3">
         <nav aria-label="Breadcrumb" class="text-sm text-ink-500">
             <ol class="flex items-center gap-2">
@@ -19,7 +19,7 @@
      luôn được gửi về email của tài khoản (không có cổng gửi SMS). -->
 <div class="bg-ink-50">
     <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-12 md:py-16">
-        <div class="mx-auto max-w-md rounded-2xl border border-ink-200 bg-white shadow-sm p-6 sm:p-8">
+        <div class="mx-auto max-w-md rounded-2xl border border-ink-200 bg-ink-800/70 backdrop-blur-xl shadow-sm p-6 sm:p-8">
             <form action="index.php?act=mk" method="post" data-validate novalidate>
 <?= \Codemoi\Core\Csrf::field() ?>
                 <h1 class="mb-2 text-center font-heading text-2xl font-bold text-ink-900">Quên mật khẩu</h1>
@@ -35,7 +35,7 @@
                     <label for="identifier" class="block text-sm font-medium text-ink-700 mb-1.5">Email hoặc số điện thoại</label>
                     <input type="text" id="identifier" name="identifier" placeholder="Nhập email hoặc số điện thoại"
                         data-rules="required"
-                        class="block w-full rounded-lg border border-ink-200 bg-white px-3.5 py-2.5 text-sm text-ink-900 placeholder:text-ink-300 focus:outline-none focus:ring-2 focus:ring-brand-500 focus:border-brand-500">
+                        class="block w-full rounded-lg border border-ink-200 bg-ink-800/70 backdrop-blur-xl px-3.5 py-2.5 text-sm text-ink-900 placeholder:text-ink-300 focus:outline-none focus:ring-2 focus:ring-brand-500 focus:border-brand-500">
                 </div>
 
                 <button type="submit" name="btn_forgot" value="Gửi mã xác nhận"

@@ -1,5 +1,5 @@
 <header
-    class="h-20 bg-white/80 backdrop-blur-md border-b border-ink-200 flex items-center justify-between px-6 shrink-0 z-10 sticky top-0 shadow-sm">
+    class="h-20 bg-ink-800/80 backdrop-blur-xl backdrop-blur-md border-b border-ink-200 flex items-center justify-between px-6 shrink-0 z-10 sticky top-0 shadow-sm">
     <div class="flex items-center">
         <button id="mobile-sidebar-toggle" class="md:hidden text-ink-500 hover:text-brand-600 transition-colors">
             <i class="fas fa-bars text-xl"></i>

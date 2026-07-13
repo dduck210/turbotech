@@ -32,7 +32,7 @@
 <!-- HERO BANNER End Here -->
 
 <!-- FREE SHIP -->
-<section class="border-y border-ink-200 bg-white py-12 md:py-16">
+<section class="border-y border-ink-200 bg-ink-800/70 backdrop-blur-xl py-12 md:py-16">
     <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div class="grid grid-cols-2 gap-6 sm:grid-cols-4">
             <!-- Begin Shipping Information Item -->
@@ -93,11 +93,11 @@
              Tab component's click delegation never toggles .active), so don't rely on it. Same
              proven pattern as the account-page tabs in view/user/myaccount.php. -->
         <div class="mb-8 flex flex-wrap justify-center gap-3">
-            <a class="home-tab-trigger active inline-flex min-h-11 items-center justify-center rounded-full border border-ink-200 bg-white px-4 py-2.5 text-sm font-semibold text-ink-700 transition-colors hover:bg-ink-50 focus:outline-none focus:ring-2 focus:ring-brand-500 [&.active]:border-brand-600! [&.active]:bg-brand-600! [&.active]:text-white!"
+            <a class="home-tab-trigger active inline-flex min-h-11 items-center justify-center rounded-full border border-ink-200 bg-ink-800/70 backdrop-blur-xl px-4 py-2.5 text-sm font-semibold text-ink-700 transition-colors hover:bg-ink-50 focus:outline-none focus:ring-2 focus:ring-brand-500 [&.active]:border-brand-600! [&.active]:bg-brand-600! [&.active]:text-white!"
                 data-tab-target="new-arrival" href="#new-arrival"><span>Sản phẩm mới</span></a>
-            <a class="home-tab-trigger inline-flex min-h-11 items-center justify-center rounded-full border border-ink-200 bg-white px-4 py-2.5 text-sm font-semibold text-ink-700 transition-colors hover:bg-ink-50 focus:outline-none focus:ring-2 focus:ring-brand-500 [&.active]:border-brand-600! [&.active]:bg-brand-600! [&.active]:text-white!"
+            <a class="home-tab-trigger inline-flex min-h-11 items-center justify-center rounded-full border border-ink-200 bg-ink-800/70 backdrop-blur-xl px-4 py-2.5 text-sm font-semibold text-ink-700 transition-colors hover:bg-ink-50 focus:outline-none focus:ring-2 focus:ring-brand-500 [&.active]:border-brand-600! [&.active]:bg-brand-600! [&.active]:text-white!"
                 data-tab-target="bestseller" href="#bestseller"><span>Sản phẩm bán chạy</span></a>
-            <a class="home-tab-trigger inline-flex min-h-11 items-center justify-center rounded-full border border-ink-200 bg-white px-4 py-2.5 text-sm font-semibold text-ink-700 transition-colors hover:bg-ink-50 focus:outline-none focus:ring-2 focus:ring-brand-500 [&.active]:border-brand-600! [&.active]:bg-brand-600! [&.active]:text-white!"
+            <a class="home-tab-trigger inline-flex min-h-11 items-center justify-center rounded-full border border-ink-200 bg-ink-800/70 backdrop-blur-xl px-4 py-2.5 text-sm font-semibold text-ink-700 transition-colors hover:bg-ink-50 focus:outline-none focus:ring-2 focus:ring-brand-500 [&.active]:border-brand-600! [&.active]:bg-brand-600! [&.active]:text-white!"
                 data-tab-target="featured-products" href="#featured-products"><span>Sản phẩm nổi bật</span></a>
         </div>
 
@@ -107,7 +107,7 @@
                     <!-- Phần show sản phẩm mới nhất -->
                     <?php
                     foreach ($prohome as $pro) { ?>
-                        <div class="group relative overflow-hidden rounded-2xl border border-ink-200 bg-white shadow-sm transition-shadow hover:shadow-md">
+                        <div class="group relative overflow-hidden rounded-2xl border border-ink-200 bg-ink-800/70 backdrop-blur-xl shadow-sm transition-shadow hover:shadow-md">
                             <div class="relative aspect-square overflow-hidden bg-ink-100">
                                 <a class="block h-full w-full"
                                     href="index.php?act=prodetail&idpro=<?= e($pro['id_pro']) ?>">
@@ -166,7 +166,7 @@
                     <!-- Sản phẩm bán chạy -->
                     <?php
                     foreach ($list_bestsp as $pro) { ?>
-                        <div class="group relative overflow-hidden rounded-2xl border border-ink-200 bg-white shadow-sm transition-shadow hover:shadow-md">
+                        <div class="group relative overflow-hidden rounded-2xl border border-ink-200 bg-ink-800/70 backdrop-blur-xl shadow-sm transition-shadow hover:shadow-md">
                             <div class="relative aspect-square overflow-hidden bg-ink-100">
                                 <a class="block h-full w-full" href="index.php?act=prodetail&idpro=<?= e($pro['id_pro']) ?>">
                                     <img class="h-full w-full object-cover" src="admin/uploads/<?= e($pro['img_pro']) ?>"
@@ -226,7 +226,7 @@
                     <!-- Phần show sản phẩm nổi bật -->
                     <?php
                     foreach ($list_topsp as $pro) { ?>
-                        <div class="group relative overflow-hidden rounded-2xl border border-ink-200 bg-white shadow-sm transition-shadow hover:shadow-md">
+                        <div class="group relative overflow-hidden rounded-2xl border border-ink-200 bg-ink-800/70 backdrop-blur-xl shadow-sm transition-shadow hover:shadow-md">
                             <div class="relative aspect-square overflow-hidden bg-ink-100">
                                 <a class="block h-full w-full" href="index.php?act=prodetail&idpro=<?= e($pro['id_pro']) ?>">
                                     <img class="h-full w-full object-cover" src="admin/uploads/<?= e($pro['img_pro']) ?>"

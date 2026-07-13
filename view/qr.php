@@ -105,7 +105,7 @@ $qrImageUrl = Payment::vietQrUrl((int) $amount, (string) $bill_code);
 </head>
 
 <body class="min-h-screen bg-linear-to-b from-ink-50 to-ink-100 font-sans text-ink-900 antialiased flex items-center justify-center p-4 sm:p-6">
-    <div class="payment-card w-full max-w-3xl overflow-hidden rounded-3xl border border-ink-200 bg-white shadow-2xl shadow-ink-900/10">
+    <div class="payment-card w-full max-w-3xl overflow-hidden rounded-3xl border border-ink-200 bg-ink-800/70 backdrop-blur-xl shadow-2xl shadow-ink-900/10">
         <!-- Header -->
         <div class="relative overflow-hidden bg-linear-to-br from-brand-600 via-brand-700 to-indigo-800 px-6 py-9 text-center text-white">
             <div class="pointer-events-none absolute inset-0 opacity-[0.15]"
@@ -147,7 +147,7 @@ $qrImageUrl = Payment::vietQrUrl((int) $amount, (string) $bill_code);
             <div class="grid grid-cols-1 gap-8 md:grid-cols-2 items-start">
                 <!-- QR Code Section -->
                 <div class="text-center">
-                    <div class="rounded-2xl border border-ink-200 bg-white p-6 shadow-sm transition-shadow hover:shadow-md">
+                    <div class="rounded-2xl border border-ink-200 bg-ink-800/70 backdrop-blur-xl p-6 shadow-sm transition-shadow hover:shadow-md">
                         <div class="mb-4 text-xs font-semibold uppercase tracking-wide text-brand-600">
                             <i class="fas fa-qrcode" aria-hidden="true"></i> Mã QR Chuyển Khoản
                         </div>
@@ -170,7 +170,7 @@ $qrImageUrl = Payment::vietQrUrl((int) $amount, (string) $bill_code);
 
                 <!-- Bank Info Section -->
                 <div class="flex flex-col gap-4">
-                    <div class="divide-y divide-ink-100 overflow-hidden rounded-2xl border border-ink-200 bg-white shadow-sm">
+                    <div class="divide-y divide-ink-100 overflow-hidden rounded-2xl border border-ink-200 bg-ink-800/70 backdrop-blur-xl shadow-sm">
                         <!-- Bank Name -->
                         <div class="flex items-center gap-3 px-4 py-3.5">
                             <span class="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-brand-50 text-brand-600">
@@ -253,7 +253,7 @@ $qrImageUrl = Payment::vietQrUrl((int) $amount, (string) $bill_code);
                 <i class="fas fa-check-circle transition-transform group-hover:scale-110" aria-hidden="true"></i> Đã Chuyển Khoản
             </a>
             <a href="../index.php?act=viewcart"
-                class="group inline-flex items-center justify-center gap-2 rounded-xl border border-ink-200 bg-white px-6 py-3 text-sm font-semibold text-ink-700 transition-all hover:bg-ink-50 hover:shadow-sm active:scale-[0.98] focus:outline-none focus:ring-2 focus:ring-brand-500">
+                class="group inline-flex items-center justify-center gap-2 rounded-xl border border-ink-200 bg-ink-800/70 backdrop-blur-xl px-6 py-3 text-sm font-semibold text-ink-700 transition-all hover:bg-ink-50 hover:shadow-sm active:scale-[0.98] focus:outline-none focus:ring-2 focus:ring-brand-500">
                 <i class="fas fa-arrow-left transition-transform group-hover:-translate-x-0.5" aria-hidden="true"></i> Quay Lại Giỏ Hàng
             </a>
         </div>

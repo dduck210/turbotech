@@ -4,7 +4,7 @@
 <div id="layoutSidenav_content">
 
     <div class="container-fluid px-4">
-        <div class="bg-white rounded-xl shadow-sm border border-ink-200 overflow-hidden mb-6 mt-4">
+        <div class="bg-ink-800/70 backdrop-blur-xl rounded-xl shadow-sm border border-ink-200 overflow-hidden mb-6 mt-4">
             <div class="px-6 py-4 border-b border-ink-200 bg-ink-50/50 font-semibold text-ink-800">
                 <i class="fas fa-table me-1"></i>
                 Danh sách bình luận

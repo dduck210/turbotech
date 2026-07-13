@@ -6,7 +6,7 @@
     <h1 class="text-3xl font-bold text-ink-800">Quản Lý Hỏi đáp</h1>
 </div>
 
-<div class="bg-white rounded-xl shadow-sm hover:shadow-md transition-shadow duration-300 overflow-hidden mb-6">
+<div class="bg-ink-800/70 backdrop-blur-xl rounded-xl shadow-sm hover:shadow-md transition-shadow duration-300 overflow-hidden mb-6">
     <div class="p-6">
         <div class="overflow-x-auto">
             <table class="w-full text-left border-collapse" id="dataTable" width="100%" cellspacing="0">

@@ -1,36 +1,60 @@
 @import "tailwindcss";
 
 /*
- * Turbotech design tokens — Modern/Minimal tech-retail style.
- * Neutral slate scale for surfaces/text, one blue accent for CTAs/links/
- * active states, semantic green/red for stock/discount/error states.
+ * Turbotech design tokens — Dark Luxury Tech redesign (2026-07-13).
+ *
+ * The `ink-*` scale keeps its existing NAMES (ink-50…ink-900) so every one
+ * of the ~230 existing `bg-ink-*`/`text-ink-*`/`border-ink-*` utility
+ * classes across every template keeps working with zero template edits —
+ * but the scale is INVERTED in meaning: ink-50 is now the darkest surface
+ * (was the lightest page background), ink-900 is now near-white text (was
+ * the darkest heading text). This flips the entire site into the dark
+ * theme by changing only these token values.
+ *
+ * `brand-*` (indigo/blue) and the new `accent-*` (violet) tokens form the
+ * signature neon gradient used on primary CTAs, active states, and glow
+ * effects — see `.btn-glow`, `.text-gradient`, `.glass` below.
  */
 @theme {
   --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
   --font-heading: "Manrope", ui-sans-serif, system-ui, sans-serif;
 
-  --color-brand-50: #eff6ff;
-  --color-brand-100: #dbeafe;
-  --color-brand-500: #3b82f6;
-  --color-brand-600: #2563eb;
-  --color-brand-700: #1d4ed8;
+  --color-brand-50: #eef2ff;
+  --color-brand-100: #e0e7ff;
+  --color-brand-400: #818cf8;
+  --color-brand-500: #6366f1;
+  --color-brand-600: #4f46e5;
+  --color-brand-700: #4338ca;
 
-  --color-ink-50: #f8fafc;
-  --color-ink-100: #f1f5f9;
-  --color-ink-200: #e2e8f0;
-  --color-ink-300: #cbd5e1;
-  --color-ink-400: #94a3b8;
-  --color-ink-500: #64748b;
-  --color-ink-600: #475569;
-  --color-ink-700: #334155;
-  --color-ink-800: #1e293b;
-  --color-ink-900: #0f172a;
+  --color-accent-400: #c4b5fd;
+  --color-accent-500: #a78bfa;
+  --color-accent-600: #8b5cf6;
+
+  --color-ink-50: #05060a;
+  --color-ink-100: #0a0c14;
+  --color-ink-200: #141826;
+  --color-ink-300: #1f2437;
+  --color-ink-400: #454b66;
+  --color-ink-500: #838aab;
+  --color-ink-600: #aab0cc;
+  --color-ink-700: #ced3e6;
+  --color-ink-800: #e7e9f5;
+  --color-ink-900: #f8f9fd;
+
+  --animate-glow-pulse: glow-pulse 3s ease-in-out infinite;
+  --animate-gradient-shift: gradient-shift 6s ease infinite;
+  --animate-float: float 5s ease-in-out infinite;
+  --animate-fade-up: fade-up 0.6s ease-out both;
 }
 
 body {
   font-family: var(--font-sans);
   color: var(--color-ink-900);
   background-color: var(--color-ink-50);
+  background-image:
+    radial-gradient(ellipse 80% 50% at 20% -10%, color-mix(in srgb, var(--color-brand-600) 22%, transparent), transparent),
+    radial-gradient(ellipse 60% 40% at 90% 0%, color-mix(in srgb, var(--color-accent-600) 18%, transparent), transparent);
+  background-attachment: fixed;
 }
 
 /* Inter's glyph for the Vietnamese Dong sign (₫, U+20AB) draws with a full
@@ -103,8 +127,74 @@ h6 {
   margin-top: 0.25rem;
   font-size: 0.75rem;
   line-height: 1rem;
-  color: #dc2626;
+  color: #f87171;
 }
 .field-error.hidden {
   display: none;
+}
+
+/* ---- Dark Luxury component patterns ------------------------------------
+   Plain CSS (not @theme) since these combine several properties at once —
+   Tailwind utilities remain the default for one-off styling, these classes
+   are for the handful of repeated "premium" treatments used across many
+   templates (glass panels, gradient text, glow buttons, animated blobs). */
+
+.glass {
+  background-color: color-mix(in srgb, var(--color-ink-800) 6%, transparent);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid color-mix(in srgb, var(--color-ink-800) 10%, transparent);
+}
+
+.text-gradient {
+  background-image: linear-gradient(90deg, var(--color-brand-400), var(--color-accent-500));
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.btn-glow {
+  background-image: linear-gradient(135deg, var(--color-brand-600), var(--color-accent-600));
+  box-shadow: 0 0 0 1px color-mix(in srgb, var(--color-accent-500) 40%, transparent),
+    0 8px 24px -8px color-mix(in srgb, var(--color-accent-600) 60%, transparent);
+  transition: box-shadow 0.3s ease, transform 0.2s ease;
+}
+.btn-glow:hover {
+  box-shadow: 0 0 0 1px color-mix(in srgb, var(--color-accent-400) 60%, transparent),
+    0 12px 32px -6px color-mix(in srgb, var(--color-accent-500) 75%, transparent);
+  transform: translateY(-1px);
+}
+
+.card-glow {
+  transition: box-shadow 0.35s ease, transform 0.35s ease, border-color 0.35s ease;
+}
+.card-glow:hover {
+  border-color: color-mix(in srgb, var(--color-accent-500) 45%, transparent);
+  box-shadow: 0 0 40px -12px color-mix(in srgb, var(--color-accent-600) 45%, transparent);
+  transform: translateY(-4px);
+}
+
+@keyframes glow-pulse {
+  0%, 100% { opacity: 0.55; }
+  50% { opacity: 1; }
+}
+@keyframes gradient-shift {
+  0%, 100% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+}
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
+}
+@keyframes fade-up {
+  from { opacity: 0; transform: translateY(16px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
 }

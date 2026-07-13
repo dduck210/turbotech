@@ -68,7 +68,7 @@ if (is_array($one_bill)) {
     </div>
 </div>
 
-<div class="bg-white rounded-xl shadow-sm border border-ink-200 overflow-hidden mb-6">
+<div class="bg-ink-800/70 backdrop-blur-xl rounded-xl shadow-sm border border-ink-200 overflow-hidden mb-6">
     <div class="overflow-x-auto">
         <table class="w-full text-left text-sm text-ink-600">
             <thead class="bg-ink-50 text-ink-700 uppercase text-xs font-semibold">

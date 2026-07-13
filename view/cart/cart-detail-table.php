@@ -11,7 +11,7 @@
  */
 $total_amount = 0;
 ?>
-<div class="rounded-2xl border border-ink-200 bg-white shadow-sm overflow-hidden">
+<div class="rounded-2xl border border-ink-200 bg-ink-800/70 backdrop-blur-xl shadow-sm overflow-hidden">
     <div class="overflow-x-auto">
         <table class="w-full text-left text-sm">
             <thead class="bg-ink-50 text-xs uppercase tracking-wide text-ink-500">
@@ -46,7 +46,7 @@ $total_amount = 0;
     </div>
 </div>
 <div class="mt-6 flex justify-end">
-    <div class="w-full md:w-96 rounded-2xl border border-ink-200 bg-white p-6 shadow-sm">
+    <div class="w-full md:w-96 rounded-2xl border border-ink-200 bg-ink-800/70 backdrop-blur-xl p-6 shadow-sm">
         <h2 class="font-heading text-lg font-semibold text-ink-900 mb-4">Tổng giỏ hàng</h2>
         <div class="flex items-center justify-between text-sm text-ink-700">
             <span>Tổng thành tiền</span>

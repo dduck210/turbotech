@@ -16,14 +16,14 @@
     </a>
 </div>
 
-<div class="bg-white rounded-xl shadow-sm hover:shadow-md transition-shadow duration-300 overflow-hidden">
+<div class="bg-ink-800/70 backdrop-blur-xl rounded-xl shadow-sm hover:shadow-md transition-shadow duration-300 overflow-hidden">
     <div class="p-6">
         <div class="mb-6 bg-ink-50 p-4 rounded-lg border border-ink-100 flex items-center justify-between">
             <div class="text-ink-600 font-medium">Lọc sản phẩm</div>
             <form action="./index.php?act=list_product" method="POST" class="flex gap-3">
 <?= \Codemoi\Core\Csrf::field() ?>
                 <select name="idcate"
-                    class="px-4 py-2 border border-ink-200 rounded-lg focus:ring-2 focus:ring-brand-500 focus:border-brand-500 transition-colors bg-white min-w-[200px]">
+                    class="px-4 py-2 border border-ink-200 rounded-lg focus:ring-2 focus:ring-brand-500 focus:border-brand-500 transition-colors bg-ink-800/70 backdrop-blur-xl min-w-[200px]">
                     <option value="0">Tất cả danh mục</option>
                     <?php
                     foreach ($ds_loai as $loai) {
@@ -63,7 +63,7 @@
                             <td class="px-4 py-4 text-center text-ink-500 font-medium">#<?= e($pro['id_pro']) ?></td>
                             <td class="px-4 py-4">
                                 <div
-                                    class="w-14 h-14 rounded-lg border border-ink-200 overflow-hidden bg-white flex items-center justify-center">
+                                    class="w-14 h-14 rounded-lg border border-ink-200 overflow-hidden bg-ink-800/70 backdrop-blur-xl flex items-center justify-center">
                                     <img src="./uploads/<?= e($pro['img_pro']) ?>"
                                         alt="<?= e($pro['name_pro']) ?>"
                                         class="max-w-full max-h-full object-cover">

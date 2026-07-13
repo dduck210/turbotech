@@ -1,5 +1,5 @@
 <!-- Breadcrumb -->
-<div class="border-b border-ink-200 bg-white">
+<div class="border-b border-ink-200 bg-ink-800/70 backdrop-blur-xl">
     <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-3">
         <nav aria-label="Breadcrumb" class="text-sm text-ink-500">
             <ol class="flex items-center gap-2">
@@ -14,7 +14,7 @@
 <!-- Form nhập mã xác minh -->
 <div class="bg-ink-50">
     <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-12 md:py-16">
-        <div class="mx-auto max-w-md rounded-2xl border border-ink-200 bg-white shadow-sm p-6 sm:p-8">
+        <div class="mx-auto max-w-md rounded-2xl border border-ink-200 bg-ink-800/70 backdrop-blur-xl shadow-sm p-6 sm:p-8">
             <form action="index.php?act=verification" method="post" data-validate novalidate>
 <?= \Codemoi\Core\Csrf::field() ?>
                 <?php
@@ -47,7 +47,7 @@
                     <label for="verification-ma" class="block text-sm font-medium text-ink-700 mb-1.5">Mã xác nhận</label>
                     <input type="text" id="verification-ma" name="ma" placeholder="Nhập mã xác nhận"
                         data-rules="required"
-                        class="block w-full rounded-lg border border-ink-200 bg-white px-3.5 py-2.5 text-sm text-ink-900 placeholder:text-ink-300 focus:outline-none focus:ring-2 focus:ring-brand-500 focus:border-brand-500">
+                        class="block w-full rounded-lg border border-ink-200 bg-ink-800/70 backdrop-blur-xl px-3.5 py-2.5 text-sm text-ink-900 placeholder:text-ink-300 focus:outline-none focus:ring-2 focus:ring-brand-500 focus:border-brand-500">
                     <?php if (isset($error['fali'])) : ?>
                         <p class="mt-1.5 text-sm text-red-600"><?= e($error['fali']) ?></p>
                     <?php endif; ?>
