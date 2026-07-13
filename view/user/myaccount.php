@@ -290,6 +290,12 @@
                                         class="block w-full rounded-lg border border-ink-200 bg-ink-100 px-3.5 py-2.5 text-sm text-ink-500">
                                 </div>
                                 <div>
+                                    <label for="account-password-oldpass" class="block text-sm font-medium text-ink-700 mb-1.5">Mật khẩu hiện tại</label>
+                                    <input type="password" id="account-password-oldpass" name="oldpass" placeholder="Nhập mật khẩu hiện tại"
+                                        data-rules="required"
+                                        class="block w-full rounded-lg border border-ink-200 bg-white px-3.5 py-2.5 text-sm text-ink-900 placeholder:text-ink-300 focus:outline-none focus:ring-2 focus:ring-brand-500 focus:border-brand-500">
+                                </div>
+                                <div>
                                     <label for="account-password-newpass" class="block text-sm font-medium text-ink-700 mb-1.5">Mật khẩu mới</label>
                                     <input type="password" id="account-password-newpass" name="newpass" placeholder="Nhập mật khẩu mới"
                                         data-rules="required|min:6"

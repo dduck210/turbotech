@@ -29,7 +29,6 @@ class ProductController extends AdminController
             $stock = $_POST['stock'] ?? 0;
             $stock_message = trim($_POST['stock_message'] ?? '') ?: null;
             $hasFile = !empty($_FILES['img_pro']['tmp_name']);
-            $img_pro = $hasFile ? $this->moveUpload($_FILES['img_pro']) : null;
 
             if ($name_pro == null || $price == null || $short_des == null || $idcate == null) {
                 echo '<script>document.addEventListener("DOMContentLoaded",()=>Swal.fire({toast:true,position:"top-end",icon:"error",title:"Vui lòng nhập đầy đủ nội dung !",showConfirmButton:false,timer:3000}));</script>';
@@ -37,11 +36,19 @@ class ProductController extends AdminController
                 echo '<script>document.addEventListener("DOMContentLoaded",()=>Swal.fire({toast:true,position:"top-end",icon:"error",title:"Giá nhập không đúng !",showConfirmButton:false,timer:3000}));</script>';
             } elseif ($stock < 0) {
                 echo '<script>document.addEventListener("DOMContentLoaded",()=>Swal.fire({toast:true,position:"top-end",icon:"error",title:"Số lượng tồn kho không đúng !",showConfirmButton:false,timer:3000}));</script>';
-            } elseif ($img_pro === null) {
-                echo '<script>document.addEventListener("DOMContentLoaded",()=>Swal.fire({toast:true,position:"top-end",icon:"error",title:"File ảnh không phù hợp !",showConfirmButton:false,timer:3000}));</script>';
+            } elseif (!$hasFile) {
+                echo '<script>document.addEventListener("DOMContentLoaded",()=>Swal.fire({toast:true,position:"top-end",icon:"error",title:"Vui lòng chọn ảnh sản phẩm !",showConfirmButton:false,timer:3000}));</script>';
             } else {
-                Product::create($name_pro, $price, $discount, $img_pro, $short_des, $detail_des, (int) $idcate, (int) $stock, $stock_message);
-                echo '<script>document.addEventListener("DOMContentLoaded",()=>Swal.fire({toast:true,position:"top-end",icon:"success",title:"Thêm sản phẩm thành công !",showConfirmButton:false,timer:3000}));</script>';
+                // Only write the file to disk once every other field has
+                // already passed validation — avoids leaving an orphaned
+                // upload when the rest of the submission is rejected.
+                $img_pro = $this->moveUpload($_FILES['img_pro']);
+                if ($img_pro === null) {
+                    echo '<script>document.addEventListener("DOMContentLoaded",()=>Swal.fire({toast:true,position:"top-end",icon:"error",title:"File ảnh không phù hợp !",showConfirmButton:false,timer:3000}));</script>';
+                } else {
+                    Product::create($name_pro, $price, $discount, $img_pro, $short_des, $detail_des, (int) $idcate, (int) $stock, $stock_message);
+                    echo '<script>document.addEventListener("DOMContentLoaded",()=>Swal.fire({toast:true,position:"top-end",icon:"success",title:"Thêm sản phẩm thành công !",showConfirmButton:false,timer:3000}));</script>';
+                }
             }
         }
 

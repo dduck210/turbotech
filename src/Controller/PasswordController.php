@@ -91,7 +91,9 @@ class PasswordController extends Controller
             $password = $_POST['newpass'] ?? '';
             $email = $_SESSION['mail'] ?? null;
 
-            if (($_POST['repass'] ?? null) !== ($_POST['newpass'] ?? null)) {
+            if (strlen($password) < 6) {
+                $error['fail'] = 'Mật khẩu phải có ít nhất 6 ký tự !';
+            } elseif (($_POST['repass'] ?? null) !== ($_POST['newpass'] ?? null)) {
                 $error['fail'] = 'Nhập lại mật khẩu không khớp !';
             } else {
                 User::resetPassword($password, $email);

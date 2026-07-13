@@ -36,7 +36,7 @@
                         <tbody class="divide-y divide-ink-100">
                             <?php foreach ($_SESSION['mycart'] as $key => $cart) {
                                 $total_amount = $total_amount + $cart[5];
-                                $removepro = "index.php?act=removecart&idcart=" . e($key);
+                                $removepro = "index.php?act=removecart&idcart=" . e($key) . "&_token=" . urlencode(\Codemoi\Core\Csrf::token());
                                 $prodetail = "index.php?act=prodetail&idpro=" . e($cart[0]);
                             ?>
                                 <tr>
@@ -74,7 +74,7 @@
             </div>
 
             <div class="mt-6 flex flex-wrap items-center justify-between gap-3">
-                <a href="index.php?act=removecart"
+                <a href="index.php?act=removecart&_token=<?= urlencode(\Codemoi\Core\Csrf::token()) ?>"
                     data-confirm="Bạn có chắc chắn muốn xóa toàn bộ sản phẩm trong giỏ hàng?"
                     class="inline-flex items-center justify-center gap-2 rounded-lg border border-red-200 bg-white px-5 py-2.5 text-sm font-semibold text-red-600 hover:bg-red-50 transition-colors focus:outline-none focus:ring-2 focus:ring-brand-500">
                     <i class="fa-solid fa-trash" aria-hidden="true"></i> Xóa toàn bộ sản phẩm

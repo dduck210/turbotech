@@ -27,6 +27,9 @@ class AuthController extends AdminController
                 $admin = User::checkAdmin($user_name, $password);
 
                 if (is_array($admin)) {
+                    // Regenerate the session ID so a session fixed before
+                    // login can't inherit admin access once this succeeds.
+                    session_regenerate_id(true);
                     $_SESSION['admin'] = $admin;
                     Csrf::rotate();
                     $_SESSION['flash_success'] = 'Đăng nhập thành công!';
@@ -42,7 +45,14 @@ class AuthController extends AdminController
 
     public function logout(): void
     {
-        session_unset();
+        $_SESSION = [];
+
+        if (ini_get('session.use_cookies')) {
+            $params = session_get_cookie_params();
+            setcookie(session_name(), '', time() - 42000, $params['path'], $params['domain'], $params['secure'], $params['httponly']);
+        }
+
+        session_destroy();
         $this->redirect('index.php?act=login');
     }
 }

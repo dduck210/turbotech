@@ -7,11 +7,9 @@ namespace Codemoi\Controller\Admin;
  * `'/'`/`'dashboard'` and the default/no-`act` fallback (all three
  * rendered the same dashboard).
  *
- * The view itself still gathers its stats by calling the global
- * `admin/model/*.php` procedural functions directly (`loadall_user()`,
- * `loadall_cmt()`, etc.) — those are shared with the admin actions not yet
- * ported onto this scaffold (Phase 08/09), so porting them onto `Model\*`
- * here would touch files outside this phase's scope.
+ * The view itself gathers its stats directly via `Model\*` calls
+ * (`\Codemoi\Model\User::allAdmin()`, `\Codemoi\Model\Comment::allAdmin()`,
+ * `\Codemoi\Model\Stats::*`, etc. — see admin/view/dashboard.php).
  */
 class DashboardController extends AdminController
 {

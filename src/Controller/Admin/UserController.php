@@ -41,10 +41,16 @@ class UserController extends AdminController
             $full_name = trim($_POST['full_name']);
             $email_user = trim($_POST['email_user']);
             $password = $_POST['password'] ?? '';
-            $role = $_POST['role'];
+            $role = $_POST['role'] ?? '';
 
             if ($user_name === '' || $full_name === '') {
                 echo '<script>document.addEventListener("DOMContentLoaded",()=>Swal.fire({toast:true,position:"top-end",icon:"error",title:"Vui lòng nhập đầy đủ nội dung !",showConfirmButton:false,timer:3000}));</script>';
+                $this->render('update_user', ['user' => User::find($id_user)]);
+                return;
+            }
+
+            if (!in_array($role, ['0', '1'], true)) {
+                echo '<script>document.addEventListener("DOMContentLoaded",()=>Swal.fire({toast:true,position:"top-end",icon:"error",title:"Vai trò không hợp lệ !",showConfirmButton:false,timer:3000}));</script>';
                 $this->render('update_user', ['user' => User::find($id_user)]);
                 return;
             }

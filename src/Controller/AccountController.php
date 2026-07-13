@@ -73,10 +73,13 @@ class AccountController extends Controller
 
         if (isset($_POST['btn_pass'])) {
             $user_name = $user['user_name'];
+            $oldPassword = $_POST['oldpass'] ?? '';
             $password = $_POST['newpass'] ?? '';
 
-            if ($password == "") {
-                echo '<script>document.addEventListener("DOMContentLoaded",()=>Swal.fire({toast:true,position:"top-end",icon:"error",title:"Không được để trống mật khẩu mới !",showConfirmButton:false,timer:3000}));</script>';
+            if (!password_verify($oldPassword, $user['password'])) {
+                echo '<script>document.addEventListener("DOMContentLoaded",()=>Swal.fire({toast:true,position:"top-end",icon:"error",title:"Mật khẩu hiện tại không đúng !",showConfirmButton:false,timer:3000}));</script>';
+            } elseif (strlen($password) < 6) {
+                echo '<script>document.addEventListener("DOMContentLoaded",()=>Swal.fire({toast:true,position:"top-end",icon:"error",title:"Mật khẩu mới phải có ít nhất 6 ký tự !",showConfirmButton:false,timer:3000}));</script>';
             } elseif (($_POST['repass'] ?? null) !== ($_POST['newpass'] ?? null)) {
                 echo '<script>document.addEventListener("DOMContentLoaded",()=>Swal.fire({toast:true,position:"top-end",icon:"error",title:"Nhập lại mật khẩu không khớp !",showConfirmButton:false,timer:3000}));</script>';
             } else {

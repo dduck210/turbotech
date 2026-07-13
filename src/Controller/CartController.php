@@ -66,12 +66,18 @@ class CartController extends Controller
     {
         if (isset($_POST['addtocart']) && $_POST['addtocart']) {
             $id_pro = $_POST['id_pro'] ?? null;
-            $name_pro = $_POST['name_pro'] ?? '';
-            $img_pro = $_POST['img_pro'] ?? '';
-            $price = $_POST['price'] ?? 0;
             $quantity = (isset($_POST['quatity']) && $_POST['quatity'] >= 1) ? $_POST['quatity'] : 1;
 
-            if ($id_pro !== null) {
+            // name_pro/img_pro/price used to come straight from the POSTed
+            // hidden form fields — trivially edited client-side to add an
+            // item at an arbitrary price. Always re-fetch the real values
+            // server-side instead; the client can't be trusted with money.
+            $product = $id_pro !== null ? Product::one((int) $id_pro) : null;
+            $name_pro = $product['name_pro'] ?? '';
+            $img_pro = $product['img_pro'] ?? '';
+            $price = $product['price'] ?? 0;
+
+            if (is_array($product)) {
                 // Guard against adding more than is actually in stock (also
                 // blocks POSTing straight to this route for an out-of-stock
                 // product, bypassing the disabled button in the UI) —

@@ -3,6 +3,8 @@
 require __DIR__ . '/../vendor/autoload.php';
 require_once __DIR__ . '/../src/Core/helpers.php';
 
+registerErrorHandler();
+
 use Codemoi\Controller\AccountController;
 use Codemoi\Controller\AuthController;
 use Codemoi\Controller\CartController;
@@ -25,6 +27,21 @@ ob_start();
 // failure's flash message is set in time for header.php's flash display to
 // pick it up on the page it redirects back to.
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && !Csrf::verify($_POST['_token'] ?? null)) {
+    $_SESSION['flash_error'] = 'Phiên làm việc đã hết hạn, vui lòng thử lại.';
+    header('Location: ' . ($_SERVER['HTTP_REFERER'] ?? 'index.php'));
+    exit;
+}
+
+// `removecart` is a plain GET link (not a form), so the POST-only check
+// above doesn't cover it — without this, an <img src="index.php?act=
+// removecart"> on any page a logged-in visitor loads would empty their
+// cart via their own session cookie (CSRF-via-GET), mirroring the same
+// class of gap already closed on the admin side.
+if (
+    $_SERVER['REQUEST_METHOD'] === 'GET'
+    && ($_GET['act'] ?? '') === 'removecart'
+    && !Csrf::verify($_GET['_token'] ?? null)
+) {
     $_SESSION['flash_error'] = 'Phiên làm việc đã hết hạn, vui lòng thử lại.';
     header('Location: ' . ($_SERVER['HTTP_REFERER'] ?? 'index.php'));
     exit;

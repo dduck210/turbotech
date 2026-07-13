@@ -71,8 +71,13 @@ class BillController extends AdminController
 
         if (isset($_POST['btn_update']) && $_POST['btn_update']) {
             $id_bill = (int) $_POST['id_bill'];
-            $status = $_POST['status'];
-            $status_pay = $_POST['status_pay'];
+            $status = $_POST['status'] ?? '';
+            $status_pay = $_POST['status_pay'] ?? '';
+
+            if (!in_array($status, ['0', '1', '2', '3', '4'], true) || !in_array($status_pay, ['0', '1'], true)) {
+                $_SESSION['flash_error'] = 'Trạng thái không hợp lệ.';
+                $this->redirect('index.php?act=list_bill');
+            }
 
             if ($status == 3) {
                 $status_pay = 1;
