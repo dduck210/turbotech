@@ -35,12 +35,20 @@ browser after this lands).
 ## Phases
 | # | Phase | Status |
 |---|-------|--------|
-| 1 | [Design tokens + shared layout shell](phase-01-tokens-shared-layout.md) | pending |
-| 2 | [Client key pages (home/product/cart/checkout)](phase-02-client-key-pages.md) | pending |
-| 3 | [Client remaining pages (auth/account/contact/comment)](phase-03-client-remaining-pages.md) | pending |
-| 4 | [Admin shared layout + dashboard + login](phase-04-admin-shared-layout.md) | pending |
-| 5 | [Admin CRUD pages](phase-05-admin-crud-pages.md) | pending |
-| 6 | [Effects pass + CSS rebuild + full regression sweep](phase-06-effects-and-verification.md) | pending |
+| 1 | Design tokens + bulk glass-card conversion + color-pairing bug fixes | DONE |
+| 2 | Client key pages: homepage hero rebuilt, product cards glow | DONE (partial — cart/checkout/product-detail get the dark theme automatically via tokens, no bespoke layout rebuild yet) |
+| 3 | Client remaining pages (auth/account/contact/comment) | Dark theme applied automatically via tokens; no bespoke layout changes yet |
+| 4 | Admin login rebuilt (glass card, gradient heading, glow button); dashboard stat/chart cards get glow | DONE |
+| 5 | Admin CRUD list/form pages | Dark theme + glass cards applied automatically via tokens; no bespoke per-page layout changes yet |
+| 6 | CSS rebuild + full regression sweep | DONE — done after every change in this session, not just once at the end |
+
+## Remaining work if a deeper pass is wanted
+The token/glass-card/glow foundation now covers 100% of both apps (every page is dark, glassmorphic,
+and uses the new brand gradient — confirmed via full route sweep, no page reverted to the old light
+theme). What's **not** done: bespoke structural layout rewrites of individual pages beyond the homepage
+hero and dashboard/login — cart, checkout, product-detail, account, and admin CRUD forms/tables look
+dark and glassy but keep their original grid/section structure. If the owner wants those restructured
+too (not just re-skinned), that's further scoped work, page by page.
 
 ## Key constraints (carry forward from prior hardening work — do not regress)
 - Keep every `e()` escaping call intact — this is a visual-only pass, never touch how data is
