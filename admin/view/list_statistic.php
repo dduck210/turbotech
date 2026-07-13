@@ -12,7 +12,7 @@ include_once "header.php";
     <h1 class="text-3xl font-bold text-ink-800">Thống Kê Báo Cáo</h1>
 </div>
 
-<div class="mb-6 bg-ink-800/70 backdrop-blur-xl p-5 rounded-xl border border-ink-200 shadow-sm">
+<div class="mb-6 bg-ink-200/70 backdrop-blur-xl p-5 rounded-xl border border-ink-200 shadow-sm">
     <form action="./index.php?act=list_thongke" method="POST" class="flex flex-col md:flex-row gap-4 items-end">
 <?= \Codemoi\Core\Csrf::field() ?>
         <div class="flex-1 text-ink-700 font-semibold">
@@ -52,7 +52,7 @@ include_once "header.php";
 
 <div class="grid grid-cols-1 xl:grid-cols-2 gap-6 mb-8">
     <!-- Revenue Stats -->
-    <div class="bg-ink-800/70 backdrop-blur-xl rounded-xl shadow-sm border border-ink-200 overflow-hidden flex flex-col">
+    <div class="bg-ink-200/70 backdrop-blur-xl rounded-xl shadow-sm border border-ink-200 overflow-hidden flex flex-col">
         <div class="px-6 py-4 border-b border-ink-200 bg-ink-50/50 flex justify-between items-center">
             <h2 class="font-semibold text-ink-800"><i class="fas fa-chart-line text-emerald-500 mr-2"></i>Doanh thu
                 theo ngày</h2>
@@ -76,7 +76,7 @@ include_once "header.php";
                             <td class="px-6 py-3 font-medium text-ink-700">
                                 <?= date('d/m/Y', strtotime($stat['order_day'])) ?></td>
                             <td class="px-6 py-3 text-center"><span
-                                    class="bg-emerald-100 text-emerald-700 px-2.5 py-0.5 rounded-full font-medium"><?= e($stat['total_orders']) ?></span>
+                                    class="bg-emerald-500/15 text-emerald-700 px-2.5 py-0.5 rounded-full font-medium"><?= e($stat['total_orders']) ?></span>
                             </td>
                             <td class="px-6 py-3 text-right font-semibold text-emerald-600">
                                 <?= number_format($stat['total_revenue']) ?> ₫</td>
@@ -100,7 +100,7 @@ include_once "header.php";
     </div>
 
     <!-- Top Selling Products -->
-    <div class="bg-ink-800/70 backdrop-blur-xl rounded-xl shadow-sm border border-ink-200 overflow-hidden flex flex-col">
+    <div class="bg-ink-200/70 backdrop-blur-xl rounded-xl shadow-sm border border-ink-200 overflow-hidden flex flex-col">
         <div class="px-6 py-4 border-b border-ink-200 bg-ink-50/50 flex justify-between items-center">
             <h2 class="font-semibold text-ink-800"><i class="fas fa-fire text-amber-500 mr-2"></i>Sản phẩm bán chạy
             </h2>
@@ -124,7 +124,7 @@ include_once "header.php";
                                     title="<?= e($stat['name_pro']) ?>"><?= e($stat['name_pro']) ?></span>
                             </td>
                             <td class="px-6 py-3 text-center"><span
-                                    class="bg-amber-100 text-amber-700 px-2.5 py-0.5 rounded-full font-medium"><?= e($stat['total_sold']) ?></span>
+                                    class="bg-amber-500/15 text-amber-700 px-2.5 py-0.5 rounded-full font-medium"><?= e($stat['total_sold']) ?></span>
                             </td>
                             <td class="px-6 py-3 text-right font-semibold text-brand-600">
                                 <?= number_format($stat['total_revenue']) ?> ₫</td>
@@ -143,7 +143,7 @@ include_once "header.php";
 </div>
 
 <!-- Inventory Stats -->
-<div class="bg-ink-800/70 backdrop-blur-xl rounded-xl shadow-sm border border-ink-200 overflow-hidden mb-8">
+<div class="bg-ink-200/70 backdrop-blur-xl rounded-xl shadow-sm border border-ink-200 overflow-hidden mb-8">
     <div class="px-6 py-4 border-b border-ink-200 bg-ink-50/50 flex justify-between items-center">
         <h2 class="font-semibold text-ink-800"><i class="fas fa-boxes text-blue-500 mr-2"></i>Tình trạng tồn kho (Tất
             cả sản phẩm)</h2>
@@ -174,13 +174,13 @@ include_once "header.php";
                             <?= e($qty) ?></td>
                         <td class="px-6 py-3 text-center">
                             <?php if ($qty == 0): ?>
-                                <span class="bg-red-100 text-red-700 px-2.5 py-1 rounded-md text-xs font-medium"><i
+                                <span class="bg-red-500/15 text-red-700 px-2.5 py-1 rounded-md text-xs font-medium"><i
                                         class="fas fa-times-circle mr-1"></i>Hết hàng</span>
                             <?php elseif ($qty <= 5): ?>
                                 <span class="bg-orange-100 text-orange-700 px-2.5 py-1 rounded-md text-xs font-medium"><i
                                         class="fas fa-exclamation-triangle mr-1"></i>Sắp hết</span>
                             <?php else: ?>
-                                <span class="bg-emerald-100 text-emerald-700 px-2.5 py-1 rounded-md text-xs font-medium"><i
+                                <span class="bg-emerald-500/15 text-emerald-700 px-2.5 py-1 rounded-md text-xs font-medium"><i
                                         class="fas fa-check-circle mr-1"></i>Còn hàng</span>
                             <?php endif; ?>
                         </td>

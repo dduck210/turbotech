@@ -1,5 +1,5 @@
 <!-- Breadcrumb -->
-<div class="border-b border-ink-200 bg-ink-800/70 backdrop-blur-xl py-4">
+<div class="border-b border-ink-200 bg-ink-200/70 backdrop-blur-xl py-4">
     <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <ul class="flex items-center gap-2 text-sm text-ink-500">
             <li><a class="hover:text-brand-600" href="index.php">Trang chủ</a></li>
@@ -16,7 +16,7 @@
             <h2 class="font-heading text-2xl font-bold text-ink-900 sm:text-3xl">Giới thiệu về Turbotech</h2>
         </div>
 
-        <div class="mt-8 rounded-2xl border border-ink-200 bg-ink-800/70 backdrop-blur-xl p-6 shadow-sm sm:p-8">
+        <div class="mt-8 rounded-2xl border border-ink-200 bg-ink-200/70 backdrop-blur-xl p-6 shadow-sm sm:p-8">
             <h5 class="font-heading font-semibold text-brand-600">1/. Lịch Sử Hình Thành</h5>
             <p class="mt-3 pl-4 text-base leading-relaxed text-ink-700">
                 - Trong kỷ nguyên số hóa mạnh mẽ hiện nay, Internet đã trở thành một phần không thể thiếu trong cuộc
@@ -30,7 +30,7 @@
             </p>
         </div>
 
-        <div class="mt-8 rounded-2xl border border-ink-200 bg-ink-800/70 backdrop-blur-xl p-6 shadow-sm sm:p-8">
+        <div class="mt-8 rounded-2xl border border-ink-200 bg-ink-200/70 backdrop-blur-xl p-6 shadow-sm sm:p-8">
             <h5 class="font-heading font-semibold text-brand-600">2/. Tầm Nhìn</h5>
             <p class="mt-3 pl-4 text-base leading-relaxed text-ink-700">
                 - Trở thành Website bán lẻ máy tính, laptop và linh kiện chính hãng có chất lượng sản phẩm và dịch vụ
@@ -41,7 +41,7 @@
             </p>
         </div>
 
-        <div class="mt-8 rounded-2xl border border-ink-200 bg-ink-800/70 backdrop-blur-xl p-6 shadow-sm sm:p-8">
+        <div class="mt-8 rounded-2xl border border-ink-200 bg-ink-200/70 backdrop-blur-xl p-6 shadow-sm sm:p-8">
             <h5 class="font-heading font-semibold text-brand-600">4/. Lợi ích của website đối với người đang quan tâm
                 đến các sản phẩm linh kiện:</h5>
             <p class="mt-3 pl-4 text-base leading-relaxed text-ink-700">

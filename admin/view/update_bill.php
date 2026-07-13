@@ -11,7 +11,7 @@ if (is_array($one_bill)) {
     <h1 class="text-3xl font-bold text-ink-800">Cập nhật hóa đơn</h1>
 </div>
 
-<div class="bg-ink-800/70 backdrop-blur-xl rounded-xl shadow-sm hover:shadow-md transition-shadow duration-300 overflow-hidden mb-6">
+<div class="bg-ink-200/70 backdrop-blur-xl rounded-xl shadow-sm hover:shadow-md transition-shadow duration-300 overflow-hidden mb-6">
     <div class="p-6">
         <div class="form-addcate">
             <form action="./index.php?act=update_bill" method="post">
@@ -70,7 +70,7 @@ if (is_array($one_bill)) {
                     <label for="formGroupExampleInput" class="block text-sm font-medium text-ink-700 mb-1">Thanh
                         toán</label>
                     <select required
-                        class="w-full rounded-lg border border-ink-200 px-4 py-2 focus:ring-2 focus:ring-brand-500 outline-none transition-all bg-ink-800/70 backdrop-blur-xl"
+                        class="w-full rounded-lg border border-ink-200 px-4 py-2 focus:ring-2 focus:ring-brand-500 outline-none transition-all bg-ink-200/70 backdrop-blur-xl"
                         name="status_pay" id="">
                         <option value="0" <?= $status_pay == 0 ? "selected" : "" ?>>Chưa thanh toán</option>
                         <option value="1" <?= $status_pay == 1 ? "selected" : "" ?>>Đã thanh toán</option>
@@ -81,7 +81,7 @@ if (is_array($one_bill)) {
                     <label for="formGroupExampleInput" class="block text-sm font-medium text-ink-700 mb-1">Trạng
                         thái</label>
                     <select required
-                        class="w-full rounded-lg border border-ink-200 px-4 py-2 focus:ring-2 focus:ring-brand-500 outline-none transition-all bg-ink-800/70 backdrop-blur-xl"
+                        class="w-full rounded-lg border border-ink-200 px-4 py-2 focus:ring-2 focus:ring-brand-500 outline-none transition-all bg-ink-200/70 backdrop-blur-xl"
                         name="status" id="">
                         <option value="0" <?= $status == 0 ? "selected" : "" ?>>Đơn hàng mới</option>
                         <option value="1" <?= $status == 1 ? "selected" : "" ?>>Đang xử lý</option>
@@ -105,7 +105,7 @@ if (is_array($one_bill)) {
         </div>
     </div>
 </div>
-<div class="bg-ink-800/70 backdrop-blur-xl rounded-xl shadow-sm border border-ink-200 overflow-hidden mb-6">
+<div class="bg-ink-200/70 backdrop-blur-xl rounded-xl shadow-sm border border-ink-200 overflow-hidden mb-6">
     <div class="px-6 py-4 border-b border-ink-200 bg-ink-50/50 font-semibold text-ink-800">
         <h6 class="m-0">Sản phẩm</h6>
     </div>

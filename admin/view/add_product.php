@@ -5,7 +5,7 @@
     <h1 class="text-3xl font-bold text-ink-800">Thêm Sản Phẩm</h1>
 </div>
 
-<div class="bg-ink-800/70 backdrop-blur-xl rounded-xl shadow-sm hover:shadow-md transition-shadow duration-300 overflow-hidden">
+<div class="bg-ink-200/70 backdrop-blur-xl rounded-xl shadow-sm hover:shadow-md transition-shadow duration-300 overflow-hidden">
     <div class="px-6 py-4 border-b border-ink-100 bg-ink-50/50">
         <h6 class="m-0 font-bold text-brand-600">Thông tin sản phẩm mới</h6>
     </div>
@@ -65,7 +65,7 @@
                 <div>
                     <label class="block text-sm font-medium text-ink-700 mb-2">Loại sản phẩm</label>
                     <select name="idcate" data-rules="minval:1" data-msg-minval="Vui lòng chọn loại sản phẩm"
-                        class="w-full px-4 py-2 border border-ink-200 rounded-lg focus:ring-2 focus:ring-brand-500 focus:border-brand-500 transition-colors bg-ink-800/70 backdrop-blur-xl">
+                        class="w-full px-4 py-2 border border-ink-200 rounded-lg focus:ring-2 focus:ring-brand-500 focus:border-brand-500 transition-colors bg-ink-200/70 backdrop-blur-xl">
                         <option value="0">Chọn loại</option>
                         <?php
                         foreach ($ds_loai as $loai) {
@@ -81,7 +81,7 @@
                     <label class="block text-sm font-medium text-ink-700 mb-2">Hình ảnh</label>
                     <input type="file" name="img_pro" data-rules="required"
                         data-msg-required="Vui lòng chọn ảnh sản phẩm"
-                        class="w-full px-4 py-2 border border-ink-200 rounded-lg focus:ring-2 focus:ring-brand-500 focus:border-brand-500 transition-colors file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-brand-50 file:text-brand-700 hover:file:bg-brand-100">
+                        class="w-full px-4 py-2 border border-ink-200 rounded-lg focus:ring-2 focus:ring-brand-500 focus:border-brand-500 transition-colors file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-brand-500/10 file:text-brand-700 hover:file:bg-brand-500/15">
                 </div>
 
                 <!-- Mô tả ngắn -->
@@ -112,7 +112,7 @@
         </form>
 
         <?php if (isset($noticepro) && $noticepro != ""): ?>
-        <div class="mt-6 p-4 bg-green-50 border border-green-200 text-green-700 rounded-lg flex items-center">
+        <div class="mt-6 p-4 bg-green-500/10 border border-green-500/30 text-green-700 rounded-lg flex items-center">
             <i class="fas fa-check-circle mr-2"></i>
             <?= e($noticepro) ?>
         </div>

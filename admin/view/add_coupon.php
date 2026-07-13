@@ -11,7 +11,7 @@ include_once "header.php";
     </a>
 </div>
 
-<div class="bg-ink-800/70 backdrop-blur-xl rounded-xl shadow-sm border border-ink-200 overflow-hidden mb-6">
+<div class="bg-ink-200/70 backdrop-blur-xl rounded-xl shadow-sm border border-ink-200 overflow-hidden mb-6">
     <div class="px-6 py-4 border-b border-ink-200 bg-ink-50/50 font-semibold text-ink-800">
         Thông tin mã giảm giá
     </div>
@@ -29,7 +29,7 @@ include_once "header.php";
                 <div>
                     <label class="block text-sm font-medium text-ink-700 mb-2">Loại giảm giá</label>
                     <select name="discount_type"
-                        class="w-full rounded-lg border-ink-300 px-4 py-2 border focus:ring-2 focus:ring-brand-500 outline-none transition-all bg-ink-800/70 backdrop-blur-xl">
+                        class="w-full rounded-lg border-ink-300 px-4 py-2 border focus:ring-2 focus:ring-brand-500 outline-none transition-all bg-ink-200/70 backdrop-blur-xl">
                         <option value="1">Giảm theo phần trăm (%)</option>
                         <option value="2">Giảm số tiền cố định (VNĐ)</option>
                     </select>
@@ -61,7 +61,7 @@ include_once "header.php";
                 <div>
                     <label class="block text-sm font-medium text-ink-700 mb-2">Áp dụng cho mặt hàng</label>
                     <select name="product_id"
-                        class="w-full rounded-lg border-ink-300 px-4 py-2 border focus:ring-2 focus:ring-brand-500 outline-none transition-all bg-ink-800/70 backdrop-blur-xl">
+                        class="w-full rounded-lg border-ink-300 px-4 py-2 border focus:ring-2 focus:ring-brand-500 outline-none transition-all bg-ink-200/70 backdrop-blur-xl">
                         <option value="0">Tất cả sản phẩm</option>
                         <?php foreach ($listpro as $pro): ?>
                             <option value="<?= e($pro['id_pro']) ?>"><?= e($pro['name_pro']) ?></option>
@@ -91,7 +91,7 @@ include_once "header.php";
                 <div>
                     <label class="block text-sm font-medium text-ink-700 mb-2">Trạng thái</label>
                     <select name="status"
-                        class="w-full rounded-lg border-ink-300 px-4 py-2 border focus:ring-2 focus:ring-brand-500 outline-none transition-all bg-ink-800/70 backdrop-blur-xl">
+                        class="w-full rounded-lg border-ink-300 px-4 py-2 border focus:ring-2 focus:ring-brand-500 outline-none transition-all bg-ink-200/70 backdrop-blur-xl">
                         <option value="1">Đang hoạt động</option>
                         <option value="0">Tạm tắt</option>
                     </select>

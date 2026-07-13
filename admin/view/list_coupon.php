@@ -10,7 +10,7 @@
     </a>
 </div>
 
-<div class="bg-ink-800/70 backdrop-blur-xl rounded-xl shadow-sm hover:shadow-md transition-shadow duration-300 overflow-hidden mb-6">
+<div class="bg-ink-200/70 backdrop-blur-xl rounded-xl shadow-sm hover:shadow-md transition-shadow duration-300 overflow-hidden mb-6">
     <div class="p-6">
         <div class="overflow-x-auto">
             <table class="w-full text-left border-collapse">
@@ -33,7 +33,7 @@
                     <tr class="border-b border-ink-100 hover:bg-ink-50 transition-colors">
                         <td class="px-4 py-4 font-medium text-ink-900">#<?= e($coupon['id_coupon']) ?></td>
                         <td class="px-4 py-4"><span
-                                class="bg-brand-100 text-brand-700 px-3 py-1 rounded-md font-mono font-bold"><?= e($coupon['code']) ?></span>
+                                class="bg-brand-500/15 text-brand-700 px-3 py-1 rounded-md font-mono font-bold"><?= e($coupon['code']) ?></span>
                         </td>
                         <td class="px-4 py-4">
                             <?php if ($coupon['discount_type'] == 1): ?>
@@ -72,20 +72,20 @@
                         <td class="px-4 py-4 text-center">
                             <?php if ($coupon['status'] == 1): ?>
                             <span
-                                class="bg-emerald-100 text-emerald-700 px-3 py-1 rounded-full text-xs font-medium">Hoạt
+                                class="bg-emerald-500/15 text-emerald-700 px-3 py-1 rounded-full text-xs font-medium">Hoạt
                                 động</span>
                             <?php else: ?>
-                            <span class="bg-red-100 text-red-700 px-3 py-1 rounded-full text-xs font-medium">Đã
+                            <span class="bg-red-500/15 text-red-700 px-3 py-1 rounded-full text-xs font-medium">Đã
                                 tắt</span>
                             <?php endif; ?>
                         </td>
                         <td class="px-4 py-4 text-center">
                             <div class="flex items-center justify-center gap-2">
                                 <a href="index.php?act=edit_coupon&id_coupon=<?= e($coupon['id_coupon']) ?>"
-                                    class="p-2 text-amber-600 bg-amber-50 rounded-lg hover:bg-amber-100 transition-all active:scale-90"
+                                    class="p-2 text-amber-600 bg-amber-500/10 rounded-lg hover:bg-amber-500/15 transition-all active:scale-90"
                                     title="Sửa"><i class="fas fa-edit"></i></a>
                                 <a href="index.php?act=delete_coupon&id_coupon=<?= e($coupon['id_coupon']) ?>&_token=<?= urlencode(\Codemoi\Core\Csrf::token()) ?>"
-                                    class="p-2 text-red-600 bg-red-50 rounded-lg hover:bg-red-100 transition-all active:scale-90"
+                                    class="p-2 text-red-600 bg-red-500/10 rounded-lg hover:bg-red-500/15 transition-all active:scale-90"
                                     data-confirm="Bạn có chắc chắn muốn xóa mã giảm giá này?" title="Xóa"><i
                                         class="fas fa-trash"></i></a>
                             </div>
@@ -95,7 +95,7 @@
                     <?php if (empty($listcoupon)): ?>
                     <tr>
                         <td colspan="8" class="px-4 py-16 text-center">
-                            <i class="fas fa-tag text-5xl text-ink-300" aria-hidden="true"></i>
+                            <i class="fas fa-tag text-5xl text-ink-600" aria-hidden="true"></i>
                             <p class="mt-4 font-semibold text-ink-700">Chưa có mã giảm giá nào</p>
                             <p class="mt-1 text-sm text-ink-500">Bấm "Thêm mã mới" ở trên để tạo mã giảm giá đầu tiên.</p>
                         </td>

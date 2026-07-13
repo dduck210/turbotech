@@ -16,14 +16,14 @@
     </a>
 </div>
 
-<div class="bg-ink-800/70 backdrop-blur-xl rounded-xl shadow-sm hover:shadow-md transition-shadow duration-300 overflow-hidden">
+<div class="bg-ink-200/70 backdrop-blur-xl rounded-xl shadow-sm hover:shadow-md transition-shadow duration-300 overflow-hidden">
     <div class="p-6">
         <div class="mb-6 bg-ink-50 p-4 rounded-lg border border-ink-100 flex items-center justify-between">
             <div class="text-ink-600 font-medium">Lọc sản phẩm</div>
             <form action="./index.php?act=list_product" method="POST" class="flex gap-3">
 <?= \Codemoi\Core\Csrf::field() ?>
                 <select name="idcate"
-                    class="px-4 py-2 border border-ink-200 rounded-lg focus:ring-2 focus:ring-brand-500 focus:border-brand-500 transition-colors bg-ink-800/70 backdrop-blur-xl min-w-[200px]">
+                    class="px-4 py-2 border border-ink-200 rounded-lg focus:ring-2 focus:ring-brand-500 focus:border-brand-500 transition-colors bg-ink-200/70 backdrop-blur-xl min-w-[200px]">
                     <option value="0">Tất cả danh mục</option>
                     <?php
                     foreach ($ds_loai as $loai) {
@@ -37,7 +37,7 @@
                     ?>
                 </select>
                 <input type="submit" value="Lọc" name="btn_filter"
-                    class="px-5 py-2 bg-ink-800 text-white font-medium rounded-lg hover:bg-ink-900 focus:ring-4 focus:ring-ink-300 transition-all active:scale-[0.97] cursor-pointer">
+                    class="px-5 py-2 bg-ink-200 text-white font-medium rounded-lg hover:bg-ink-100 focus:ring-4 focus:ring-ink-300 transition-all active:scale-[0.97] cursor-pointer">
             </form>
         </div>
 
@@ -63,7 +63,7 @@
                             <td class="px-4 py-4 text-center text-ink-500 font-medium">#<?= e($pro['id_pro']) ?></td>
                             <td class="px-4 py-4">
                                 <div
-                                    class="w-14 h-14 rounded-lg border border-ink-200 overflow-hidden bg-ink-800/70 backdrop-blur-xl flex items-center justify-center">
+                                    class="w-14 h-14 rounded-lg border border-ink-200 overflow-hidden bg-ink-200/70 backdrop-blur-xl flex items-center justify-center">
                                     <img src="./uploads/<?= e($pro['img_pro']) ?>"
                                         alt="<?= e($pro['name_pro']) ?>"
                                         class="max-w-full max-h-full object-cover">
@@ -80,7 +80,7 @@
                             <td class="px-4 py-4 text-center">
                                 <?php if ($pro['discount'] > 0): ?>
                                     <span
-                                        class="inline-flex items-center justify-center px-2.5 py-1 text-xs font-bold rounded-full bg-red-100 text-red-600">
+                                        class="inline-flex items-center justify-center px-2.5 py-1 text-xs font-bold rounded-full bg-red-500/15 text-red-600">
                                         -<?= e($pro['discount']) ?>%
                                     </span>
                                 <?php else: ?>
@@ -90,12 +90,12 @@
                             <td class="px-4 py-4 text-center">
                                 <?php if ((int) $pro['stock'] <= 0) : ?>
                                     <span
-                                        class="inline-flex items-center justify-center px-2.5 py-1 border border-red-200 text-xs font-medium rounded-full bg-red-50 text-red-600">
+                                        class="inline-flex items-center justify-center px-2.5 py-1 border border-red-500/30 text-xs font-medium rounded-full bg-red-500/10 text-red-600">
                                         Hết hàng
                                     </span>
                                 <?php else : ?>
                                     <span
-                                        class="inline-flex items-center justify-center px-2.5 py-1 border border-green-200 text-xs font-medium rounded-full bg-green-50 text-green-700">
+                                        class="inline-flex items-center justify-center px-2.5 py-1 border border-green-500/30 text-xs font-medium rounded-full bg-green-500/10 text-green-700">
                                         <?= e($pro['stock']) ?>
                                     </span>
                                 <?php endif; ?>
@@ -106,12 +106,12 @@
                             <td class="px-4 py-4 text-center">
                                 <div class="flex items-center justify-center gap-2">
                                     <a href="./index.php?act=edit_product&id_pro=<?= e($pro['id_pro']) ?>"
-                                        class="p-2 text-yellow-600 bg-yellow-50 rounded-lg hover:bg-yellow-100 transition-all active:scale-90"
+                                        class="p-2 text-yellow-600 bg-yellow-500/10 rounded-lg hover:bg-yellow-500/15 transition-all active:scale-90"
                                         title="Sửa">
                                         <i class="fa-solid fa-pen-to-square"></i>
                                     </a>
                                     <a href="./index.php?act=delete_product&id_pro=<?= e($pro['id_pro']) ?>&_token=<?= urlencode(\Codemoi\Core\Csrf::token()) ?>"
-                                        class="p-2 text-red-600 bg-red-50 rounded-lg hover:bg-red-100 transition-all active:scale-90"
+                                        class="p-2 text-red-600 bg-red-500/10 rounded-lg hover:bg-red-500/15 transition-all active:scale-90"
                                         data-confirm="Bạn có chắc chắn muốn xóa không?" title="Xóa">
                                         <i class="fa-solid fa-trash"></i>
                                     </a>

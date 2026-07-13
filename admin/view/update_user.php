@@ -1,6 +1,6 @@
 <?php include_once "header.php" ?>
 
-<div class="bg-ink-800/70 backdrop-blur-xl rounded-xl shadow-sm border border-ink-200 overflow-hidden mb-6">
+<div class="bg-ink-200/70 backdrop-blur-xl rounded-xl shadow-sm border border-ink-200 overflow-hidden mb-6">
   <div class="px-6 py-4 border-b border-ink-200 bg-ink-50/50 font-semibold text-ink-800">
     <h6 class="m-0 text-emerald-600">Cập nhật tài khoản người dùng</h6>
   </div>
@@ -58,7 +58,7 @@
                 echo "Thành viên";
               } ?></span></label>
           <select required
-            class="w-full rounded-lg border border-ink-200 px-4 py-2 focus:ring-2 focus:ring-brand-500 outline-none transition-all bg-ink-800/70 backdrop-blur-xl"
+            class="w-full rounded-lg border border-ink-200 px-4 py-2 focus:ring-2 focus:ring-brand-500 outline-none transition-all bg-ink-200/70 backdrop-blur-xl"
             name="role" id="">
             <?php $arr = array('0' => 'Thành Viên', '1' => 'Admin'); ?>
             <?php foreach ($arr as $key => $value) { ?>

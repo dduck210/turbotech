@@ -7,7 +7,7 @@ if (is_array($one_bill)) {
 ?>
 
 
-<div class="bg-emerald-50 border border-emerald-200 text-emerald-700 px-4 py-3 rounded-lg mb-4 font-semibold">
+<div class="bg-emerald-500/10 border border-emerald-500/30 text-emerald-700 px-4 py-3 rounded-lg mb-4 font-semibold">
     Chi tiết đơn hàng UTP-<?= e($id_bill) ?>
 </div>
 <div class="bg-ink-50 rounded-xl shadow-sm border border-ink-200 overflow-hidden mb-6 p-6">
@@ -68,7 +68,7 @@ if (is_array($one_bill)) {
     </div>
 </div>
 
-<div class="bg-ink-800/70 backdrop-blur-xl rounded-xl shadow-sm border border-ink-200 overflow-hidden mb-6">
+<div class="bg-ink-200/70 backdrop-blur-xl rounded-xl shadow-sm border border-ink-200 overflow-hidden mb-6">
     <div class="overflow-x-auto">
         <table class="w-full text-left text-sm text-ink-600">
             <thead class="bg-ink-50 text-ink-700 uppercase text-xs font-semibold">

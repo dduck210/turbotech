@@ -11,7 +11,7 @@ if (is_array($one_loai)) {
   <h1 class="text-3xl font-bold text-ink-800">Cập nhật loại máy tính</h1>
 </div>
 
-<div class="bg-ink-800/70 backdrop-blur-xl rounded-xl shadow-sm hover:shadow-md transition-shadow duration-300 overflow-hidden mb-6">
+<div class="bg-ink-200/70 backdrop-blur-xl rounded-xl shadow-sm hover:shadow-md transition-shadow duration-300 overflow-hidden mb-6">
   <div class="p-6">
     <div class="form-addcate">
       <form action="index.php?act=update_category" method="post" data-validate novalidate>

@@ -9,8 +9,8 @@ $categoriesActive = in_array($current_act, ['add_category', 'list_category', 'ed
 function nav_link_class(bool $active): string
 {
     return $active
-        ? 'flex items-center px-3 py-2.5 rounded-lg bg-ink-800 text-white transition-colors group'
-        : 'flex items-center px-3 py-2.5 rounded-lg hover:bg-ink-800 text-ink-300 transition-colors group';
+        ? 'flex items-center px-3 py-2.5 rounded-lg bg-ink-200 text-white transition-colors group'
+        : 'flex items-center px-3 py-2.5 rounded-lg hover:bg-ink-200 text-ink-600 transition-colors group';
 }
 
 function nav_icon_class(bool $active): string
@@ -23,16 +23,16 @@ function nav_icon_class(bool $active): string
 function nav_submenu_toggle_class(bool $active): string
 {
     return $active
-        ? 'px-3 py-2.5 rounded-lg bg-ink-800 text-white transition-colors flex items-center justify-between cursor-pointer group'
-        : 'px-3 py-2.5 rounded-lg hover:bg-ink-800 text-ink-300 transition-colors flex items-center justify-between cursor-pointer group';
+        ? 'px-3 py-2.5 rounded-lg bg-ink-200 text-white transition-colors flex items-center justify-between cursor-pointer group'
+        : 'px-3 py-2.5 rounded-lg hover:bg-ink-200 text-ink-600 transition-colors flex items-center justify-between cursor-pointer group';
 }
 ?>
-<div id="mobile-sidebar-backdrop" class="hidden fixed inset-0 bg-ink-900/50 z-30 md:hidden"></div>
+<div id="mobile-sidebar-backdrop" class="hidden fixed inset-0 bg-ink-100/50 z-30 md:hidden"></div>
 <aside id="mobile-sidebar-nav"
-    class="w-64 bg-ink-900 text-ink-300 shrink-0 hidden md:flex flex-col shadow-2xl fixed inset-y-0 left-0 z-40 md:relative md:inset-auto md:z-20">
+    class="w-64 bg-ink-100 text-ink-600 shrink-0 hidden md:flex flex-col shadow-2xl fixed inset-y-0 left-0 z-40 md:relative md:inset-auto md:z-20">
     <!-- Logo -->
     <a href="index.php?act=admin"
-        class="flex items-center justify-center h-20 border-b border-ink-800 hover:bg-ink-800/50 transition-colors group">
+        class="flex items-center justify-center h-20 border-b border-ink-800 hover:bg-ink-200/50 transition-colors group">
         <div
             class="bg-brand-600 text-white p-2.5 rounded-xl group-hover:scale-110 transition-transform shadow-lg shadow-brand-500/30 flex items-center justify-center">
             <i class="fas fa-laugh-wink text-xl"></i>

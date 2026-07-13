@@ -6,38 +6,66 @@
  * @var array $list_bestsp Best-selling products (Codemoi\Model\Product::bestSellers()).
  */
 ?>
-<!-- HERO BANNER (was: slick .main-slider carousel -> now a static responsive grid, no JS needed) -->
-<section class="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
-    <div class="grid grid-cols-1 gap-6 md:grid-cols-2">
-        <!-- Begin Hero Banner Item -->
-        <div class="relative flex min-h-[280px] items-end overflow-hidden rounded-2xl bg-ink-900 bg-cover bg-center sm:min-h-[380px]"
-            style="background-image:url('./assets/images/slider/anhmoi.jpg')">
-            <div class="relative z-10 p-6 sm:p-8">
-                <a class="inline-flex items-center justify-center gap-2 rounded-lg bg-brand-600 px-5 py-2.5 text-sm font-semibold text-white shadow-sm transition-colors hover:bg-brand-700 focus:outline-none focus:ring-2 focus:ring-brand-500 focus:ring-offset-2"
-                    href="index.php?act=product">Mua ngay</a>
+<!-- HERO -->
+<section class="relative overflow-hidden">
+    <!-- Ambient glow blobs -->
+    <div class="pointer-events-none absolute -top-32 -left-32 h-96 w-96 rounded-full bg-brand-600/25 blur-3xl animate-float" aria-hidden="true"></div>
+    <div class="pointer-events-none absolute top-1/3 -right-40 h-[28rem] w-[28rem] rounded-full bg-accent-600/20 blur-3xl animate-float" style="animation-delay:-2.5s" aria-hidden="true"></div>
+
+    <div class="relative mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-8 lg:py-24">
+        <div class="mx-auto max-w-3xl text-center animate-fade-up">
+            <span class="glass inline-flex items-center gap-2 rounded-full px-4 py-1.5 text-xs font-semibold uppercase tracking-wider text-accent-400">
+                <i class="fa-solid fa-bolt" aria-hidden="true"></i> Laptop gaming &amp; hiệu năng cao
+            </span>
+            <h1 class="mt-6 font-heading text-4xl font-extrabold leading-tight sm:text-5xl lg:text-6xl">
+                Nâng tầm <span class="text-gradient">trải nghiệm</span><br>công nghệ của bạn
+            </h1>
+            <p class="mx-auto mt-6 max-w-xl text-base text-ink-500 sm:text-lg">
+                Turbotech — laptop gaming và hiệu năng cao chính hãng, cấu hình mạnh mẽ, giá tốt nhất thị trường.
+            </p>
+            <div class="mt-8 flex flex-wrap items-center justify-center gap-4">
+                <a href="index.php?act=product"
+                    class="btn-glow inline-flex items-center justify-center gap-2 rounded-xl px-7 py-3.5 text-sm font-semibold text-white transition-transform">
+                    Mua ngay <i class="fa-solid fa-arrow-right" aria-hidden="true"></i>
+                </a>
+                <a href="index.php?act=introduce"
+                    class="glass inline-flex items-center justify-center gap-2 rounded-xl px-7 py-3.5 text-sm font-semibold text-ink-800 transition-colors hover:text-brand-400">
+                    Tìm hiểu thêm
+                </a>
             </div>
         </div>
-        <!-- Hero Banner Item End Here -->
-        <!-- Begin Hero Banner Item -->
-        <div class="relative flex min-h-[280px] items-end overflow-hidden rounded-2xl bg-ink-900 bg-cover bg-center sm:min-h-[380px]"
-            style="background-image:url('./assets/images/slider/anhmoi2.jpg')">
-            <div class="relative z-10 p-6 sm:p-8">
-                <a class="inline-flex items-center justify-center gap-2 rounded-lg bg-brand-600 px-5 py-2.5 text-sm font-semibold text-white shadow-sm transition-colors hover:bg-brand-700 focus:outline-none focus:ring-2 focus:ring-brand-500 focus:ring-offset-2"
-                    href="index.php?act=product">Mua ngay</a>
+
+        <div class="mt-14 grid grid-cols-1 gap-6 md:grid-cols-2">
+            <!-- Begin Hero Banner Item -->
+            <div class="card-glow glass relative flex min-h-[240px] items-end overflow-hidden rounded-2xl bg-cover bg-center sm:min-h-[340px]"
+                style="background-image:linear-gradient(0deg, rgba(5,6,10,.85), rgba(5,6,10,.15)), url('./assets/images/slider/anhmoi.jpg')">
+                <div class="relative z-10 p-6 sm:p-8">
+                    <a class="btn-glow inline-flex items-center justify-center gap-2 rounded-lg px-5 py-2.5 text-sm font-semibold text-white"
+                        href="index.php?act=product">Mua ngay</a>
+                </div>
             </div>
+            <!-- Hero Banner Item End Here -->
+            <!-- Begin Hero Banner Item -->
+            <div class="card-glow glass relative flex min-h-[240px] items-end overflow-hidden rounded-2xl bg-cover bg-center sm:min-h-[340px]"
+                style="background-image:linear-gradient(0deg, rgba(5,6,10,.85), rgba(5,6,10,.15)), url('./assets/images/slider/anhmoi2.jpg')">
+                <div class="relative z-10 p-6 sm:p-8">
+                    <a class="btn-glow inline-flex items-center justify-center gap-2 rounded-lg px-5 py-2.5 text-sm font-semibold text-white"
+                        href="index.php?act=product">Mua ngay</a>
+                </div>
+            </div>
+            <!-- Hero Banner Item End Here -->
         </div>
-        <!-- Hero Banner Item End Here -->
     </div>
 </section>
-<!-- HERO BANNER End Here -->
+<!-- HERO End Here -->
 
 <!-- FREE SHIP -->
-<section class="border-y border-ink-200 bg-ink-800/70 backdrop-blur-xl py-12 md:py-16">
+<section class="border-y border-ink-200 bg-ink-200/70 backdrop-blur-xl py-12 md:py-16">
     <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div class="grid grid-cols-2 gap-6 sm:grid-cols-4">
             <!-- Begin Shipping Information Item -->
             <div class="flex flex-col items-center gap-3 text-center">
-                <div class="flex h-14 w-14 items-center justify-center rounded-full bg-brand-50 text-2xl text-brand-600">
+                <div class="flex h-14 w-14 items-center justify-center rounded-full bg-brand-500/10 text-2xl text-brand-400 ring-1 ring-brand-500/30">
                     <i class="fa fa-truck" aria-hidden="true"></i>
                 </div>
                 <div>
@@ -48,7 +76,7 @@
             <!-- Shipping Information Item End Here -->
             <!-- Begin Shipping Information Item -->
             <div class="flex flex-col items-center gap-3 text-center">
-                <div class="flex h-14 w-14 items-center justify-center rounded-full bg-brand-50 text-2xl text-brand-600">
+                <div class="flex h-14 w-14 items-center justify-center rounded-full bg-brand-500/10 text-2xl text-brand-400 ring-1 ring-brand-500/30">
                     <i class="fa fa-credit-card" aria-hidden="true"></i>
                 </div>
                 <div>
@@ -59,7 +87,7 @@
             <!-- Shipping Information Item End Here -->
             <!-- Begin Shipping Information Item -->
             <div class="flex flex-col items-center gap-3 text-center">
-                <div class="flex h-14 w-14 items-center justify-center rounded-full bg-brand-50 text-2xl text-brand-600">
+                <div class="flex h-14 w-14 items-center justify-center rounded-full bg-brand-500/10 text-2xl text-brand-400 ring-1 ring-brand-500/30">
                     <i class="fa fa-calendar" aria-hidden="true"></i>
                 </div>
                 <div>
@@ -70,7 +98,7 @@
             <!-- Shipping Information Item End Here -->
             <!-- Begin Shipping Information Item -->
             <div class="flex flex-col items-center gap-3 text-center">
-                <div class="flex h-14 w-14 items-center justify-center rounded-full bg-brand-50 text-2xl text-brand-600">
+                <div class="flex h-14 w-14 items-center justify-center rounded-full bg-brand-500/10 text-2xl text-brand-400 ring-1 ring-brand-500/30">
                     <i class="fas fa-star-of-life" aria-hidden="true"></i>
                 </div>
                 <div>
@@ -93,11 +121,11 @@
              Tab component's click delegation never toggles .active), so don't rely on it. Same
              proven pattern as the account-page tabs in view/user/myaccount.php. -->
         <div class="mb-8 flex flex-wrap justify-center gap-3">
-            <a class="home-tab-trigger active inline-flex min-h-11 items-center justify-center rounded-full border border-ink-200 bg-ink-800/70 backdrop-blur-xl px-4 py-2.5 text-sm font-semibold text-ink-700 transition-colors hover:bg-ink-50 focus:outline-none focus:ring-2 focus:ring-brand-500 [&.active]:border-brand-600! [&.active]:bg-brand-600! [&.active]:text-white!"
+            <a class="home-tab-trigger active inline-flex min-h-11 items-center justify-center rounded-full border border-ink-200 bg-ink-200/70 backdrop-blur-xl px-4 py-2.5 text-sm font-semibold text-ink-700 transition-colors hover:bg-ink-50 focus:outline-none focus:ring-2 focus:ring-brand-500 [&.active]:border-brand-600! [&.active]:bg-brand-600! [&.active]:text-white!"
                 data-tab-target="new-arrival" href="#new-arrival"><span>Sản phẩm mới</span></a>
-            <a class="home-tab-trigger inline-flex min-h-11 items-center justify-center rounded-full border border-ink-200 bg-ink-800/70 backdrop-blur-xl px-4 py-2.5 text-sm font-semibold text-ink-700 transition-colors hover:bg-ink-50 focus:outline-none focus:ring-2 focus:ring-brand-500 [&.active]:border-brand-600! [&.active]:bg-brand-600! [&.active]:text-white!"
+            <a class="home-tab-trigger inline-flex min-h-11 items-center justify-center rounded-full border border-ink-200 bg-ink-200/70 backdrop-blur-xl px-4 py-2.5 text-sm font-semibold text-ink-700 transition-colors hover:bg-ink-50 focus:outline-none focus:ring-2 focus:ring-brand-500 [&.active]:border-brand-600! [&.active]:bg-brand-600! [&.active]:text-white!"
                 data-tab-target="bestseller" href="#bestseller"><span>Sản phẩm bán chạy</span></a>
-            <a class="home-tab-trigger inline-flex min-h-11 items-center justify-center rounded-full border border-ink-200 bg-ink-800/70 backdrop-blur-xl px-4 py-2.5 text-sm font-semibold text-ink-700 transition-colors hover:bg-ink-50 focus:outline-none focus:ring-2 focus:ring-brand-500 [&.active]:border-brand-600! [&.active]:bg-brand-600! [&.active]:text-white!"
+            <a class="home-tab-trigger inline-flex min-h-11 items-center justify-center rounded-full border border-ink-200 bg-ink-200/70 backdrop-blur-xl px-4 py-2.5 text-sm font-semibold text-ink-700 transition-colors hover:bg-ink-50 focus:outline-none focus:ring-2 focus:ring-brand-500 [&.active]:border-brand-600! [&.active]:bg-brand-600! [&.active]:text-white!"
                 data-tab-target="featured-products" href="#featured-products"><span>Sản phẩm nổi bật</span></a>
         </div>
 
@@ -107,7 +135,7 @@
                     <!-- Phần show sản phẩm mới nhất -->
                     <?php
                     foreach ($prohome as $pro) { ?>
-                        <div class="group relative overflow-hidden rounded-2xl border border-ink-200 bg-ink-800/70 backdrop-blur-xl shadow-sm transition-shadow hover:shadow-md">
+                        <div class="group relative overflow-hidden rounded-2xl border border-ink-200 bg-ink-200/70 backdrop-blur-xl shadow-sm transition-shadow hover:shadow-md">
                             <div class="relative aspect-square overflow-hidden bg-ink-100">
                                 <a class="block h-full w-full"
                                     href="index.php?act=prodetail&idpro=<?= e($pro['id_pro']) ?>">
@@ -115,14 +143,14 @@
                                         alt="<?= e($pro['name_pro']) ?>" />
                                 </a>
                                 <span
-                                    class="absolute top-2 right-2 inline-flex items-center rounded-full bg-brand-50 px-3 py-1 text-xs font-medium text-brand-700">Mới</span>
+                                    class="absolute top-2 right-2 inline-flex items-center rounded-full bg-brand-500/10 px-3 py-1 text-xs font-medium text-brand-700">Mới</span>
                                 <?php if (!isset($pro['discount']) || $pro['discount'] <= 0) { ?>
                                 <?php } else { ?>
                                     <span
                                         class="absolute top-2 left-2 rounded-full bg-red-600 px-2 py-1 text-xs font-bold text-white">-<?= e($pro['discount']) ?>%</span>
                                 <?php } ?>
                                 <?php if ((int) $pro['stock'] <= 0) { ?>
-                                    <span class="absolute bottom-2 left-2 rounded-full bg-ink-900/80 px-2 py-1 text-xs font-bold text-white"><?= htmlspecialchars($pro['stock_message'] ?: 'Hết hàng') ?></span>
+                                    <span class="absolute bottom-2 left-2 rounded-full bg-ink-100/80 px-2 py-1 text-xs font-bold text-white"><?= htmlspecialchars($pro['stock_message'] ?: 'Hết hàng') ?></span>
                                 <?php } ?>
                             </div>
                             <div class="p-4">
@@ -136,7 +164,7 @@
                                     <?php } else { ?>
                                         <span
                                             class="font-bold text-brand-600"><?= number_format(($pro['price']) - (($pro['price']) * ($pro['discount']) / 100)) ?>₫</span>
-                                        <span class="text-sm text-ink-300 line-through"><?= number_format($pro['price']) ?>₫</span>
+                                        <span class="text-sm text-ink-600 line-through"><?= number_format($pro['price']) ?>₫</span>
                                     <?php } ?>
                                 </div>
                                 <?php if ((int) $pro['stock'] > 0) { ?>
@@ -151,7 +179,7 @@
                                     </form>
                                 <?php } else { ?>
                                     <button type="button" disabled
-                                        class="inline-flex w-full items-center justify-center gap-2 rounded-lg bg-ink-100 px-5 py-2.5 text-sm font-semibold text-ink-300 cursor-not-allowed">
+                                        class="inline-flex w-full items-center justify-center gap-2 rounded-lg bg-ink-100 px-5 py-2.5 text-sm font-semibold text-ink-600 cursor-not-allowed">
                                         <?= htmlspecialchars($pro['stock_message'] ?: 'Hết hàng') ?>
                                     </button>
                                 <?php } ?>
@@ -166,21 +194,21 @@
                     <!-- Sản phẩm bán chạy -->
                     <?php
                     foreach ($list_bestsp as $pro) { ?>
-                        <div class="group relative overflow-hidden rounded-2xl border border-ink-200 bg-ink-800/70 backdrop-blur-xl shadow-sm transition-shadow hover:shadow-md">
+                        <div class="group relative overflow-hidden rounded-2xl border border-ink-200 bg-ink-200/70 backdrop-blur-xl shadow-sm transition-shadow hover:shadow-md">
                             <div class="relative aspect-square overflow-hidden bg-ink-100">
                                 <a class="block h-full w-full" href="index.php?act=prodetail&idpro=<?= e($pro['id_pro']) ?>">
                                     <img class="h-full w-full object-cover" src="admin/uploads/<?= e($pro['img_pro']) ?>"
                                         alt="<?= e($pro['name_pro']) ?>" />
                                 </a>
                                 <span
-                                    class="absolute top-2 right-2 inline-flex items-center rounded-full bg-brand-50 px-3 py-1 text-xs font-medium text-brand-700">Hot</span>
+                                    class="absolute top-2 right-2 inline-flex items-center rounded-full bg-brand-500/10 px-3 py-1 text-xs font-medium text-brand-700">Hot</span>
                                 <?php if (!isset($pro['discount']) || $pro['discount'] <= 0) { ?>
                                 <?php } else { ?>
                                     <span
                                         class="absolute top-2 left-2 rounded-full bg-red-600 px-2 py-1 text-xs font-bold text-white">-<?= e($pro['discount']) ?>%</span>
                                 <?php } ?>
                                 <?php if ((int) $pro['stock'] <= 0) { ?>
-                                    <span class="absolute bottom-2 left-2 rounded-full bg-ink-900/80 px-2 py-1 text-xs font-bold text-white"><?= htmlspecialchars($pro['stock_message'] ?: 'Hết hàng') ?></span>
+                                    <span class="absolute bottom-2 left-2 rounded-full bg-ink-100/80 px-2 py-1 text-xs font-bold text-white"><?= htmlspecialchars($pro['stock_message'] ?: 'Hết hàng') ?></span>
                                 <?php } ?>
                             </div>
                             <div class="p-4">
@@ -194,7 +222,7 @@
                                     <?php } else { ?>
                                         <span
                                             class="font-bold text-brand-600"><?= number_format(($pro['price']) - (($pro['price']) * ($pro['discount']) / 100)) ?>₫</span>
-                                        <span class="text-sm text-ink-300 line-through"><?= number_format($pro['price']) ?>₫</span>
+                                        <span class="text-sm text-ink-600 line-through"><?= number_format($pro['price']) ?>₫</span>
                                     <?php } ?>
                                 </div>
                                 <?php if ((int) $pro['stock'] > 0) { ?>
@@ -209,7 +237,7 @@
                                     </form>
                                 <?php } else { ?>
                                     <button type="button" disabled
-                                        class="inline-flex w-full items-center justify-center gap-2 rounded-lg bg-ink-100 px-5 py-2.5 text-sm font-semibold text-ink-300 cursor-not-allowed">
+                                        class="inline-flex w-full items-center justify-center gap-2 rounded-lg bg-ink-100 px-5 py-2.5 text-sm font-semibold text-ink-600 cursor-not-allowed">
                                         <?= htmlspecialchars($pro['stock_message'] ?: 'Hết hàng') ?>
                                     </button>
                                 <?php } ?>
@@ -226,14 +254,14 @@
                     <!-- Phần show sản phẩm nổi bật -->
                     <?php
                     foreach ($list_topsp as $pro) { ?>
-                        <div class="group relative overflow-hidden rounded-2xl border border-ink-200 bg-ink-800/70 backdrop-blur-xl shadow-sm transition-shadow hover:shadow-md">
+                        <div class="group relative overflow-hidden rounded-2xl border border-ink-200 bg-ink-200/70 backdrop-blur-xl shadow-sm transition-shadow hover:shadow-md">
                             <div class="relative aspect-square overflow-hidden bg-ink-100">
                                 <a class="block h-full w-full" href="index.php?act=prodetail&idpro=<?= e($pro['id_pro']) ?>">
                                     <img class="h-full w-full object-cover" src="admin/uploads/<?= e($pro['img_pro']) ?>"
                                         alt="<?= e($pro['name_pro']) ?>" />
                                 </a>
                                 <span
-                                    class="absolute top-2 right-2 inline-flex items-center rounded-full bg-brand-50 px-3 py-1 text-xs font-medium text-brand-700">Nổi
+                                    class="absolute top-2 right-2 inline-flex items-center rounded-full bg-brand-500/10 px-3 py-1 text-xs font-medium text-brand-700">Nổi
                                     bật</span>
                                 <?php if (!isset($pro['discount']) || $pro['discount'] <= 0) { ?>
                                 <?php } else { ?>
@@ -241,7 +269,7 @@
                                         class="absolute top-2 left-2 rounded-full bg-red-600 px-2 py-1 text-xs font-bold text-white">-<?= e($pro['discount']) ?>%</span>
                                 <?php } ?>
                                 <?php if ((int) $pro['stock'] <= 0) { ?>
-                                    <span class="absolute bottom-2 left-2 rounded-full bg-ink-900/80 px-2 py-1 text-xs font-bold text-white"><?= htmlspecialchars($pro['stock_message'] ?: 'Hết hàng') ?></span>
+                                    <span class="absolute bottom-2 left-2 rounded-full bg-ink-100/80 px-2 py-1 text-xs font-bold text-white"><?= htmlspecialchars($pro['stock_message'] ?: 'Hết hàng') ?></span>
                                 <?php } ?>
                             </div>
                             <div class="p-4">
@@ -255,7 +283,7 @@
                                     <?php } else { ?>
                                         <span
                                             class="font-bold text-brand-600"><?= number_format(($pro['price']) - (($pro['price']) * ($pro['discount']) / 100)) ?>₫</span>
-                                        <span class="text-sm text-ink-300 line-through"><?= number_format($pro['price']) ?>₫</span>
+                                        <span class="text-sm text-ink-600 line-through"><?= number_format($pro['price']) ?>₫</span>
                                     <?php } ?>
                                 </div>
                                 <?php if ((int) $pro['stock'] > 0) { ?>
@@ -270,7 +298,7 @@
                                     </form>
                                 <?php } else { ?>
                                     <button type="button" disabled
-                                        class="inline-flex w-full items-center justify-center gap-2 rounded-lg bg-ink-100 px-5 py-2.5 text-sm font-semibold text-ink-300 cursor-not-allowed">
+                                        class="inline-flex w-full items-center justify-center gap-2 rounded-lg bg-ink-100 px-5 py-2.5 text-sm font-semibold text-ink-600 cursor-not-allowed">
                                         <?= htmlspecialchars($pro['stock_message'] ?: 'Hết hàng') ?>
                                     </button>
                                 <?php } ?>
@@ -287,7 +315,7 @@
 
 <!-- Begin Turbotech Product With Content Area -->
 <section class="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
-    <div class="relative flex min-h-[280px] items-center overflow-hidden rounded-2xl bg-ink-900 bg-cover bg-center sm:min-h-[420px]"
+    <div class="relative flex min-h-[280px] items-center overflow-hidden rounded-2xl bg-ink-100 bg-cover bg-center sm:min-h-[420px]"
         style="background-image:url('./assets/images/banner/pcgami.png')">
         <div class="relative z-10 ml-auto w-full max-w-md p-6 text-right sm:p-10">
             <h2 class="font-heading text-2xl font-bold text-white sm:text-3xl">PC Gaming</h2>

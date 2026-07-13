@@ -1,7 +1,7 @@
 <?php include_once "header.php" ?>
 
 
-<div class="bg-ink-800/70 backdrop-blur-xl rounded-xl shadow-sm border border-ink-200 overflow-hidden mb-6">
+<div class="bg-ink-200/70 backdrop-blur-xl rounded-xl shadow-sm border border-ink-200 overflow-hidden mb-6">
     <div class="px-6 py-4 border-b border-ink-200 bg-ink-50/50 font-semibold text-ink-800">
         <h6 class="m-0">Cập nhật sản phẩm</h6>
     </div>
@@ -76,7 +76,7 @@
                         <label for="exampleFormControlSelect1"
                             class="block text-sm font-medium text-ink-700 mb-1">Loại máy tính</label>
                         <select
-                            class="w-full rounded-lg border border-ink-200 px-4 py-2 focus:ring-2 focus:ring-brand-500 outline-none transition-all bg-ink-800/70 backdrop-blur-xl"
+                            class="w-full rounded-lg border border-ink-200 px-4 py-2 focus:ring-2 focus:ring-brand-500 outline-none transition-all bg-ink-200/70 backdrop-blur-xl"
                             name="idcate" id="exampleFormControlSelect1" data-rules="minval:1"
                             data-msg-minval="Vui lòng chọn loại sản phẩm">
                             <option value="0">Chọn loại</option>
@@ -97,7 +97,7 @@
                         <label for="formGroupExampleInput" class="block text-sm font-medium text-ink-700 mb-1">Hình
                             ảnh (<?= e($img_pro) ?>)</label>
                         <input type="file" name="img_pro"
-                            class="w-full rounded-lg border border-ink-200 px-4 py-2 focus:ring-2 focus:ring-brand-500 outline-none transition-all bg-ink-800/70 backdrop-blur-xl">
+                            class="w-full rounded-lg border border-ink-200 px-4 py-2 focus:ring-2 focus:ring-brand-500 outline-none transition-all bg-ink-200/70 backdrop-blur-xl">
                     </div>
                 </div>
 

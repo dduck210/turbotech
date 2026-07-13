@@ -9,7 +9,7 @@
     <h1 class="text-3xl font-bold text-ink-800">Quản Lý Người Dùng</h1>
 </div>
 
-<div class="bg-ink-800/70 backdrop-blur-xl rounded-xl shadow-sm hover:shadow-md transition-shadow duration-300 overflow-hidden mb-6">
+<div class="bg-ink-200/70 backdrop-blur-xl rounded-xl shadow-sm hover:shadow-md transition-shadow duration-300 overflow-hidden mb-6">
     <div class="p-6">
         <div class="overflow-x-auto">
             <table class="w-full text-left border-collapse" id="dataTable" width="100%" cellspacing="0">
@@ -33,17 +33,17 @@
                         <td class="px-4 py-4"><?= e($user['full_name']) ?></td>
                         <td class="px-4 py-4"><?= e($user['email_user']) ?></td>
                         <td class="px-4 py-4 text-center"><?php if ($user['role'] == 1) {
-                                                echo "<span class='inline-flex items-center justify-center px-2.5 py-1 text-xs font-bold rounded-full bg-red-100 text-red-600'>Admin</span>";
+                                                echo "<span class='inline-flex items-center justify-center px-2.5 py-1 text-xs font-bold rounded-full bg-red-500/15 text-red-600'>Admin</span>";
                                             } else {
-                                                echo "<span class='inline-flex items-center justify-center px-2.5 py-1 text-xs font-bold rounded-full bg-emerald-100 text-emerald-700'>Thành Viên</span>";
+                                                echo "<span class='inline-flex items-center justify-center px-2.5 py-1 text-xs font-bold rounded-full bg-emerald-500/15 text-emerald-700'>Thành Viên</span>";
                                             } ?></td>
                         <td class="px-4 py-4 text-center">
                             <div class="flex items-center justify-center gap-2">
                                 <a href="./index.php?act=edit_user&id_user=<?= e($user['id_user']) ?>"
-                                    class="p-2 text-yellow-600 bg-yellow-50 rounded-lg hover:bg-yellow-100 transition-all active:scale-90"
+                                    class="p-2 text-yellow-600 bg-yellow-500/10 rounded-lg hover:bg-yellow-500/15 transition-all active:scale-90"
                                     title="Sửa"><i class="fa-solid fa-pen-to-square"></i></a>
                                 <a href="./index.php?act=delete_usser&id_user=<?= e($user['id_user']) ?>&_token=<?= urlencode(\Codemoi\Core\Csrf::token()) ?>"
-                                    class="p-2 text-red-600 bg-red-50 rounded-lg hover:bg-red-100 transition-all active:scale-90"
+                                    class="p-2 text-red-600 bg-red-500/10 rounded-lg hover:bg-red-500/15 transition-all active:scale-90"
                                     data-confirm="Bạn có chắc chắn muốn xóa không?" title="Xóa"><i
                                         class="fa-solid fa-trash"></i></a>
                             </div>

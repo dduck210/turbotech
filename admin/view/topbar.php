@@ -1,5 +1,5 @@
 <header
-    class="h-20 bg-ink-800/80 backdrop-blur-xl backdrop-blur-md border-b border-ink-200 flex items-center justify-between px-6 shrink-0 z-10 sticky top-0 shadow-sm">
+    class="h-20 bg-ink-200/80 backdrop-blur-xl backdrop-blur-md border-b border-ink-200 flex items-center justify-between px-6 shrink-0 z-10 sticky top-0 shadow-sm">
     <div class="flex items-center">
         <button id="mobile-sidebar-toggle" class="md:hidden text-ink-500 hover:text-brand-600 transition-colors">
             <i class="fas fa-bars text-xl"></i>
@@ -15,7 +15,7 @@
     <div class="flex items-center space-x-4">
         <!-- Notifications -->
         <button
-            class="relative p-2 text-ink-400 hover:text-brand-600 transition-colors rounded-full hover:bg-brand-50">
+            class="relative p-2 text-ink-400 hover:text-brand-600 transition-colors rounded-full hover:bg-brand-500/10">
             <i class="fas fa-bell text-lg"></i>
             <span class="absolute top-1 right-1 w-2.5 h-2.5 bg-red-500 rounded-full border-2 border-white"></span>
         </button>
@@ -28,9 +28,9 @@
             </div>
             <img src="../assets/admin-images/admin.png"
                 onerror="this.src='https://ui-avatars.com/api/?name=Admin&background=eff6ff&color=2563eb'"
-                class="w-10 h-10 rounded-full border-2 border-brand-100 object-cover shadow-sm">
+                class="w-10 h-10 rounded-full border-2 border-brand-500/25 object-cover shadow-sm">
             <a href="index.php?act=logout" data-confirm="Bạn có chắc chắn muốn đăng xuất?"
-                class="ml-2 p-2 text-ink-400 hover:text-red-500 transition-colors rounded-full hover:bg-red-50"
+                class="ml-2 p-2 text-ink-400 hover:text-red-500 transition-colors rounded-full hover:bg-red-500/10"
                 title="Đăng xuất">
                 <i class="fas fa-sign-out-alt text-lg"></i>
             </a>

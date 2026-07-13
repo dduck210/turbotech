@@ -24,7 +24,7 @@
     <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12">
 
         <!-- Image -->
-        <div class="rounded-2xl border border-ink-200 bg-ink-800/70 backdrop-blur-xl overflow-hidden">
+        <div class="rounded-2xl border border-ink-200 bg-ink-200/70 backdrop-blur-xl overflow-hidden">
             <div class="aspect-square bg-ink-100 overflow-hidden">
                 <img src="admin/uploads/<?= $one_pro['img_pro']; ?>"
                     alt="Ảnh sản phẩm <?= htmlspecialchars($one_pro['name_pro']) ?>"
@@ -47,17 +47,17 @@
                     <span class="text-2xl font-bold text-brand-600">
                         <?= number_format(($one_pro['price']) - (($one_pro['price']) * ($one_pro['discount']) / 100)) ?>₫
                     </span>
-                    <span class="ml-2 text-ink-300 line-through"><?= number_format($one_pro['price']) ?>₫</span>
+                    <span class="ml-2 text-ink-600 line-through"><?= number_format($one_pro['price']) ?>₫</span>
                 <?php } ?>
             </div>
 
             <div class="mb-4">
                 <?php if ((int) $one_pro['stock'] > 0) { ?>
-                    <span class="inline-flex items-center gap-1.5 rounded-full bg-green-50 px-3 py-1 text-xs font-medium text-green-700">
+                    <span class="inline-flex items-center gap-1.5 rounded-full bg-green-500/10 px-3 py-1 text-xs font-medium text-green-700">
                         <i class="fa-solid fa-circle-check" aria-hidden="true"></i> Còn hàng (<?= (int) $one_pro['stock'] ?> sản phẩm)
                     </span>
                 <?php } else { ?>
-                    <span class="inline-flex items-center gap-1.5 rounded-full bg-red-50 px-3 py-1 text-xs font-medium text-red-700">
+                    <span class="inline-flex items-center gap-1.5 rounded-full bg-red-500/10 px-3 py-1 text-xs font-medium text-red-700">
                         <i class="fa-solid fa-circle-xmark" aria-hidden="true"></i> <?= htmlspecialchars($one_pro['stock_message'] ?: 'Hết hàng') ?>
                     </span>
                 <?php } ?>
@@ -105,7 +105,7 @@
             </form>
             <?php } else { ?>
             <button type="button" disabled
-                class="mb-6 inline-flex items-center justify-center gap-2 rounded-lg bg-ink-100 px-5 py-2.5 text-sm font-semibold text-ink-300 cursor-not-allowed">
+                class="mb-6 inline-flex items-center justify-center gap-2 rounded-lg bg-ink-100 px-5 py-2.5 text-sm font-semibold text-ink-600 cursor-not-allowed">
                 <?= htmlspecialchars($one_pro['stock_message'] ?: 'Hết hàng') ?>
             </button>
             <?php } ?>
@@ -176,7 +176,7 @@
     <h4 class="font-heading text-xl font-semibold text-ink-900 mb-6">Các sản phẩm cùng loại</h4>
     <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-6">
         <?php foreach ($similar_pro as $pro) { ?>
-            <div class="rounded-2xl border border-ink-200 bg-ink-800/70 backdrop-blur-xl shadow-sm hover:shadow-md transition-shadow overflow-hidden">
+            <div class="rounded-2xl border border-ink-200 bg-ink-200/70 backdrop-blur-xl shadow-sm hover:shadow-md transition-shadow overflow-hidden">
                 <div class="relative aspect-square bg-ink-100 overflow-hidden">
                     <a href="index.php?act=prodetail&idpro=<?php echo $pro['id_pro']; ?>">
                         <img src="admin/uploads/<?php echo $pro['img_pro']; ?>"
@@ -184,7 +184,7 @@
                             class="h-full w-full object-cover">
                     </a>
                     <?php if ((int) $pro['stock'] <= 0) { ?>
-                        <span class="absolute top-2 right-2 rounded-full bg-ink-900/80 text-white text-xs font-bold px-2 py-1"><?= htmlspecialchars($pro['stock_message'] ?: 'Hết hàng') ?></span>
+                        <span class="absolute top-2 right-2 rounded-full bg-ink-100/80 text-white text-xs font-bold px-2 py-1"><?= htmlspecialchars($pro['stock_message'] ?: 'Hết hàng') ?></span>
                     <?php } ?>
                 </div>
                 <div class="p-4">
@@ -210,7 +210,7 @@
                         </form>
                     <?php } else { ?>
                         <button type="button" disabled
-                            class="w-full inline-flex items-center justify-center gap-2 rounded-lg bg-ink-100 px-5 py-2.5 text-sm font-semibold text-ink-300 cursor-not-allowed">
+                            class="w-full inline-flex items-center justify-center gap-2 rounded-lg bg-ink-100 px-5 py-2.5 text-sm font-semibold text-ink-600 cursor-not-allowed">
                             <?= htmlspecialchars($pro['stock_message'] ?: 'Hết hàng') ?>
                         </button>
                     <?php } ?>

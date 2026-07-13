@@ -6,7 +6,7 @@
     <h1 class="text-3xl font-bold text-ink-800">Quản Lý Bình Luận</h1>
 </div>
 
-<div class="bg-ink-800/70 backdrop-blur-xl rounded-xl shadow-sm hover:shadow-md transition-shadow duration-300 overflow-hidden mb-6">
+<div class="bg-ink-200/70 backdrop-blur-xl rounded-xl shadow-sm hover:shadow-md transition-shadow duration-300 overflow-hidden mb-6">
     <div class="p-6">
         <div class="overflow-x-auto">
             <table class="w-full text-left border-collapse" id="dataTable" width="100%" cellspacing="0">
@@ -34,7 +34,7 @@
                         <td class="px-4 py-4 text-center">
                             <div class="flex items-center justify-center">
                                 <a href="index.php?act=delete_cmt&idcmt=<?= e($id_cmt) ?>&_token=<?= urlencode(\Codemoi\Core\Csrf::token()) ?>"
-                                    class="p-2 text-red-600 bg-red-50 rounded-lg hover:bg-red-100 transition-all active:scale-90"
+                                    class="p-2 text-red-600 bg-red-500/10 rounded-lg hover:bg-red-500/15 transition-all active:scale-90"
                                     data-confirm="Bạn có chắc chắn muốn xóa?" title="Xóa"><i
                                         class="fa-solid fa-trash"></i></a>
                             </div>

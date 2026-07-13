@@ -14,7 +14,7 @@
 </nav>
 
 <div class="mx-auto max-w-3xl px-4 sm:px-6 lg:px-8 py-8 md:py-12">
-    <div class="mb-6 rounded-lg border border-green-200 bg-green-50 p-4 text-sm font-semibold text-green-700">
+    <div class="mb-6 rounded-lg border border-green-500/30 bg-green-500/10 p-4 text-sm font-semibold text-green-700">
         Đặt hàng thành công! Cảm ơn quý khách đã mua hàng của Turbotech
     </div>
     <?php
@@ -23,7 +23,7 @@
     }
     ?>
     <!-- mã đơn hàng -->
-    <div class="mb-6 rounded-2xl border border-ink-200 bg-ink-800/70 backdrop-blur-xl p-6 shadow-sm">
+    <div class="mb-6 rounded-2xl border border-ink-200 bg-ink-200/70 backdrop-blur-xl p-6 shadow-sm">
         <h2 class="font-heading text-lg font-semibold text-ink-900 mb-4">Thông tin đơn hàng</h2>
         <dl class="space-y-2 text-sm">
             <div class="flex items-center justify-between">
@@ -59,7 +59,7 @@
     <!-- thông tin đặt hàng -->
     <form action="index.php?act=billconfirm" method="post">
 <?= \Codemoi\Core\Csrf::field() ?>
-        <div class="mb-6 rounded-2xl border border-ink-200 bg-ink-800/70 backdrop-blur-xl p-6 shadow-sm">
+        <div class="mb-6 rounded-2xl border border-ink-200 bg-ink-200/70 backdrop-blur-xl p-6 shadow-sm">
             <h2 class="font-heading text-lg font-semibold text-ink-900 mb-4">Thông tin đặt hàng</h2>
             <div class="space-y-4">
                 <div>
@@ -90,7 +90,7 @@
             </div>
         </div>
         <!-- phương thức thanh toán -->
-        <div class="mb-6 rounded-2xl border border-ink-200 bg-ink-800/70 backdrop-blur-xl p-6 shadow-sm">
+        <div class="mb-6 rounded-2xl border border-ink-200 bg-ink-200/70 backdrop-blur-xl p-6 shadow-sm">
             <h2 class="font-heading text-lg font-semibold text-ink-900 mb-4">Phương thức thanh toán</h2>
             <label class="flex min-h-11 items-center gap-3 rounded-lg border border-ink-200 px-4 py-3">
                 <input class="h-4 w-4 text-brand-600 focus:ring-2 focus:ring-brand-500" type="radio" name="payment" id="inlineRadio1" checked>
@@ -112,7 +112,7 @@
 
         <div class="mt-6 flex justify-end">
             <a href="index.php?act=product"
-                class="inline-flex items-center justify-center gap-2 rounded-lg border border-ink-200 bg-ink-800/70 backdrop-blur-xl px-5 py-2.5 text-sm font-semibold text-ink-900 hover:bg-ink-50 transition-colors focus:outline-none focus:ring-2 focus:ring-brand-500">
+                class="inline-flex items-center justify-center gap-2 rounded-lg border border-ink-200 bg-ink-200/70 backdrop-blur-xl px-5 py-2.5 text-sm font-semibold text-ink-900 hover:bg-ink-50 transition-colors focus:outline-none focus:ring-2 focus:ring-brand-500">
                 Xem thêm sản phẩm <i class="fa-solid fa-magnifying-glass" aria-hidden="true"></i>
             </a>
         </div>

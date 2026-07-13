@@ -24,21 +24,21 @@
 </head>
 
 <body
-    class="bg-ink-900 text-ink-800 antialiased flex items-center justify-center min-h-screen relative overflow-hidden">
+    class="bg-ink-50 text-ink-600 antialiased flex items-center justify-center min-h-screen relative overflow-hidden">
     <?php if (!empty($flash_error)): ?>
     <script>document.addEventListener("DOMContentLoaded",()=>Swal.fire({toast:true,position:"top-end",icon:"error",title:<?= json_encode($flash_error) ?>,showConfirmButton:false,timer:4000}));</script>
     <?php endif; ?>
     <!-- Decorative Background Shapes -->
-    <div class="bg-shape bg-brand-600 w-[500px] h-[500px] top-[-200px] left-[-200px]"></div>
-    <div class="bg-shape bg-purple-600 w-[400px] h-[400px] bottom-[-100px] right-[-100px]"></div>
+    <div class="bg-shape bg-brand-600 w-[500px] h-[500px] top-[-200px] left-[-200px] animate-float"></div>
+    <div class="bg-shape bg-accent-600 w-[400px] h-[400px] bottom-[-100px] right-[-100px] animate-float" style="animation-delay:-2.5s"></div>
 
-    <div class="container mx-auto px-4 w-full max-w-5xl relative z-10">
-        <div class="bg-ink-800/95 backdrop-blur-xl backdrop-blur-xl rounded-3xl shadow-2xl overflow-hidden border border-white/20">
+    <div class="container mx-auto px-4 w-full max-w-5xl relative z-10 animate-fade-up">
+        <div class="glass rounded-3xl shadow-2xl overflow-hidden">
             <div class="flex flex-col lg:flex-row">
                 <!-- Image Section -->
                 <div
-                    class="hidden lg:flex lg:w-1/2 bg-ink-50 items-center justify-center p-12 relative overflow-hidden group">
-                    <div class="absolute inset-0 bg-linear-to-br from-brand-50 to-purple-50 opacity-50"></div>
+                    class="hidden lg:flex lg:w-1/2 bg-ink-100 items-center justify-center p-12 relative overflow-hidden group">
+                    <div class="absolute inset-0 bg-linear-to-br from-brand-600/25 to-accent-600/25"></div>
                     <img src="uploads/anhad.png" alt="logo Turbotech"
                         class="w-full max-w-sm relative z-10 drop-shadow-2xl group-hover:scale-105 transition-transform duration-700">
                 </div>
@@ -46,7 +46,7 @@
                 <!-- Form Section -->
                 <div class="w-full lg:w-1/2 p-8 md:p-12 lg:p-16 flex flex-col justify-center">
                     <div class="text-center mb-8">
-                        <h1 class="text-3xl font-bold text-ink-800 mb-2 font-heading">Trang quản trị</h1>
+                        <h1 class="text-3xl font-bold mb-2 font-heading"><span class="text-gradient">Trang quản trị</span></h1>
                         <p class="text-ink-500">Chào mừng trở lại Turbotech!</p>
                     </div>
 
@@ -55,17 +55,17 @@
                         <div>
                             <label class="block text-sm font-medium text-ink-700 mb-2">Tài khoản</label>
                             <input type="text" name="user_name" placeholder="Nhập tài khoản" data-rules="required"
-                                class="w-full rounded-xl border border-ink-200 px-5 py-3 focus:ring-2 focus:ring-brand-500 focus:border-brand-500 outline-none transition-all bg-ink-50 focus:bg-ink-800/70 backdrop-blur-xl text-ink-800">
+                                class="w-full rounded-xl border border-ink-300 px-5 py-3 focus:ring-2 focus:ring-brand-500 focus:border-brand-500 outline-none transition-all bg-ink-100 text-ink-800">
                         </div>
 
                         <div>
                             <label class="block text-sm font-medium text-ink-700 mb-2">Mật khẩu</label>
                             <input type="password" name="password" placeholder="Nhập mật khẩu" data-rules="required"
-                                class="w-full rounded-xl border border-ink-200 px-5 py-3 focus:ring-2 focus:ring-brand-500 focus:border-brand-500 outline-none transition-all bg-ink-50 focus:bg-ink-800/70 backdrop-blur-xl text-ink-800">
+                                class="w-full rounded-xl border border-ink-300 px-5 py-3 focus:ring-2 focus:ring-brand-500 focus:border-brand-500 outline-none transition-all bg-ink-100 text-ink-800">
                         </div>
 
                         <input type="submit" name="btn_login" value="Đăng nhập"
-                            class="w-full bg-ink-900 hover:bg-brand-600 text-white font-semibold rounded-xl px-4 py-3.5 mt-4 transition-all active:scale-[0.98] cursor-pointer shadow-lg shadow-ink-900/20 hover:shadow-brand-500/30">
+                            class="btn-glow w-full text-white font-semibold rounded-xl px-4 py-3.5 mt-4 transition-all active:scale-[0.98] cursor-pointer">
                     </form>
                 </div>
             </div>

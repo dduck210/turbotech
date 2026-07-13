@@ -1,5 +1,5 @@
 <!-- Breadcrumb -->
-<div class="border-b border-ink-200 bg-ink-800/70 backdrop-blur-xl">
+<div class="border-b border-ink-200 bg-ink-200/70 backdrop-blur-xl">
     <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-3">
         <nav aria-label="Breadcrumb" class="text-sm text-ink-500">
             <ol class="flex items-center gap-2">
@@ -15,12 +15,12 @@
 <div class="bg-ink-50">
     <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-12 md:py-16">
         <?php if (isset($noti_success) && $noti_success != "") : ?>
-            <div class="mx-auto mb-6 max-w-md rounded-lg border border-green-200 bg-green-50 p-3 text-sm text-green-700">
+            <div class="mx-auto mb-6 max-w-md rounded-lg border border-green-500/30 bg-green-500/10 p-3 text-sm text-green-700">
                 <?php echo $noti_success; ?>
             </div>
         <?php endif; ?>
 
-        <div class="mx-auto max-w-md rounded-2xl border border-ink-200 bg-ink-800/70 backdrop-blur-xl shadow-sm p-6 sm:p-8">
+        <div class="mx-auto max-w-md rounded-2xl border border-ink-200 bg-ink-200/70 backdrop-blur-xl shadow-sm p-6 sm:p-8">
             <form action="index.php?act=login" method="post" data-validate novalidate>
                 <h1 class="mb-6 text-center font-heading text-2xl font-bold text-ink-900">Đăng nhập tài khoản</h1>
 
@@ -28,7 +28,7 @@
                     <label for="login-user-name" class="block text-sm font-medium text-ink-700 mb-1.5">Tài khoản</label>
                     <input type="text" id="login-user-name" name="user_name" placeholder="Nhập tên tài khoản hoặc địa chỉ email của bạn"
                         data-rules="required"
-                        class="block w-full rounded-lg border border-ink-200 bg-ink-800/70 backdrop-blur-xl px-3.5 py-2.5 text-sm text-ink-900 placeholder:text-ink-300 focus:outline-none focus:ring-2 focus:ring-brand-500 focus:border-brand-500">
+                        class="block w-full rounded-lg border border-ink-200 bg-ink-200/70 backdrop-blur-xl px-3.5 py-2.5 text-sm text-ink-900 placeholder:text-ink-600 focus:outline-none focus:ring-2 focus:ring-brand-500 focus:border-brand-500">
                 </div>
 
                 <div class="mb-4">
@@ -36,7 +36,7 @@
                     <div class="relative">
                         <input type="password" id="login-password" name="password" placeholder="Nhập mật khẩu của bạn"
                             data-rules="required"
-                            class="block w-full rounded-lg border border-ink-200 bg-ink-800/70 backdrop-blur-xl px-3.5 py-2.5 pr-11 text-sm text-ink-900 placeholder:text-ink-300 focus:outline-none focus:ring-2 focus:ring-brand-500 focus:border-brand-500">
+                            class="block w-full rounded-lg border border-ink-200 bg-ink-200/70 backdrop-blur-xl px-3.5 py-2.5 pr-11 text-sm text-ink-900 placeholder:text-ink-600 focus:outline-none focus:ring-2 focus:ring-brand-500 focus:border-brand-500">
                         <button type="button" id="login-password-toggle" aria-label="Hiện/ẩn mật khẩu"
                             class="absolute inset-y-0 right-0 flex h-11 w-11 items-center justify-center text-ink-500 hover:text-ink-900 focus:outline-none focus:ring-2 focus:ring-brand-500 rounded-lg">
                             <i class="fa-regular fa-eye" aria-hidden="true"></i>
