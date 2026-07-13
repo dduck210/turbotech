@@ -5,7 +5,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <title>Turbotech Admin - Đăng nhập</title>
-    <link rel="shortcut icon" type="image/x-icon" href="../assets/admin-images/logoadmin.png" />
+    <link rel="icon" type="image/svg+xml" href="../assets/images/menu/logo/favicon.svg" />
 
     <!-- Modern Typography -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -39,7 +39,7 @@
                 <div
                     class="hidden lg:flex lg:w-1/2 bg-ink-100 items-center justify-center p-12 relative overflow-hidden group">
                     <div class="absolute inset-0 bg-linear-to-br from-brand-600/25 to-accent-600/25"></div>
-                    <img src="uploads/anhad.png" alt="logo Turbotech"
+                    <img src="../assets/images/menu/logo/logo-wordmark-dark.svg" alt="logo Turbotech"
                         class="w-full max-w-sm relative z-10 drop-shadow-2xl group-hover:scale-105 transition-transform duration-700">
                 </div>
 

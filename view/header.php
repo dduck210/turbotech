@@ -29,7 +29,7 @@ unset($_SESSION['flash_success'], $_SESSION['flash_error']);
             <a href="index.php" class="group flex shrink-0 items-center gap-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-brand-500">
                 <span class="relative">
                     <span class="absolute inset-0 -z-10 rounded-full bg-brand-600/40 blur-xl transition-opacity group-hover:opacity-80"></span>
-                    <img src="./assets/images/menu/logo/logo4.png" alt="Logo Turbotech" class="h-8 w-auto sm:h-10" />
+                    <img src="./assets/images/menu/logo/logo-wordmark-dark.svg" alt="Logo Turbotech" class="h-8 w-auto sm:h-10" />
                 </span>
             </a>
 

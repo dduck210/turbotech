@@ -9,3 +9,18 @@
 </IfModule>
 
 Options -Indexes
+
+# Static assets (images/css/js/fonts) must always be revalidated with the
+# server instead of served straight from the browser's disk cache — without
+# this, a plain F5 after deploying a changed asset can keep showing the old
+# file until a hard refresh (Ctrl+F5) forces a bypass. no-cache still lets
+# the browser send a conditional request (If-Modified-Since/If-None-Match)
+# so unchanged files get a cheap 304 instead of a full re-download.
+<IfModule mod_headers.c>
+    <FilesMatch "\.(css|js|png|jpe?g|gif|svg|webp|ico|woff2?|ttf)$">
+        Header set Cache-Control "no-cache, must-revalidate"
+    </FilesMatch>
+</IfModule>
+<IfModule mod_expires.c>
+    ExpiresActive Off
+</IfModule>

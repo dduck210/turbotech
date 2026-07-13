@@ -12,3 +12,12 @@
         Deny from all
     </IfModule>
 </FilesMatch>
+
+# Force revalidation so a re-uploaded product/avatar image with the same
+# filename shows up on a plain F5 instead of needing a hard refresh.
+<IfModule mod_headers.c>
+    Header set Cache-Control "no-cache, must-revalidate"
+</IfModule>
+<IfModule mod_expires.c>
+    ExpiresActive Off
+</IfModule>
