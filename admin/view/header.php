@@ -4,13 +4,13 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title>Turbotech Admin - Premium Dashboard</title>
+    <title>Turbotech Admin - Quản trị cửa hàng</title>
     <link rel="icon" type="image/svg+xml" href="../assets/images/menu/logo/favicon.svg" />
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link
-        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Manrope:wght@600;700;800&display=swap"
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Manrope:wght@600;700;800&family=Cormorant+Garamond:wght@500;600;700&display=swap"
         rel="stylesheet">
 
     <!-- FontAwesome -->
@@ -36,5 +36,5 @@
         <div class="flex-1 flex flex-col overflow-hidden">
             <?php include_once "topbar.php"; ?>
             <!-- Main Scrollable Content -->
-            <main class="flex-1 overflow-y-auto bg-ink-50/50 p-4 md:p-6 lg:p-8">
-                <div class="animate-admin-fade-in">
+            <main class="flex-1 overflow-y-auto bg-ink-100 p-4 md:p-6 lg:p-8">
+                <div class="animate-admin-fade-in mx-auto max-w-7xl">

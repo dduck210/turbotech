@@ -1,60 +1,47 @@
 @import "tailwindcss";
 
 /*
- * Turbotech design tokens — Dark Luxury Tech redesign (2026-07-13).
+ * Turbotech design tokens — Boutique redesign (2026-07-13).
  *
- * The `ink-*` scale keeps its existing NAMES (ink-50…ink-900) so every one
- * of the ~230 existing `bg-ink-*`/`text-ink-*`/`border-ink-*` utility
- * classes across every template keeps working with zero template edits —
- * but the scale is INVERTED in meaning: ink-50 is now the darkest surface
- * (was the lightest page background), ink-900 is now near-white text (was
- * the darkest heading text). This flips the entire site into the dark
- * theme by changing only these token values.
- *
- * `brand-*` (indigo/blue) and the new `accent-*` (violet) tokens form the
- * signature neon gradient used on primary CTAs, active states, and glow
- * effects — see `.btn-glow`, `.text-gradient`, `.glass` below.
+ * Replaces the previous Dark Luxury Tech scheme. The `ink-*` scale is back
+ * to standard light-to-dark orientation (ink-50 lightest, ink-900 darkest)
+ * with warm cream/espresso hues instead of cool navy/gray. `brand-*`
+ * (bronze/gold) and `accent-*` (deep copper) are the two-tone premium
+ * accent used across CTAs, active states, and headings.
  */
 @theme {
   --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
-  --font-heading: "Manrope", ui-sans-serif, system-ui, sans-serif;
+  --font-heading: "Cormorant Garamond", Georgia, "Times New Roman", serif;
 
-  --color-brand-50: #eef2ff;
-  --color-brand-100: #e0e7ff;
-  --color-brand-400: #818cf8;
-  --color-brand-500: #6366f1;
-  --color-brand-600: #4f46e5;
-  --color-brand-700: #4338ca;
+  --color-brand-50: #fbf3e7;
+  --color-brand-100: #f3e2c5;
+  --color-brand-400: #c9a464;
+  --color-brand-500: #b08d57;
+  --color-brand-600: #96733f;
+  --color-brand-700: #7a5c32;
 
-  --color-accent-400: #c4b5fd;
-  --color-accent-500: #a78bfa;
-  --color-accent-600: #8b5cf6;
+  --color-accent-400: #c97b5b;
+  --color-accent-500: #a85c3f;
+  --color-accent-600: #8c4530;
 
-  --color-ink-50: #05060a;
-  --color-ink-100: #0a0c14;
-  --color-ink-200: #141826;
-  --color-ink-300: #1f2437;
-  --color-ink-400: #454b66;
-  --color-ink-500: #838aab;
-  --color-ink-600: #aab0cc;
-  --color-ink-700: #ced3e6;
-  --color-ink-800: #e7e9f5;
-  --color-ink-900: #f8f9fd;
+  --color-ink-50: #fbf8f2;
+  --color-ink-100: #f4efe6;
+  --color-ink-200: #ece4d3;
+  --color-ink-300: #dcd2bf;
+  --color-ink-400: #c4b49b;
+  --color-ink-500: #9c8b72;
+  --color-ink-600: #7a6b54;
+  --color-ink-700: #5a4c3a;
+  --color-ink-800: #3a2f22;
+  --color-ink-900: #2b2118;
 
-  --animate-glow-pulse: glow-pulse 3s ease-in-out infinite;
-  --animate-gradient-shift: gradient-shift 6s ease infinite;
-  --animate-float: float 5s ease-in-out infinite;
   --animate-fade-up: fade-up 0.6s ease-out both;
 }
 
 body {
   font-family: var(--font-sans);
-  color: var(--color-ink-900);
-  background-color: var(--color-ink-50);
-  background-image:
-    radial-gradient(ellipse 80% 50% at 20% -10%, color-mix(in srgb, var(--color-brand-600) 22%, transparent), transparent),
-    radial-gradient(ellipse 60% 40% at 90% 0%, color-mix(in srgb, var(--color-accent-600) 18%, transparent), transparent);
-  background-attachment: fixed;
+  color: var(--color-ink-800);
+  background-color: var(--color-ink-100);
 }
 
 /* Inter's glyph for the Vietnamese Dong sign (₫, U+20AB) draws with a full
@@ -118,74 +105,58 @@ h6 {
    !important on .is-invalid so it reliably overrides a field's existing
    border-ink-200 utility regardless of Tailwind's generation order. */
 .is-invalid {
-  border-color: #ef4444 !important;
+  border-color: #b3413a !important;
 }
 .is-invalid:focus {
-  --tw-ring-color: #ef4444 !important;
+  --tw-ring-color: #b3413a !important;
 }
 .field-error {
   margin-top: 0.25rem;
   font-size: 0.75rem;
   line-height: 1rem;
-  color: #f87171;
+  color: #b3413a;
 }
 .field-error.hidden {
   display: none;
 }
 
-/* ---- Dark Luxury component patterns ------------------------------------
+/* ---- Boutique component patterns ---------------------------------------
    Plain CSS (not @theme) since these combine several properties at once —
    Tailwind utilities remain the default for one-off styling, these classes
    are for the handful of repeated "premium" treatments used across many
-   templates (glass panels, gradient text, glow buttons, animated blobs). */
+   templates (flat cards, solid buttons, serif accents). */
 
-.glass {
-  background-color: color-mix(in srgb, var(--color-ink-800) 6%, transparent);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
-  border: 1px solid color-mix(in srgb, var(--color-ink-800) 10%, transparent);
-}
-
-.text-gradient {
-  background-image: linear-gradient(90deg, var(--color-brand-400), var(--color-accent-500));
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
+.card-boutique {
+  background-color: var(--color-ink-50);
+  border: 1px solid var(--color-ink-300);
+  box-shadow: 0 1px 2px rgba(43, 33, 24, 0.04);
 }
 
-.btn-glow {
-  background-image: linear-gradient(135deg, var(--color-brand-600), var(--color-accent-600));
-  box-shadow: 0 0 0 1px color-mix(in srgb, var(--color-accent-500) 40%, transparent),
-    0 8px 24px -8px color-mix(in srgb, var(--color-accent-600) 60%, transparent);
-  transition: box-shadow 0.3s ease, transform 0.2s ease;
-}
-.btn-glow:hover {
-  box-shadow: 0 0 0 1px color-mix(in srgb, var(--color-accent-400) 60%, transparent),
-    0 12px 32px -6px color-mix(in srgb, var(--color-accent-500) 75%, transparent);
-  transform: translateY(-1px);
+.text-serif-accent {
+  font-family: var(--font-heading);
+  color: var(--color-brand-600);
 }
 
-.card-glow {
-  transition: box-shadow 0.35s ease, transform 0.35s ease, border-color 0.35s ease;
+.btn-boutique {
+  background-color: var(--color-brand-500);
+  border: 1px solid var(--color-brand-600);
+  color: #fff;
+  transition: background-color 0.25s ease, box-shadow 0.25s ease;
 }
-.card-glow:hover {
-  border-color: color-mix(in srgb, var(--color-accent-500) 45%, transparent);
-  box-shadow: 0 0 40px -12px color-mix(in srgb, var(--color-accent-600) 45%, transparent);
-  transform: translateY(-4px);
+.btn-boutique:hover {
+  background-color: var(--color-brand-600);
+  box-shadow: 0 2px 8px rgba(43, 33, 24, 0.12);
 }
 
-@keyframes glow-pulse {
-  0%, 100% { opacity: 0.55; }
-  50% { opacity: 1; }
+.card-hover {
+  transition: box-shadow 0.3s ease, transform 0.3s ease, border-color 0.3s ease;
 }
-@keyframes gradient-shift {
-  0%, 100% { background-position: 0% 50%; }
-  50% { background-position: 100% 50%; }
+.card-hover:hover {
+  border-color: var(--color-brand-400);
+  box-shadow: 0 8px 20px -8px rgba(43, 33, 24, 0.16);
+  transform: translateY(-2px);
 }
-@keyframes float {
-  0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(-10px); }
-}
+
 @keyframes fade-up {
   from { opacity: 0; transform: translateY(16px); }
   to { opacity: 1; transform: translateY(0); }

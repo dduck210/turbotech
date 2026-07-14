@@ -24,7 +24,11 @@ unset($_SESSION['flash_success']);
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Bình luận sản phẩm</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Cormorant+Garamond:wght@500;600;700&display=swap"
+        rel="stylesheet" />
     <link rel="stylesheet" type="text/css" media="screen" href="../assets/css/tailwind.css" />
     <link rel="icon" type="image/svg+xml" href="../assets/images/menu/logo/favicon.svg" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" integrity="sha512-xh6O/CkQoPOWDdYTDqeRdPCVd1SpvCA9XXcUnZS2FmJNp1coAFzvtCN9BmamE+4aHK8yyUHUSCcJHgXloTyT2A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
@@ -54,9 +58,9 @@ unset($_SESSION['flash_success']);
         }
     }
     ?>
-    <div class="product_comments_block space-y-4 p-4">
+    <div class="product_comments_block space-y-3 p-4">
         <?php foreach ($listcmt as $cmt) : extract($cmt); ?>
-            <div class="comment_details same-stuff rounded-2xl border border-ink-200 bg-ink-200/70 backdrop-blur-xl p-4 shadow-sm">
+            <div class="comment_details same-stuff border-b border-ink-200 pb-3">
                 <div class="flex flex-wrap items-baseline gap-2">
                     <span class="user-id font-heading font-semibold text-ink-900"><?= e($full_name) ?> (<?= e($user_name) ?>)</span>
                     <em class="text-xs text-ink-500 not-italic"><?= e($comment_date) ?></em>
@@ -66,23 +70,23 @@ unset($_SESSION['flash_success']);
         <?php endforeach ?>
         <!-- Form bình luận-->
 
-        <div class="comment-btn-area mt-3">
+        <div class="comment-btn-area mt-4">
             <?php if ($canReview) { ?>
-                <form action="<?= e($_SERVER['PHP_SELF']) ?>" method="post" data-validate novalidate class="rounded-2xl border border-ink-200 bg-ink-200/70 backdrop-blur-xl p-4 shadow-sm">
+                <form action="<?= e($_SERVER['PHP_SELF']) ?>" method="post" data-validate novalidate class="card-boutique rounded-md p-4">
                     <?= \Codemoi\Core\Csrf::field() ?>
                     <label for="content_cmt" class="mb-1.5 block text-sm font-medium text-ink-700">Bình luận của bạn</label>
-                    <textarea id="content_cmt" name="content_cmt" data-rules="required|min:2" class="area-cmt block w-full rounded-lg border border-ink-200 bg-ink-200/70 backdrop-blur-xl px-3.5 py-2.5 text-sm text-ink-900 placeholder:text-ink-600 focus:outline-none focus:ring-2 focus:ring-brand-500 focus:border-brand-500" cols="60" rows="3" placeholder="Nhập bình luận của bạn"></textarea>
+                    <textarea id="content_cmt" name="content_cmt" data-rules="required|min:2" class="area-cmt block w-full rounded-md border border-ink-300 bg-white px-3.5 py-2.5 text-sm text-ink-900 placeholder:text-ink-500 focus:outline-none focus:ring-2 focus:ring-brand-500 focus:border-brand-500" cols="60" rows="3" placeholder="Nhập bình luận của bạn"></textarea>
                     <input type="hidden" name="idpro" value="<?= e($idpro) ?>">
                     <div class="mt-3">
-                        <input type="submit" name="btn_cmt" value="Gửi" class="ip-cmt inline-flex cursor-pointer items-center justify-center gap-2 rounded-lg bg-brand-600 px-5 py-2.5 text-sm font-semibold text-white shadow-sm transition-colors hover:bg-brand-700 focus:outline-none focus:ring-2 focus:ring-brand-500 focus:ring-offset-2">
+                        <input type="submit" name="btn_cmt" value="Gửi" class="btn-boutique ip-cmt inline-flex cursor-pointer items-center justify-center gap-2 rounded-md px-5 py-2.5 text-sm font-semibold">
                     </div>
                 </form>
             <?php } elseif (!isset($_SESSION['user'])) { ?>
-                <div class="rounded-lg border border-brand-500/25 bg-brand-500/10 p-3 text-sm text-brand-700">
+                <div class="rounded-md border border-brand-500/25 bg-brand-50 p-3 text-sm text-brand-700">
                     <p class="alert alert-primary fs-6">Vui lòng đăng nhập để bình luận !</p>
                 </div>
             <?php } else { ?>
-                <div class="rounded-lg border border-amber-500/30 bg-amber-500/10 p-3 text-sm text-amber-800">
+                <div class="rounded-md border border-amber-500/30 bg-amber-500/10 p-3 text-sm text-amber-800">
                     <p>Bạn cần mua và nhận sản phẩm này để có thể đánh giá.</p>
                 </div>
             <?php } ?>

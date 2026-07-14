@@ -12,7 +12,8 @@
 </nav>
 
 <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-8 md:py-12">
-    <h1 class="font-heading text-2xl md:text-3xl font-bold text-ink-900 mb-6">Giỏ hàng của bạn</h1>
+    <h1 class="font-heading text-2xl md:text-3xl font-semibold text-ink-900 mb-2">Giỏ hàng của bạn</h1>
+    <span class="mb-6 block h-px w-16 bg-brand-500"></span>
 
     <form action="index.php?act=bill" method="post">
 <?= \Codemoi\Core\Csrf::field() ?>
@@ -20,10 +21,10 @@
             $total_amount = 0;
             $i = 0;
         ?>
-            <div class="rounded-2xl border border-ink-200 bg-ink-200/70 backdrop-blur-xl shadow-sm overflow-hidden">
+            <div class="card-boutique rounded-md overflow-hidden">
                 <div class="overflow-x-auto">
                     <table class="w-full text-left text-sm">
-                        <thead class="bg-ink-50 text-xs uppercase tracking-wide text-ink-500">
+                        <thead class="bg-ink-100 text-xs uppercase tracking-wide text-ink-500">
                             <tr>
                                 <th class="px-4 py-3" scope="col">Hình ảnh</th>
                                 <th class="px-4 py-3" scope="col">Sản phẩm</th>
@@ -33,7 +34,7 @@
                                 <th class="px-4 py-3 text-center" scope="col">Thao tác</th>
                             </tr>
                         </thead>
-                        <tbody class="divide-y divide-ink-100">
+                        <tbody class="divide-y divide-ink-200">
                             <?php foreach ($_SESSION['mycart'] as $key => $cart) {
                                 $total_amount = $total_amount + $cart[5];
                                 $removepro = "index.php?act=removecart&idcart=" . e($key) . "&_token=" . urlencode(\Codemoi\Core\Csrf::token());
@@ -41,7 +42,7 @@
                             ?>
                                 <tr>
                                     <td class="px-4 py-3">
-                                        <a href="<?= e($prodetail) ?>" class="block h-16 w-16 overflow-hidden rounded-lg bg-ink-100">
+                                        <a href="<?= e($prodetail) ?>" class="block h-16 w-16 overflow-hidden rounded-md border border-ink-200 bg-ink-100">
                                             <img src="admin/uploads/<?= e($cart[2]) ?>" alt="<?= e($cart[1]) ?>" class="h-full w-full object-cover" />
                                         </a>
                                     </td>
@@ -53,7 +54,7 @@
                                         <div class="mx-auto w-20">
                                             <label for="<?= e($key) ?>" class="sr-only">Số lượng</label>
                                             <input type="number" name="quantity" id="<?= e($key) ?>" value="<?= e($cart[4]) ?>" onchange="saveCart(this);"
-                                                class="block w-full rounded-lg border border-ink-200 bg-ink-200/70 backdrop-blur-xl px-2 py-2 text-center text-sm text-ink-900 focus:outline-none focus:ring-2 focus:ring-brand-500 focus:border-brand-500" />
+                                                class="block w-full rounded-md border border-ink-300 bg-ink-50 px-2 py-2 text-center text-sm text-ink-900 focus:outline-none focus:ring-2 focus:ring-brand-500 focus:border-brand-500" />
                                         </div>
                                     </td>
                                     <td class="px-4 py-3 font-semibold text-ink-900"><?= number_format($cart[5]) ?> ₫</td>
@@ -76,35 +77,35 @@
             <div class="mt-6 flex flex-wrap items-center justify-between gap-3">
                 <a href="index.php?act=removecart&_token=<?= urlencode(\Codemoi\Core\Csrf::token()) ?>"
                     data-confirm="Bạn có chắc chắn muốn xóa toàn bộ sản phẩm trong giỏ hàng?"
-                    class="inline-flex items-center justify-center gap-2 rounded-lg border border-red-500/30 bg-ink-200/70 backdrop-blur-xl px-5 py-2.5 text-sm font-semibold text-red-600 hover:bg-red-500/10 transition-colors focus:outline-none focus:ring-2 focus:ring-brand-500">
+                    class="inline-flex items-center justify-center gap-2 rounded-md border border-red-500/30 bg-ink-50 px-5 py-2.5 text-sm font-semibold text-red-600 hover:bg-red-500/10 transition-colors focus:outline-none focus:ring-2 focus:ring-brand-500">
                     <i class="fa-solid fa-trash" aria-hidden="true"></i> Xóa toàn bộ sản phẩm
                 </a>
                 <a href="index.php?act=product"
-                    class="inline-flex items-center justify-center gap-2 rounded-lg border border-ink-200 bg-ink-200/70 backdrop-blur-xl px-5 py-2.5 text-sm font-semibold text-ink-900 hover:bg-ink-50 transition-colors focus:outline-none focus:ring-2 focus:ring-brand-500">
+                    class="inline-flex items-center justify-center gap-2 rounded-md border border-ink-300 bg-ink-50 px-5 py-2.5 text-sm font-semibold text-ink-900 hover:bg-ink-100 transition-colors focus:outline-none focus:ring-2 focus:ring-brand-500">
                     Xem thêm sản phẩm
                 </a>
             </div>
 
             <div class="mt-8 flex justify-end">
-                <div class="w-full md:w-96 rounded-2xl border border-ink-200 bg-ink-200/70 backdrop-blur-xl p-6 shadow-sm">
+                <div class="card-boutique w-full md:w-96 rounded-md p-6">
                     <h2 class="font-heading text-lg font-semibold text-ink-900 mb-4">Tổng giỏ hàng</h2>
-                    <div class="flex items-center justify-between text-sm text-ink-700 mb-6">
+                    <div class="flex items-center justify-between text-sm text-ink-700 mb-6 border-t border-ink-200 pt-4">
                         <span>Tổng thành tiền</span>
-                        <span class="text-lg font-bold text-brand-600"><?= number_format($total_amount) ?> ₫</span>
+                        <span class="text-lg font-semibold text-brand-600"><?= number_format($total_amount) ?> ₫</span>
                     </div>
                     <button type="submit"
-                        class="inline-flex w-full items-center justify-center gap-2 rounded-lg bg-brand-600 px-5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-brand-700 transition-colors focus:outline-none focus:ring-2 focus:ring-brand-500 focus:ring-offset-2">
+                        class="btn-boutique inline-flex w-full items-center justify-center gap-2 rounded-md px-5 py-2.5 text-sm font-semibold">
                         Xác nhận đặt hàng
                     </button>
                 </div>
             </div>
         <?php } else { ?>
-            <div class="rounded-2xl border border-ink-200 bg-ink-200/70 backdrop-blur-xl py-16 text-center shadow-sm">
-                <i class="fa-solid fa-cart-shopping text-5xl text-ink-600" aria-hidden="true"></i>
+            <div class="card-boutique rounded-md py-16 text-center">
+                <i class="fa-solid fa-cart-shopping text-5xl text-ink-400" aria-hidden="true"></i>
                 <h3 class="mt-4 font-heading text-lg font-semibold text-red-600">Giỏ hàng trống. Vui lòng thêm sản phẩm để đặt hàng!</h3>
                 <div class="mt-6">
                     <a href="index.php?act=product"
-                        class="inline-flex items-center justify-center gap-2 rounded-lg bg-brand-600 px-5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-brand-700 transition-colors focus:outline-none focus:ring-2 focus:ring-brand-500 focus:ring-offset-2">
+                        class="btn-boutique inline-flex items-center justify-center gap-2 rounded-md px-5 py-2.5 text-sm font-semibold">
                         <i class="fa-solid fa-plus" aria-hidden="true"></i> Thêm sản phẩm
                     </a>
                 </div>

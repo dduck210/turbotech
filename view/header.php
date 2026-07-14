@@ -22,63 +22,60 @@ unset($_SESSION['flash_success'], $_SESSION['flash_error']);
     <i class="fa-solid fa-truck-fast mr-2" aria-hidden="true"></i> Miễn phí vận chuyển toàn quốc — Bảo hành chính hãng 12 tháng
 </div>
 
-<header class="sticky top-0 z-40 border-b border-ink-200 bg-ink-200/90 backdrop-blur-xl backdrop-blur">
+<header class="sticky top-0 z-40 border-b border-ink-300 bg-ink-50">
     <div class="mx-auto max-w-7xl px-3 sm:px-6 lg:px-8">
-        <div class="flex h-16 items-center justify-between gap-1 sm:gap-3">
+        <div class="flex h-20 items-center justify-between gap-2 sm:gap-4">
             <!-- Logo -->
-            <a href="index.php" class="group flex shrink-0 items-center gap-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-brand-500">
-                <span class="relative">
-                    <span class="absolute inset-0 -z-10 rounded-full bg-brand-600/40 blur-xl transition-opacity group-hover:opacity-80"></span>
-                    <img src="./assets/images/menu/logo/logo-wordmark-dark.svg" alt="Logo Turbotech" class="h-8 w-auto sm:h-10" />
-                </span>
+            <a href="index.php" class="flex shrink-0 items-center rounded-md focus:outline-none focus:ring-2 focus:ring-brand-500">
+                <img src="./assets/images/menu/logo/logo-wordmark-light.svg" alt="Logo Turbotech" class="h-8 w-auto sm:h-9" />
             </a>
 
             <!-- Desktop nav -->
-            <nav class="hidden items-center gap-1 lg:flex">
+            <nav class="hidden items-center gap-6 lg:flex">
                 <a href="index.php"
-                    class="relative rounded-lg px-3 py-2 text-sm font-medium text-ink-700 transition-colors after:absolute after:bottom-0 after:left-3 after:right-3 after:h-0.5 after:origin-left after:scale-x-0 after:rounded-full after:bg-linear-to-r after:from-brand-500 after:to-accent-500 after:transition-transform hover:text-brand-400 hover:after:scale-x-100 focus:outline-none focus:ring-2 focus:ring-brand-500">Trang
+                    class="relative py-2 text-sm font-medium uppercase tracking-wide text-ink-700 transition-colors after:absolute after:-bottom-0.5 after:left-0 after:h-px after:w-0 after:bg-brand-500 after:transition-all hover:text-brand-600 hover:after:w-full focus:outline-none focus:ring-2 focus:ring-brand-500">Trang
                     chủ</a>
 
                 <div class="group relative">
                     <a href="index.php?act=product"
-                        class="inline-flex items-center gap-1 rounded-lg px-3 py-2 text-sm font-medium text-ink-700 transition-colors hover:bg-ink-50 hover:text-brand-600 focus:outline-none focus:ring-2 focus:ring-brand-500">
+                        class="inline-flex items-center gap-1.5 py-2 text-sm font-medium uppercase tracking-wide text-ink-700 transition-colors hover:text-brand-600 focus:outline-none focus:ring-2 focus:ring-brand-500">
                         Sản phẩm
-                        <i class="fa-solid fa-chevron-down text-xs"></i>
+                        <i class="fa-solid fa-chevron-down text-[10px]"></i>
                     </a>
                     <div
-                        class="invisible absolute left-0 top-full z-50 w-56 rounded-xl border border-ink-200 bg-ink-200/70 backdrop-blur-xl py-2 opacity-0 shadow-lg transition-all group-hover:visible group-hover:opacity-100">
+                        class="card-boutique invisible absolute left-0 top-full z-50 w-56 rounded-md py-2 opacity-0 transition-all group-hover:visible group-hover:opacity-100">
                         <?php
                         foreach ($listcate ?? [] as $cate) {
                             extract($cate);
                             $linkpro = "index.php?act=product&idcate=" . $id_cate;
-                            echo '<a href="' . e($linkpro) . '" class="block px-4 py-2 text-sm text-ink-700 hover:bg-ink-50 hover:text-brand-600 focus:outline-none focus:ring-2 focus:ring-brand-500">' . e($name_cate) . '</a>';
+                            echo '<a href="' . e($linkpro) . '" class="block px-4 py-2 text-sm text-ink-700 hover:bg-ink-100 hover:text-brand-600 focus:outline-none focus:ring-2 focus:ring-brand-500">' . e($name_cate) . '</a>';
                         }
                         ?>
                     </div>
                 </div>
 
                 <a href="index.php?act=introduce"
-                    class="relative rounded-lg px-3 py-2 text-sm font-medium text-ink-700 transition-colors after:absolute after:bottom-0 after:left-3 after:right-3 after:h-0.5 after:origin-left after:scale-x-0 after:rounded-full after:bg-linear-to-r after:from-brand-500 after:to-accent-500 after:transition-transform hover:text-brand-400 hover:after:scale-x-100 focus:outline-none focus:ring-2 focus:ring-brand-500">Giới
+                    class="relative py-2 text-sm font-medium uppercase tracking-wide text-ink-700 transition-colors after:absolute after:-bottom-0.5 after:left-0 after:h-px after:w-0 after:bg-brand-500 after:transition-all hover:text-brand-600 hover:after:w-full focus:outline-none focus:ring-2 focus:ring-brand-500">Giới
                     thiệu</a>
                 <a href="index.php?act=contact"
-                    class="relative rounded-lg px-3 py-2 text-sm font-medium text-ink-700 transition-colors after:absolute after:bottom-0 after:left-3 after:right-3 after:h-0.5 after:origin-left after:scale-x-0 after:rounded-full after:bg-linear-to-r after:from-brand-500 after:to-accent-500 after:transition-transform hover:text-brand-400 hover:after:scale-x-100 focus:outline-none focus:ring-2 focus:ring-brand-500">Liên
+                    class="relative py-2 text-sm font-medium uppercase tracking-wide text-ink-700 transition-colors after:absolute after:-bottom-0.5 after:left-0 after:h-px after:w-0 after:bg-brand-500 after:transition-all hover:text-brand-600 hover:after:w-full focus:outline-none focus:ring-2 focus:ring-brand-500">Liên
                     hệ</a>
                 <a href="index.php?act=question"
-                    class="relative rounded-lg px-3 py-2 text-sm font-medium text-ink-700 transition-colors after:absolute after:bottom-0 after:left-3 after:right-3 after:h-0.5 after:origin-left after:scale-x-0 after:rounded-full after:bg-linear-to-r after:from-brand-500 after:to-accent-500 after:transition-transform hover:text-brand-400 hover:after:scale-x-100 focus:outline-none focus:ring-2 focus:ring-brand-500">Hỏi
+                    class="relative py-2 text-sm font-medium uppercase tracking-wide text-ink-700 transition-colors after:absolute after:-bottom-0.5 after:left-0 after:h-px after:w-0 after:bg-brand-500 after:transition-all hover:text-brand-600 hover:after:w-full focus:outline-none focus:ring-2 focus:ring-brand-500">Hỏi
                     đáp</a>
             </nav>
 
             <!-- Desktop search -->
-            <form action="index.php" method="get" class="hidden max-w-sm flex-1 md:flex">
+            <form action="index.php" method="get" class="hidden max-w-xs flex-1 md:flex">
                 <input type="hidden" name="act" value="product">
                 <label for="header-search" class="sr-only">Tìm kiếm sản phẩm</label>
-                <div class="relative w-full">
+                <div class="relative w-full border-b border-ink-300 focus-within:border-brand-500">
                     <input id="header-search" name="kyw" type="text" required
-                        placeholder="Nhập từ khóa tìm kiếm ..."
-                        class="block w-full rounded-full border border-ink-200 bg-ink-50 py-2.5 pl-4 pr-11 text-sm text-ink-900 placeholder:text-ink-600 focus:border-brand-500 focus:bg-ink-200/70 backdrop-blur-xl focus:outline-none focus:ring-2 focus:ring-brand-500" />
+                        placeholder="Tìm kiếm sản phẩm ..."
+                        class="block w-full bg-transparent py-2 pl-1 pr-9 text-sm text-ink-900 placeholder:text-ink-500 focus:outline-none" />
                     <button type="submit" name="btn_search" aria-label="Tìm kiếm"
-                        class="absolute right-1 top-1/2 flex h-9 w-9 -translate-y-1/2 items-center justify-center rounded-full text-ink-500 transition-colors hover:bg-ink-100 hover:text-brand-600 focus:outline-none focus:ring-2 focus:ring-brand-500">
-                        <i class="fa-solid fa-magnifying-glass"></i>
+                        class="absolute right-0 top-1/2 flex h-8 w-8 -translate-y-1/2 items-center justify-center text-ink-500 transition-colors hover:text-brand-600 focus:outline-none focus:ring-2 focus:ring-brand-500">
+                        <i class="fa-solid fa-magnifying-glass text-sm"></i>
                     </button>
                 </div>
             </form>
@@ -94,7 +91,7 @@ unset($_SESSION['flash_success'], $_SESSION['flash_error']);
                             class="absolute right-0.5 top-0.5 inline-flex h-5 w-5 items-center justify-center rounded-full bg-brand-600 text-[11px] font-bold text-white"><?= e($count) ?></span>
                     </a>
                     <div
-                        class="invisible absolute right-0 top-full z-50 w-80 rounded-xl border border-ink-200 bg-ink-200/70 backdrop-blur-xl opacity-0 shadow-lg transition-all group-hover:visible group-hover:opacity-100">
+                        class="card-boutique invisible absolute right-0 top-full z-50 w-80 rounded-md opacity-0 transition-all group-hover:visible group-hover:opacity-100">
                         <?php if (empty($_SESSION['mycart'])) { ?>
                             <p class="p-6 text-center text-sm text-ink-500">Bạn chưa thêm sản phẩm nào vào giỏ hàng !</p>
                         <?php } else { ?>
@@ -151,7 +148,7 @@ unset($_SESSION['flash_success'], $_SESSION['flash_error']);
                         </a>
                     <?php } ?>
                     <div
-                        class="invisible absolute right-0 top-full z-50 w-56 rounded-xl border border-ink-200 bg-ink-200/70 backdrop-blur-xl py-2 opacity-0 shadow-lg transition-all group-hover:visible group-hover:opacity-100">
+                        class="card-boutique invisible absolute right-0 top-full z-50 w-56 rounded-md py-2 opacity-0 transition-all group-hover:visible group-hover:opacity-100">
                         <?php if (!isset($_SESSION['user'])) { ?>
                             <a href="index.php?act=login"
                                 class="flex items-center gap-2 px-4 py-2 text-sm text-ink-700 hover:bg-ink-50 hover:text-brand-600 focus:outline-none focus:ring-2 focus:ring-brand-500"><i
@@ -192,12 +189,12 @@ unset($_SESSION['flash_success'], $_SESSION['flash_error']);
         <form action="index.php" method="get" class="pb-3 md:hidden">
             <input type="hidden" name="act" value="product">
             <label for="header-search-mobile" class="sr-only">Tìm kiếm sản phẩm</label>
-            <div class="relative w-full">
+            <div class="relative w-full border-b border-ink-300 focus-within:border-brand-500">
                 <input id="header-search-mobile" name="kyw" type="text" required
-                    placeholder="Nhập từ khóa tìm kiếm ..."
-                    class="block w-full rounded-full border border-ink-200 bg-ink-50 py-2.5 pl-4 pr-11 text-sm text-ink-900 placeholder:text-ink-600 focus:border-brand-500 focus:bg-ink-200/70 backdrop-blur-xl focus:outline-none focus:ring-2 focus:ring-brand-500" />
+                    placeholder="Tìm kiếm sản phẩm ..."
+                    class="block w-full bg-transparent py-2.5 pl-1 pr-9 text-sm text-ink-900 placeholder:text-ink-500 focus:outline-none" />
                 <button type="submit" name="btn_search" aria-label="Tìm kiếm"
-                    class="absolute right-1 top-1/2 flex h-9 w-9 -translate-y-1/2 items-center justify-center rounded-full text-ink-500 transition-colors hover:bg-ink-100 hover:text-brand-600 focus:outline-none focus:ring-2 focus:ring-brand-500">
+                    class="absolute right-0 top-1/2 flex h-9 w-9 -translate-y-1/2 items-center justify-center text-ink-500 transition-colors hover:text-brand-600 focus:outline-none focus:ring-2 focus:ring-brand-500">
                     <i class="fa-solid fa-magnifying-glass"></i>
                 </button>
             </div>
@@ -205,7 +202,7 @@ unset($_SESSION['flash_success'], $_SESSION['flash_error']);
     </div>
 
     <!-- Mobile nav -->
-    <nav id="mobile-menu" class="hidden border-t border-ink-200 bg-ink-200/70 backdrop-blur-xl lg:hidden">
+    <nav id="mobile-menu" class="hidden border-t border-ink-300 bg-ink-50 lg:hidden">
         <div class="mx-auto max-w-7xl space-y-1 px-4 py-4 sm:px-6">
             <a href="index.php"
                 class="block rounded-lg px-3 py-2.5 text-sm font-medium text-ink-700 hover:bg-ink-50 focus:outline-none focus:ring-2 focus:ring-brand-500">Trang

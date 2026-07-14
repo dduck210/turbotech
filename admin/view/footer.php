@@ -2,9 +2,11 @@
                 </main>
 
                 <!-- Footer -->
-                <footer class="bg-ink-200/70 backdrop-blur-xl border-t border-ink-200 py-4 px-6 shrink-0 z-10">
-                    <div class="text-center text-sm text-ink-500 font-medium">
+                <footer class="bg-ink-50 border-t border-ink-300 py-4 px-6 shrink-0 z-10">
+                    <div class="flex items-center justify-center gap-2 text-sm text-ink-500">
+                        <span class="w-4 h-px bg-ink-300"></span>
                         &copy; 2026 Turbotech Admin.
+                        <span class="w-4 h-px bg-ink-300"></span>
                     </div>
                 </footer>
                 </div> <!-- End Main Content Wrapper -->
@@ -13,22 +15,22 @@
                 <!-- Custom confirm dialog (replaces the native browser confirm() popup) —
          logic lives in assets/js/confirm-dialog.js; markup stays here so its
          classes are seen by Tailwind's content scan. -->
-                <div id="confirm-dialog-overlay" class="hidden fixed inset-0 z-50 bg-ink-100/50 p-4">
+                <div id="confirm-dialog-overlay" class="hidden fixed inset-0 z-50 bg-ink-900/40 p-4">
                     <div class="flex h-full w-full items-center justify-center">
-                        <div class="w-full max-w-sm rounded-2xl bg-ink-200/70 backdrop-blur-xl p-6 shadow-xl">
-                            <div class="mb-4 flex items-center gap-3">
+                        <div class="card-boutique w-full max-w-sm rounded-lg p-6">
+                            <div class="mb-4 flex items-center gap-3 border-b border-ink-300 pb-4">
                                 <div
-                                    class="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-amber-500/15 text-amber-600">
+                                    class="flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-brand-400 text-brand-600">
                                     <i class="fas fa-exclamation-triangle" aria-hidden="true"></i>
                                 </div>
-                                <h3 class="text-base font-semibold text-ink-900">Xác nhận</h3>
+                                <h3 class="font-heading text-xl text-ink-900">Xác nhận</h3>
                             </div>
                             <p id="confirm-dialog-message" class="mb-6 text-sm text-ink-600"></p>
                             <div class="flex justify-end gap-3">
                                 <button type="button" id="confirm-dialog-cancel"
-                                    class="rounded-lg border border-ink-200 bg-ink-200/70 backdrop-blur-xl px-4 py-2 text-sm font-semibold text-ink-900 transition-colors hover:bg-ink-50 focus:outline-none focus:ring-2 focus:ring-brand-500">Hủy</button>
+                                    class="rounded-md border border-ink-300 bg-ink-50 px-4 py-2 text-sm font-semibold text-ink-800 transition-colors hover:bg-ink-200 focus:outline-none focus:ring-2 focus:ring-brand-400">Hủy</button>
                                 <button type="button" id="confirm-dialog-ok"
-                                    class="rounded-lg bg-red-600 px-4 py-2 text-sm font-semibold text-white transition-colors hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2">Xác
+                                    class="rounded-md bg-red-600 px-4 py-2 text-sm font-semibold text-white transition-colors hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2">Xác
                                     nhận</button>
                             </div>
                         </div>

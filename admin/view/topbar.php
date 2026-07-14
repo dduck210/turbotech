@@ -1,38 +1,38 @@
 <header
-    class="h-20 bg-ink-200/80 backdrop-blur-xl backdrop-blur-md border-b border-ink-200 flex items-center justify-between px-6 shrink-0 z-10 sticky top-0 shadow-sm">
-    <div class="flex items-center">
+    class="h-20 bg-ink-50 border-b border-ink-300 flex items-center justify-between px-6 shrink-0 z-10 sticky top-0">
+    <div class="flex items-center gap-4">
         <button id="mobile-sidebar-toggle" class="md:hidden text-ink-500 hover:text-brand-600 transition-colors">
             <i class="fas fa-bars text-xl"></i>
         </button>
         <!-- Search -->
-        <div class="hidden md:flex relative ml-4">
-            <i class="fas fa-search absolute left-3 top-1/2 -tranink-y-1/2 text-ink-400"></i>
+        <div class="hidden md:flex items-center relative border border-ink-300 rounded-md focus-within:border-brand-500 transition-colors">
+            <i class="fas fa-search absolute left-3 text-ink-400 text-sm"></i>
             <input type="text" placeholder="Tìm kiếm..."
-                class="bg-ink-100 text-sm rounded-full pl-10 pr-4 py-2 border-none focus:ring-2 focus:ring-brand-500 outline-none w-40 lg:w-64 transition-all focus:w-56 lg:focus:w-80">
+                class="bg-transparent text-sm pl-9 pr-4 py-2 border-none outline-none w-40 lg:w-64 transition-all focus:w-56 lg:focus:w-80 text-ink-800 placeholder:text-ink-400">
         </div>
     </div>
 
-    <div class="flex items-center space-x-4">
+    <div class="flex items-center gap-4">
         <!-- Notifications -->
         <button
-            class="relative p-2 text-ink-400 hover:text-brand-600 transition-colors rounded-full hover:bg-brand-500/10">
+            class="relative p-2 text-ink-400 hover:text-brand-600 transition-colors rounded-md hover:bg-ink-200">
             <i class="fas fa-bell text-lg"></i>
-            <span class="absolute top-1 right-1 w-2.5 h-2.5 bg-red-500 rounded-full border-2 border-white"></span>
+            <span class="absolute top-1.5 right-1.5 w-2 h-2 bg-accent-500 rounded-full border border-ink-50"></span>
         </button>
 
-        <!-- Profile Dropdown -->
-        <div class="flex items-center space-x-3 border-l border-ink-200 pl-4 ml-2">
+        <!-- Profile -->
+        <div class="flex items-center gap-3 border border-ink-300 rounded-md pl-3 pr-2 py-1.5">
             <div class="text-right hidden lg:block whitespace-nowrap">
-                <div class="text-sm font-semibold text-ink-700">Admin Turbotech</div>
-                <div class="text-xs text-ink-500 font-medium">Quản trị viên</div>
+                <div class="text-sm font-semibold text-ink-800">Admin Turbotech</div>
+                <div class="text-xs text-ink-500">Quản trị viên</div>
             </div>
             <img src="../assets/admin-images/admin.png"
-                onerror="this.src='https://ui-avatars.com/api/?name=Admin&background=eff6ff&color=2563eb'"
-                class="w-10 h-10 rounded-full border-2 border-brand-500/25 object-cover shadow-sm">
+                onerror="this.src='https://ui-avatars.com/api/?name=Admin&background=f3e2c5&color=7a5c32'"
+                class="w-9 h-9 rounded-full border border-ink-300 object-cover">
             <a href="index.php?act=logout" data-confirm="Bạn có chắc chắn muốn đăng xuất?"
-                class="ml-2 p-2 text-ink-400 hover:text-red-500 transition-colors rounded-full hover:bg-red-500/10"
+                class="p-1.5 text-ink-400 hover:text-red-600 transition-colors rounded-md hover:bg-red-50"
                 title="Đăng xuất">
-                <i class="fas fa-sign-out-alt text-lg"></i>
+                <i class="fas fa-sign-out-alt"></i>
             </a>
         </div>
     </div>

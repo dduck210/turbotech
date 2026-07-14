@@ -11,7 +11,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link
-        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Manrope:wght@600;700;800&display=swap"
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Manrope:wght@600;700;800&family=Cormorant+Garamond:wght@500;600;700&display=swap"
         rel="stylesheet">
 
     <!-- SweetAlert2 -->
@@ -23,56 +23,54 @@
     <link rel="stylesheet" href="../assets/css/admin-tailwind.css" />
 </head>
 
-<body
-    class="bg-ink-50 text-ink-600 antialiased flex items-center justify-center min-h-screen relative overflow-hidden">
+<body class="bg-ink-100 text-ink-600 antialiased flex items-center justify-center min-h-screen p-4">
     <?php if (!empty($flash_error)): ?>
     <script>document.addEventListener("DOMContentLoaded",()=>Swal.fire({toast:true,position:"top-end",icon:"error",title:<?= json_encode($flash_error) ?>,showConfirmButton:false,timer:4000}));</script>
     <?php endif; ?>
-    <!-- Decorative Background Shapes -->
-    <div class="bg-shape bg-brand-600 w-[500px] h-[500px] top-[-200px] left-[-200px] animate-float"></div>
-    <div class="bg-shape bg-accent-600 w-[400px] h-[400px] bottom-[-100px] right-[-100px] animate-float" style="animation-delay:-2.5s"></div>
 
-    <div class="container mx-auto px-4 w-full max-w-5xl relative z-10 animate-fade-up">
-        <div class="glass rounded-3xl shadow-2xl overflow-hidden">
+    <div class="container mx-auto w-full max-w-5xl">
+        <div class="card-boutique rounded-lg overflow-hidden">
             <div class="flex flex-col lg:flex-row">
-                <!-- Image Section -->
-                <div
-                    class="hidden lg:flex lg:w-1/2 bg-ink-100 items-center justify-center p-12 relative overflow-hidden group">
-                    <div class="absolute inset-0 bg-linear-to-br from-brand-600/25 to-accent-600/25"></div>
-                    <img src="../assets/images/menu/logo/logo-wordmark-dark.svg" alt="logo Turbotech"
-                        class="w-full max-w-sm relative z-10 drop-shadow-2xl group-hover:scale-105 transition-transform duration-700">
+                <!-- Brand Panel -->
+                <div class="lg:w-2/5 bg-ink-900 text-ink-100 p-10 md:p-12 flex flex-col justify-between">
+                    <img src="../assets/images/menu/logo/logo-wordmark-dark.svg" alt="Turbotech"
+                        class="h-10 w-auto">
+                    <div class="my-10">
+                        <span class="block w-10 h-px bg-brand-400 mb-6"></span>
+                        <p class="font-heading text-2xl leading-snug text-ink-50">
+                            Không gian quản trị dành riêng cho đội ngũ Turbotech.
+                        </p>
+                    </div>
+                    <p class="text-xs text-ink-400 tracking-wide">&copy; 2026 Turbotech. Boutique Commerce.</p>
                 </div>
 
                 <!-- Form Section -->
-                <div class="w-full lg:w-1/2 p-8 md:p-12 lg:p-16 flex flex-col justify-center">
-                    <div class="text-center mb-8">
-                        <h1 class="text-3xl font-bold mb-2 font-heading"><span class="text-gradient">Trang quản trị</span></h1>
+                <div class="w-full lg:w-3/5 p-8 md:p-12 lg:p-16 flex flex-col justify-center">
+                    <div class="mb-8">
+                        <span class="block w-10 h-px bg-brand-500 mb-4"></span>
+                        <h1 class="font-heading text-3xl text-ink-900 mb-2">Trang quản trị</h1>
                         <p class="text-ink-500">Chào mừng trở lại Turbotech!</p>
                     </div>
 
-                    <form class="space-y-6" action="index.php?act=login" method="post" data-validate novalidate>
+                    <form class="space-y-5" action="index.php?act=login" method="post" data-validate novalidate>
 <?= \Codemoi\Core\Csrf::field() ?>
                         <div>
-                            <label class="block text-sm font-medium text-ink-700 mb-2">Tài khoản</label>
+                            <label class="block text-xs font-semibold uppercase tracking-wider text-ink-500 mb-2">Tài khoản</label>
                             <input type="text" name="user_name" placeholder="Nhập tài khoản" data-rules="required"
-                                class="w-full rounded-xl border border-ink-300 px-5 py-3 focus:ring-2 focus:ring-brand-500 focus:border-brand-500 outline-none transition-all bg-ink-100 text-ink-800">
+                                class="w-full rounded-md border border-ink-300 px-4 py-3 focus:ring-2 focus:ring-brand-400 focus:border-brand-500 outline-none transition-all bg-ink-50 text-ink-800">
                         </div>
 
                         <div>
-                            <label class="block text-sm font-medium text-ink-700 mb-2">Mật khẩu</label>
+                            <label class="block text-xs font-semibold uppercase tracking-wider text-ink-500 mb-2">Mật khẩu</label>
                             <input type="password" name="password" placeholder="Nhập mật khẩu" data-rules="required"
-                                class="w-full rounded-xl border border-ink-300 px-5 py-3 focus:ring-2 focus:ring-brand-500 focus:border-brand-500 outline-none transition-all bg-ink-100 text-ink-800">
+                                class="w-full rounded-md border border-ink-300 px-4 py-3 focus:ring-2 focus:ring-brand-400 focus:border-brand-500 outline-none transition-all bg-ink-50 text-ink-800">
                         </div>
 
                         <input type="submit" name="btn_login" value="Đăng nhập"
-                            class="btn-glow w-full text-white font-semibold rounded-xl px-4 py-3.5 mt-4 transition-all active:scale-[0.98] cursor-pointer">
+                            class="btn-boutique w-full font-semibold rounded-md px-4 py-3 mt-2 cursor-pointer">
                     </form>
                 </div>
             </div>
-        </div>
-
-        <div class="text-center text-ink-400 text-sm mt-8 font-medium tracking-wide">
-            &copy; 2026 Turbotech Admin. Premium Access.
         </div>
     </div>
     <script src="../assets/js/form-validate.js"></script>

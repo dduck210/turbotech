@@ -1,4 +1,4 @@
-﻿<?php include_once "header.php" ?>
+<?php include_once "header.php" ?>
 <?php /** @var array $one_bill */ ?>
 <?php
 if (is_array($one_bill)) {
@@ -6,34 +6,57 @@ if (is_array($one_bill)) {
 }
 ?>
 
-
-<div class="bg-emerald-500/10 border border-emerald-500/30 text-emerald-700 px-4 py-3 rounded-lg mb-4 font-semibold">
-    Chi tiết đơn hàng UTP-<?= e($id_bill) ?>
+<div class="mb-8 pb-5 border-b border-ink-300 flex flex-wrap items-end justify-between gap-4">
+    <div>
+        <div class="text-xs font-semibold uppercase tracking-[0.2em] text-brand-600 mb-1">Đơn hàng</div>
+        <h1 class="font-heading text-3xl text-ink-900">Chi tiết UTP-<?= e($id_bill) ?></h1>
+    </div>
+    <a href="index.php?act=listbill"
+        class="inline-flex items-center gap-2 border border-ink-300 text-ink-700 font-medium rounded-md px-5 py-2.5 hover:bg-ink-200 transition-colors">
+        <i class="fa-solid fa-arrow-left"></i> Quay lại danh sách
+    </a>
 </div>
-<div class="bg-ink-50 rounded-xl shadow-sm border border-ink-200 overflow-hidden mb-6 p-6">
-    <div class="space-y-2 text-ink-700">
-        <p>Mã hóa đơn: UTP-<?= e($id_bill) ?>
-        </p>
-        <p>Người đặt: <span class="fw-bold">
-                <?= e($user_name) ?>
-            </span></p>
-        <p>Họ tên: <?= e($full_name) ?>
-        </p>
-        <p>Email: <?= e($email) ?></p>
-        <p>Địa chỉ nhận hàng: <?= e($address) ?>
-        </p>
-        <p>Số điện thoại: 0<?= e($phone) ?></p>
-        <p>Ngày đặt: <?= e($order_date) ?>
-        </p>
-        <?php if (!empty($coupon_code)) : ?>
-            <p>Mã giảm giá: <span class="text-emerald-600 font-bold"><?= e($coupon_code) ?>
-                    (-<?= number_format($discount_amount) ?>₫)</span></p>
-        <?php endif; ?>
-        <p>Thành tiền: <span class="text-ink-800 font-bold">
-                <?= number_format($total_amount) ?>₫
-            </span></p>
-        <p>Phương thức thanh toán:
-            <span class="text-brand-600 font-bold"> <?php if ($payment == 1) {
+
+<div class="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-6">
+    <div class="lg:col-span-2 card-boutique rounded-lg overflow-hidden">
+        <div class="px-6 py-4 border-b border-ink-300">
+            <h2 class="font-heading text-lg text-ink-900">Thông tin đơn hàng</h2>
+            <span class="block w-8 h-px bg-brand-500 mt-2"></span>
+        </div>
+        <div class="p-6 grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-4 text-sm">
+            <div>
+                <div class="text-xs font-semibold uppercase tracking-wider text-ink-500 mb-1">Người đặt</div>
+                <div class="text-ink-800 font-medium"><?= e($user_name) ?></div>
+            </div>
+            <div>
+                <div class="text-xs font-semibold uppercase tracking-wider text-ink-500 mb-1">Họ tên</div>
+                <div class="text-ink-800 font-medium"><?= e($full_name) ?></div>
+            </div>
+            <div>
+                <div class="text-xs font-semibold uppercase tracking-wider text-ink-500 mb-1">Email</div>
+                <div class="text-ink-800"><?= e($email) ?></div>
+            </div>
+            <div>
+                <div class="text-xs font-semibold uppercase tracking-wider text-ink-500 mb-1">Số điện thoại</div>
+                <div class="text-ink-800">0<?= e($phone) ?></div>
+            </div>
+            <div class="sm:col-span-2">
+                <div class="text-xs font-semibold uppercase tracking-wider text-ink-500 mb-1">Địa chỉ nhận hàng</div>
+                <div class="text-ink-800"><?= e($address) ?></div>
+            </div>
+            <div>
+                <div class="text-xs font-semibold uppercase tracking-wider text-ink-500 mb-1">Ngày đặt</div>
+                <div class="text-ink-800"><?= e($order_date) ?></div>
+            </div>
+            <?php if (!empty($coupon_code)) : ?>
+            <div>
+                <div class="text-xs font-semibold uppercase tracking-wider text-ink-500 mb-1">Mã giảm giá</div>
+                <div class="text-emerald-600 font-bold"><?= e($coupon_code) ?> (-<?= number_format($discount_amount) ?>₫)</div>
+            </div>
+            <?php endif; ?>
+            <div>
+                <div class="text-xs font-semibold uppercase tracking-wider text-ink-500 mb-1">Phương thức thanh toán</div>
+                <div class="text-brand-600 font-semibold"><?php if ($payment == 1) {
                                                         echo "Thanh toán khi nhận hàng";
                                                     } else if ($payment == 2) {
                                                         echo "Chuyển khoản ngân hàng";
@@ -41,9 +64,11 @@ if (is_array($one_bill)) {
                                                         echo "Thanh toán online";
                                                     } else {
                                                         echo "Không tìm thấy phương thức thanh toán";
-                                                    } ?></span>
-        </p>
-        <p>Trạng thái đơn hàng: <span class="text-amber-500 font-bold"><?php if ($status == 0) {
+                                                    } ?></div>
+            </div>
+            <div>
+                <div class="text-xs font-semibold uppercase tracking-wider text-ink-500 mb-1">Trạng thái đơn hàng</div>
+                <div class="text-amber-600 font-semibold"><?php if ($status == 0) {
                                                                             echo "Đơn hàng mới";
                                                                         } else if ($status == 1) {
                                                                             echo "Đang xử lý";
@@ -55,24 +80,37 @@ if (is_array($one_bill)) {
                                                                             echo "Đã hủy";
                                                                         } else {
                                                                             echo "Lỗi trạng thái";
-                                                                        } ?>
-            </span>
-        </p>
-        <p>Trạng thái thanh toán: <?php if ($status_pay == 0) {
-                                        echo '<span class="text-red-500 font-semibold">Chưa thanh toán</span>';
+                                                                        } ?></div>
+            </div>
+            <div>
+                <div class="text-xs font-semibold uppercase tracking-wider text-ink-500 mb-1">Trạng thái thanh toán</div>
+                <div><?php if ($status_pay == 0) {
+                                        echo '<span class="text-red-600 font-semibold">Chưa thanh toán</span>';
                                     } else if ($status_pay == 1) {
-                                        echo '<span class="text-emerald-500 font-semibold">Đã thanh toán</span>';
+                                        echo '<span class="text-emerald-600 font-semibold">Đã thanh toán</span>';
                                     } else {
                                         echo "Không tìm thấy phương thức thanh toán";
-                                    }  ?></p>
+                                    }  ?></div>
+            </div>
+        </div>
+    </div>
+
+    <div class="card-boutique rounded-lg overflow-hidden flex flex-col items-center justify-center p-8 text-center">
+        <span class="w-10 h-px bg-brand-500 mb-4"></span>
+        <div class="text-xs font-semibold uppercase tracking-wider text-ink-500 mb-2">Thành tiền</div>
+        <div class="font-heading text-3xl text-ink-900"><?= number_format($total_amount) ?>₫</div>
     </div>
 </div>
 
-<div class="bg-ink-200/70 backdrop-blur-xl rounded-xl shadow-sm border border-ink-200 overflow-hidden mb-6">
+<div class="card-boutique rounded-lg overflow-hidden mb-6">
+    <div class="px-6 py-4 border-b border-ink-300">
+        <h2 class="font-heading text-lg text-ink-900">Sản phẩm</h2>
+        <span class="block w-8 h-px bg-brand-500 mt-2"></span>
+    </div>
     <div class="overflow-x-auto">
         <table class="w-full text-left text-sm text-ink-600">
-            <thead class="bg-ink-50 text-ink-700 uppercase text-xs font-semibold">
-                <tr>
+            <thead>
+                <tr class="border-b-2 border-ink-300 text-ink-600 text-xs font-semibold tracking-widest uppercase">
                     <th class="px-4 py-3">Hình ảnh</th>
                     <th class="px-4 py-3">Sản phẩm</th>
                     <th class="px-4 py-3">Đơn giá</th>
@@ -80,39 +118,23 @@ if (is_array($one_bill)) {
                     <th class="px-4 py-3">Thành tiền</th>
                 </tr>
             </thead>
-            <tbody>
+            <tbody class="divide-y divide-ink-200">
                 <?php $id = $_GET['idbill'];
                 $bill = \Codemoi\Model\Order::items((int) $id);
-                // var_dump($bill);
                 foreach ($bill as $value) {
                 ?>
-                    <tr class="border-b border-ink-100 hover:bg-ink-50 transition-colors">
-                        <td class="px-4 py-3"><img src="../admin/uploads/<?= e($value['img_pro']) ?>" alt="Ultraphone Product"
-                                width="80px"></img></td>
-                        <td class="px-4 py-3">
-                            <?= e($value['name_pro']) ?>
-                        </td>
-                        <td class="px-4 py-3"><span class="amount">
-                                <?= number_format($value['price_pro']) ?>₫
-                            </span></td>
-                        <td class="px-4 py-3 quantity">
-                            <?= e($value['quantity']) ?>
-                        </td>
-                        <td class="px-4 py-3 product-subtotal"><span class="amount text-emerald-600 font-medium">
-                                <?= number_format($value['total_amount']) ?>₫
-                            </span></td>
+                    <tr class="hover:bg-ink-100/60 transition-colors">
+                        <td class="px-4 py-3"><img src="../admin/uploads/<?= e($value['img_pro']) ?>" alt="<?= e($value['name_pro']) ?>"
+                                class="w-16 h-16 rounded-md border border-ink-300 object-cover"></td>
+                        <td class="px-4 py-3"><?= e($value['name_pro']) ?></td>
+                        <td class="px-4 py-3"><span class="amount"><?= number_format($value['price_pro']) ?>₫</span></td>
+                        <td class="px-4 py-3 quantity"><?= e($value['quantity']) ?></td>
+                        <td class="px-4 py-3 product-subtotal"><span class="amount text-emerald-600 font-medium"><?= number_format($value['total_amount']) ?>₫</span></td>
                     </tr>
                 <?php } ?>
             </tbody>
         </table>
     </div>
-</div>
-<div class="btn-function mb-6">
-    <a href="index.php?act=listbill"
-        class="bg-brand-600 hover:bg-brand-700 text-white font-medium rounded-lg px-4 py-2 transition-colors inline-block"><i
-            class="fa-solid fa-arrow-left"></i> Quay lại
-        danh sách</a>
-</div>
 </div>
 
 <?php include_once "footer.php" ?>

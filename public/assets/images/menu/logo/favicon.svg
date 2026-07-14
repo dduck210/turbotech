@@ -1,8 +1,8 @@
 <svg width="180" height="180" viewBox="0 0 180 180" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Turbotech">
   <defs>
     <linearGradient id="gF1" x1="0%" y1="100%" x2="100%" y2="0%">
-      <stop offset="0%" stop-color="#6366f1"/>
-      <stop offset="100%" stop-color="#a78bfa"/>
+      <stop offset="0%" stop-color="#96733f"/>
+      <stop offset="100%" stop-color="#c9a464"/>
     </linearGradient>
   </defs>
   <rect x="2" y="46" width="88" height="16" rx="8" fill="url(#gF1)"/>
