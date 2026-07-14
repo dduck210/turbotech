@@ -41,7 +41,7 @@
                     </li>
                     <li class="flex items-center gap-3">
                         <i class="fa-solid fa-envelope w-4 text-brand-400"></i>
-                        <a href="#" class="transition-colors hover:text-brand-400 focus:outline-none focus:ring-2 focus:ring-brand-500">tubotech@gmail.com</a>
+                        <a href="mailto:turbotech@gmail.com" class="transition-colors hover:text-brand-400 focus:outline-none focus:ring-2 focus:ring-brand-500">turbotech@gmail.com</a>
                     </li>
                 </ul>
             </div>

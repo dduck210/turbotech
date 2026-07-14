@@ -32,7 +32,7 @@
                 </li>
                 <li class="flex items-center gap-3">
                     <i class="fa-solid fa-envelope w-4 text-brand-500"></i>
-                    <span class="text-ink-700">tubotech@gmail.com</span>
+                    <span class="text-ink-700">turbotech@gmail.com</span>
                 </li>
             </ul>
         </div>
