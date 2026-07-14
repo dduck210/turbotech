@@ -18,31 +18,34 @@ class Stats
     }
 
     /** Paid revenue in the last 24h. Mirrors old `ngay()`. */
-    public static function today()
+    public static function today(): int
     {
         $sql = "SELECT SUM(`total_amount`) FROM `bill` WHERE `status_pay` = '1' AND `order_date` >= NOW() - INTERVAL 1 DAY ";
-        return Database::queryValue($sql);
+        return (int) (Database::queryValue($sql) ?? 0);
     }
 
     /** Paid revenue in the last 7 days. Mirrors old `tuan()`. */
-    public static function thisWeek()
+    public static function thisWeek(): int
     {
         $sql = "SELECT SUM(`total_amount`) FROM `bill` WHERE `status_pay` = '1' AND `order_date` >= NOW() - INTERVAL 1 WEEK ";
-        return Database::queryValue($sql);
+        return (int) (Database::queryValue($sql) ?? 0);
     }
 
     /** Paid revenue in the last 30 days. Mirrors old `thang()`. */
-    public static function thisMonth()
+    public static function thisMonth(): int
     {
         $sql = "SELECT SUM(`total_amount`) FROM `bill` WHERE `status_pay` = '1' AND `order_date` >= NOW() - INTERVAL 1 MONTH ";
-        return Database::queryValue($sql);
+        return (int) (Database::queryValue($sql) ?? 0);
     }
 
     /** Paid revenue for calendar month `$month` (1-12), any year. Mirrors old `tungthang($a)`. */
-    public static function forMonth(int $month)
+    public static function forMonth(int $month): int
     {
         $sql = "SELECT SUM(`total_amount`) as soluong FROM `bill` WHERE `status_pay` = '1' AND Month(order_date) = ? ";
-        return Database::queryValue($sql, $month);
+        // SUM() returns SQL NULL for a month with zero matching rows — cast to 0 so
+        // the dashboard revenue chart (Chart.js, dashboard.php) doesn't treat every
+        // zero-revenue month as a data gap and break the line into an isolated dot.
+        return (int) (Database::queryValue($sql, $month) ?? 0);
     }
 
     /** Mirrors old `get_revenue_by_date($from_date, $to_date)`. */
