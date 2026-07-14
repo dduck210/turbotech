@@ -27,7 +27,7 @@ unset($_SESSION['flash_success']);
     <title>Bình luận sản phẩm</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Cormorant+Garamond:wght@500;600;700&display=swap"
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@500;600;700;800&display=swap"
         rel="stylesheet" />
     <link rel="stylesheet" type="text/css" media="screen" href="../assets/css/tailwind.css" />
     <link rel="icon" type="image/svg+xml" href="../assets/images/menu/logo/favicon.svg" />

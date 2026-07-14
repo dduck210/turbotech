@@ -87,13 +87,6 @@
                 </div>
             </form>
 
-            <!-- Sidebar banner -->
-            <div class="overflow-hidden rounded-md border border-ink-300">
-                <a href="#">
-                    <img src="./assets/images/shop/1.png" alt="Turbotech" class="w-full h-auto">
-                </a>
-            </div>
-
             <!-- Recommended products (was slick slider "jb-list-product_slider" — dropped per
                  design-system's legacy-plugin removal guidance, replaced with a plain vertical list) -->
             <div class="border-t border-ink-200 pt-6">
