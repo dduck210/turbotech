@@ -52,10 +52,14 @@ class AccountController extends Controller
             } else {
                 $img_user = '';
                 if (!empty($_FILES['img_user']['tmp_name'])) {
-                    $new_name = basename($_FILES['img_user']['name']);
-                    $extension = strtolower(pathinfo($new_name, PATHINFO_EXTENSION));
+                    $original_name = basename($_FILES['img_user']['name']);
+                    $extension = strtolower(pathinfo($original_name, PATHINFO_EXTENSION));
                     $allowed_extensions = ['jpg', 'jpeg', 'png', 'gif'];
-                    if (in_array($extension, $allowed_extensions, true) && !preg_match('/\.(php|phtml|pht)/i', $new_name)) {
+                    if (in_array($extension, $allowed_extensions, true) && !preg_match('/\.(php|phtml|pht)/i', $original_name)) {
+                        // Generated, not the client's filename — two users
+                        // uploading a same-named avatar (e.g. "avatar.jpg")
+                        // used to silently overwrite each other's image.
+                        $new_name = 'user_' . bin2hex(random_bytes(8)) . '.' . $extension;
                         $target_file = 'uploads/' . $new_name;
                         if (move_uploaded_file($_FILES['img_user']['tmp_name'], $target_file)) {
                             $img_user = $new_name;
