@@ -136,6 +136,17 @@ class User
     }
 
     /**
+     * How many role=1 accounts currently exist — used to block demoting or
+     * deleting the last one, which would lock everyone out of `/admin`
+     * with no recovery path (`AdminController::requireAdmin()` gates on
+     * `role='1'` and there's no admin-restore script anywhere).
+     */
+    public static function countAdmins(): int
+    {
+        return (int) Database::queryValue("SELECT COUNT(*) FROM user WHERE role = 1");
+    }
+
+    /**
      * Look up a single user by id. Mirrors old `loadone_user($id_user)`.
      *
      * @return array|false

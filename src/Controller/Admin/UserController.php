@@ -61,6 +61,16 @@ class UserController extends AdminController
                 return;
             }
 
+            // Demoting the last remaining admin would lock everyone out of
+            // /admin with no recovery path (requireAdmin() gates on
+            // role='1', and there's no admin-restore script anywhere).
+            $target = User::find($id_user);
+            if ($target && (int) $target['role'] === 1 && $role !== '1' && User::countAdmins() <= 1) {
+                echo '<script>document.addEventListener("DOMContentLoaded",()=>Swal.fire({toast:true,position:"top-end",icon:"error",title:"Không thể hạ quyền quản trị viên cuối cùng !",showConfirmButton:false,timer:4000}));</script>';
+                $this->render('update_user', ['user' => $target]);
+                return;
+            }
+
             // Blank password is allowed (means "keep current password");
             // only enforce the minimum length when actually changing it.
             if ($password !== '' && strlen($password) < 6) {
@@ -82,7 +92,16 @@ class UserController extends AdminController
         $this->requireAdmin();
 
         if (isset($_GET['id_user']) && $_GET['id_user'] > 0) {
-            User::deleteAdmin((int) $_GET['id_user']);
+            $id_user = (int) $_GET['id_user'];
+            $target = User::find($id_user);
+
+            // Same last-admin lockout risk as update() above.
+            if ($target && (int) $target['role'] === 1 && User::countAdmins() <= 1) {
+                $_SESSION['flash_error'] = 'Không thể xóa quản trị viên cuối cùng !';
+                $this->redirect('index.php?act=list_user');
+            }
+
+            User::deleteAdmin($id_user);
         }
 
         $this->redirect('index.php?act=list_user');
