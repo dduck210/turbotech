@@ -1,14 +1,67 @@
 {
-  "name": "84904/codemoi",
-  "type": "library",
-  "autoload": {
-    "psr-4": {
-      "Codemoi\\": "src/",
-      "PHPMailer\\PHPMailer\\": "email/PHPMailer/src/"
+    "$schema": "https://getcomposer.org/schema.json",
+    "name": "84904/codemoi",
+    "type": "project",
+    "description": "Turbotech — migrating from a custom MVC (Codemoi\\ namespace, src/) to Laravel in place. Both autoload mappings coexist during the transition; the Codemoi\\ entry is removed once the legacy src/ is deleted in the final migration phase.",
+    "keywords": ["laravel", "framework"],
+    "license": "MIT",
+    "require": {
+        "php": "^8.3",
+        "laravel/framework": "^13.8",
+        "laravel/tinker": "^3.0"
     },
-    "files": [
-      "src/Core/helpers.php"
-    ]
-  },
-  "require": {}
+    "require-dev": {
+        "fakerphp/faker": "^1.23",
+        "laravel/pail": "^1.2.5",
+        "laravel/pao": "^1.0.6",
+        "laravel/pint": "^1.27",
+        "mockery/mockery": "^1.6",
+        "nunomaduro/collision": "^8.6",
+        "phpunit/phpunit": "^12.5.12"
+    },
+    "autoload": {
+        "psr-4": {
+            "App\\": "app/",
+            "Database\\Factories\\": "database/factories/",
+            "Database\\Seeders\\": "database/seeders/",
+            "Codemoi\\": "src/",
+            "PHPMailer\\PHPMailer\\": "email/PHPMailer/src/"
+        },
+        "files": [
+            "src/Core/helpers.php"
+        ]
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Tests\\": "tests/"
+        }
+    },
+    "scripts": {
+        "post-autoload-dump": [
+            "Illuminate\\Foundation\\ComposerScripts::postAutoloadDump",
+            "@php artisan package:discover --ansi"
+        ],
+        "post-update-cmd": [
+            "@php artisan vendor:publish --tag=laravel-assets --ansi --force"
+        ],
+        "pre-package-uninstall": [
+            "Illuminate\\Foundation\\ComposerScripts::prePackageUninstall"
+        ]
+    },
+    "extra": {
+        "laravel": {
+            "dont-discover": []
+        }
+    },
+    "config": {
+        "optimize-autoloader": true,
+        "preferred-install": "dist",
+        "sort-packages": true,
+        "allow-plugins": {
+            "pestphp/pest-plugin": true,
+            "php-http/discovery": true
+        }
+    },
+    "minimum-stability": "stable",
+    "prefer-stable": true
 }
