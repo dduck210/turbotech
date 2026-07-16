@@ -147,7 +147,36 @@ class Order
     public static function cancel(int $id_bill, int $id_user): bool
     {
         $sql = "UPDATE bill SET status = 4 WHERE id_bill = ? AND id_user = ? AND status = 0";
-        return Database::execute($sql, $id_bill, $id_user) > 0;
+        $cancelled = Database::execute($sql, $id_bill, $id_user) > 0;
+
+        if ($cancelled) {
+            self::restockAndRefundCoupon($id_bill);
+        }
+
+        return $cancelled;
+    }
+
+    /**
+     * Gives back what a now-cancelled order reserved: restores each line
+     * item's stock (the counterpart to the `Product::decrementStock()`
+     * calls made at order creation) and, if a coupon was applied, its
+     * usage count. Called from every path that can move a bill to status 4
+     * ("Đã hủy") — client self-cancel here, and the admin quick-cancel/
+     * manual-edit actions in `Controller\Admin\BillController`.
+     */
+    public static function restockAndRefundCoupon(int $id_bill): void
+    {
+        foreach (self::items($id_bill) as $line) {
+            Product::restoreStock((int) $line['id_pro'], (int) $line['quantity']);
+        }
+
+        $bill = self::one($id_bill);
+        if ($bill && !empty($bill['coupon_code'])) {
+            $coupon = Coupon::findByCode($bill['coupon_code']);
+            if ($coupon) {
+                Coupon::decrementUsage((int) $coupon['id_coupon']);
+            }
+        }
     }
 
     /**

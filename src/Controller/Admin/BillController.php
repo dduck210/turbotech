@@ -83,7 +83,20 @@ class BillController extends AdminController
                 $status_pay = 1;
             }
 
+            // This form can set status to anything, unlike the guarded
+            // approve/ship/cancel quick actions below — so cancelling from
+            // here needs the same stock/coupon restore those get, and it's
+            // gated on the PREVIOUS status so re-saving an already-cancelled
+            // bill (e.g. just editing status_pay) can't restore stock twice.
+            $previousBill = Order::one($id_bill);
+            $wasAlreadyCancelled = $previousBill && (int) $previousBill['status'] === 4;
+
             Order::updateStatus($id_bill, $status, $status_pay);
+
+            if ($status == 4 && !$wasAlreadyCancelled) {
+                Order::restockAndRefundCoupon($id_bill);
+            }
+
             $_SESSION['flash_success'] = 'Cập nhật đơn hàng thành công!';
         }
 
@@ -137,6 +150,11 @@ class BillController extends AdminController
             $bill = Order::one($idbill);
             if ($bill && in_array((int) $bill['status'], $fromStatuses, true)) {
                 Order::updateStatus($idbill, $toStatus, $bill['status_pay']);
+
+                if ($toStatus === '4') {
+                    Order::restockAndRefundCoupon($idbill);
+                }
+
                 $_SESSION['flash_success'] = $message;
             }
         }

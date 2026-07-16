@@ -148,6 +148,17 @@ class Product
     }
 
     /**
+     * Give back stock reserved by an order that's since been cancelled —
+     * the counterpart to `decrementStock()`, which runs at order creation.
+     * Without this, every cancelled order permanently shrinks the visible
+     * stock count for units that were never actually shipped.
+     */
+    public static function restoreStock(int $id_pro, int $quantity): void
+    {
+        Database::execute("UPDATE product SET stock = stock + ? WHERE id_pro = ?", $quantity, $id_pro);
+    }
+
+    /**
      * Whether at least `$quantity` units are currently in stock.
      */
     public static function hasStock(int $id_pro, int $quantity = 1): bool

@@ -21,6 +21,19 @@ class Coupon
     }
 
     /**
+     * Look up a coupon by code regardless of active status — used when
+     * reversing a redemption (order cancellation), since the coupon could
+     * have been deactivated or run out since the order was placed but its
+     * `used_count` still needs to be given back.
+     *
+     * @return array|false
+     */
+    public static function findByCode(string $code)
+    {
+        return Database::queryOne("SELECT * FROM coupons WHERE code = ?", $code);
+    }
+
+    /**
      * Validate a code against the current cart and compute its discount.
      * Centralizes every rule (active, in-date, usage limit, minimum order
      * value, single-product restriction) so checkout can't be tricked by
@@ -93,6 +106,20 @@ class Coupon
     {
         Database::execute(
             "UPDATE coupons SET used_count = used_count + 1 WHERE id_coupon = ? AND (usage_limit = 0 OR used_count < usage_limit)",
+            $id_coupon
+        );
+    }
+
+    /**
+     * Counterpart to `incrementUsage()` — gives back a redemption when the
+     * order that used it gets cancelled, so a cancelled order doesn't
+     * permanently eat into a limited-use coupon's remaining redemptions.
+     * Floored at 0 via GREATEST() so this can never go negative.
+     */
+    public static function decrementUsage(int $id_coupon): void
+    {
+        Database::execute(
+            "UPDATE coupons SET used_count = GREATEST(used_count - 1, 0) WHERE id_coupon = ?",
             $id_coupon
         );
     }
