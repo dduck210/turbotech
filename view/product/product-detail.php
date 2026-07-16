@@ -183,7 +183,7 @@
     </div>
     <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5 md:gap-6">
         <?php foreach ($similar_pro as $pro) { ?>
-            <div class="card-hover card-boutique rounded-md overflow-hidden">
+            <div class="card-hover card-boutique flex flex-col rounded-md overflow-hidden">
                 <div class="relative aspect-square bg-ink-100 overflow-hidden border-b border-ink-200">
                     <a href="index.php?act=prodetail&idpro=<?= e($pro['id_pro']) ?>">
                         <img src="admin/uploads/<?= e($pro['img_pro']) ?>"
@@ -194,7 +194,7 @@
                         <span class="absolute top-2 right-2 rounded-sm bg-ink-900/80 text-white text-[11px] font-bold px-2 py-1"><?= e($pro['stock_message'] ?: 'Hết hàng') ?></span>
                     <?php } ?>
                 </div>
-                <div class="p-4">
+                <div class="flex flex-1 flex-col p-4">
                     <h6 class="font-heading font-semibold text-ink-900 line-clamp-2 mb-2">
                         <a href="index.php?act=prodetail&idpro=<?= e($pro['id_pro']) ?>"
                             class="hover:text-brand-600 transition-colors">
@@ -207,7 +207,7 @@
                         </span>
                     </div>
                     <?php if ((int) $pro['stock'] > 0) { ?>
-                        <form action="index.php?act=addtocart" method="post">
+                        <form action="index.php?act=addtocart" method="post" class="mt-auto">
 <?= \Codemoi\Core\Csrf::field() ?>
                             <input type="hidden" name="id_pro" value="<?= e($pro['id_pro']) ?>">
                             <input type="hidden" name="name_pro" value="<?= e($pro['name_pro']) ?>">
@@ -218,7 +218,7 @@
                         </form>
                     <?php } else { ?>
                         <button type="button" disabled
-                            class="w-full inline-flex items-center justify-center gap-2 rounded-md bg-ink-100 px-5 py-2.5 text-sm font-semibold text-ink-500 cursor-not-allowed">
+                            class="mt-auto w-full inline-flex items-center justify-center gap-2 rounded-md bg-ink-100 px-5 py-2.5 text-sm font-semibold text-ink-500 cursor-not-allowed">
                             <?= htmlspecialchars($pro['stock_message'] ?: 'Hết hàng') ?>
                         </button>
                     <?php } ?>
