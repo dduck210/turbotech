@@ -163,10 +163,15 @@ class ProductController extends AdminController
             return null;
         }
 
-        if (!move_uploaded_file($file['tmp_name'], self::UPLOAD_DIR . $name)) {
+        // Generate the stored filename instead of reusing the client's —
+        // two admins uploading a same-named file (e.g. "logo.jpg") used to
+        // silently overwrite each other's product image on disk.
+        $storedName = 'pro_' . bin2hex(random_bytes(8)) . '.' . $extension;
+
+        if (!move_uploaded_file($file['tmp_name'], self::UPLOAD_DIR . $storedName)) {
             return null;
         }
 
-        return $name;
+        return $storedName;
     }
 }
