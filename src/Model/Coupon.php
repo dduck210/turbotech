@@ -83,9 +83,18 @@ class Coupon
         return min($discount, $orderTotal);
     }
 
+    /**
+     * The `usage_limit` guard makes this atomic at the DB level — without
+     * it, two checkouts racing past `validateForCart()`'s (separate,
+     * earlier) limit check at the same instant could both increment past
+     * the cap. `usage_limit = 0` means unlimited, matching `validateForCart()`.
+     */
     public static function incrementUsage(int $id_coupon): void
     {
-        Database::execute("UPDATE coupons SET used_count = used_count + 1 WHERE id_coupon = ?", $id_coupon);
+        Database::execute(
+            "UPDATE coupons SET used_count = used_count + 1 WHERE id_coupon = ? AND (usage_limit = 0 OR used_count < usage_limit)",
+            $id_coupon
+        );
     }
 
     /**

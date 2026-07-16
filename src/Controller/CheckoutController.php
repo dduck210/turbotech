@@ -324,6 +324,17 @@ class CheckoutController extends Controller
                 }
                 unset($_SESSION['coupon']);
 
+                // Must run before the redirect below, not after — this is a
+                // self-redirect back to the same route. A bare GET on
+                // ?act=viewbill (no CSRF check covers this route) used to
+                // hit this exact branch again on the next request since the
+                // cart was still non-empty, creating another order every
+                // time, looping until the browser's redirect cap kicked in.
+                // Clearing first means the next hit's `$total_amount > 0`
+                // check is false, so it falls through to the confirmation
+                // view instead of creating a duplicate order.
+                Cart::clear();
+
                 $this->redirect('?act=viewbill');
             }
 

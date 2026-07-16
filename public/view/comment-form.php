@@ -47,7 +47,13 @@ unset($_SESSION['flash_success']);
         $user_name = $_SESSION['user']['user_name'];
         $full_name = $_SESSION['user']['full_name'];
         $comment_date = date("m/d/Y h:i:sa");
-        if (!$canReview) {
+        // This page is a standalone AJAX-loaded entry point (not routed
+        // through public/index.php), so it never hits that front
+        // controller's global CSRF check — it must verify its own token,
+        // the same one Csrf::field() already renders into the form below.
+        if (!\Codemoi\Core\Csrf::verify($_POST['_token'] ?? null)) {
+            echo '<script>document.addEventListener("DOMContentLoaded",()=>Swal.fire({toast:true,position:"top-end",icon:"error",title:"Phiên làm việc đã hết hạn, vui lòng tải lại trang !",showConfirmButton:false,timer:3000}));</script>';
+        } elseif (!$canReview) {
             echo '<script>document.addEventListener("DOMContentLoaded",()=>Swal.fire({toast:true,position:"top-end",icon:"error",title:"Bạn cần mua và nhận sản phẩm này để đánh giá !",showConfirmButton:false,timer:3000}));</script>';
         } elseif ($content == null) {
             echo '<script>document.addEventListener("DOMContentLoaded",()=>Swal.fire({toast:true,position:"top-end",icon:"error",title:"Không được để trống !",showConfirmButton:false,timer:3000}));</script>';
