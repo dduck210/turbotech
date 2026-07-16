@@ -205,13 +205,15 @@ CREATE TABLE `question` (
   `email` varchar(250) NOT NULL,
   `phone` varchar(20) NOT NULL,
   `contennt` text NOT NULL,
+  `reply` text DEFAULT NULL,
+  `replied_at` datetime DEFAULT NULL,
   PRIMARY KEY (`id_ques`)
 ) ENGINE=InnoDB AUTO_INCREMENT=20 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 LOCK TABLES `question` WRITE;
 /*!40000 ALTER TABLE `question` DISABLE KEYS */;
-INSERT INTO `question` VALUES (16,'Tran Trung','trantrung123@gmail.com','0987654321','Khi nào có máy mới hả shop'),(17,'Tuan Anh','nguyenductuananh910@gmail.com','0987654321','bh co may'),(18,'Test','t@x.com','0912345678','Test question'),(19,'Test','t@x.com','0912345678','Test contact');
+INSERT INTO `question` VALUES (16,'Tran Trung','trantrung123@gmail.com','0987654321','Khi nào có máy mới hả shop',NULL,NULL),(17,'Tuan Anh','nguyenductuananh910@gmail.com','0987654321','bh co may',NULL,NULL),(18,'Test','t@x.com','0912345678','Test question',NULL,NULL),(19,'Test','t@x.com','0912345678','Test contact',NULL,NULL);
 /*!40000 ALTER TABLE `question` ENABLE KEYS */;
 UNLOCK TABLES;
 DROP TABLE IF EXISTS `user`;

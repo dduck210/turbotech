@@ -82,6 +82,8 @@ $router->add('list_cmt', [CommentController::class, 'list']);
 $router->add('delete_cmt', [CommentController::class, 'delete']);
 $router->add('list_ques', [QuestionController::class, 'list']);
 $router->add('delete_ques', [QuestionController::class, 'delete']);
+$router->add('reply_question', [QuestionController::class, 'replyForm']);
+$router->add('send_reply', [QuestionController::class, 'sendReply']);
 $router->add('list_thongke', [StatsController::class, 'index']);
 $router->setDefault([DashboardController::class, 'index']);
 

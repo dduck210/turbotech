@@ -17,6 +17,7 @@
                         <th class="px-4 py-3">Email</th>
                         <th class="px-4 py-3">Số điện thoại</th>
                         <th class="px-4 py-3">Nội dung</th>
+                        <th class="px-4 py-3 text-center">Trạng thái</th>
                         <th class="px-4 py-3 text-center">Thao tác</th>
 
                     </tr>
@@ -32,7 +33,17 @@
                         <td class="px-4 py-4"><?= e($phone) ?></td>
                         <td class="px-4 py-4"><?= e($contennt) ?></td>
                         <td class="px-4 py-4 text-center">
-                            <div class="flex items-center justify-center">
+                            <?php if (!empty($reply)): ?>
+                                <span class="inline-flex items-center justify-center px-2.5 py-1 text-xs font-bold rounded-md bg-emerald-500/15 text-emerald-700">Đã trả lời</span>
+                            <?php else: ?>
+                                <span class="inline-flex items-center justify-center px-2.5 py-1 text-xs font-bold rounded-md bg-amber-500/15 text-amber-700">Chưa trả lời</span>
+                            <?php endif; ?>
+                        </td>
+                        <td class="px-4 py-4 text-center">
+                            <div class="flex items-center justify-center gap-2">
+                                <a href="./index.php?act=reply_question&id_ques=<?= e($ques['id_ques']) ?>"
+                                    class="p-2 text-blue-600 bg-blue-500/10 rounded-md hover:bg-blue-500/15 transition-all active:scale-90"
+                                    title="Trả lời"><i class="fa-solid fa-reply"></i></a>
                                 <a href="./index.php?act=delete_ques&id_ques=<?= e($ques['id_ques']) ?>&_token=<?= urlencode(\Codemoi\Core\Csrf::token()) ?>"
                                     class="p-2 text-red-600 bg-red-500/10 rounded-md hover:bg-red-500/15 transition-all active:scale-90"
                                     data-confirm="Bạn có chắc chắn muốn xóa không?" title="Xóa"><i

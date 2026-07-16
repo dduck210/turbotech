@@ -29,6 +29,27 @@ class Question
     }
 
     /**
+     * Single question by id, for the admin reply form.
+     *
+     * @return array|false
+     */
+    public static function find(int $idQues)
+    {
+        return Database::queryOne("SELECT * FROM `question` WHERE id_ques = ?", $idQues);
+    }
+
+    /**
+     * Save the admin's reply. Submissions aren't tied to a logged-in
+     * account (name/email/phone only), so the reply is emailed to the
+     * submitted address rather than shown on any "my questions" page —
+     * this just records what was sent and when.
+     */
+    public static function saveReply(int $idQues, string $reply): void
+    {
+        Database::execute("UPDATE `question` SET reply = ?, replied_at = NOW() WHERE id_ques = ?", $reply, $idQues);
+    }
+
+    /**
      * Mirrors old `admin/model/question.php::delete_ques($id_ques)`. No FK
      * references `question` (Phase 06 audit), so this can't fail on delete.
      */
