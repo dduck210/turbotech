@@ -127,12 +127,15 @@ class ProductController extends AdminController
             try {
                 Product::delete((int) $_GET['id_pro']);
             } catch (PDOException $e) {
-                // SQLSTATE 23000: product already referenced by an order
-                // line in `cart` (lk_pro_cart) — deleting it would break
-                // that order's history, so block it with a clear message
-                // instead of the raw fatal error.
+                // SQLSTATE 23000: product still referenced by either an
+                // order line (`cart.lk_pro_cart`) or a review
+                // (`comment.lk_pro_cmt`) — deleting it would break that
+                // history, so block it with a clear message instead of the
+                // raw fatal error. Worded generically rather than always
+                // blaming "order" specifically, since either FK can be the
+                // actual cause and the message shouldn't misattribute it.
                 if ($e->getCode() === '23000') {
-                    $_SESSION['flash_error'] = 'Không thể xoá sản phẩm này vì đã có đơn hàng liên quan.';
+                    $_SESSION['flash_error'] = 'Không thể xoá sản phẩm này vì đã có đơn hàng hoặc đánh giá liên quan.';
                 } else {
                     throw $e;
                 }

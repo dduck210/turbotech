@@ -164,6 +164,10 @@ class CheckoutController extends Controller
                 $_SESSION['flash_error'] = "Vui lòng nhập đầy đủ địa chỉ nhận hàng !";
                 $check_error = 1;
             }
+            if (!in_array($payment, ['1', '2', '3'], true)) {
+                $_SESSION['flash_error'] = "Vui lòng chọn phương thức thanh toán hợp lệ !";
+                $check_error = 1;
+            }
 
             if ($check_error != 0) {
                 $this->redirect('?act=bill');
