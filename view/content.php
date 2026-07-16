@@ -113,6 +113,19 @@
                 <a class="home-tab-trigger min-h-11 border-b-2 border-transparent py-1 text-sm font-semibold uppercase tracking-wide text-ink-500 transition-colors hover:text-brand-600 [&.active]:border-brand-600! [&.active]:text-brand-600!"
                     data-tab-target="featured-products" href="#featured-products"><span>Nổi bật</span></a>
             </div>
+
+            <!-- Client-side price sort: re-orders the cards already rendered in whichever
+                 tab panel is currently active (script at the bottom of this file) — no
+                 server round-trip needed since all the data is already on the page. -->
+            <label class="ml-auto flex items-center gap-2 text-sm text-ink-600">
+                <span class="hidden sm:inline">Sắp xếp:</span>
+                <select id="home-price-sort"
+                    class="rounded-md border border-ink-300 bg-ink-50 px-3 py-2 text-sm text-ink-800 focus:border-brand-500 focus:outline-none focus:ring-2 focus:ring-brand-500">
+                    <option value="">Mặc định</option>
+                    <option value="asc">Giá thấp đến cao</option>
+                    <option value="desc">Giá cao đến thấp</option>
+                </select>
+            </label>
         </div>
 
         <div class="tab-content">
@@ -121,7 +134,7 @@
                     <!-- Phần show sản phẩm mới nhất -->
                     <?php
                     foreach ($prohome as $pro) { ?>
-                        <div class="card-hover group card-boutique flex flex-col overflow-hidden rounded-md">
+                        <div class="card-hover group card-boutique flex flex-col overflow-hidden rounded-md" data-price="<?= (int) (($pro['discount'] ?? 0) > 0 ? $pro['price'] - ($pro['price'] * $pro['discount'] / 100) : $pro['price']) ?>">
                             <div class="relative aspect-square overflow-hidden border-b border-ink-200 bg-ink-100">
                                 <a class="block h-full w-full"
                                     href="index.php?act=prodetail&idpro=<?= e($pro['id_pro']) ?>">
@@ -180,7 +193,7 @@
                     <!-- Sản phẩm bán chạy -->
                     <?php
                     foreach ($list_bestsp as $pro) { ?>
-                        <div class="card-hover group card-boutique flex flex-col overflow-hidden rounded-md">
+                        <div class="card-hover group card-boutique flex flex-col overflow-hidden rounded-md" data-price="<?= (int) (($pro['discount'] ?? 0) > 0 ? $pro['price'] - ($pro['price'] * $pro['discount'] / 100) : $pro['price']) ?>">
                             <div class="relative aspect-square overflow-hidden border-b border-ink-200 bg-ink-100">
                                 <a class="block h-full w-full" href="index.php?act=prodetail&idpro=<?= e($pro['id_pro']) ?>">
                                     <img class="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105" loading="lazy" decoding="async" src="admin/uploads/<?= e($pro['img_pro']) ?>"
@@ -240,7 +253,7 @@
                     <!-- Phần show sản phẩm nổi bật -->
                     <?php
                     foreach ($list_topsp as $pro) { ?>
-                        <div class="card-hover group card-boutique flex flex-col overflow-hidden rounded-md">
+                        <div class="card-hover group card-boutique flex flex-col overflow-hidden rounded-md" data-price="<?= (int) (($pro['discount'] ?? 0) > 0 ? $pro['price'] - ($pro['price'] * $pro['discount'] / 100) : $pro['price']) ?>">
                             <div class="relative aspect-square overflow-hidden border-b border-ink-200 bg-ink-100">
                                 <a class="block h-full w-full" href="index.php?act=prodetail&idpro=<?= e($pro['id_pro']) ?>">
                                     <img class="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105" loading="lazy" decoding="async" src="admin/uploads/<?= e($pro['img_pro']) ?>"
@@ -293,6 +306,13 @@
                     <!-- end phần show sản phẩm nổi bật -->
                 </div>
             </div>
+        </div>
+
+        <div class="mt-10 text-center">
+            <a href="index.php?act=product"
+                class="btn-boutique inline-flex items-center justify-center gap-2 rounded-md px-8 py-3 text-sm font-semibold">
+                Xem thêm sản phẩm <i class="fa-solid fa-arrow-right" aria-hidden="true"></i>
+            </a>
         </div>
     </div>
 </section>
@@ -360,6 +380,45 @@
                     t.classList.toggle('active', t === trigger);
                 });
             });
+        });
+
+        // Price sort: re-orders the cards inside whichever tab panel is
+        // currently active. Grid layout doesn't care about DOM order visually
+        // changing, so this is just re-appending children in the new order —
+        // no server round-trip, the data (data-price) is already on the page.
+        var sortSelect = document.getElementById('home-price-sort');
+        if (sortSelect) {
+            sortSelect.addEventListener('change', function() {
+                var direction = sortSelect.value;
+                var activePanel = document.querySelector('[data-tab-panel].active');
+                if (!activePanel) return;
+                var grid = activePanel.querySelector(':scope > div');
+                if (!grid) return;
+                var cards = Array.prototype.slice.call(grid.children);
+
+                if (direction === '') {
+                    cards.sort(function(a, b) {
+                        return (a.dataset.originalOrder || 0) - (b.dataset.originalOrder || 0);
+                    });
+                } else {
+                    cards.sort(function(a, b) {
+                        var priceA = parseFloat(a.dataset.price) || 0;
+                        var priceB = parseFloat(b.dataset.price) || 0;
+                        return direction === 'asc' ? priceA - priceB : priceB - priceA;
+                    });
+                }
+
+                cards.forEach(function(card) {
+                    grid.appendChild(card);
+                });
+            });
+        }
+
+        // Stamp each card's original render order once, up front, so picking
+        // "Mặc định" after sorting can restore it instead of leaving cards
+        // shuffled.
+        document.querySelectorAll('[data-tab-panel] > div > [data-price]').forEach(function(card, index) {
+            card.dataset.originalOrder = index;
         });
     })();
 </script>
