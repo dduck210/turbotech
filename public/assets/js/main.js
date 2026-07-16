@@ -870,3 +870,37 @@
         observer.observe(el);
     });
 })();
+
+/* Back-to-top button (footer.php): fades in once the user has scrolled past
+   the fold, scrolls smoothly to the top on click. Visibility is driven by
+   inline style (opacity/pointer-events), not a class toggle — see the
+   comment on the button markup itself for why. */
+(function() {
+    'use strict';
+
+    var backToTopBtn = document.getElementById('back-to-top');
+    if (!backToTopBtn) return;
+
+    var SHOW_AFTER_PX = 400;
+    var ticking = false;
+
+    function updateVisibility() {
+        var isPastFold = window.scrollY > SHOW_AFTER_PX;
+        backToTopBtn.style.opacity = isPastFold ? '1' : '0';
+        backToTopBtn.style.pointerEvents = isPastFold ? 'auto' : 'none';
+        ticking = false;
+    }
+
+    window.addEventListener('scroll', function() {
+        if (ticking) return;
+        ticking = true;
+        window.requestAnimationFrame(updateVisibility);
+    }, { passive: true });
+
+    updateVisibility();
+
+    backToTopBtn.addEventListener('click', function() {
+        var prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        window.scrollTo({ top: 0, behavior: prefersReducedMotion ? 'auto' : 'smooth' });
+    });
+})();

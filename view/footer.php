@@ -49,6 +49,17 @@
     </div>
 </footer>
 
+<!-- Back-to-top: shown once the user has scrolled past the fold (toggled via
+     opacity/pointer-events in main.js, not the "hidden" utility — a plain
+     class toggle would fight this button's own "flex" display class in the
+     compiled stylesheet's cascade order the same way it did on the
+     homepage's "Xem thêm sản phẩm" button). -->
+<button type="button" id="back-to-top" aria-label="Lên đầu trang"
+    class="btn-boutique fixed bottom-6 right-6 z-40 flex h-12 w-12 items-center justify-center rounded-full opacity-0 shadow-lg transition-opacity duration-300 ease-out"
+    style="pointer-events: none;">
+    <i class="fa-solid fa-arrow-up" aria-hidden="true"></i>
+</button>
+
 <!-- Custom confirm dialog (replaces the native browser confirm() popup) —
      logic lives in assets/js/confirm-dialog.js; markup stays here so its
      classes are seen by Tailwind's content scan. -->

@@ -375,11 +375,19 @@
         // in place (they're already rendered, just marked hidden — see the
         // `extra-item hidden` class added server-side past the 8th card)
         // instead of navigating away to the full catalog page.
+        //
+        // Sets style.display directly rather than toggling the "hidden"
+        // utility class: this button also carries "inline-flex" (from
+        // .btn-boutique's layout classes), and in the compiled stylesheet
+        // that rule happens to be generated after ".hidden", so on an equal-
+        // specificity tie "inline-flex" wins the cascade and the button
+        // stays visible even with the "hidden" class applied. An inline
+        // style always wins over any class, regardless of source order.
         function updateSeeMoreVisibility() {
             if (!seeMoreBtn) return;
             var activePanel = document.querySelector('[data-tab-panel].active');
             var hasHiddenExtras = !!(activePanel && activePanel.querySelector('.extra-item.hidden'));
-            seeMoreBtn.classList.toggle('hidden', !hasHiddenExtras);
+            seeMoreBtn.style.display = hasHiddenExtras ? '' : 'none';
         }
 
         triggers.forEach(function(trigger) {
