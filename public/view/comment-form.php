@@ -10,10 +10,12 @@ use Codemoi\Model\Order;
 
 $idpro = $_REQUEST['idpro'];
 $listcmt = Comment::forProduct($idpro);
+$alreadyReviewed = isset($_SESSION['user']) && Comment::hasReviewed((int) $_SESSION['user']['id_user'], (int) $idpro);
 // Reviews are limited to verified purchasers (an order for this product
-// that's actually been delivered) — checked again server-side in the
-// submit handler below, not just to decide whether to show the form.
-$canReview = isset($_SESSION['user']) && Order::hasDeliveredPurchase((int) $_SESSION['user']['id_user'], (int) $idpro);
+// that's actually been delivered) who haven't already reviewed it —
+// checked again server-side in the submit handler below, not just to
+// decide whether to show the form.
+$canReview = isset($_SESSION['user']) && !$alreadyReviewed && Order::hasDeliveredPurchase((int) $_SESSION['user']['id_user'], (int) $idpro);
 $flash_success = $_SESSION['flash_success'] ?? null;
 unset($_SESSION['flash_success']);
 ?>
@@ -53,6 +55,8 @@ unset($_SESSION['flash_success']);
         // the same one Csrf::field() already renders into the form below.
         if (!\Codemoi\Core\Csrf::verify($_POST['_token'] ?? null)) {
             echo '<script>document.addEventListener("DOMContentLoaded",()=>Swal.fire({toast:true,position:"top-end",icon:"error",title:"Phiên làm việc đã hết hạn, vui lòng tải lại trang !",showConfirmButton:false,timer:3000}));</script>';
+        } elseif ($alreadyReviewed) {
+            echo '<script>document.addEventListener("DOMContentLoaded",()=>Swal.fire({toast:true,position:"top-end",icon:"error",title:"Bạn đã đánh giá sản phẩm này rồi !",showConfirmButton:false,timer:3000}));</script>';
         } elseif (!$canReview) {
             echo '<script>document.addEventListener("DOMContentLoaded",()=>Swal.fire({toast:true,position:"top-end",icon:"error",title:"Bạn cần mua và nhận sản phẩm này để đánh giá !",showConfirmButton:false,timer:3000}));</script>';
         } elseif ($content == null) {
@@ -90,6 +94,10 @@ unset($_SESSION['flash_success']);
             <?php } elseif (!isset($_SESSION['user'])) { ?>
                 <div class="rounded-md border border-brand-500/25 bg-brand-50 p-3 text-sm text-brand-700">
                     <p class="alert alert-primary fs-6">Vui lòng đăng nhập để bình luận !</p>
+                </div>
+            <?php } elseif ($alreadyReviewed) { ?>
+                <div class="rounded-md border border-emerald-500/30 bg-emerald-500/10 p-3 text-sm text-emerald-800">
+                    <p>Bạn đã đánh giá sản phẩm này rồi. Cảm ơn bạn!</p>
                 </div>
             <?php } else { ?>
                 <div class="rounded-md border border-amber-500/30 bg-amber-500/10 p-3 text-sm text-amber-800">

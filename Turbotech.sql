@@ -133,6 +133,7 @@ CREATE TABLE `comment` (
   `id_pro` int(11) NOT NULL,
   `comment_date` varchar(30) NOT NULL,
   PRIMARY KEY (`id_cmt`),
+  UNIQUE KEY `idx_user_product_review` (`id_user`,`id_pro`),
   KEY `lk_user_cmt` (`id_user`),
   KEY `lk_pro_cmt` (`id_pro`),
   CONSTRAINT `lk_pro_cmt` FOREIGN KEY (`id_pro`) REFERENCES `product` (`id_pro`)

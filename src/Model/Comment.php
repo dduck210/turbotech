@@ -30,6 +30,18 @@ class Comment
     }
 
     /**
+     * Whether this user has already reviewed this product — a verified
+     * purchase (`Order::hasDeliveredPurchase()`) only gates ELIGIBILITY to
+     * review, it doesn't stop the same eligible customer from submitting
+     * unlimited reviews for the same product.
+     */
+    public static function hasReviewed(int $id_user, int $id_pro): bool
+    {
+        $sql = "SELECT 1 FROM comment WHERE id_user = ? AND id_pro = ? LIMIT 1";
+        return Database::queryOne($sql, $id_user, $id_pro) !== false;
+    }
+
+    /**
      * Every comment across all products (for moderation), joined with the
      * product so the admin list can show which product each comment is on.
      * Mirrors old `admin/model/comment.php::loadall_cmt()`.
