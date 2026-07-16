@@ -181,7 +181,7 @@
         <span class="text-serif-accent text-xs font-semibold uppercase tracking-[0.2em]">Gợi ý</span>
         <h4 class="mt-1 font-heading text-xl font-semibold text-ink-900">Các sản phẩm cùng loại</h4>
     </div>
-    <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5 md:gap-6">
+    <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-5 md:gap-6">
         <?php foreach ($similar_pro as $pro) { ?>
             <div class="card-hover card-boutique flex flex-col rounded-md overflow-hidden">
                 <div class="relative aspect-square bg-ink-100 overflow-hidden border-b border-ink-200">
