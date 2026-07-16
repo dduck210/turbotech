@@ -15,6 +15,24 @@ use Codemoi\Model\Order;
  */
 class BillController extends AdminController
 {
+    /**
+     * Same forward-only workflow the guarded quick actions (approve/ship/
+     * cancel) already enforce, applied to the manual edit form too — that
+     * form used to accept ANY status unconditionally, which let a
+     * delivered (3) order be "cancelled," wrongly restocking goods already
+     * handed to the customer, and let cycling 4->0->4 re-trigger the
+     * stock/coupon restore every time. Each status also allows staying put
+     * (e.g. 1 -> 1) so the form can still be used to fix just `status_pay`
+     * without moving the order status at all.
+     */
+    private const ALLOWED_TRANSITIONS = [
+        0 => [0, 1, 4],
+        1 => [1, 2, 4],
+        2 => [2, 3],
+        3 => [3],
+        4 => [4],
+    ];
+
     public function list(): void
     {
         $this->requireAdmin();
@@ -79,21 +97,27 @@ class BillController extends AdminController
                 $this->redirect('index.php?act=list_bill');
             }
 
+            $previousBill = Order::one($id_bill);
+            if (!$previousBill) {
+                $_SESSION['flash_error'] = 'Không tìm thấy đơn hàng này.';
+                $this->redirect('index.php?act=list_bill');
+            }
+
+            $previousStatus = (int) $previousBill['status'];
+            $newStatus = (int) $status;
+
+            if (!in_array($newStatus, self::ALLOWED_TRANSITIONS[$previousStatus] ?? [], true)) {
+                $_SESSION['flash_error'] = 'Không thể chuyển đơn hàng sang trạng thái này.';
+                $this->redirect('index.php?act=list_bill');
+            }
+
             if ($status == 3) {
                 $status_pay = 1;
             }
 
-            // This form can set status to anything, unlike the guarded
-            // approve/ship/cancel quick actions below — so cancelling from
-            // here needs the same stock/coupon restore those get, and it's
-            // gated on the PREVIOUS status so re-saving an already-cancelled
-            // bill (e.g. just editing status_pay) can't restore stock twice.
-            $previousBill = Order::one($id_bill);
-            $wasAlreadyCancelled = $previousBill && (int) $previousBill['status'] === 4;
-
             Order::updateStatus($id_bill, $status, $status_pay);
 
-            if ($status == 4 && !$wasAlreadyCancelled) {
+            if ($newStatus === 4 && $previousStatus !== 4) {
                 Order::restockAndRefundCoupon($id_bill);
             }
 
