@@ -1,5 +1,8 @@
 <?php
 
+use App\Http\Controllers\Admin\CategoryController as AdminCategoryController;
+use App\Http\Controllers\Admin\DashboardController as AdminDashboardController;
+use App\Http\Controllers\Admin\ProductController as AdminProductController;
 use App\Http\Controllers\AccountController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CartController;
@@ -60,8 +63,17 @@ Route::middleware('auth')->group(function () {
     Route::post('/checkout/qr/confirm', [CheckoutController::class, 'confirmTransfer'])->name('checkout.qr.confirm');
 });
 
-// Placeholder — replaced by the real admin dashboard in Phase 4 Group F.
-// Needed now so AuthController::login()'s role=1 redirect resolves.
-Route::get('/admin/dashboard', function () {
-    return 'Admin dashboard placeholder — built in Phase 4 Group F.';
-})->middleware(['auth', 'admin'])->name('admin.dashboard');
+Route::prefix('admin')->middleware(['auth', 'admin'])->name('admin.')->group(function () {
+    Route::get('/dashboard', AdminDashboardController::class)->name('dashboard');
+
+    Route::resource('categories', AdminCategoryController::class)->except('show');
+    Route::resource('products', AdminProductController::class)->except('show');
+
+    // Placeholders — replaced by the real controllers in Phase 4 Group E/F.
+    Route::get('/orders', fn () => 'Đơn hàng — Phase 4 Group E.')->name('orders.index');
+    Route::get('/users', fn () => 'Người dùng — Phase 4 Group F.')->name('users.index');
+    Route::get('/coupons', fn () => 'Mã giảm giá — Phase 4 Group F.')->name('coupons.index');
+    Route::get('/comments', fn () => 'Bình luận — Phase 4 Group F.')->name('comments.index');
+    Route::get('/questions', fn () => 'Hỏi đáp — Phase 4 Group F.')->name('questions.index');
+    Route::get('/stats', fn () => 'Thống kê — Phase 4 Group F.')->name('stats.index');
+});
