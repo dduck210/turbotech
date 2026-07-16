@@ -3,6 +3,7 @@
 namespace Codemoi\Controller;
 
 use Codemoi\Core\Controller;
+use Codemoi\Core\Seo;
 use Codemoi\Model\Question;
 
 /**
@@ -13,6 +14,9 @@ class QuestionController extends Controller
 {
     public function index(): void
     {
+        Seo::setTitle('Hỏi đáp - Turbotech');
+        Seo::setDescription('Gửi câu hỏi cho đội ngũ Turbotech để được tư vấn về sản phẩm laptop gaming và PC.');
+
         if (isset($_POST['btn_question']) && $_POST['btn_question']) {
             $name = $_POST['name'] ?? '';
             $email = $_POST['email'] ?? '';

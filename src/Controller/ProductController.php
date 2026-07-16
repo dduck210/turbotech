@@ -3,6 +3,7 @@
 namespace Codemoi\Controller;
 
 use Codemoi\Core\Controller;
+use Codemoi\Core\Seo;
 use Codemoi\Model\Category;
 use Codemoi\Model\Product;
 
@@ -26,6 +27,18 @@ class ProductController extends Controller
 
         if ($min > 0 && $max > 0 && $min > $max) {
             [$min, $max] = [$max, $min];
+        }
+
+        $categoryName = Category::name($idcate);
+        if ($kyw !== '') {
+            Seo::setTitle('Kết quả tìm kiếm "' . $kyw . '" - Turbotech');
+            Seo::setDescription('Kết quả tìm kiếm sản phẩm "' . $kyw . '" tại Turbotech - laptop gaming và PC hiệu năng cao chính hãng.');
+        } elseif ($idcate > 0) {
+            Seo::setTitle('Laptop ' . $categoryName . ' chính hãng, giá tốt - Turbotech');
+            Seo::setDescription('Danh sách laptop ' . $categoryName . ' chính hãng tại Turbotech - cấu hình mạnh mẽ, giá cạnh tranh, bảo hành 12 tháng.');
+        } else {
+            Seo::setTitle('Tất cả sản phẩm - Turbotech');
+            Seo::setDescription('Toàn bộ laptop gaming và PC hiệu năng cao tại Turbotech - lọc theo danh mục, khoảng giá, tìm kiếm theo từ khóa.');
         }
 
         $this->view('product/product-list', [
@@ -61,6 +74,14 @@ class ProductController extends Controller
         $one_pro = Product::one($id_pro);
         $idcate = $one_pro['idcate'] ?? 0;
         $similar_pro = Product::similar($id_pro, $idcate);
+
+        if (is_array($one_pro)) {
+            Seo::setTitle($one_pro['name_pro'] . ' - Giá ' . number_format((float) $one_pro['price']) . 'đ - Turbotech');
+            Seo::setDescription($one_pro['short_des'] ?? $one_pro['name_pro']);
+            if (!empty($one_pro['img_pro'])) {
+                Seo::setImage('admin/uploads/' . $one_pro['img_pro']);
+            }
+        }
 
         $this->view('product/product-detail', [
             'one_pro' => $one_pro,

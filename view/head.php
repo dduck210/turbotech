@@ -1,12 +1,30 @@
 <!DOCTYPE html>
-<html lang="zxx">
+<html lang="vi">
 <!-- Mirrored from htmldemo.net/jobaria/jobaria/index.html by HTTrack Website Copier/3.x [XR&CO'2014], Mon, 07 Nov 2022 14:12:32 GMT -->
 
 <head>
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <meta name="csrf-token" content="<?= htmlspecialchars(\Codemoi\Core\Csrf::token()) ?>" />
-  <title>Turbotech</title>
+  <!-- __SEO_TITLE__/__SEO_DESCRIPTION__/__SEO_IMAGE__/__SEO_CANONICAL__ are literal
+       placeholder markers, not PHP variables: this file runs (and gets buffered)
+       before the router has picked a controller, so the per-page value isn't known
+       yet at this point. public/index.php replaces them in the full output buffer
+       right after the router dispatches — see Codemoi\Core\Seo. -->
+  <title>__SEO_TITLE__</title>
+  <meta name="description" content="__SEO_DESCRIPTION__" />
+  <link rel="canonical" href="__SEO_CANONICAL__" />
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="Turbotech" />
+  <meta property="og:title" content="__SEO_TITLE__" />
+  <meta property="og:description" content="__SEO_DESCRIPTION__" />
+  <meta property="og:image" content="__SEO_IMAGE__" />
+  <meta property="og:url" content="__SEO_CANONICAL__" />
+  <meta property="og:locale" content="vi_VN" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="__SEO_TITLE__" />
+  <meta name="twitter:description" content="__SEO_DESCRIPTION__" />
+  <meta name="twitter:image" content="__SEO_IMAGE__" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />

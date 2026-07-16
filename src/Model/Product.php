@@ -21,6 +21,15 @@ class Product
     }
 
     /**
+     * All product ids, for building the sitemap.
+     */
+    public static function allIds(): array
+    {
+        $sql = "SELECT id_pro FROM product ORDER BY id_pro DESC";
+        return Database::query($sql);
+    }
+
+    /**
      * Single product by id.
      * Mirrors old `loadone_pro($id_pro)`.
      *

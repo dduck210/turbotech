@@ -16,6 +16,7 @@ use Codemoi\Controller\ProductController;
 use Codemoi\Controller\QuestionController;
 use Codemoi\Core\Csrf;
 use Codemoi\Core\Router;
+use Codemoi\Core\Seo;
 use Codemoi\Model\Cart;
 use Codemoi\Model\Category;
 
@@ -85,4 +86,20 @@ $router->setDefault([HomeController::class, 'index']);
 $router->dispatch($_GET['act'] ?? '');
 
 include __DIR__ . '/../view/footer.php';
-ob_end_flush();
+
+// Swap in the per-page SEO values now that the controller has had a chance
+// to set them (Seo::setTitle()/setDescription()/setImage()) — see the
+// comment in view/head.php for why this can't just be echoed there directly.
+// REQUEST_URI already carries whatever subdirectory the app is served under
+// (e.g. /codemoi1/?act=product) since mod_rewrite forwards to public/
+// internally without changing what the browser actually requested — see
+// the root .htaccess — so it must NOT be prefixed again here.
+$scheme = (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off') ? 'https' : 'http';
+$canonical = $scheme . '://' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
+$page = ob_get_clean();
+$page = str_replace(
+    ['__SEO_TITLE__', '__SEO_DESCRIPTION__', '__SEO_IMAGE__', '__SEO_CANONICAL__'],
+    [e(Seo::title()), e(Seo::description()), e(Seo::image()), e($canonical)],
+    $page
+);
+echo $page;

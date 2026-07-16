@@ -3,6 +3,7 @@
 namespace Codemoi\Controller;
 
 use Codemoi\Core\Controller;
+use Codemoi\Core\Seo;
 use Codemoi\Model\Auth;
 use Codemoi\Model\Order;
 use Codemoi\Model\User;
@@ -29,6 +30,9 @@ class AccountController extends Controller
         }
 
         $user = Auth::user();
+
+        Seo::setTitle('Tài khoản của tôi - Turbotech');
+        Seo::setDescription('Quản lý thông tin cá nhân, đơn hàng và mật khẩu tài khoản Turbotech của bạn.');
 
         if (isset($_POST['btn_change']) && $_POST['btn_change']) {
             $id_user = $user['id_user'];

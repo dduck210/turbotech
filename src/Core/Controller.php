@@ -36,6 +36,17 @@ abstract class Controller
      */
     protected function redirect(string $url): void
     {
+        // public/index.php buffers the whole page (ob_start()) so it can
+        // stamp per-page SEO tags into head.php's placeholder tokens after
+        // the router dispatches — but a redirect exits before that
+        // replacement step ever runs, so without discarding the buffer here
+        // the literal `__SEO_TITLE__`-style tokens (plus whatever partial
+        // head/header HTML rendered so far) would flush to the client
+        // alongside the Location header. A redirect has no meaningful body
+        // anyway, so drop it instead of leaking it.
+        if (ob_get_level() > 0) {
+            ob_end_clean();
+        }
         header('Location: ' . $url);
         exit;
     }

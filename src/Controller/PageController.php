@@ -3,6 +3,7 @@
 namespace Codemoi\Controller;
 
 use Codemoi\Core\Controller;
+use Codemoi\Core\Seo;
 use Codemoi\Model\Question;
 
 /**
@@ -13,6 +14,8 @@ class PageController extends Controller
 {
     public function introduce(): void
     {
+        Seo::setTitle('Giới thiệu - Turbotech');
+        Seo::setDescription('Tìm hiểu về Turbotech - đơn vị cung cấp laptop gaming và PC hiệu năng cao chính hãng, uy tín.');
         $this->view('introduce');
     }
 
@@ -21,6 +24,9 @@ class PageController extends Controller
      */
     public function contact(): void
     {
+        Seo::setTitle('Liên hệ - Turbotech');
+        Seo::setDescription('Liên hệ với Turbotech để được tư vấn laptop gaming, PC và hỗ trợ sau bán hàng.');
+
         if (isset($_POST['btn_contact']) && $_POST['btn_contact']) {
             $name = $_POST['name'] ?? '';
             $email = $_POST['email'] ?? '';

@@ -4,6 +4,7 @@ namespace Codemoi\Controller;
 
 use Codemoi\Core\Controller;
 use Codemoi\Core\Csrf;
+use Codemoi\Core\Seo;
 use Codemoi\Model\Auth;
 use Codemoi\Model\User;
 
@@ -16,6 +17,9 @@ class AuthController extends Controller
 {
     public function register(): void
     {
+        Seo::setTitle('Đăng ký tài khoản - Turbotech');
+        Seo::setDescription('Tạo tài khoản Turbotech để mua sắm laptop gaming, PC và theo dõi đơn hàng dễ dàng.');
+
         if (isset($_POST['btn_register']) && $_POST['btn_register']) {
             $user_name = trim($_POST['user_name'] ?? '');
             $full_name = trim($_POST['full_name'] ?? '');
@@ -111,6 +115,9 @@ class AuthController extends Controller
 
     public function login(): void
     {
+        Seo::setTitle('Đăng nhập - Turbotech');
+        Seo::setDescription('Đăng nhập tài khoản Turbotech để mua sắm laptop gaming, PC chính hãng và theo dõi đơn hàng.');
+
         if (isset($_POST['btn_login']) && $_POST['btn_login']) {
             $user_name = $_POST['user_name'] ?? '';
             $password = $_POST['password'] ?? '';

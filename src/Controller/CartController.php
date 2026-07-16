@@ -3,6 +3,7 @@
 namespace Codemoi\Controller;
 
 use Codemoi\Core\Controller;
+use Codemoi\Core\Seo;
 use Codemoi\Model\Cart;
 use Codemoi\Model\Product;
 
@@ -20,6 +21,8 @@ class CartController extends Controller
 {
     public function viewCart(): void
     {
+        Seo::setTitle('Giỏ hàng - Turbotech');
+        Seo::setDescription('Xem lại giỏ hàng của bạn tại Turbotech trước khi đặt hàng.');
         $this->view('cart/viewcart');
     }
 

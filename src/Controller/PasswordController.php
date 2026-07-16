@@ -3,6 +3,7 @@
 namespace Codemoi\Controller;
 
 use Codemoi\Core\Controller;
+use Codemoi\Core\Seo;
 use Codemoi\Model\User;
 
 /**
@@ -27,6 +28,9 @@ class PasswordController extends Controller
     public function forgotPassword(): void
     {
         $error = null;
+
+        Seo::setTitle('Quên mật khẩu - Turbotech');
+        Seo::setDescription('Khôi phục mật khẩu tài khoản Turbotech qua email hoặc số điện thoại đã đăng ký.');
 
         if (isset($_POST['btn_forgot']) && $_POST['btn_forgot']) {
             $identifier = trim($_POST['identifier'] ?? '');
@@ -75,6 +79,8 @@ class PasswordController extends Controller
      */
     public function verification(): void
     {
+        Seo::setTitle('Xác nhận mã - Turbotech');
+        Seo::setDescription('Nhập mã xác nhận đã gửi qua email để tiếp tục đặt lại mật khẩu Turbotech.');
         $this->view('user/verification');
     }
 
@@ -82,6 +88,9 @@ class PasswordController extends Controller
     public function change(): void
     {
         $error = [];
+
+        Seo::setTitle('Đặt lại mật khẩu - Turbotech');
+        Seo::setDescription('Tạo mật khẩu mới cho tài khoản Turbotech của bạn.');
 
         if (!($_SESSION['otp_verified'] ?? false)) {
             $this->redirect('index.php?act=mk');

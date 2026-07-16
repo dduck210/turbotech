@@ -3,6 +3,7 @@
 namespace Codemoi\Controller;
 
 use Codemoi\Core\Controller;
+use Codemoi\Core\Seo;
 use Codemoi\Model\Auth;
 use Codemoi\Model\Cart;
 use Codemoi\Model\Coupon;
@@ -24,6 +25,9 @@ class CheckoutController extends Controller
 {
     public function bill(): void
     {
+        Seo::setTitle('Thông tin đặt hàng - Turbotech');
+        Seo::setDescription('Điền thông tin giao hàng và thanh toán để hoàn tất đơn hàng tại Turbotech.');
+
         // Re-validate the session's applied coupon against the current
         // cart on every page load, so a stale/expired code (or one that no
         // longer matches the cart contents) is silently dropped instead of
@@ -245,6 +249,7 @@ class CheckoutController extends Controller
         $_SESSION['check'] = 1;
 
         if (($_SESSION['check'] ?? null) == 1 || $payment == 1) {
+            Seo::setTitle('Đặt hàng thành công - Turbotech');
             $this->view('cart/billconfirm', [
                 'bill' => $bill,
                 'cart_detail' => $cart_detail,
@@ -340,6 +345,7 @@ class CheckoutController extends Controller
         $_SESSION['check'] = 1;
 
         if (($_SESSION['check'] ?? null) == 1 || $payment == 1) {
+            Seo::setTitle('Đặt hàng thành công - Turbotech');
             $this->view('cart/billconfirm', [
                 'bill' => $bill,
                 'cart_detail' => $cart_detail,
