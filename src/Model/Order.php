@@ -26,9 +26,10 @@ class Order
         string $order_date,
         string $total_amount,
         ?string $coupon_code = null,
-        int $discount_amount = 0
+        int $discount_amount = 0,
+        ?int $id_coupon = null
     ): string {
-        $sql = "INSERT INTO bill(bill_code,id_user, user_name, full_name, address, phone, email, payment, order_date, total_amount, coupon_code, discount_amount) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        $sql = "INSERT INTO bill(bill_code,id_user, user_name, full_name, address, phone, email, payment, order_date, total_amount, coupon_code, discount_amount, id_coupon) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
         return Database::executeReturnId(
             $sql,
             $bill_code,
@@ -42,7 +43,8 @@ class Order
             $order_date,
             $total_amount,
             $coupon_code,
-            $discount_amount
+            $discount_amount,
+            $id_coupon
         );
     }
 
@@ -171,7 +173,18 @@ class Order
         }
 
         $bill = self::one($id_bill);
-        if ($bill && !empty($bill['coupon_code'])) {
+        if (!$bill) {
+            return;
+        }
+
+        // Prefer the stable id_coupon reference — coupon_code alone breaks
+        // if the coupon's code is later renamed (a bare string with no FK,
+        // while coupons.code is UNIQUE, so the old code just stops
+        // matching anything). Falls back to the code lookup for bills
+        // placed before id_coupon existed.
+        if (!empty($bill['id_coupon'])) {
+            Coupon::decrementUsage((int) $bill['id_coupon']);
+        } elseif (!empty($bill['coupon_code'])) {
             $coupon = Coupon::findByCode($bill['coupon_code']);
             if ($coupon) {
                 Coupon::decrementUsage((int) $coupon['id_coupon']);

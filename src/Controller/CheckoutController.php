@@ -206,7 +206,8 @@ class CheckoutController extends Controller
                 $order_date,
                 $total_amount,
                 $coupon['code'],
-                $coupon['discount']
+                $coupon['discount'],
+                $coupon['id_coupon']
             );
             $_SESSION['idbill'] = $idbill;
 
