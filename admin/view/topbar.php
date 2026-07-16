@@ -33,7 +33,7 @@
         <!-- Profile -->
         <div class="flex items-center gap-3 border border-ink-300 rounded-md pl-3 pr-2 py-1.5">
             <div class="text-right hidden lg:block whitespace-nowrap">
-                <div class="text-sm font-semibold text-ink-800">Admin Turbotech</div>
+                <div class="text-sm font-semibold text-ink-800">Xin chào, <?= e($_SESSION['admin']['full_name'] ?? 'Admin') ?></div>
                 <div class="text-xs text-ink-500">Quản trị viên</div>
             </div>
             <img src="../assets/admin-images/admin.png"
