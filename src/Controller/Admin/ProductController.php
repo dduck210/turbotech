@@ -36,6 +36,11 @@ class ProductController extends AdminController
                 echo '<script>document.addEventListener("DOMContentLoaded",()=>Swal.fire({toast:true,position:"top-end",icon:"error",title:"Giá nhập không đúng !",showConfirmButton:false,timer:3000}));</script>';
             } elseif ($stock < 0) {
                 echo '<script>document.addEventListener("DOMContentLoaded",()=>Swal.fire({toast:true,position:"top-end",icon:"error",title:"Số lượng tồn kho không đúng !",showConfirmButton:false,timer:3000}));</script>';
+            } elseif ($discount < 0 || $discount > 100) {
+                // Client-side only had max="100" (add_product.php) — a
+                // discount over 100 makes Product::discountedPrice() return
+                // a negative sale price, both on-screen and at checkout.
+                echo '<script>document.addEventListener("DOMContentLoaded",()=>Swal.fire({toast:true,position:"top-end",icon:"error",title:"Giảm giá phải từ 0 đến 100 !",showConfirmButton:false,timer:3000}));</script>';
             } elseif (!$hasFile) {
                 echo '<script>document.addEventListener("DOMContentLoaded",()=>Swal.fire({toast:true,position:"top-end",icon:"error",title:"Vui lòng chọn ảnh sản phẩm !",showConfirmButton:false,timer:3000}));</script>';
             } else {
@@ -95,6 +100,16 @@ class ProductController extends AdminController
             $detail_des = $_POST['detail_des'];
             $stock = (int) ($_POST['stock'] ?? 0);
             $stock_message = trim($_POST['stock_message'] ?? '') ?: null;
+
+            // Unlike add(), this action had NO server-side validation at
+            // all — a crafted (or fat-fingered) request could set a
+            // negative price/stock, or a discount over 100 that makes
+            // Product::discountedPrice() return a negative sale price.
+            if ($price <= 0 || $stock < 0 || $discount < 0 || $discount > 100) {
+                $_SESSION['flash_error'] = 'Giá / tồn kho / giảm giá không hợp lệ.';
+                $this->redirect('index.php?act=list_product');
+            }
+
             $img_pro = $this->moveUpload($_FILES['img_pro'] ?? null) ?? '';
 
             Product::update($id_pro, $name_pro, $price, $discount, $short_des, $detail_des, $img_pro, $idcate, $stock, $stock_message);
