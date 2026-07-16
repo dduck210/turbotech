@@ -35,4 +35,10 @@ return [
         ],
     ],
 
+    'vietqr' => [
+        'bank_code' => env('BANK_CODE', ''),
+        'account_no' => env('BANK_ACCOUNT_NO', ''),
+        'account_name' => env('BANK_ACCOUNT_NAME', ''),
+    ],
+
 ];

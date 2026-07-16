@@ -26,6 +26,8 @@ class Order extends Model
 
     protected $fillable = [
         'bill_code',
+        'id_pro',
+        'name_pro',
         'id_user',
         'user_name',
         'full_name',

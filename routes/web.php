@@ -2,6 +2,8 @@
 
 use App\Http\Controllers\AccountController;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\CartController;
+use App\Http\Controllers\CheckoutController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\PageController;
 use App\Http\Controllers\PasswordController;
@@ -21,6 +23,11 @@ Route::get('/contact', [PageController::class, 'contact'])->name('contact');
 Route::post('/contact', [PageController::class, 'submitContact'])->name('contact.submit');
 Route::get('/question', [QuestionController::class, 'index'])->name('question.index');
 Route::post('/question', [QuestionController::class, 'submit'])->name('question.submit');
+
+Route::get('/cart', [CartController::class, 'view'])->name('cart.view');
+Route::post('/cart/edit', [CartController::class, 'edit'])->name('cart.edit');
+Route::post('/cart/add', [CartController::class, 'add'])->name('cart.add');
+Route::get('/cart/remove', [CartController::class, 'remove'])->name('cart.remove');
 
 Route::middleware('guest')->group(function () {
     Route::get('/register', [AuthController::class, 'showRegister'])->name('register.show');
@@ -43,6 +50,14 @@ Route::middleware('auth')->group(function () {
     Route::post('/account/profile', [AccountController::class, 'updateProfile'])->name('account.profile');
     Route::post('/account/password', [AccountController::class, 'changePassword'])->name('account.password');
     Route::post('/account/orders/cancel', [AccountController::class, 'cancelOrder'])->name('account.orders.cancel');
+
+    Route::get('/checkout', [CheckoutController::class, 'show'])->name('checkout.show');
+    Route::post('/checkout/coupon/apply', [CheckoutController::class, 'applyCoupon'])->name('checkout.coupon.apply');
+    Route::post('/checkout/coupon/remove', [CheckoutController::class, 'removeCoupon'])->name('checkout.coupon.remove');
+    Route::post('/checkout/confirm', [CheckoutController::class, 'confirm'])->name('checkout.confirm');
+    Route::get('/checkout/confirmation', [CheckoutController::class, 'confirmation'])->name('checkout.confirmation');
+    Route::get('/checkout/qr', [CheckoutController::class, 'qr'])->name('checkout.qr');
+    Route::post('/checkout/qr/confirm', [CheckoutController::class, 'confirmTransfer'])->name('checkout.qr.confirm');
 });
 
 // Placeholder — replaced by the real admin dashboard in Phase 4 Group F.
@@ -50,9 +65,3 @@ Route::middleware('auth')->group(function () {
 Route::get('/admin/dashboard', function () {
     return 'Admin dashboard placeholder — built in Phase 4 Group F.';
 })->middleware(['auth', 'admin'])->name('admin.dashboard');
-
-// Placeholder — replaced by the real CartController in Phase 4 Group C.
-// Needed now so product/detail.blade.php's add-to-cart form resolves.
-Route::post('/cart/add', function () {
-    abort(501, 'Giỏ hàng chưa sẵn sàng — sẽ có ở Phase 4 Group C.');
-})->name('cart.add');
