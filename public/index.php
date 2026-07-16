@@ -97,9 +97,17 @@ include __DIR__ . '/../view/footer.php';
 $scheme = (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off') ? 'https' : 'http';
 $canonical = $scheme . '://' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
 $page = ob_get_clean();
-$page = str_replace(
-    ['__SEO_TITLE__', '__SEO_DESCRIPTION__', '__SEO_IMAGE__', '__SEO_CANONICAL__'],
-    [e(Seo::title()), e(Seo::description()), e(Seo::image()), e($canonical)],
-    $page
-);
+// strtr(), not str_replace() — str_replace() with parallel arrays applies
+// each replacement in sequence over the WHOLE string, so if user-controlled
+// content ends up inside an earlier replacement's value (e.g. a search
+// keyword reflected into the title happens to contain the literal text
+// "__SEO_DESCRIPTION__"), a later replacement pass would match and corrupt
+// it. strtr() replaces all keys in a single simultaneous pass, so an
+// already-substituted region can never be matched again.
+$page = strtr($page, [
+    '__SEO_TITLE__' => e(Seo::title()),
+    '__SEO_DESCRIPTION__' => e(Seo::description()),
+    '__SEO_IMAGE__' => e(Seo::image()),
+    '__SEO_CANONICAL__' => e($canonical),
+]);
 echo $page;

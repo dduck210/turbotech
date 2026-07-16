@@ -29,11 +29,16 @@ class ProductController extends Controller
             [$min, $max] = [$max, $min];
         }
 
-        $categoryName = Category::name($idcate);
+        // Category::name() returns a single space (not '') for both "no
+        // idcate given" and "idcate doesn't match any row" — trim() so a
+        // stale/invalid idcate falls through to the generic listing title
+        // instead of rendering "Laptop   chính hãng..." with the literal
+        // space still in it.
+        $categoryName = trim(Category::name($idcate));
         if ($kyw !== '') {
             Seo::setTitle('Kết quả tìm kiếm "' . $kyw . '" - Turbotech');
             Seo::setDescription('Kết quả tìm kiếm sản phẩm "' . $kyw . '" tại Turbotech - laptop gaming và PC hiệu năng cao chính hãng.');
-        } elseif ($idcate > 0) {
+        } elseif ($idcate > 0 && $categoryName !== '') {
             Seo::setTitle('Laptop ' . $categoryName . ' chính hãng, giá tốt - Turbotech');
             Seo::setDescription('Danh sách laptop ' . $categoryName . ' chính hãng tại Turbotech - cấu hình mạnh mẽ, giá cạnh tranh, bảo hành 12 tháng.');
         } else {

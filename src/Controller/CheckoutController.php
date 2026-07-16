@@ -258,110 +258,29 @@ class CheckoutController extends Controller
     }
 
     /**
-     * Near-duplicate of `confirm()` used for direct `?act=viewbill` visits.
-     * The old code referenced `$full_name`/`$address`/`$phone`/`$email`/
-     * `$payment` here while the `$_POST` reads that fed them were commented
-     * out (`index.php:392-396`) — a latent bug (Phase 05 fix, was flagged in
-     * the plan's Open Questions). Reading them from `$_POST` the same way
-     * `confirm()` does is clearly the original intent. In the real browser
-     * flow (POST billconfirm -> redirect to `?act=viewbill`), the redirect is
-     * a plain GET with no form body, so these all read as empty strings and
-     * the cart is already empty (`$total_amount > 0` is false) — same
-     * behavior as before for that path. This only changes behavior for the
-     * previously-buggy scenario where `?act=viewbill` is hit directly with
-     * POST data present and a non-empty cart.
+     * Renders the confirmation for the order `confirm()` just created
+     * (tracked via `$_SESSION['idbill']`). This used to also have its own
+     * order-creation branch for a direct `?act=viewbill` hit, but nothing
+     * in the app actually links or redirects here with order data —
+     * `confirm()` renders the confirmation itself for cash orders and
+     * redirects straight to `view/qr.php` for bank/QR ones — so that branch
+     * was only ever reachable via a bare, uncredentialed GET. It also
+     * self-redirected back into itself before it ever reached the
+     * `Order::addItem()` line-item insert, so even a legitimate hit could
+     * only ever produce a `bill` row with no line items. Removed rather
+     * than patched: it had no real caller and no path that ended correctly.
      */
     public function viewbill(): void
     {
-        $full_name = $_POST['full_name'] ?? '';
-        $province = $_POST['province'] ?? '';
-        $ward = $_POST['ward'] ?? '';
-        $address_detail = $_POST['address_detail'] ?? '';
-        $address = $address_detail !== '' ? "{$address_detail}, {$ward}, {$province}" : '';
-        $phone = $_POST['phone'] ?? '';
-        $email = $_POST['email'] ?? '';
-        $payment = $_POST['payment'] ?? null;
-        $bill_code = null;
         $idbill = $_SESSION['idbill'] ?? null;
-        $total_amount = null;
+        $bill = $idbill !== null ? Order::one((int) $idbill) : false;
+        $cart_detail = $idbill !== null ? Order::items((int) $idbill) : [];
 
-        $user = Auth::user();
-
-        if ($user) {
-            $bill_code = substr(str_shuffle("123456789"), 0, 5);
-            $order_date = date('Y/m/d h:i:s', time());
-            $total_amount = Cart::total();
-
-            if ($total_amount > 0) {
-                foreach (Cart::items() as $cart) {
-                    if (!Product::hasStock($cart[0], $cart[4])) {
-                        $_SESSION['flash_error'] = "Sản phẩm \"{$cart[1]}\" không đủ số lượng tồn kho, vui lòng cập nhật giỏ hàng!";
-                        $this->redirect('?act=viewcart');
-                    }
-                }
-
-                $coupon = $this->resolveCoupon($total_amount);
-                $total_amount = $total_amount - $coupon['discount'];
-
-                $idbill = Order::create(
-                    $bill_code,
-                    $user['id_user'],
-                    $user['user_name'],
-                    $full_name,
-                    $address,
-                    $phone,
-                    $email,
-                    $payment,
-                    $order_date,
-                    $total_amount,
-                    $coupon['code'],
-                    $coupon['discount']
-                );
-                $_SESSION['idbill'] = $idbill;
-
-                if ($coupon['id_coupon'] !== null) {
-                    Coupon::incrementUsage($coupon['id_coupon']);
-                }
-                unset($_SESSION['coupon']);
-
-                // Must run before the redirect below, not after — this is a
-                // self-redirect back to the same route. A bare GET on
-                // ?act=viewbill (no CSRF check covers this route) used to
-                // hit this exact branch again on the next request since the
-                // cart was still non-empty, creating another order every
-                // time, looping until the browser's redirect cap kicked in.
-                // Clearing first means the next hit's `$total_amount > 0`
-                // check is false, so it falls through to the confirmation
-                // view instead of creating a duplicate order.
-                Cart::clear();
-
-                $this->redirect('?act=viewbill');
-            }
-
-            foreach (Cart::items() as $cart) {
-                Order::addItem($user['id_user'], $user['user_name'], $cart[0], $cart[2], $cart[1], $cart[3], $cart[4], $cart[5], $idbill);
-                Product::decrementStock($cart[0], $cart[4]);
-            }
-        }
-        Cart::clear();
-
-        $bill = Order::one($idbill);
-        $cart_detail = Order::items($idbill);
-
-        if ($payment == 2) {
-            $_SESSION['pay'] = [$payment, $total_amount, $bill_code];
-            $this->redirect('view/qr.php');
-        }
-
-        $_SESSION['check'] = 1;
-
-        if (($_SESSION['check'] ?? null) == 1 || $payment == 1) {
-            Seo::setTitle('Đặt hàng thành công - Turbotech');
-            $this->view('cart/billconfirm', [
-                'bill' => $bill,
-                'cart_detail' => $cart_detail,
-            ]);
-        }
+        Seo::setTitle('Đặt hàng thành công - Turbotech');
+        $this->view('cart/billconfirm', [
+            'bill' => $bill,
+            'cart_detail' => $cart_detail,
+        ]);
     }
 
     /** Mirrors old inline `function validate_mobile($mobile)` (`index.php:306-309`). */
