@@ -435,7 +435,7 @@
     /*  Cart Plus Minus Button
 /*----------------------------------------*/
     // NOTE: the dec/inc buttons used to be injected here via .append(); the
-    // Tailwind-redesigned template (view/product/product-detail.php) now renders
+    // Tailwind-redesigned template (view/sanpham/sanphamct.php) now renders
     // them statically (with proper styling), so appending a second pair here
     // would just duplicate them. Only the click handler is still needed.
     $('.qtybutton').on('click', function() {
@@ -820,3 +820,53 @@
         additionalMarginTop: 80,
     });
 })(jQuery);
+
+/* Smoothness pass (boutique redesign): fade images in as they finish
+   loading instead of popping in, and reveal sections/cards as the user
+   scrolls to them. Plain vanilla JS — no jQuery dependency needed for
+   either. Both are pure visual polish, so a missing IntersectionObserver
+   (very old browsers) just leaves .reveal-on-scroll elements visible via
+   the fallback below instead of stuck invisible. */
+(function() {
+    'use strict';
+
+    function markLoaded(img) {
+        img.classList.add('is-loaded');
+    }
+
+    document.querySelectorAll('img[loading="lazy"]').forEach(function(img) {
+        if (img.complete) {
+            markLoaded(img);
+        } else {
+            img.addEventListener('load', function() {
+                markLoaded(img);
+            });
+            img.addEventListener('error', function() {
+                markLoaded(img);
+            });
+        }
+    });
+
+    var revealTargets = document.querySelectorAll('.reveal-on-scroll');
+    if (!revealTargets.length) return;
+
+    if (!('IntersectionObserver' in window)) {
+        revealTargets.forEach(function(el) {
+            el.classList.add('is-visible');
+        });
+        return;
+    }
+
+    var observer = new IntersectionObserver(function(entries) {
+        entries.forEach(function(entry) {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('is-visible');
+                observer.unobserve(entry.target);
+            }
+        });
+    }, { rootMargin: '0px 0px -10% 0px', threshold: 0.1 });
+
+    revealTargets.forEach(function(el) {
+        observer.observe(el);
+    });
+})();

@@ -38,10 +38,46 @@
   --animate-fade-up: fade-up 0.6s ease-out both;
 }
 
+html {
+  scroll-behavior: smooth;
+}
+
 body {
   font-family: var(--font-sans);
   color: var(--color-ink-800);
   background-color: var(--color-ink-100);
+}
+
+/* Smooth cross-page fade instead of the browser's default hard cut when
+   navigating between pages — this is a classic multi-page app (every link
+   is a full document load), so the CSS View Transitions API is the only
+   way to get an SPA-like transition. No-ops in browsers that don't support
+   it yet (Firefox/Safari), so it's pure progressive enhancement. */
+@view-transition {
+  navigation: auto;
+}
+
+/* Fade-in-on-load for images: JS toggles the "is-loaded" class once each
+   image's load event fires (see main.js) so photos settle in instead of
+   popping in as they finish downloading. */
+img[loading="lazy"] {
+  opacity: 0;
+  transition: opacity 0.5s ease;
+}
+img[loading="lazy"].is-loaded {
+  opacity: 1;
+}
+
+/* Scroll-reveal: sections/cards start faded+shifted, IntersectionObserver
+   (main.js) adds "is-visible" once each one enters the viewport. */
+.reveal-on-scroll {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.6s cubic-bezier(0.22, 1, 0.36, 1), transform 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.reveal-on-scroll.is-visible {
+  opacity: 1;
+  transform: translateY(0);
 }
 
 /* Inter's glyph for the Vietnamese Dong sign (₫, U+20AB) draws with a full
@@ -141,20 +177,23 @@ h6 {
   background-color: var(--color-brand-500);
   border: 1px solid var(--color-brand-600);
   color: #fff;
-  transition: background-color 0.25s ease, box-shadow 0.25s ease;
+  transition: background-color 0.3s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.3s cubic-bezier(0.22, 1, 0.36, 1), transform 0.2s cubic-bezier(0.22, 1, 0.36, 1);
 }
 .btn-boutique:hover {
   background-color: var(--color-brand-600);
   box-shadow: 0 2px 8px rgba(43, 33, 24, 0.12);
 }
+.btn-boutique:active {
+  transform: scale(0.98);
+}
 
 .card-hover {
-  transition: box-shadow 0.3s ease, transform 0.3s ease, border-color 0.3s ease;
+  transition: box-shadow 0.4s cubic-bezier(0.22, 1, 0.36, 1), transform 0.4s cubic-bezier(0.22, 1, 0.36, 1), border-color 0.4s cubic-bezier(0.22, 1, 0.36, 1);
 }
 .card-hover:hover {
   border-color: var(--color-brand-400);
   box-shadow: 0 8px 20px -8px rgba(43, 33, 24, 0.16);
-  transform: translateY(-2px);
+  transform: translateY(-3px);
 }
 
 @keyframes fade-up {
@@ -163,9 +202,16 @@ h6 {
 }
 
 @media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
   * {
     animation-duration: 0.01ms !important;
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
+  }
+  .reveal-on-scroll {
+    opacity: 1;
+    transform: none;
   }
 }

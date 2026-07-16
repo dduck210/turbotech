@@ -60,7 +60,7 @@
 <!-- HERO End Here -->
 
 <!-- WHY US — quiet icon column row (was: bento glass grid) -->
-<section class="py-14 md:py-20">
+<section class="reveal-on-scroll py-14 md:py-20">
     <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div class="mb-10 max-w-xl">
             <span class="text-serif-accent text-xs font-semibold uppercase tracking-[0.2em]">Vì sao chọn Turbotech</span>
@@ -93,7 +93,7 @@
 <!-- WHY US End Here -->
 
 <!-- PHẦN SẢN PHẨM TRANG HOME -->
-<section class="bg-ink-50 py-14 md:py-20">
+<section class="reveal-on-scroll bg-ink-50 py-14 md:py-20">
     <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div class="mb-8 flex flex-wrap items-end justify-between gap-4 border-b border-ink-200 pb-6">
             <div>
@@ -125,7 +125,7 @@
                             <div class="relative aspect-square overflow-hidden border-b border-ink-200 bg-ink-100">
                                 <a class="block h-full w-full"
                                     href="index.php?act=prodetail&idpro=<?= e($pro['id_pro']) ?>">
-                                    <img class="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105" src="admin/uploads/<?= e($pro['img_pro']) ?>"
+                                    <img class="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105" loading="lazy" decoding="async" src="admin/uploads/<?= e($pro['img_pro']) ?>"
                                         alt="<?= e($pro['name_pro']) ?>" />
                                 </a>
                                 <span
@@ -183,7 +183,7 @@
                         <div class="card-hover group card-boutique flex flex-col overflow-hidden rounded-md">
                             <div class="relative aspect-square overflow-hidden border-b border-ink-200 bg-ink-100">
                                 <a class="block h-full w-full" href="index.php?act=prodetail&idpro=<?= e($pro['id_pro']) ?>">
-                                    <img class="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105" src="admin/uploads/<?= e($pro['img_pro']) ?>"
+                                    <img class="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105" loading="lazy" decoding="async" src="admin/uploads/<?= e($pro['img_pro']) ?>"
                                         alt="<?= e($pro['name_pro']) ?>" />
                                 </a>
                                 <span
@@ -243,7 +243,7 @@
                         <div class="card-hover group card-boutique flex flex-col overflow-hidden rounded-md">
                             <div class="relative aspect-square overflow-hidden border-b border-ink-200 bg-ink-100">
                                 <a class="block h-full w-full" href="index.php?act=prodetail&idpro=<?= e($pro['id_pro']) ?>">
-                                    <img class="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105" src="admin/uploads/<?= e($pro['img_pro']) ?>"
+                                    <img class="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105" loading="lazy" decoding="async" src="admin/uploads/<?= e($pro['img_pro']) ?>"
                                         alt="<?= e($pro['name_pro']) ?>" />
                                 </a>
                                 <span
@@ -299,10 +299,10 @@
 <!-- PHẦN SẢN PHẨM TRANG HOME End Here -->
 
 <!-- PC Gaming spotlight: framed split layout (was: full-bleed overlay card + glow-pulse blob) -->
-<section class="mx-auto max-w-7xl px-4 py-14 sm:px-6 lg:px-8 md:py-20">
+<section class="reveal-on-scroll mx-auto max-w-7xl px-4 py-14 sm:px-6 lg:px-8 md:py-20">
     <div class="grid grid-cols-1 items-center gap-8 lg:grid-cols-2 lg:gap-12">
         <div class="card-boutique overflow-hidden rounded-lg lg:order-2">
-            <img src="./assets/images/banner/pcgami.png" alt="PC Gaming Turbotech" class="h-64 w-full object-cover sm:h-80 lg:h-96" />
+            <img src="./assets/images/banner/pcgami.png" alt="PC Gaming Turbotech" class="h-64 w-full object-cover sm:h-80 lg:h-96" loading="lazy" decoding="async" />
         </div>
         <div class="lg:order-1">
             <span class="text-serif-accent text-xs font-semibold uppercase tracking-[0.2em]">PC Gaming</span>
@@ -322,17 +322,17 @@
 <!-- PC Gaming spotlight End Here -->
 
 <!-- Brand banners: framed image + caption below (was: image with dark gradient text-overlay) -->
-<section class="mx-auto max-w-7xl px-4 pb-14 sm:px-6 lg:px-8 md:pb-20">
+<section class="reveal-on-scroll mx-auto max-w-7xl px-4 pb-14 sm:px-6 lg:px-8 md:pb-20">
     <div class="grid grid-cols-1 gap-6 md:grid-cols-2">
         <a href="index.php?act=product&idcate=12" class="card-hover card-boutique group block overflow-hidden rounded-md">
-            <img class="h-56 w-full object-cover transition-transform duration-500 group-hover:scale-105" src="./assets/images/banner/lapmsi.jpg" alt="Turbotech" />
+            <img class="h-56 w-full object-cover transition-transform duration-500 group-hover:scale-105" loading="lazy" decoding="async" src="./assets/images/banner/lapmsi.jpg" alt="Turbotech" />
             <div class="flex items-center justify-between border-t border-ink-200 p-4">
                 <span class="font-heading text-lg font-semibold text-ink-900">MSI Series</span>
                 <i class="fa-solid fa-arrow-right text-brand-500" aria-hidden="true"></i>
             </div>
         </a>
         <a href="index.php?act=product&idcate=11" class="card-hover card-boutique group block overflow-hidden rounded-md">
-            <img class="h-56 w-full object-cover transition-transform duration-500 group-hover:scale-105" src="./assets/images/banner/lenovo.jpg" alt="Turbotech" />
+            <img class="h-56 w-full object-cover transition-transform duration-500 group-hover:scale-105" loading="lazy" decoding="async" src="./assets/images/banner/lenovo.jpg" alt="Turbotech" />
             <div class="flex items-center justify-between border-t border-ink-200 p-4">
                 <span class="font-heading text-lg font-semibold text-ink-900">Lenovo Series</span>
                 <i class="fa-solid fa-arrow-right text-brand-500" aria-hidden="true"></i>

@@ -188,7 +188,7 @@
                     <a href="index.php?act=prodetail&idpro=<?= e($pro['id_pro']) ?>">
                         <img src="admin/uploads/<?= e($pro['img_pro']) ?>"
                             alt="Ảnh sản phẩm <?= e($pro['name_pro']) ?>"
-                            class="h-full w-full object-cover">
+                            class="h-full w-full object-cover" loading="lazy" decoding="async">
                     </a>
                     <?php if ((int) $pro['stock'] <= 0) { ?>
                         <span class="absolute top-2 right-2 rounded-sm bg-ink-900/80 text-white text-[11px] font-bold px-2 py-1"><?= e($pro['stock_message'] ?: 'Hết hàng') ?></span>

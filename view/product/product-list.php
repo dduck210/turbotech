@@ -99,7 +99,7 @@
                                 class="shrink-0 h-16 w-16 rounded-md border border-ink-200 bg-ink-100 overflow-hidden">
                                 <img src="admin/uploads/<?= e($topsp['img_pro']) ?>"
                                     alt="Ảnh sản phẩm <?= e($topsp['name_pro']) ?>"
-                                    class="h-full w-full object-cover">
+                                    class="h-full w-full object-cover" loading="lazy" decoding="async">
                             </a>
                             <div class="min-w-0">
                                 <h6 class="text-sm font-medium text-ink-900 line-clamp-2">
@@ -160,7 +160,7 @@
                             <a href="index.php?act=prodetail&idpro=<?= e($pro['id_pro']) ?>">
                                 <img src="admin/uploads/<?= e($pro['img_pro']) ?>"
                                     alt="Ảnh sản phẩm <?= e($pro['name_pro']) ?>"
-                                    class="h-full w-full object-cover">
+                                    class="h-full w-full object-cover" loading="lazy" decoding="async">
                             </a>
                             <?php if ($pro['discount'] > 0) { ?>
                                 <span class="absolute top-2 left-2 rounded-sm bg-accent-600 text-white text-[11px] font-bold px-2 py-1">

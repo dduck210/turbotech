@@ -43,7 +43,7 @@ unset($_SESSION['flash_success'], $_SESSION['flash_error']);
                         <i class="fa-solid fa-chevron-down text-[10px]"></i>
                     </a>
                     <div
-                        class="card-boutique invisible absolute left-0 top-full z-50 w-56 rounded-md py-2 opacity-0 transition-all group-hover:visible group-hover:opacity-100">
+                        class="card-boutique invisible absolute left-0 top-full z-50 w-56 rounded-md py-2 opacity-0 -translate-y-1 transition-all duration-200 ease-out group-hover:visible group-hover:opacity-100 group-hover:translate-y-0">
                         <?php
                         foreach ($listcate ?? [] as $cate) {
                             extract($cate);
@@ -91,7 +91,7 @@ unset($_SESSION['flash_success'], $_SESSION['flash_error']);
                             class="absolute right-0.5 top-0.5 inline-flex h-5 w-5 items-center justify-center rounded-full bg-brand-600 text-[11px] font-bold text-white"><?= e($count) ?></span>
                     </a>
                     <div
-                        class="card-boutique invisible absolute right-0 top-full z-50 w-80 rounded-md opacity-0 transition-all group-hover:visible group-hover:opacity-100">
+                        class="card-boutique invisible absolute right-0 top-full z-50 w-80 rounded-md opacity-0 -translate-y-1 transition-all duration-200 ease-out group-hover:visible group-hover:opacity-100 group-hover:translate-y-0">
                         <?php if (empty($_SESSION['mycart'])) { ?>
                             <p class="p-6 text-center text-sm text-ink-500">Bạn chưa thêm sản phẩm nào vào giỏ hàng !</p>
                         <?php } else { ?>
@@ -148,7 +148,7 @@ unset($_SESSION['flash_success'], $_SESSION['flash_error']);
                         </a>
                     <?php } ?>
                     <div
-                        class="card-boutique invisible absolute right-0 top-full z-50 w-56 rounded-md py-2 opacity-0 transition-all group-hover:visible group-hover:opacity-100">
+                        class="card-boutique invisible absolute right-0 top-full z-50 w-56 rounded-md py-2 opacity-0 -translate-y-1 transition-all duration-200 ease-out group-hover:visible group-hover:opacity-100 group-hover:translate-y-0">
                         <?php if (!isset($_SESSION['user'])) { ?>
                             <a href="index.php?act=login"
                                 class="flex items-center gap-2 px-4 py-2 text-sm text-ink-700 hover:bg-ink-50 hover:text-brand-600 focus:outline-none focus:ring-2 focus:ring-brand-500"><i
@@ -202,7 +202,9 @@ unset($_SESSION['flash_success'], $_SESSION['flash_error']);
     </div>
 
     <!-- Mobile nav -->
-    <nav id="mobile-menu" class="hidden border-t border-ink-300 bg-ink-50 lg:hidden">
+    <nav id="mobile-menu"
+        class="grid grid-rows-[0fr] overflow-hidden border-t border-ink-300 bg-ink-50 transition-[grid-template-rows] duration-300 ease-in-out lg:hidden">
+        <div class="min-h-0 overflow-hidden">
         <div class="mx-auto max-w-7xl space-y-1 px-4 py-4 sm:px-6">
             <a href="index.php"
                 class="block rounded-lg px-3 py-2.5 text-sm font-medium text-ink-700 hover:bg-ink-50 focus:outline-none focus:ring-2 focus:ring-brand-500">Trang
@@ -256,6 +258,7 @@ unset($_SESSION['flash_success'], $_SESSION['flash_error']);
                 <?php } ?>
             </div>
         </div>
+        </div>
     </nav>
 </header>
 
@@ -265,8 +268,9 @@ unset($_SESSION['flash_success'], $_SESSION['flash_error']);
         var menu = document.getElementById('mobile-menu');
         if (!btn || !menu) return;
         btn.addEventListener('click', function() {
-            var isNowHidden = menu.classList.toggle('hidden');
-            btn.setAttribute('aria-expanded', String(!isNowHidden));
+            var isNowOpen = menu.classList.toggle('grid-rows-[1fr]');
+            menu.classList.toggle('grid-rows-[0fr]', !isNowOpen);
+            btn.setAttribute('aria-expanded', String(isNowOpen));
         });
     })();
 </script>
