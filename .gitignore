@@ -26,3 +26,4 @@ Thumbs.db
 /storage/*.key
 /storage/pail
 _ide_helper.php
+/public-laravel-dev/
