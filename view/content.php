@@ -95,37 +95,40 @@
 <!-- PHẦN SẢN PHẨM TRANG HOME -->
 <section class="reveal-on-scroll bg-ink-50 py-14 md:py-20">
     <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <div class="mb-8 flex flex-wrap items-end justify-between gap-4 border-b border-ink-200 pb-6">
-            <div>
+        <div class="mb-8 border-b border-ink-200 pb-6">
+            <div class="mb-5">
                 <span class="text-serif-accent text-xs font-semibold uppercase tracking-[0.2em]">Sản phẩm</span>
                 <h2 class="mt-2 font-heading text-2xl font-semibold text-ink-900 sm:text-3xl">Khám phá laptop phù hợp với bạn</h2>
             </div>
-            <!-- Tab nav: underline style (was: pill segmented control). Plain vanilla-JS click
-                 handler (home-tab-trigger/home-tab-panel, script at the bottom of this file) —
-                 Bootstrap's data-bs-toggle="tab" data-api does NOT actually fire in this theme's
-                 bundled plugins.min.js, so don't rely on it. Same proven pattern as the
-                 account-page tabs in view/user/myaccount.php. -->
-            <div class="flex flex-wrap gap-6">
-                <a class="home-tab-trigger active min-h-11 border-b-2 border-transparent py-1 text-sm font-semibold uppercase tracking-wide text-ink-500 transition-colors hover:text-brand-600 [&.active]:border-brand-600! [&.active]:text-brand-600!"
-                    data-tab-target="new-arrival" href="#new-arrival"><span>Mới</span></a>
-                <a class="home-tab-trigger min-h-11 border-b-2 border-transparent py-1 text-sm font-semibold uppercase tracking-wide text-ink-500 transition-colors hover:text-brand-600 [&.active]:border-brand-600! [&.active]:text-brand-600!"
-                    data-tab-target="bestseller" href="#bestseller"><span>Bán chạy</span></a>
-                <a class="home-tab-trigger min-h-11 border-b-2 border-transparent py-1 text-sm font-semibold uppercase tracking-wide text-ink-500 transition-colors hover:text-brand-600 [&.active]:border-brand-600! [&.active]:text-brand-600!"
-                    data-tab-target="featured-products" href="#featured-products"><span>Nổi bật</span></a>
-            </div>
 
-            <!-- Client-side price sort: re-orders the cards already rendered in whichever
-                 tab panel is currently active (script at the bottom of this file) — no
-                 server round-trip needed since all the data is already on the page. -->
-            <label class="ml-auto flex items-center gap-2 text-sm text-ink-600">
-                <span class="hidden sm:inline">Sắp xếp:</span>
-                <select id="home-price-sort"
-                    class="rounded-md border border-ink-300 bg-ink-50 px-3 py-2 text-sm text-ink-800 focus:border-brand-500 focus:outline-none focus:ring-2 focus:ring-brand-500">
-                    <option value="">Mặc định</option>
-                    <option value="asc">Giá thấp đến cao</option>
-                    <option value="desc">Giá cao đến thấp</option>
-                </select>
-            </label>
+            <div class="flex flex-wrap items-center justify-between gap-4">
+                <!-- Tab nav: underline style (was: pill segmented control). Plain vanilla-JS click
+                     handler (home-tab-trigger/home-tab-panel, script at the bottom of this file) —
+                     Bootstrap's data-bs-toggle="tab" data-api does NOT actually fire in this theme's
+                     bundled plugins.min.js, so don't rely on it. Same proven pattern as the
+                     account-page tabs in view/user/myaccount.php. -->
+                <div class="flex flex-wrap gap-6">
+                    <a class="home-tab-trigger active min-h-11 border-b-2 border-transparent py-1 text-sm font-semibold uppercase tracking-wide text-ink-500 transition-colors hover:text-brand-600 [&.active]:border-brand-600! [&.active]:text-brand-600!"
+                        data-tab-target="new-arrival" href="#new-arrival"><span>Mới</span></a>
+                    <a class="home-tab-trigger min-h-11 border-b-2 border-transparent py-1 text-sm font-semibold uppercase tracking-wide text-ink-500 transition-colors hover:text-brand-600 [&.active]:border-brand-600! [&.active]:text-brand-600!"
+                        data-tab-target="bestseller" href="#bestseller"><span>Bán chạy</span></a>
+                    <a class="home-tab-trigger min-h-11 border-b-2 border-transparent py-1 text-sm font-semibold uppercase tracking-wide text-ink-500 transition-colors hover:text-brand-600 [&.active]:border-brand-600! [&.active]:text-brand-600!"
+                        data-tab-target="featured-products" href="#featured-products"><span>Nổi bật</span></a>
+                </div>
+
+                <!-- Client-side price sort: re-orders the cards already rendered in whichever
+                     tab panel is currently active (script at the bottom of this file) — no
+                     server round-trip needed since all the data is already on the page. -->
+                <label class="flex items-center gap-2 text-sm text-ink-600">
+                    <span class="hidden sm:inline">Sắp xếp:</span>
+                    <select id="home-price-sort"
+                        class="rounded-md border border-ink-300 bg-ink-50 px-3 py-2 text-sm text-ink-800 focus:border-brand-500 focus:outline-none focus:ring-2 focus:ring-brand-500">
+                        <option value="">Mặc định</option>
+                        <option value="asc">Giá thấp đến cao</option>
+                        <option value="desc">Giá cao đến thấp</option>
+                    </select>
+                </label>
+            </div>
         </div>
 
         <div class="tab-content">
@@ -133,8 +136,8 @@
                 <div class="grid grid-cols-2 gap-5 sm:grid-cols-3 lg:grid-cols-4">
                     <!-- Phần show sản phẩm mới nhất -->
                     <?php
-                    foreach ($prohome as $pro) { ?>
-                        <div class="card-hover group card-boutique flex flex-col overflow-hidden rounded-md" data-price="<?= (int) (($pro['discount'] ?? 0) > 0 ? $pro['price'] - ($pro['price'] * $pro['discount'] / 100) : $pro['price']) ?>">
+                    foreach ($prohome as $homeIndex => $pro) { ?>
+                        <div class="card-hover group card-boutique flex flex-col overflow-hidden rounded-md<?= $homeIndex >= 8 ? ' extra-item hidden' : '' ?>" data-price="<?= (int) (($pro['discount'] ?? 0) > 0 ? $pro['price'] - ($pro['price'] * $pro['discount'] / 100) : $pro['price']) ?>">
                             <div class="relative aspect-square overflow-hidden border-b border-ink-200 bg-ink-100">
                                 <a class="block h-full w-full"
                                     href="index.php?act=prodetail&idpro=<?= e($pro['id_pro']) ?>">
@@ -192,8 +195,8 @@
                 <div class="grid grid-cols-2 gap-5 sm:grid-cols-3 lg:grid-cols-4">
                     <!-- Sản phẩm bán chạy -->
                     <?php
-                    foreach ($list_bestsp as $pro) { ?>
-                        <div class="card-hover group card-boutique flex flex-col overflow-hidden rounded-md" data-price="<?= (int) (($pro['discount'] ?? 0) > 0 ? $pro['price'] - ($pro['price'] * $pro['discount'] / 100) : $pro['price']) ?>">
+                    foreach ($list_bestsp as $bestsellerIndex => $pro) { ?>
+                        <div class="card-hover group card-boutique flex flex-col overflow-hidden rounded-md<?= $bestsellerIndex >= 8 ? ' extra-item hidden' : '' ?>" data-price="<?= (int) (($pro['discount'] ?? 0) > 0 ? $pro['price'] - ($pro['price'] * $pro['discount'] / 100) : $pro['price']) ?>">
                             <div class="relative aspect-square overflow-hidden border-b border-ink-200 bg-ink-100">
                                 <a class="block h-full w-full" href="index.php?act=prodetail&idpro=<?= e($pro['id_pro']) ?>">
                                     <img class="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105" loading="lazy" decoding="async" src="admin/uploads/<?= e($pro['img_pro']) ?>"
@@ -309,10 +312,10 @@
         </div>
 
         <div class="mt-10 text-center">
-            <a href="index.php?act=product"
+            <button type="button" id="home-see-more"
                 class="btn-boutique inline-flex items-center justify-center gap-2 rounded-md px-8 py-3 text-sm font-semibold">
-                Xem thêm sản phẩm <i class="fa-solid fa-arrow-right" aria-hidden="true"></i>
-            </a>
+                <span>Xem thêm sản phẩm</span> <i class="fa-solid fa-chevron-down" aria-hidden="true"></i>
+            </button>
         </div>
     </div>
 </section>
@@ -366,6 +369,18 @@
     (function() {
         var triggers = document.querySelectorAll('.home-tab-trigger');
         var panels = document.querySelectorAll('[data-tab-panel]');
+        var seeMoreBtn = document.getElementById('home-see-more');
+
+        // "Xem thêm sản phẩm" reveals the rest of the CURRENT tab's products
+        // in place (they're already rendered, just marked hidden — see the
+        // `extra-item hidden` class added server-side past the 8th card)
+        // instead of navigating away to the full catalog page.
+        function updateSeeMoreVisibility() {
+            if (!seeMoreBtn) return;
+            var activePanel = document.querySelector('[data-tab-panel].active');
+            var hasHiddenExtras = !!(activePanel && activePanel.querySelector('.extra-item.hidden'));
+            seeMoreBtn.classList.toggle('hidden', !hasHiddenExtras);
+        }
 
         triggers.forEach(function(trigger) {
             trigger.addEventListener('click', function(e) {
@@ -379,8 +394,23 @@
                 triggers.forEach(function(t) {
                     t.classList.toggle('active', t === trigger);
                 });
+
+                updateSeeMoreVisibility();
             });
         });
+
+        if (seeMoreBtn) {
+            seeMoreBtn.addEventListener('click', function() {
+                var activePanel = document.querySelector('[data-tab-panel].active');
+                if (!activePanel) return;
+                activePanel.querySelectorAll('.extra-item.hidden').forEach(function(card) {
+                    card.classList.remove('hidden');
+                });
+                updateSeeMoreVisibility();
+            });
+        }
+
+        updateSeeMoreVisibility();
 
         // Price sort: re-orders the cards inside whichever tab panel is
         // currently active. Grid layout doesn't care about DOM order visually
