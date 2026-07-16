@@ -144,7 +144,7 @@ unset($_SESSION['flash_success'], $_SESSION['flash_error']);
                             <?php } else { ?>
                                 <i class="fa-solid fa-user text-lg"></i>
                             <?php } ?>
-                            <span class="hidden max-w-32 truncate sm:inline"><?= e($_SESSION['user']['full_name']) ?></span>
+                            <span class="hidden max-w-48 truncate sm:inline">Xin chào, <?= e($_SESSION['user']['full_name']) ?></span>
                         </a>
                     <?php } ?>
                     <div
