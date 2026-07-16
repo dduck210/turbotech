@@ -31,6 +31,12 @@ class AuthController extends AdminController
                     // login can't inherit admin access once this succeeds.
                     session_regenerate_id(true);
                     $_SESSION['admin'] = $admin;
+                    // Mirrors the client login's symmetric fix: an admin is also
+                    // a real `user` row, so also sign them into the client-side
+                    // session ($_SESSION['user']) — otherwise the "xem trang web"
+                    // link in the admin panel would drop them onto the storefront
+                    // as a logged-out guest despite already being authenticated.
+                    $_SESSION['user'] = $admin;
                     Csrf::rotate();
                     $_SESSION['flash_success'] = 'Đăng nhập thành công!';
                     $this->redirect('index.php');

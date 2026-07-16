@@ -13,6 +13,16 @@
     </div>
 
     <div class="flex items-center gap-4">
+        <!-- Switch to the client-facing storefront (opens in the same tab —
+             the admin and client sides share one session, so this never
+             logs the admin out; see Controller\Admin\AuthController::login()
+             for why $_SESSION['user'] is also set on admin login). -->
+        <a href="../index.php"
+            class="hidden items-center gap-2 rounded-md border border-ink-300 px-3 py-2 text-sm font-medium text-ink-700 transition-colors hover:bg-ink-200 sm:flex">
+            <i class="fas fa-arrow-up-right-from-square text-xs" aria-hidden="true"></i>
+            Xem trang web
+        </a>
+
         <!-- Notifications -->
         <button
             class="relative p-2 text-ink-400 hover:text-brand-600 transition-colors rounded-md hover:bg-ink-200">

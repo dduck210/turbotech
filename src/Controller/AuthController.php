@@ -120,6 +120,19 @@ class AuthController extends Controller
                 Auth::login($check_user);
                 Csrf::rotate();
                 $_SESSION['flash_success'] = 'Đăng nhập thành công!';
+
+                // An admin account (role=1) logging in through the client-facing
+                // form goes straight to the admin panel instead of the storefront
+                // homepage. Admin sessions are tracked separately from client ones
+                // ($_SESSION['admin'] vs $_SESSION['user'] — see
+                // Controller\Admin\AdminController::requireAdmin()), so both must
+                // be set here or the admin panel would immediately bounce them
+                // back to its own login screen despite already being authenticated.
+                if ((int) $check_user['role'] === 1) {
+                    $_SESSION['admin'] = $check_user;
+                    $this->redirect('admin/index.php');
+                }
+
                 $this->redirect('index.php');
             }
 
