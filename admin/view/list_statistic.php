@@ -59,6 +59,7 @@ include_once "header.php";
             <h2 class="font-heading text-lg text-ink-900"><i class="fas fa-chart-line text-emerald-600 mr-2"></i>Doanh thu
                 theo ngày</h2>
             <span class="block w-8 h-px bg-brand-500 mt-2"></span>
+            <p class="mt-1 text-xs text-ink-500">Số tiền thực thu (đã trừ mã giảm giá)</p>
         </div>
         <div class="p-0 flex-1 overflow-auto max-h-[400px]">
             <table class="w-full text-left border-collapse text-sm">
@@ -108,6 +109,7 @@ include_once "header.php";
             <h2 class="font-heading text-lg text-ink-900"><i class="fas fa-fire text-amber-600 mr-2"></i>Sản phẩm bán chạy
             </h2>
             <span class="block w-8 h-px bg-brand-500 mt-2"></span>
+            <p class="mt-1 text-xs text-ink-500">Doanh thu theo giá bán, chưa trừ mã giảm giá của đơn hàng — có thể chênh lệch với "Doanh thu theo ngày" ở đơn có áp mã</p>
         </div>
         <div class="p-0 flex-1 overflow-auto max-h-[400px]">
             <table class="w-full text-left border-collapse text-sm">

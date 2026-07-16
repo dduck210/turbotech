@@ -74,7 +74,18 @@ class Stats
         return Database::query($sql, ...$args);
     }
 
-    /** Mirrors old `get_products_sold_by_date($from_date, $to_date, $sort_order)`. */
+    /**
+     * Mirrors old `get_products_sold_by_date($from_date, $to_date, $sort_order)`.
+     *
+     * `total_revenue` here sums `cart.total_amount` (line price * qty,
+     * pre-discount) — a per-product gross figure. `revenueByDate()` above
+     * sums `bill.total_amount` (post-coupon-discount, per order). The two
+     * won't reconcile for a date range with coupon-applied orders, since
+     * the discount is subtracted once at the order level and never
+     * prorated back across individual line items — this is intentional,
+     * not a bug: they answer different questions ("what did this product
+     * sell for" vs. "what did we actually collect").
+     */
     public static function productsSoldByDate(string $fromDate, string $toDate, string $sortOrder = 'DESC'): array
     {
         $sql = "SELECT p.id_pro, p.name_pro, p.img_pro, SUM(c.quantity) as total_sold, SUM(c.total_amount) as total_revenue FROM cart c JOIN bill b ON c.id_bill = b.id_bill JOIN product p ON c.id_pro = p.id_pro WHERE b.status_pay = '1' AND b.status != 4";
