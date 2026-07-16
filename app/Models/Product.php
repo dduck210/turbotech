@@ -72,4 +72,84 @@ class Product extends Model
     {
         return $this->stock >= $quantity;
     }
+
+    /** Latest 20 products for the home page. Mirrors `Product::allHome()`. */
+    public function scopeHomeLatest($query)
+    {
+        return $query->orderByDesc('id_pro')->limit(20);
+    }
+
+    /** Top 8 by view count. Mirrors `Product::featured()`. */
+    public function scopeFeatured($query)
+    {
+        return $query->orderByDesc('view')->limit(8);
+    }
+
+    /**
+     * Best-selling products by units actually sold, cancelled orders
+     * excluded — mirrors `Codemoi\Model\Product::bestSellers()`. Uses
+     * SUM(quantity), not COUNT(*): a single 50-unit order should outrank
+     * two separate 1-unit orders.
+     */
+    public static function bestSellers(int $limit = 8)
+    {
+        // Every selected product column must appear in GROUP BY —
+        // MariaDB's ONLY_FULL_GROUP_BY here doesn't apply the
+        // functional-dependency-on-primary-key exception the way MySQL
+        // 5.7.5+ does for `product.*` + `GROUP BY product.id_pro` alone.
+        return static::query()
+            ->select([
+                'product.id_pro', 'product.name_pro', 'product.price', 'product.discount',
+                'product.img_pro', 'product.short_des', 'product.detail_des', 'product.view',
+                'product.stock', 'product.stock_message', 'product.idcate',
+            ])
+            ->selectRaw('SUM(cart.quantity) as total_sale')
+            ->join('cart', 'cart.id_pro', '=', 'product.id_pro')
+            ->join('bill', 'bill.id_bill', '=', 'cart.id_bill')
+            ->where('bill.status_pay', 1)
+            ->where('bill.status', '!=', Order::STATUS_CANCELLED)
+            ->groupBy([
+                'product.id_pro', 'product.name_pro', 'product.price', 'product.discount',
+                'product.img_pro', 'product.short_des', 'product.detail_des', 'product.view',
+                'product.stock', 'product.stock_message', 'product.idcate',
+            ])
+            ->orderByDesc('total_sale')
+            ->limit($limit)
+            ->get();
+    }
+
+    /**
+     * Keyword/category/price-range search. Mirrors `Product::search()` —
+     * LIKE-escapes `\`, `%`, `_` in the keyword so a literal search for
+     * e.g. "50%" searches for that literal substring, not a wildcard.
+     */
+    public static function search(string $keyword = '', int $idcate = 0, int $min = 0, int $max = 0)
+    {
+        $query = static::query();
+
+        if ($keyword !== '') {
+            $escaped = str_replace(['\\', '%', '_'], ['\\\\', '\\%', '\\_'], $keyword);
+            $query->where('name_pro', 'like', "%{$escaped}%");
+        }
+        if ($idcate > 0) {
+            $query->where('idcate', $idcate);
+        }
+        if ($min > 0) {
+            $query->where('price', '>=', $min);
+        }
+        if ($max > 0) {
+            $query->where('price', '<=', $max);
+        }
+
+        return $query->orderByDesc('id_pro')->get();
+    }
+
+    /** Same category, excluding self. Mirrors `Product::similar()`. */
+    public function similar(int $limit = 5)
+    {
+        return static::where('idcate', $this->idcate)
+            ->where('id_pro', '!=', $this->id_pro)
+            ->limit($limit)
+            ->get();
+    }
 }

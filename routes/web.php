@@ -2,15 +2,25 @@
 
 use App\Http\Controllers\AccountController;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\HomeController;
+use App\Http\Controllers\PageController;
 use App\Http\Controllers\PasswordController;
+use App\Http\Controllers\ProductController;
+use App\Http\Controllers\QuestionController;
 use Illuminate\Support\Facades\Route;
 
-// Placeholder — replaced by a real HomeController in Phase 4 Group B
-// (catalog). Kept here now only so route('home') resolves for the
-// post-login/post-logout redirects this group (Auth + Account) needs.
-Route::get('/', function () {
-    return view('welcome');
-})->name('home');
+Route::get('/', HomeController::class)->name('home');
+
+Route::get('/products', [ProductController::class, 'index'])->name('product.index');
+Route::get('/products/{idpro}', [ProductController::class, 'show'])->name('product.show');
+Route::post('/products/{idpro}/reviews', [ProductController::class, 'submitReview'])
+    ->middleware('auth')->name('product.reviews.store');
+
+Route::get('/introduce', [PageController::class, 'introduce'])->name('introduce');
+Route::get('/contact', [PageController::class, 'contact'])->name('contact');
+Route::post('/contact', [PageController::class, 'submitContact'])->name('contact.submit');
+Route::get('/question', [QuestionController::class, 'index'])->name('question.index');
+Route::post('/question', [QuestionController::class, 'submit'])->name('question.submit');
 
 Route::middleware('guest')->group(function () {
     Route::get('/register', [AuthController::class, 'showRegister'])->name('register.show');
@@ -40,3 +50,9 @@ Route::middleware('auth')->group(function () {
 Route::get('/admin/dashboard', function () {
     return 'Admin dashboard placeholder — built in Phase 4 Group F.';
 })->middleware(['auth', 'admin'])->name('admin.dashboard');
+
+// Placeholder — replaced by the real CartController in Phase 4 Group C.
+// Needed now so product/detail.blade.php's add-to-cart form resolves.
+Route::post('/cart/add', function () {
+    abort(501, 'Giỏ hàng chưa sẵn sàng — sẽ có ở Phase 4 Group C.');
+})->name('cart.add');
