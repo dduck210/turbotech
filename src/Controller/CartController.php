@@ -52,11 +52,17 @@ class CartController extends Controller
             $items = Cart::items();
             $idPro = $items[$code][0] ?? null;
 
-            if ($idPro !== null && $quantity > 0 && !Product::hasStock((int) $idPro, $quantity)) {
+            // A negative quantity used to fall through to the `else` branch
+            // below untouched (only `$quantity > 0` triggered the stock
+            // clamp) — Cart::update() would store it as-is, and at checkout
+            // Product::decrementStock()'s `stock = stock - ?` arithmetic
+            // would then ADD stock back for a negative quantity, letting a
+            // logged-in customer inflate a product's stock for free.
+            if ($idPro !== null && $quantity >= 0 && $quantity > 0 && !Product::hasStock((int) $idPro, $quantity)) {
                 $maxStock = (int) (Product::one((int) $idPro)['stock'] ?? 0);
                 Cart::update((int) $code, $maxStock);
                 $result = ['success' => false, 'clampedTo' => $maxStock, 'message' => 'Chỉ còn ' . $maxStock . ' sản phẩm trong kho.'];
-            } else {
+            } elseif ($idPro !== null && $quantity >= 0) {
                 Cart::update((int) $code, $quantity);
                 $result = ['success' => true];
             }
@@ -78,7 +84,10 @@ class CartController extends Controller
             $product = $id_pro !== null ? Product::one((int) $id_pro) : null;
             $name_pro = $product['name_pro'] ?? '';
             $img_pro = $product['img_pro'] ?? '';
-            $price = $product['price'] ?? 0;
+            // The post-discount price, not the raw one — every template
+            // (homepage, listing, detail) shows the discounted "sale price",
+            // so that's what must actually get charged at checkout too.
+            $price = is_array($product) ? Product::discountedPrice($product) : 0;
 
             if (is_array($product)) {
                 // Guard against adding more than is actually in stock (also

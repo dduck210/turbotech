@@ -42,6 +42,24 @@ class Product
     }
 
     /**
+     * Post-discount unit price — the same "sale price" formula every
+     * customer-facing template computes for display (`view/content.php`,
+     * `product-list.php`, `product-detail.php`: `price - price*discount/100`).
+     * `CartController::add()` used to charge the raw `price` instead,
+     * meaning every discounted product was charged at full price despite
+     * showing a struck-through sale price everywhere the shopper looked.
+     */
+    public static function discountedPrice(array $product): int
+    {
+        $discount = (int) ($product['discount'] ?? 0);
+        if ($discount <= 0) {
+            return (int) $product['price'];
+        }
+
+        return (int) round($product['price'] - ($product['price'] * $discount / 100));
+    }
+
+    /**
      * Search products by keyword / category / price range.
      * Mirrors old `loadall_pro($kyw, $idcate, $min, $max)`. Keeps the exact
      * LIKE-escaping (`\\`, `%`, `_`) from the legacy implementation.
@@ -79,6 +97,10 @@ class Product
      */
     public static function bestSellers(): array
     {
+        // status != 4 (Đã hủy) — a cancelled order's line items were never
+        // actually sold and must not count toward what the homepage's "Bán
+        // chạy" tab shows real shoppers. SUM(quantity), not COUNT(*): a
+        // single 50-unit order should outrank two separate 1-unit orders.
         $sql = "SELECT
                 a.id_pro,
                 a.name_pro,
@@ -87,11 +109,11 @@ class Product
                 a.img_pro,
                 a.stock,
                 a.stock_message,
-                COUNT(*) as total_sale
+                SUM(b.quantity) as total_sale
             FROM product a
             INNER JOIN cart b ON a.id_pro = b.id_pro
             INNER JOIN bill c ON b.id_bill = c.id_bill
-            WHERE c.status_pay = 1
+            WHERE c.status_pay = 1 AND c.status != 4
             GROUP BY
                 a.id_pro,
                 a.name_pro,
