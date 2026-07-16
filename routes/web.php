@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Admin\BillController as AdminBillController;
 use App\Http\Controllers\Admin\CategoryController as AdminCategoryController;
 use App\Http\Controllers\Admin\DashboardController as AdminDashboardController;
 use App\Http\Controllers\Admin\ProductController as AdminProductController;
@@ -69,8 +70,15 @@ Route::prefix('admin')->middleware(['auth', 'admin'])->name('admin.')->group(fun
     Route::resource('categories', AdminCategoryController::class)->except('show');
     Route::resource('products', AdminProductController::class)->except('show');
 
-    // Placeholders — replaced by the real controllers in Phase 4 Group E/F.
-    Route::get('/orders', fn () => 'Đơn hàng — Phase 4 Group E.')->name('orders.index');
+    Route::get('/orders', [AdminBillController::class, 'index'])->name('orders.index');
+    Route::get('/orders/{order}', [AdminBillController::class, 'show'])->name('orders.show');
+    Route::get('/orders/{order}/edit', [AdminBillController::class, 'edit'])->name('orders.edit');
+    Route::put('/orders/{order}', [AdminBillController::class, 'update'])->name('orders.update');
+    Route::post('/orders/{order}/approve', [AdminBillController::class, 'approve'])->name('orders.approve');
+    Route::post('/orders/{order}/ship', [AdminBillController::class, 'ship'])->name('orders.ship');
+    Route::post('/orders/{order}/cancel', [AdminBillController::class, 'cancel'])->name('orders.cancel');
+
+    // Placeholders — replaced by the real controllers in Phase 4 Group F.
     Route::get('/users', fn () => 'Người dùng — Phase 4 Group F.')->name('users.index');
     Route::get('/coupons', fn () => 'Mã giảm giá — Phase 4 Group F.')->name('coupons.index');
     Route::get('/comments', fn () => 'Bình luận — Phase 4 Group F.')->name('comments.index');
