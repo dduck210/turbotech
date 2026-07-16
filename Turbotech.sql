@@ -68,7 +68,8 @@ CREATE TABLE `bill` (
   `status_pay` varchar(11) NOT NULL DEFAULT '0',
   `coupon_code` varchar(50) DEFAULT NULL,
   `discount_amount` int(11) NOT NULL DEFAULT 0,
-  PRIMARY KEY (`id_bill`)
+  PRIMARY KEY (`id_bill`),
+  KEY `lk_user_bill` (`id_user`)
 ) ENGINE=InnoDB AUTO_INCREMENT=131 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -94,6 +95,7 @@ CREATE TABLE `cart` (
   PRIMARY KEY (`id`),
   KEY `lk_bill_cart` (`id_bill`),
   KEY `lk_pro_cart` (`id_pro`),
+  KEY `lk_user_cart` (`id_user`,`id_pro`),
   CONSTRAINT `lk_bill_cart` FOREIGN KEY (`id_bill`) REFERENCES `bill` (`id_bill`),
   CONSTRAINT `lk_pro_cart` FOREIGN KEY (`id_pro`) REFERENCES `product` (`id_pro`)
 ) ENGINE=InnoDB AUTO_INCREMENT=121 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
@@ -226,7 +228,9 @@ CREATE TABLE `user` (
   `register_date` date DEFAULT NULL,
   `last_login` date DEFAULT NULL,
   `role` tinyint(1) NOT NULL DEFAULT 0,
-  PRIMARY KEY (`id_user`)
+  PRIMARY KEY (`id_user`),
+  KEY `idx_user_name` (`user_name`),
+  KEY `idx_email_user` (`email_user`)
 ) ENGINE=InnoDB AUTO_INCREMENT=83 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
