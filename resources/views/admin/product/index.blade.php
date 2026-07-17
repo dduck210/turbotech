@@ -1,9 +1,10 @@
 @extends('admin.layouts.app')
 
+@section('page-title', 'Sản phẩm')
+
 @section('content')
-<div class="mb-6 flex items-center justify-between">
-    <h1 class="font-heading text-2xl font-semibold text-ink-900">Sản phẩm</h1>
-    <a href="{{ route('admin.products.create') }}" class="btn-boutique rounded-md px-4 py-2 text-sm font-semibold">Thêm sản phẩm</a>
+<div class="mb-6 flex items-center justify-end">
+    <a href="{{ route('admin.products.create') }}" class="btn-boutique rounded-md px-4 py-2 text-sm"><i class="fas fa-plus"></i> Thêm sản phẩm</a>
 </div>
 <div class="overflow-x-auto rounded-md border border-ink-300 bg-white">
     <table class="w-full text-left text-sm">

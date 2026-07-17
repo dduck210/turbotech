@@ -1,7 +1,8 @@
 @extends('admin.layouts.app')
 
+@section('page-title', 'Bình luận')
+
 @section('content')
-<h1 class="mb-6 font-heading text-2xl font-semibold text-ink-900">Bình luận</h1>
 <div class="overflow-x-auto rounded-md border border-ink-300 bg-white">
     <table class="w-full text-left text-sm">
         <thead>

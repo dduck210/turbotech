@@ -1,9 +1,10 @@
 @extends('admin.layouts.app')
 
+@section('page-title', 'Danh mục')
+
 @section('content')
-<div class="mb-6 flex items-center justify-between">
-    <h1 class="font-heading text-2xl font-semibold text-ink-900">Danh mục</h1>
-    <a href="{{ route('admin.categories.create') }}" class="btn-boutique rounded-md px-4 py-2 text-sm font-semibold">Thêm danh mục</a>
+<div class="mb-6 flex items-center justify-end">
+    <a href="{{ route('admin.categories.create') }}" class="btn-boutique rounded-md px-4 py-2 text-sm"><i class="fas fa-plus"></i> Thêm danh mục</a>
 </div>
 <div class="overflow-x-auto rounded-md border border-ink-300 bg-white">
     <table class="w-full text-left text-sm">

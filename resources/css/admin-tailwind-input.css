@@ -1,10 +1,13 @@
 @import "tailwindcss";
+@import "./partials/_fonts.css";
+@import "./partials/_boutique-components.css";
 
 /*
- * Turbotech Admin design tokens — Boutique redesign (2026-07-13).
- * Mirrors src/css/tailwind-input.css exactly so both halves of the app
- * share one consistent warm/bronze identity instead of the previous
- * Dark Luxury Tech scheme.
+ * Turbotech Admin design tokens — Boutique redesign (2026-07-13), elevated
+ * pass (2026-07-17). Same palette as resources/css/tailwind-input.css
+ * (the two @theme blocks can't literally share one file since they're
+ * separate Tailwind CLI entry points, but the font-face and component
+ * partials above are shared, so they can't drift out of sync again).
  */
 @theme {
   --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
@@ -16,7 +19,8 @@
   --color-brand-500: #b08d57;
   --color-brand-600: #96733f;
   --color-brand-700: #7a5c32;
-  --color-brand-900: #4a3a20;
+  --color-brand-800: #5e4527;
+  --color-brand-900: #3d2d1a;
 
   --color-accent-400: #c97b5b;
   --color-accent-500: #a85c3f;
@@ -32,6 +36,7 @@
   --color-ink-700: #5a4c3a;
   --color-ink-800: #3a2f22;
   --color-ink-900: #2b2118;
+  --color-ink-950: #1a1410;
 }
 
 body {
@@ -39,58 +44,9 @@ body {
   background-color: var(--color-ink-100);
 }
 
-h1,
-h2,
-h3,
-h4,
-h5,
-h6 {
+h1, h2, h3, h4, h5, h6 {
   font-family: var(--font-heading);
-}
-
-/* Inter's glyph for the Vietnamese Dong sign (₫, U+20AB) draws with a full
-   horizontal stroke through the base that reads as a stray underline at
-   every weight (confirmed by isolated rendering tests) — a defect in the
-   typeface itself, not our CSS. Manrope draws it cleanly, so redirect just
-   this one code point to Manrope's own hosted glyph (same Google Fonts CDN
-   already used sitewide) while every other character keeps rendering from
-   Inter as normal. Covers every weight Inter is loaded at (400/500/600/700)
-   so it fixes all ₫ displays sitewide without touching each template. */
-@font-face {
-  font-family: "Inter";
-  font-style: normal;
-  font-weight: 400;
-  font-display: swap;
-  src: url(https://fonts.gstatic.com/s/manrope/v20/xn7_YHE41ni1AdIRqAuZuw1Bx9mbZk79FN_N-bnBeA.woff2)
-    format("woff2");
-  unicode-range: U+20AB;
-}
-@font-face {
-  font-family: "Inter";
-  font-style: normal;
-  font-weight: 500;
-  font-display: swap;
-  src: url(https://fonts.gstatic.com/s/manrope/v20/xn7_YHE41ni1AdIRqAuZuw1Bx9mbZk7PFN_N-bnBeA.woff2)
-    format("woff2");
-  unicode-range: U+20AB;
-}
-@font-face {
-  font-family: "Inter";
-  font-style: normal;
-  font-weight: 600;
-  font-display: swap;
-  src: url(https://fonts.gstatic.com/s/manrope/v20/xn7_YHE41ni1AdIRqAuZuw1Bx9mbZk4jE9_N-bnBeA.woff2)
-    format("woff2");
-  unicode-range: U+20AB;
-}
-@font-face {
-  font-family: "Inter";
-  font-style: normal;
-  font-weight: 700;
-  font-display: swap;
-  src: url(https://fonts.gstatic.com/s/manrope/v20/xn7_YHE41ni1AdIRqAuZuw1Bx9mbZk4aE9_N-bnBeA.woff2)
-    format("woff2");
-  unicode-range: U+20AB;
+  letter-spacing: -0.01em;
 }
 
 ::-webkit-scrollbar {
@@ -152,37 +108,19 @@ h6 {
   display: none;
 }
 
-/* ---- Boutique component patterns (mirrors client tokens file) --------- */
-
-.card-boutique {
-  background-color: var(--color-ink-50);
-  border: 1px solid var(--color-ink-300);
-  box-shadow: 0 1px 2px rgba(43, 33, 24, 0.04);
+/* Active-state indicator for the sidebar's current-page link. */
+.sidebar-link {
+  display: flex;
+  align-items: center;
+  gap: 0.625rem;
+  border-left: 2px solid transparent;
+  transition: background-color 0.2s ease, color 0.2s ease, border-color 0.2s ease;
 }
-
-.text-serif-accent {
-  font-family: var(--font-heading);
-  color: var(--color-brand-600);
-}
-
-.btn-boutique {
-  background-color: var(--color-brand-500);
-  border: 1px solid var(--color-brand-600);
-  color: #fff;
-  transition: background-color 0.25s ease, box-shadow 0.25s ease;
-}
-.btn-boutique:hover {
-  background-color: var(--color-brand-600);
-  box-shadow: 0 2px 8px rgba(43, 33, 24, 0.12);
-}
-
-.card-hover {
-  transition: box-shadow 0.3s ease, transform 0.3s ease, border-color 0.3s ease;
-}
-.card-hover:hover {
-  border-color: var(--color-brand-400);
-  box-shadow: 0 8px 20px -8px rgba(43, 33, 24, 0.16);
-  transform: translateY(-2px);
+.sidebar-link.is-active {
+  background-color: var(--color-brand-50);
+  border-left-color: var(--color-brand-600);
+  color: var(--color-brand-700);
+  font-weight: 600;
 }
 
 @media (prefers-reduced-motion: reduce) {

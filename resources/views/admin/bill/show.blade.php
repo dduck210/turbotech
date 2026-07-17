@@ -1,9 +1,9 @@
 @extends('admin.layouts.app')
 
-@section('content')
-<h1 class="mb-6 font-heading text-2xl font-semibold text-ink-900">Chi tiết đơn hàng #{{ $order->bill_code }}</h1>
+@section('page-title', 'Chi tiết đơn hàng #'.$order->bill_code)
 
-<div class="max-w-2xl rounded-md border border-ink-300 bg-white p-6">
+@section('content')
+<div class="max-w-2xl rounded-md border border-ink-300 bg-white p-6 shadow-sm">
     <p class="mb-2 text-sm"><strong>Khách hàng:</strong> {{ $order->full_name }} ({{ $order->user_name }})</p>
     <p class="mb-2 text-sm"><strong>Địa chỉ:</strong> {{ $order->address }}</p>
     <p class="mb-2 text-sm"><strong>Điện thoại:</strong> {{ $order->phone }}</p>
@@ -26,6 +26,6 @@
             @endforeach
         </tbody>
     </table>
-    <div class="mt-4 text-right text-lg font-semibold text-brand-600">Tổng cộng: {{ number_format($order->total_amount) }}₫</div>
+    <div class="price mt-4 text-right text-lg font-semibold">Tổng cộng: {{ number_format($order->total_amount) }}₫</div>
 </div>
 @endsection

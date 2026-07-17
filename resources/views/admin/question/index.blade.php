@@ -1,7 +1,8 @@
 @extends('admin.layouts.app')
 
+@section('page-title', 'Hỏi đáp')
+
 @section('content')
-<h1 class="mb-6 font-heading text-2xl font-semibold text-ink-900">Hỏi đáp</h1>
 <div class="overflow-x-auto rounded-md border border-ink-300 bg-white">
     <table class="w-full text-left text-sm">
         <thead>
@@ -17,9 +18,9 @@
                     <td class="p-4 max-w-md">{{ $question->contennt }}</td>
                     <td class="p-4">
                         @if ($question->replied_at)
-                            <span class="text-green-600">Đã trả lời</span>
+                            <span class="rounded-full bg-emerald-100 px-2.5 py-1 text-xs font-semibold text-emerald-700">Đã trả lời</span>
                         @else
-                            <span class="text-amber-600">Chưa trả lời</span>
+                            <span class="rounded-full bg-amber-100 px-2.5 py-1 text-xs font-semibold text-amber-700">Chưa trả lời</span>
                         @endif
                     </td>
                     <td class="p-4">
