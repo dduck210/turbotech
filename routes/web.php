@@ -18,9 +18,11 @@ use App\Http\Controllers\PageController;
 use App\Http\Controllers\PasswordController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\QuestionController;
+use App\Http\Controllers\SitemapController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', HomeController::class)->name('home');
+Route::get('/sitemap.xml', SitemapController::class)->name('sitemap');
 
 Route::get('/products', [ProductController::class, 'index'])->name('product.index');
 Route::get('/products/{idpro}', [ProductController::class, 'show'])->name('product.show');

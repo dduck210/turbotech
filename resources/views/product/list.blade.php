@@ -28,7 +28,7 @@
             @forelse ($listpro as $product)
                 <a href="{{ route('product.show', $product->id_pro) }}" class="card-boutique flex flex-col overflow-hidden rounded-md">
                     <div class="relative aspect-square overflow-hidden bg-ink-100">
-                        <img src="{{ asset('admin/uploads/'.$product->img_pro) }}" alt="{{ $product->name_pro }}" loading="lazy" class="h-full w-full object-cover">
+                        <img src="{{ asset('storage/products/'.$product->img_pro) }}" alt="{{ $product->name_pro }}" loading="lazy" class="h-full w-full object-cover">
                         @if ($product->discount > 0)
                             <span class="absolute left-2 top-2 rounded-sm bg-accent-600 px-2 py-1 text-[11px] font-bold text-white">-{{ $product->discount }}%</span>
                         @endif

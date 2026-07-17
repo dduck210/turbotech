@@ -22,7 +22,7 @@
                 @foreach ($items as $index => $line)
                     <tr>
                         <td class="flex items-center gap-3 p-4">
-                            <img src="{{ asset('admin/uploads/'.$line['img_pro']) }}" class="h-14 w-14 rounded-md object-cover">
+                            <img src="{{ asset('storage/products/'.$line['img_pro']) }}" class="h-14 w-14 rounded-md object-cover">
                             <span class="font-medium text-ink-900">{{ $line['name_pro'] }}</span>
                         </td>
                         <td class="p-4">{{ number_format($line['price']) }}₫</td>

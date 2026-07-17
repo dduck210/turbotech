@@ -6,11 +6,19 @@
 # matter what the project folder is named or where htdocs points, because
 # the rewrite is relative to this .htaccess's own directory.
 #
-# This also keeps everything OUTSIDE public/ (.env, vendor/, src/,
-# admin/model/, scripts/, Turbotech.sql, composer.json, ...) unreachable
-# over HTTP: a request for e.g. /.env is rewritten to public/.env, which
-# doesn't exist, so it 404s instead of serving the real file at the
-# project root.
+# This also keeps everything OUTSIDE public/ (.env, vendor/, app/,
+# composer.json, ...) unreachable over HTTP: a request for e.g. /.env is
+# rewritten to public/.env, which doesn't exist, so it 404s instead of
+# serving the real file at the project root.
+#
+# Caveat that cost real debugging time: this internal rewrite leaves
+# SCRIPT_NAME holding a "/public" segment that REQUEST_URI never had,
+# which breaks Symfony's request base-path detection (every Laravel route
+# 404s). Fixed in public/index.php itself, not here — see the comment
+# there. Don't try to fix this by testing file-existence conditions in
+# THIS .htaccess instead: %1 backreferences leak stale values across the
+# extra internal subrequests Apache's DirectoryIndex handling triggers,
+# making that approach silently wrong for some requests.
 <IfModule mod_rewrite.c>
     RewriteEngine On
 

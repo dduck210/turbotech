@@ -15,7 +15,7 @@
         <tbody class="divide-y divide-ink-200">
             @foreach ($products as $product)
                 <tr>
-                    <td class="p-4"><img src="{{ asset('admin/uploads/'.$product->img_pro) }}" class="h-12 w-12 rounded-md object-cover"></td>
+                    <td class="p-4"><img src="{{ asset('storage/products/'.$product->img_pro) }}" class="h-12 w-12 rounded-md object-cover"></td>
                     <td class="p-4">{{ $product->name_pro }}</td>
                     <td class="p-4">{{ number_format($product->price) }}₫</td>
                     <td class="p-4">{{ $product->discount }}%</td>

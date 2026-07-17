@@ -1,9 +1,7 @@
 User-agent: *
 Disallow: /admin/
-Disallow: /index.php?act=myaccount
-Disallow: /index.php?act=viewcart
-Disallow: /index.php?act=bill
-Disallow: /index.php?act=billconfirm
-Disallow: /index.php?act=viewbill
+Disallow: /account
+Disallow: /cart
+Disallow: /checkout
 
-Sitemap: /sitemap.php
+Sitemap: /sitemap.xml

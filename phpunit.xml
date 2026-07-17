@@ -19,6 +19,11 @@
     </source>
     <php>
         <env name="APP_ENV" value="testing"/>
+        <!-- The real .env's APP_URL includes a "/codemoi1" path (this
+             project has no dedicated vhost), which otherwise leaks into
+             TestCase's request base URL and makes every route 404 in
+             tests — routes are defined without that prefix. -->
+        <env name="APP_URL" value="http://localhost"/>
         <env name="APP_MAINTENANCE_DRIVER" value="file"/>
         <env name="BCRYPT_ROUNDS" value="4"/>
         <env name="BROADCAST_CONNECTION" value="null"/>

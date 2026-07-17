@@ -53,7 +53,7 @@ class AccountController extends Controller
                 // ProductController::store()'s upload handling for why
                 // (prevents same-name-overwrite collisions between users).
                 $storedName = 'user_'.Str::random(16).'.'.$extension;
-                $file->move(public_path('uploads'), $storedName);
+                $file->move(storage_path('app/public/avatars'), $storedName);
                 $imgUser = $storedName;
             }
         }

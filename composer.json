@@ -2,7 +2,7 @@
     "$schema": "https://getcomposer.org/schema.json",
     "name": "84904/codemoi",
     "type": "project",
-    "description": "Turbotech — migrating from a custom MVC (Codemoi\\ namespace, src/) to Laravel in place. Both autoload mappings coexist during the transition; the Codemoi\\ entry is removed once the legacy src/ is deleted in the final migration phase.",
+    "description": "Turbotech — a Laravel e-commerce application.",
     "keywords": ["laravel", "framework"],
     "license": "MIT",
     "require": {
@@ -23,13 +23,8 @@
         "psr-4": {
             "App\\": "app/",
             "Database\\Factories\\": "database/factories/",
-            "Database\\Seeders\\": "database/seeders/",
-            "Codemoi\\": "src/",
-            "PHPMailer\\PHPMailer\\": "email/PHPMailer/src/"
-        },
-        "files": [
-            "src/Core/helpers.php"
-        ]
+            "Database\\Seeders\\": "database/seeders/"
+        }
     },
     "autoload-dev": {
         "psr-4": {

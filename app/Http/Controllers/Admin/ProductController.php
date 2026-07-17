@@ -125,7 +125,7 @@ class ProductController extends Controller
     {
         $file = $request->file('img_pro');
         $storedName = 'pro_'.Str::random(16).'.'.strtolower($file->getClientOriginalExtension());
-        $file->move(public_path('admin/uploads'), $storedName);
+        $file->move(storage_path('app/public/products'), $storedName);
 
         return $storedName;
     }

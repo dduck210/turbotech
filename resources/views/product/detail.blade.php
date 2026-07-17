@@ -3,7 +3,7 @@
 @section('content')
 <div class="grid grid-cols-1 gap-10 lg:grid-cols-2">
     <div class="aspect-square overflow-hidden rounded-md border border-ink-200 bg-ink-100">
-        <img src="{{ asset('admin/uploads/'.$product->img_pro) }}" alt="{{ $product->name_pro }}" class="h-full w-full object-cover">
+        <img src="{{ asset('storage/products/'.$product->img_pro) }}" alt="{{ $product->name_pro }}" class="h-full w-full object-cover">
     </div>
 
     <div>
@@ -45,7 +45,7 @@
         @foreach ($similar as $sp)
             <a href="{{ route('product.show', $sp->id_pro) }}" class="card-boutique flex flex-col overflow-hidden rounded-md">
                 <div class="aspect-square overflow-hidden bg-ink-100">
-                    <img src="{{ asset('admin/uploads/'.$sp->img_pro) }}" alt="{{ $sp->name_pro }}" loading="lazy" class="h-full w-full object-cover">
+                    <img src="{{ asset('storage/products/'.$sp->img_pro) }}" alt="{{ $sp->name_pro }}" loading="lazy" class="h-full w-full object-cover">
                 </div>
                 <div class="p-3">
                     <h3 class="line-clamp-2 text-sm font-medium text-ink-900">{{ $sp->name_pro }}</h3>
