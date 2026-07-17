@@ -31,12 +31,18 @@
             </button>
         </form>
 
-        <div class="mt-8 border-t border-ink-200 pt-6 text-sm text-ink-700">
-            {{ $product->short_des }}
-        </div>
-        <div class="prose prose-sm mt-4 max-w-none text-ink-700">
-            {!! $product->detail_des !!}
-        </div>
+        @if ($product->detail_des)
+            <div class="mt-8 border-t border-ink-200 pt-6">
+                <span class="eyebrow">Cấu hình</span>
+                <div class="spec-sheet prose prose-sm mt-3 max-w-none text-ink-700">
+                    {!! $product->detail_des !!}
+                </div>
+            </div>
+        @elseif ($product->short_des)
+            <div class="mt-8 border-t border-ink-200 pt-6 text-sm text-ink-700">
+                {{ $product->short_des }}
+            </div>
+        @endif
     </div>
 </div>
 

@@ -148,3 +148,39 @@
   position: relative;
   z-index: 1;
 }
+
+/* Thin, brand-colored scrollbar for the horizontal "Bán chạy nhất" strip —
+   the browser default is a jarring gray bar under an otherwise warm,
+   considered palette. Firefox uses scrollbar-color; the rest use the
+   ::-webkit-scrollbar-* pseudo-elements. */
+.scroll-strip {
+  scroll-snap-type: x proximity;
+  scrollbar-width: thin;
+  scrollbar-color: var(--color-brand-400) transparent;
+}
+.scroll-strip > a {
+  scroll-snap-align: start;
+}
+.scroll-strip::-webkit-scrollbar {
+  height: 6px;
+}
+.scroll-strip::-webkit-scrollbar-track {
+  background: transparent;
+}
+.scroll-strip::-webkit-scrollbar-thumb {
+  background-color: var(--color-brand-400);
+  border-radius: 9999px;
+}
+
+/* Product spec block: the stored HTML is just one <p> per spec line, no
+   label/value markup — styling every line as its own bordered row turns
+   that into a scannable sheet instead of a dense paragraph, without
+   needing to parse "Label: value" out of free-form text. */
+.spec-sheet p {
+  margin: 0;
+  padding: 0.75rem 0;
+  border-bottom: 1px solid var(--color-ink-200);
+}
+.spec-sheet p:last-child {
+  border-bottom: none;
+}
