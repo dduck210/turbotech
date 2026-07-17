@@ -1,8 +1,8 @@
 <footer class="mt-20 border-t border-ink-200 bg-ink-950 text-ink-300">
     <div class="mx-auto grid max-w-7xl grid-cols-1 gap-10 px-4 py-14 sm:px-6 md:grid-cols-4 lg:px-8">
         <div>
-            <a href="{{ route('home') }}" class="font-heading text-xl font-bold text-white">
-                Turbo<span class="text-brand-400">tech</span>
+            <a href="{{ route('home') }}" class="inline-flex items-center">
+                <img src="{{ asset('assets/images/menu/logo/logo-wordmark-dark.svg') }}" alt="Turbotech" class="h-9 w-auto">
             </a>
             <p class="mt-3 max-w-xs text-sm text-ink-400">
                 Laptop gaming &amp; PC hiệu năng cao chính hãng — cấu hình mạnh mẽ, giá cạnh tranh, bảo hành chính hãng 12 tháng.
@@ -40,3 +40,9 @@
         &copy; {{ date('Y') }} Turbotech. Đã đăng ký bản quyền.
     </div>
 </footer>
+
+<button type="button" id="back-to-top" aria-label="Lên đầu trang"
+    class="btn-boutique fixed bottom-6 right-6 z-40 flex h-12 w-12 items-center justify-center rounded-full opacity-0 shadow-lg transition-opacity duration-300 ease-out"
+    style="pointer-events: none;">
+    <i class="fa-solid fa-arrow-up"></i>
+</button>

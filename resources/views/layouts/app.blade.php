@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="vi">
+<html lang="vi" class="overflow-x-hidden">
 
 <head>
     <meta charset="UTF-8">
@@ -15,7 +15,7 @@
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
 
-<body class="bg-ink-50 font-sans text-ink-900 antialiased">
+<body class="overflow-x-hidden bg-ink-50 font-sans text-ink-900 antialiased">
     @if (session('flash_success'))
         <script>document.addEventListener("DOMContentLoaded",()=>Swal.fire({toast:true,position:"top-end",icon:"success",title:@json(session('flash_success')),showConfirmButton:false,timer:3000}));</script>
     @endif
@@ -31,7 +31,7 @@
 
     @include('layouts.partials.footer')
 
-    <script src="{{ asset('assets/js/main.js') }}" defer></script>
+    <script src="{{ asset('assets/js/boutique-effects.js') }}" defer></script>
 </body>
 
 </html>

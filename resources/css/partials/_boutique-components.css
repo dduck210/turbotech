@@ -126,9 +126,25 @@
 }
 
 /* Warm dotted texture for the hero band — deliberately not a generic
-   purple/blue gradient. Sits under the ink-950 -> brand-900 gradient via
-   background layering (see .hero-boutique in home.blade.php). */
+   purple/blue gradient. A ::before overlay rather than the element's own
+   background-image, so it layers on top of whatever gradient utility
+   (bg-gradient-to-br, bg-linear-to-br, ...) is applied to the same
+   element instead of silently replacing it — two classes setting the
+   same background-image property both directly would just have the
+   later one in the stylesheet win outright. */
 .hero-texture {
+  position: relative;
+  isolation: isolate;
+}
+.hero-texture::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 0;
   background-image: radial-gradient(circle, rgba(255, 255, 255, 0.08) 1px, transparent 1px);
   background-size: 22px 22px;
+}
+.hero-texture > * {
+  position: relative;
+  z-index: 1;
 }

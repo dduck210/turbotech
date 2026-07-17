@@ -14,7 +14,7 @@
 
 <aside class="w-60 shrink-0 border-r border-ink-300 bg-white">
     <a href="{{ route('admin.dashboard') }}" class="flex items-center gap-2 border-b border-ink-200 px-5 py-5">
-        <span class="font-heading text-lg font-bold text-ink-900">Turbo<span class="text-brand-600">tech</span></span>
+        <img src="{{ asset('assets/images/menu/logo/logo-wordmark-light.svg') }}" alt="Turbotech" class="h-7 w-auto">
     </a>
     <nav class="space-y-0.5 p-3 text-sm">
         @foreach ($navItems as $item)
