@@ -2,8 +2,13 @@
 
 use App\Http\Controllers\Admin\BillController as AdminBillController;
 use App\Http\Controllers\Admin\CategoryController as AdminCategoryController;
+use App\Http\Controllers\Admin\CommentController as AdminCommentController;
+use App\Http\Controllers\Admin\CouponController as AdminCouponController;
 use App\Http\Controllers\Admin\DashboardController as AdminDashboardController;
 use App\Http\Controllers\Admin\ProductController as AdminProductController;
+use App\Http\Controllers\Admin\QuestionController as AdminQuestionController;
+use App\Http\Controllers\Admin\StatsController as AdminStatsController;
+use App\Http\Controllers\Admin\UserController as AdminUserController;
 use App\Http\Controllers\AccountController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CartController;
@@ -78,10 +83,20 @@ Route::prefix('admin')->middleware(['auth', 'admin'])->name('admin.')->group(fun
     Route::post('/orders/{order}/ship', [AdminBillController::class, 'ship'])->name('orders.ship');
     Route::post('/orders/{order}/cancel', [AdminBillController::class, 'cancel'])->name('orders.cancel');
 
-    // Placeholders — replaced by the real controllers in Phase 4 Group F.
-    Route::get('/users', fn () => 'Người dùng — Phase 4 Group F.')->name('users.index');
-    Route::get('/coupons', fn () => 'Mã giảm giá — Phase 4 Group F.')->name('coupons.index');
-    Route::get('/comments', fn () => 'Bình luận — Phase 4 Group F.')->name('comments.index');
-    Route::get('/questions', fn () => 'Hỏi đáp — Phase 4 Group F.')->name('questions.index');
-    Route::get('/stats', fn () => 'Thống kê — Phase 4 Group F.')->name('stats.index');
+    Route::get('/users', [AdminUserController::class, 'index'])->name('users.index');
+    Route::get('/users/{user}/edit', [AdminUserController::class, 'edit'])->name('users.edit');
+    Route::put('/users/{user}', [AdminUserController::class, 'update'])->name('users.update');
+    Route::delete('/users/{user}', [AdminUserController::class, 'destroy'])->name('users.destroy');
+
+    Route::resource('coupons', AdminCouponController::class)->except('show');
+
+    Route::get('/comments', [AdminCommentController::class, 'index'])->name('comments.index');
+    Route::delete('/comments/{comment}', [AdminCommentController::class, 'destroy'])->name('comments.destroy');
+
+    Route::get('/questions', [AdminQuestionController::class, 'index'])->name('questions.index');
+    Route::delete('/questions/{question}', [AdminQuestionController::class, 'destroy'])->name('questions.destroy');
+    Route::get('/questions/{question}/reply', [AdminQuestionController::class, 'showReply'])->name('questions.reply');
+    Route::post('/questions/{question}/reply', [AdminQuestionController::class, 'sendReply'])->name('questions.reply.send');
+
+    Route::get('/stats', AdminStatsController::class)->name('stats.index');
 });
