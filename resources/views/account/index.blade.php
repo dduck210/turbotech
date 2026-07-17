@@ -9,13 +9,20 @@
         0 => 'Đơn hàng mới', 1 => 'Đang xử lí', 2 => 'Đang giao hàng',
         3 => 'Đã giao hàng', 4 => 'Đã hủy',
     ];
+    $statusColors = [
+        0 => 'bg-ink-100 text-ink-700', 1 => 'bg-brand-100 text-brand-700', 2 => 'bg-blue-100 text-blue-700',
+        3 => 'bg-emerald-100 text-emerald-700', 4 => 'bg-red-100 text-red-700',
+    ];
 @endphp
 
+<span class="eyebrow">Xin chào, {{ $user->full_name }}</span>
+<h1 class="mb-8 mt-2 font-heading text-2xl font-semibold text-ink-900">Tài khoản của tôi</h1>
+
 <div class="grid grid-cols-1 gap-8 lg:grid-cols-[240px_1fr]">
-    <nav class="space-y-1 rounded-md border border-ink-200 bg-white p-4 text-sm">
-        <a href="#account-details" class="block rounded-md px-3 py-2 font-medium text-ink-700 hover:bg-ink-100">Thông tin cá nhân</a>
-        <a href="#account-orders" class="block rounded-md px-3 py-2 font-medium text-ink-700 hover:bg-ink-100">Đơn hàng của tôi</a>
-        <a href="#account-password" class="block rounded-md px-3 py-2 font-medium text-ink-700 hover:bg-ink-100">Đổi mật khẩu</a>
+    <nav class="h-fit space-y-1 rounded-md border border-ink-200 bg-white p-4 text-sm">
+        <a href="#account-details" class="block rounded-md px-3 py-2 font-medium text-ink-700 transition-colors hover:bg-ink-100 hover:text-brand-600">Thông tin cá nhân</a>
+        <a href="#account-orders" class="block rounded-md px-3 py-2 font-medium text-ink-700 transition-colors hover:bg-ink-100 hover:text-brand-600">Đơn hàng của tôi</a>
+        <a href="#account-password" class="block rounded-md px-3 py-2 font-medium text-ink-700 transition-colors hover:bg-ink-100 hover:text-brand-600">Đổi mật khẩu</a>
     </nav>
 
     <div class="space-y-8">
@@ -23,49 +30,49 @@
             <div class="rounded-md border border-brand-300 bg-brand-50 p-3 text-sm text-brand-700">{{ session('cancelMessage') }}</div>
         @endif
 
-        <section id="account-details" class="rounded-md border border-ink-200 bg-white p-6">
-            <h2 class="mb-4 font-heading text-lg font-semibold text-ink-900">Thông tin cá nhân</h2>
+        <section id="account-details" class="rounded-md border border-ink-200 bg-white p-6 shadow-sm">
+            <h2 class="mb-4 border-b border-ink-200 pb-4 font-heading text-lg font-semibold text-ink-900">Thông tin cá nhân</h2>
             <form action="{{ route('account.profile') }}" method="post" enctype="multipart/form-data" class="space-y-4">
                 @csrf
                 <div>
                     <label class="mb-1 block text-sm font-medium text-ink-700">Họ và tên</label>
                     <input type="text" name="full_name" value="{{ old('full_name', $user->full_name) }}" required
-                        class="w-full rounded-md border border-ink-300 px-3.5 py-2.5 text-sm">
+                        class="input-boutique">
                 </div>
                 <div>
                     <label class="mb-1 block text-sm font-medium text-ink-700">Email</label>
                     <input type="email" name="email_user" value="{{ old('email_user', $user->email_user) }}" required
-                        class="w-full rounded-md border border-ink-300 px-3.5 py-2.5 text-sm">
+                        class="input-boutique">
                 </div>
                 <div>
                     <label class="mb-1 block text-sm font-medium text-ink-700">Số điện thoại</label>
                     <input type="text" name="phone_user" value="{{ old('phone_user', $user->phone_user) }}" required
-                        class="w-full rounded-md border border-ink-300 px-3.5 py-2.5 text-sm">
+                        class="input-boutique">
                 </div>
                 <div class="grid grid-cols-2 gap-3">
                     <div>
                         <label class="mb-1 block text-sm font-medium text-ink-700">Tỉnh/thành phố</label>
-                        <input type="text" name="province" required class="w-full rounded-md border border-ink-300 px-3.5 py-2.5 text-sm">
+                        <input type="text" name="province" required class="input-boutique">
                     </div>
                     <div>
                         <label class="mb-1 block text-sm font-medium text-ink-700">Xã/phường</label>
-                        <input type="text" name="ward" required class="w-full rounded-md border border-ink-300 px-3.5 py-2.5 text-sm">
+                        <input type="text" name="ward" required class="input-boutique">
                     </div>
                 </div>
                 <div>
                     <label class="mb-1 block text-sm font-medium text-ink-700">Địa chỉ chi tiết</label>
-                    <input type="text" name="address_detail" required class="w-full rounded-md border border-ink-300 px-3.5 py-2.5 text-sm">
+                    <input type="text" name="address_detail" required class="input-boutique">
                 </div>
                 <div>
                     <label class="mb-1 block text-sm font-medium text-ink-700">Ảnh đại diện</label>
                     <input type="file" name="img_user" accept=".jpg,.jpeg,.png,.gif" class="w-full text-sm">
                 </div>
-                <button type="submit" class="btn-boutique rounded-md px-5 py-2.5 text-sm font-semibold">Lưu thay đổi</button>
+                <button type="submit" class="btn-boutique rounded-md px-6 py-2.5 text-sm">Lưu thay đổi</button>
             </form>
         </section>
 
-        <section id="account-orders" class="rounded-md border border-ink-200 bg-white p-6">
-            <h2 class="mb-4 font-heading text-lg font-semibold text-ink-900">Đơn hàng của tôi</h2>
+        <section id="account-orders" class="rounded-md border border-ink-200 bg-white p-6 shadow-sm">
+            <h2 class="mb-4 border-b border-ink-200 pb-4 font-heading text-lg font-semibold text-ink-900">Đơn hàng của tôi</h2>
             <div class="overflow-x-auto">
                 <table class="w-full text-left text-sm">
                     <thead>
@@ -82,8 +89,10 @@
                             <tr>
                                 <td class="py-3">{{ $order->bill_code }}</td>
                                 <td class="py-3">{{ $order->order_date?->format('d/m/Y H:i') }}</td>
-                                <td class="py-3 font-semibold text-brand-600">{{ number_format($order->total_amount) }}₫</td>
-                                <td class="py-3">{{ $statusLabels[$order->status] ?? 'Đơn hàng mới' }}</td>
+                                <td class="price py-3 font-semibold">{{ number_format($order->total_amount) }}₫</td>
+                                <td class="py-3">
+                                    <span class="rounded-full px-2.5 py-1 text-xs font-semibold {{ $statusColors[$order->status] ?? 'bg-ink-100 text-ink-700' }}">{{ $statusLabels[$order->status] ?? 'Đơn hàng mới' }}</span>
+                                </td>
                                 <td class="py-3">
                                     @if ((int) $order->status === 0)
                                         <form action="{{ route('account.orders.cancel') }}" method="post" onsubmit="return confirm('Bạn có chắc chắn muốn hủy đơn hàng này?');">
@@ -102,23 +111,23 @@
             </div>
         </section>
 
-        <section id="account-password" class="rounded-md border border-ink-200 bg-white p-6">
-            <h2 class="mb-4 font-heading text-lg font-semibold text-ink-900">Đổi mật khẩu</h2>
+        <section id="account-password" class="rounded-md border border-ink-200 bg-white p-6 shadow-sm">
+            <h2 class="mb-4 border-b border-ink-200 pb-4 font-heading text-lg font-semibold text-ink-900">Đổi mật khẩu</h2>
             <form action="{{ route('account.password') }}" method="post" class="space-y-4">
                 @csrf
                 <div>
                     <label class="mb-1 block text-sm font-medium text-ink-700">Mật khẩu hiện tại</label>
-                    <input type="password" name="oldpass" required class="w-full rounded-md border border-ink-300 px-3.5 py-2.5 text-sm">
+                    <input type="password" name="oldpass" required class="input-boutique">
                 </div>
                 <div>
                     <label class="mb-1 block text-sm font-medium text-ink-700">Mật khẩu mới</label>
-                    <input type="password" name="newpass" required class="w-full rounded-md border border-ink-300 px-3.5 py-2.5 text-sm">
+                    <input type="password" name="newpass" required class="input-boutique">
                 </div>
                 <div>
                     <label class="mb-1 block text-sm font-medium text-ink-700">Nhập lại mật khẩu mới</label>
-                    <input type="password" name="repass" required class="w-full rounded-md border border-ink-300 px-3.5 py-2.5 text-sm">
+                    <input type="password" name="repass" required class="input-boutique">
                 </div>
-                <button type="submit" class="btn-boutique rounded-md px-5 py-2.5 text-sm font-semibold">Đổi mật khẩu</button>
+                <button type="submit" class="btn-boutique rounded-md px-6 py-2.5 text-sm">Đổi mật khẩu</button>
             </form>
         </section>
     </div>

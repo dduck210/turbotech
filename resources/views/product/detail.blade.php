@@ -7,13 +7,14 @@
     </div>
 
     <div>
-        <h1 class="font-heading text-2xl font-semibold text-ink-900">{{ $product->name_pro }}</h1>
-        <div class="mt-4 flex items-baseline gap-3">
+        <span class="eyebrow">Turbotech</span>
+        <h1 class="mt-2 font-heading text-2xl font-semibold text-ink-900 sm:text-3xl">{{ $product->name_pro }}</h1>
+        <div class="mt-5 flex items-baseline gap-3">
             @if ($product->discount > 0)
                 <span class="text-lg text-ink-400 line-through">{{ number_format($product->price) }}₫</span>
                 <span class="rounded-sm bg-accent-600 px-2 py-1 text-xs font-bold text-white">-{{ $product->discount }}%</span>
             @endif
-            <span class="font-heading text-3xl font-bold text-brand-600">{{ number_format($product->discounted_price) }}₫</span>
+            <span class="price text-3xl font-bold">{{ number_format($product->discounted_price) }}₫</span>
         </div>
 
         <p class="mt-4 text-sm text-ink-600">
@@ -23,9 +24,9 @@
         <form action="{{ route('cart.add') }}" method="post" class="mt-6 flex items-center gap-3">
             @csrf
             <input type="hidden" name="id_pro" value="{{ $product->id_pro }}">
-            <input type="number" name="quatity" value="1" min="1" max="{{ $product->stock }}" class="w-20 rounded-md border border-ink-300 px-3 py-2 text-sm">
+            <input type="number" name="quatity" value="1" min="1" max="{{ $product->stock }}" class="input-boutique w-20">
             <button type="submit" name="addtocart" value="1" @disabled($product->stock <= 0)
-                class="btn-boutique rounded-md px-6 py-2.5 text-sm font-semibold disabled:opacity-50">
+                class="btn-boutique rounded-md px-6 py-3 text-sm disabled:opacity-50">
                 {{ $product->stock > 0 ? 'Thêm vào giỏ' : 'Hết hàng' }}
             </button>
         </form>
@@ -39,8 +40,11 @@
     </div>
 </div>
 
-<section class="mt-14">
-    <h2 class="mb-4 font-heading text-xl font-semibold text-ink-900">Sản phẩm tương tự</h2>
+<section class="mt-16">
+    <div class="mb-6 border-b border-ink-200 pb-4">
+        <span class="eyebrow">Gợi ý cho bạn</span>
+        <h2 class="mt-2 font-heading text-xl font-semibold text-ink-900">Sản phẩm tương tự</h2>
+    </div>
     <div class="grid grid-cols-2 gap-5 sm:grid-cols-3 lg:grid-cols-5">
         @foreach ($similar as $sp)
             <a href="{{ route('product.show', $sp->id_pro) }}" class="card-boutique flex flex-col overflow-hidden rounded-md">
@@ -49,15 +53,18 @@
                 </div>
                 <div class="p-3">
                     <h3 class="line-clamp-2 text-sm font-medium text-ink-900">{{ $sp->name_pro }}</h3>
-                    <div class="mt-1 font-semibold text-brand-600">{{ number_format($sp->discounted_price) }}₫</div>
+                    <div class="price mt-1 font-semibold">{{ number_format($sp->discounted_price) }}₫</div>
                 </div>
             </a>
         @endforeach
     </div>
 </section>
 
-<section class="mt-14 max-w-2xl">
-    <h2 class="mb-4 font-heading text-xl font-semibold text-ink-900">Đánh giá sản phẩm</h2>
+<section class="mt-16 max-w-2xl">
+    <div class="mb-6 border-b border-ink-200 pb-4">
+        <span class="eyebrow">Phản hồi khách hàng</span>
+        <h2 class="mt-2 font-heading text-xl font-semibold text-ink-900">Đánh giá sản phẩm</h2>
+    </div>
     <div class="space-y-3">
         @forelse ($comments as $cmt)
             <div class="border-b border-ink-200 pb-3">
@@ -78,8 +85,8 @@
                 <form action="{{ route('product.reviews.store', $product->id_pro) }}" method="post" class="card-boutique rounded-md p-4">
                     @csrf
                     <label class="mb-1.5 block text-sm font-medium text-ink-700">Bình luận của bạn</label>
-                    <textarea name="content_cmt" rows="3" required minlength="2" class="w-full rounded-md border border-ink-300 px-3.5 py-2.5 text-sm"></textarea>
-                    <button type="submit" class="btn-boutique mt-3 rounded-md px-5 py-2.5 text-sm font-semibold">Gửi</button>
+                    <textarea name="content_cmt" rows="3" required minlength="2" class="input-boutique"></textarea>
+                    <button type="submit" class="btn-boutique mt-3 rounded-md px-5 py-2.5 text-sm">Gửi</button>
                 </form>
             @elseif ($alreadyReviewed)
                 <p class="rounded-md border border-emerald-300 bg-emerald-50 p-3 text-sm text-emerald-800">Bạn đã đánh giá sản phẩm này rồi. Cảm ơn bạn!</p>

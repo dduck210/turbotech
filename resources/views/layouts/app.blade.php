@@ -7,6 +7,9 @@
     <title>{{ $metaTitle ?? 'Turbotech' }}</title>
     <meta name="description" content="{{ $metaDescription ?? 'Turbotech - laptop gaming và PC hiệu năng cao chính hãng.' }}">
     <meta name="csrf-token" content="{{ csrf_token() }}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="{{ asset('assets/css/tailwind.css') }}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css">
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
@@ -20,34 +23,15 @@
         <script>document.addEventListener("DOMContentLoaded",()=>Swal.fire({toast:true,position:"top-end",icon:"error",title:@json($errors->first()),showConfirmButton:false,timer:3500}));</script>
     @endif
 
-    <header class="border-b border-ink-200 bg-white">
-        <div class="mx-auto flex max-w-7xl items-center justify-between px-4 py-4 sm:px-6 lg:px-8">
-            <a href="{{ route('home') }}" class="font-heading text-xl font-bold text-brand-600">Turbotech</a>
-            <nav class="flex items-center gap-4 text-sm font-medium text-ink-700">
-                @auth
-                    <a href="{{ route('account.index') }}" class="hover:text-brand-600">{{ auth()->user()->full_name }}</a>
-                    @if ((int) auth()->user()->role === 1)
-                        <a href="{{ route('admin.dashboard') }}" class="hover:text-brand-600">Trang Admin</a>
-                    @endif
-                    <form action="{{ route('logout') }}" method="post" class="inline">
-                        @csrf
-                        <button type="submit" class="hover:text-brand-600">Đăng xuất</button>
-                    </form>
-                @else
-                    <a href="{{ route('login.show') }}" class="hover:text-brand-600">Đăng nhập</a>
-                    <a href="{{ route('register.show') }}" class="hover:text-brand-600">Đăng ký</a>
-                @endauth
-            </nav>
-        </div>
-    </header>
+    @include('layouts.partials.header')
 
     <main class="mx-auto max-w-7xl px-4 py-10 sm:px-6 lg:px-8">
         @yield('content')
     </main>
 
-    <footer class="mt-16 border-t border-ink-200 py-8 text-center text-sm text-ink-500">
-        &copy; {{ date('Y') }} Turbotech
-    </footer>
+    @include('layouts.partials.footer')
+
+    <script src="{{ asset('assets/js/main.js') }}" defer></script>
 </body>
 
 </html>

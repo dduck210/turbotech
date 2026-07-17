@@ -1,0 +1,134 @@
+/* ---- Boutique component patterns ---------------------------------------
+   Plain CSS (not @theme) since these combine several properties at once —
+   Tailwind utilities remain the default for one-off styling, these classes
+   are for the handful of repeated "premium" treatments used across many
+   templates. */
+
+/* Small-caps section label above a heading ("BÁN CHẠY NHẤT"), the
+   boutique-retail equivalent of an overline. */
+.eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-family: var(--font-sans);
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--color-brand-600);
+}
+.eyebrow::before {
+  content: "";
+  width: 1.5rem;
+  height: 1px;
+  background: var(--color-brand-500);
+}
+
+.card-boutique {
+  background-color: var(--color-ink-50);
+  border: 1px solid var(--color-ink-300);
+  box-shadow: 0 1px 2px rgba(43, 33, 24, 0.04);
+  transition: box-shadow 0.4s cubic-bezier(0.22, 1, 0.36, 1), transform 0.4s cubic-bezier(0.22, 1, 0.36, 1), border-color 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.card-boutique:hover {
+  border-color: var(--color-brand-400);
+  box-shadow: 0 12px 24px -12px rgba(43, 33, 24, 0.2);
+  transform: translateY(-3px);
+}
+
+.text-serif-accent {
+  font-family: var(--font-heading);
+  color: var(--color-brand-600);
+}
+
+/* Price display: serif figure + tabular-nums so multiple prices in a list
+   (cart, order tables) keep their digits aligned in a column. */
+.price {
+  font-family: var(--font-heading);
+  font-variant-numeric: tabular-nums;
+  color: var(--color-brand-700);
+}
+
+.btn-boutique {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  background-color: var(--color-brand-600);
+  border: 1px solid var(--color-brand-700);
+  color: #fff;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  box-shadow: 0 1px 2px rgba(43, 33, 24, 0.08);
+  transition: background-color 0.3s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.3s cubic-bezier(0.22, 1, 0.36, 1), transform 0.2s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.btn-boutique:hover {
+  background-color: var(--color-brand-700);
+  box-shadow: 0 6px 16px -4px rgba(43, 33, 24, 0.28);
+}
+.btn-boutique:active {
+  transform: scale(0.98);
+}
+.btn-boutique:disabled {
+  transform: none;
+  box-shadow: none;
+}
+
+/* Secondary CTA — outlined, fills solid on hover. Used next to a primary
+   .btn-boutique so the two-button hero/CTA pattern has real hierarchy. */
+.btn-boutique-outline {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  background-color: transparent;
+  border: 1px solid currentColor;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  transition: background-color 0.3s cubic-bezier(0.22, 1, 0.36, 1), color 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.btn-boutique-outline:hover {
+  background-color: currentColor;
+}
+.btn-boutique-outline:hover > * {
+  color: var(--color-ink-950);
+}
+
+/* Standard text input treatment — replaces the same ~10-property utility
+   string that was copy-pasted onto every <input> across every form. */
+.input-boutique {
+  display: block;
+  width: 100%;
+  border-radius: 0.375rem;
+  border: 1px solid var(--color-ink-300);
+  background-color: #fff;
+  padding: 0.625rem 0.875rem;
+  font-size: 0.875rem;
+  color: var(--color-ink-900);
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+.input-boutique::placeholder {
+  color: var(--color-ink-400);
+}
+.input-boutique:focus {
+  outline: none;
+  border-color: var(--color-brand-500);
+  box-shadow: 0 0 0 3px rgba(176, 141, 87, 0.18);
+}
+
+.card-hover {
+  transition: box-shadow 0.4s cubic-bezier(0.22, 1, 0.36, 1), transform 0.4s cubic-bezier(0.22, 1, 0.36, 1), border-color 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.card-hover:hover {
+  border-color: var(--color-brand-400);
+  box-shadow: 0 8px 20px -8px rgba(43, 33, 24, 0.16);
+  transform: translateY(-3px);
+}
+
+/* Warm dotted texture for the hero band — deliberately not a generic
+   purple/blue gradient. Sits under the ink-950 -> brand-900 gradient via
+   background layering (see .hero-boutique in home.blade.php). */
+.hero-texture {
+  background-image: radial-gradient(circle, rgba(255, 255, 255, 0.08) 1px, transparent 1px);
+  background-size: 22px 22px;
+}
