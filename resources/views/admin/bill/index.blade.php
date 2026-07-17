@@ -28,7 +28,7 @@
             </tr>
         </thead>
         <tbody class="divide-y divide-ink-200">
-            @foreach ($orders as $order)
+            @forelse ($orders as $order)
                 <tr>
                     <td class="p-4">{{ $order->bill_code }}</td>
                     <td class="p-4">{{ $order->full_name }}</td>
@@ -59,7 +59,9 @@
                         </div>
                     </td>
                 </tr>
-            @endforeach
+            @empty
+                <tr><td colspan="6" class="p-4 text-center text-ink-500">Không tìm thấy đơn hàng nào.</td></tr>
+            @endforelse
         </tbody>
     </table>
 </div>

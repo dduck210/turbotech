@@ -14,7 +14,7 @@
             </tr>
         </thead>
         <tbody class="divide-y divide-ink-200">
-            @foreach ($categories as $cate)
+            @forelse ($categories as $cate)
                 <tr>
                     <td class="p-4">#{{ $cate->id_cate }}</td>
                     <td class="p-4">{{ $cate->name_cate }}</td>
@@ -26,7 +26,9 @@
                         </form>
                     </td>
                 </tr>
-            @endforeach
+            @empty
+                <tr><td colspan="3" class="p-4 text-center text-ink-500">Chưa có danh mục nào.</td></tr>
+            @endforelse
         </tbody>
     </table>
 </div>

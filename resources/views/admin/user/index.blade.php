@@ -11,7 +11,7 @@
             </tr>
         </thead>
         <tbody class="divide-y divide-ink-200">
-            @foreach ($users as $user)
+            @forelse ($users as $user)
                 <tr>
                     <td class="p-4">{{ $user->user_name }}</td>
                     <td class="p-4">{{ $user->full_name }}</td>
@@ -31,7 +31,9 @@
                         </form>
                     </td>
                 </tr>
-            @endforeach
+            @empty
+                <tr><td colspan="5" class="p-4 text-center text-ink-500">Chưa có người dùng nào.</td></tr>
+            @endforelse
         </tbody>
     </table>
 </div>

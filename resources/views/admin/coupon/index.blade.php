@@ -14,7 +14,7 @@
             </tr>
         </thead>
         <tbody class="divide-y divide-ink-200">
-            @foreach ($coupons as $coupon)
+            @forelse ($coupons as $coupon)
                 <tr>
                     <td class="p-4 font-mono">{{ $coupon->code }}</td>
                     <td class="p-4">{{ (int) $coupon->discount_type === 1 ? '%' : 'VNĐ' }}</td>
@@ -35,7 +35,9 @@
                         </form>
                     </td>
                 </tr>
-            @endforeach
+            @empty
+                <tr><td colspan="6" class="p-4 text-center text-ink-500">Chưa có mã giảm giá nào.</td></tr>
+            @endforelse
         </tbody>
     </table>
 </div>

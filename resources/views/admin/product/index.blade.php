@@ -14,7 +14,7 @@
             </tr>
         </thead>
         <tbody class="divide-y divide-ink-200">
-            @foreach ($products as $product)
+            @forelse ($products as $product)
                 <tr>
                     <td class="p-4"><img src="{{ asset('storage/products/'.$product->img_pro) }}" class="h-12 w-12 rounded-md object-cover"></td>
                     <td class="p-4">{{ $product->name_pro }}</td>
@@ -29,7 +29,9 @@
                         </form>
                     </td>
                 </tr>
-            @endforeach
+            @empty
+                <tr><td colspan="6" class="p-4 text-center text-ink-500">Chưa có sản phẩm nào.</td></tr>
+            @endforelse
         </tbody>
     </table>
 </div>
