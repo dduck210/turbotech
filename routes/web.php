@@ -44,12 +44,16 @@ Route::middleware('guest')->group(function () {
     Route::get('/register', [AuthController::class, 'showRegister'])->name('register.show');
     Route::post('/register', [AuthController::class, 'register'])->name('register');
     Route::get('/login', [AuthController::class, 'showLogin'])->name('login.show');
-    Route::post('/login', [AuthController::class, 'login'])->name('login');
+    Route::post('/login', [AuthController::class, 'login'])->middleware('throttle:5,1')->name('login');
 
     Route::get('/forgot-password', [PasswordController::class, 'showForgot'])->name('password.forgot');
-    Route::post('/forgot-password', [PasswordController::class, 'forgot'])->name('password.forgot.submit');
+    Route::post('/forgot-password', [PasswordController::class, 'forgot'])->middleware('throttle:3,1')->name('password.forgot.submit');
     Route::get('/verify-code', [PasswordController::class, 'showVerify'])->name('password.verify');
-    Route::post('/verify-code', [PasswordController::class, 'verify'])->name('password.verify.submit');
+    // IP-based, on top of PasswordController::verify()'s own session-attempt
+    // counter — that counter resets for free on a fresh session (no cookie
+    // sent), so it alone can't stop a scripted attacker from grinding
+    // through the 6-digit code with unlimited attempts.
+    Route::post('/verify-code', [PasswordController::class, 'verify'])->middleware('throttle:5,1')->name('password.verify.submit');
     Route::get('/change-password', [PasswordController::class, 'showChange'])->name('password.change');
     Route::post('/change-password', [PasswordController::class, 'change'])->name('password.change.submit');
 });

@@ -44,18 +44,19 @@ class AccountController extends Controller
 
         $imgUser = $user->img_user;
         if ($request->hasFile('img_user')) {
-            $file = $request->file('img_user');
-            $allowed = ['jpg', 'jpeg', 'png', 'gif'];
-            $extension = strtolower($file->getClientOriginalExtension());
+            // Real content-sniffed validation (matches Admin\ProductController's
+            // upload handling) instead of trusting the client-supplied
+            // extension/filename — an extension check alone would accept a
+            // renamed PHP file as long as its name didn't literally contain
+            // ".php". Storage/app/public/avatars/.htaccess also disables PHP
+            // execution there regardless, but this closes the gap properly
+            // rather than relying only on that second layer.
+            $request->validate(['img_user' => ['image', 'mimes:jpg,jpeg,png,gif']]);
 
-            if (in_array($extension, $allowed, true) && ! preg_match('/\.(php|phtml|pht)/i', $file->getClientOriginalName())) {
-                // Generated filename, not the client's — see
-                // ProductController::store()'s upload handling for why
-                // (prevents same-name-overwrite collisions between users).
-                $storedName = 'user_'.Str::random(16).'.'.$extension;
-                $file->move(storage_path('app/public/avatars'), $storedName);
-                $imgUser = $storedName;
-            }
+            $file = $request->file('img_user');
+            $storedName = 'user_'.Str::random(16).'.'.strtolower($file->getClientOriginalExtension());
+            $file->move(storage_path('app/public/avatars'), $storedName);
+            $imgUser = $storedName;
         }
 
         $user->update([

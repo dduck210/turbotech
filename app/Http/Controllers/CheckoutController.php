@@ -10,6 +10,7 @@ use App\Services\CouponService;
 use App\Services\VietQrService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Str;
 
@@ -104,7 +105,7 @@ class CheckoutController extends Controller
             'province' => ['required', 'string'],
             'ward' => ['required', 'string'],
             'address_detail' => ['required', 'string'],
-            'phone' => ['required', 'regex:/^[0-9]{10}$/'],
+            'phone' => ['required', 'regex:/^(\+?84|0)\d{9,10}$/'],
             'email' => ['required', 'email'],
             'payment' => ['required', 'in:1,2,3'],
         ], [
@@ -130,11 +131,26 @@ class CheckoutController extends Controller
         }
 
         $resolved = $this->resolveCoupon($totalAmount);
-        $discount = $resolved['discount'];
-        $finalTotal = $totalAmount - $discount;
-        $billCode = substr(str_shuffle('123456789'), 0, 5);
+        $billCode = $this->generateUniqueBillCode();
 
-        $order = DB::transaction(function () use ($data, $user, $address, $billCode, $finalTotal, $resolved) {
+        $order = DB::transaction(function () use ($data, $user, $address, $billCode, $totalAmount, $resolved) {
+            // Re-validated against `resolveCoupon()` moments ago, but the
+            // authoritative check is this atomic increment, done here
+            // (inside the same transaction as the order it discounts) so a
+            // second checkout racing on the same near-limit coupon can't
+            // both pass validation and both get the discount — the guard is
+            // CouponService::incrementUsage()'s own conditional UPDATE, not
+            // a fresh SELECT, which is exactly the check-then-act gap that
+            // would otherwise let the cap be exceeded by one.
+            $discount = 0;
+            $coupon = $resolved['coupon'];
+            if ($coupon && $this->coupons->incrementUsage($coupon->id_coupon) > 0) {
+                $discount = $resolved['discount'];
+            } else {
+                $coupon = null;
+            }
+            $finalTotal = $totalAmount - $discount;
+
             $order = Order::create([
                 'bill_code' => $billCode,
                 // id_pro/name_pro are dead columns from before the
@@ -157,9 +173,9 @@ class CheckoutController extends Controller
                 'total_amount' => $finalTotal,
                 'status' => Order::STATUS_NEW,
                 'status_pay' => 0,
-                'coupon_code' => $resolved['coupon']?->code,
-                'id_coupon' => $resolved['coupon']?->id_coupon,
-                'discount_amount' => $resolved['discount'],
+                'coupon_code' => $coupon?->code,
+                'id_coupon' => $coupon?->id_coupon,
+                'discount_amount' => $discount,
             ]);
 
             foreach ($this->cart->items() as $line) {
@@ -183,31 +199,56 @@ class CheckoutController extends Controller
             return $order;
         });
 
-        if ($resolved['coupon']) {
-            $this->coupons->incrementUsage($resolved['coupon']->id_coupon);
-        }
         session()->forget('coupon');
 
-        Mail::html(
-            '<h3>Xin chào, cảm ơn quý khách đặt hàng tại Turbotech.<br></h3>'.
-            '<p>Tên khách hàng: '.e($data['full_name']).'</p>'.
-            '<p>Địa chỉ: '.e($address).'</p>'.
-            '<p>Tổng tiền: '.number_format($finalTotal).'₫</p>',
-            function ($message) use ($data) {
-                $message->to($data['email'])->subject('Thông báo đặt hàng thành công!');
-            }
-        );
+        // The order is already safely committed at this point — an SMTP
+        // hiccup is a notification failure, not a checkout failure, and
+        // shouldn't turn a successful order into a 500 the customer might
+        // react to by placing a duplicate one.
+        try {
+            Mail::html(
+                '<h3>Xin chào, cảm ơn quý khách đặt hàng tại Turbotech.<br></h3>'.
+                '<p>Tên khách hàng: '.e($data['full_name']).'</p>'.
+                '<p>Địa chỉ: '.e($address).'</p>'.
+                '<p>Tổng tiền: '.number_format($order->total_amount).'₫</p>',
+                function ($message) use ($data) {
+                    $message->to($data['email'])->subject('Thông báo đặt hàng thành công!');
+                }
+            );
+        } catch (\Throwable $e) {
+            Log::error('Order confirmation email failed to send for bill '.$order->bill_code.': '.$e->getMessage());
+        }
 
         $this->cart->clear();
         session(['idbill' => $order->id_bill]);
 
         if (in_array((int) $data['payment'], [2, 3], true)) {
-            session(['pay' => [$data['payment'], $finalTotal, $billCode]]);
+            session(['pay' => [$data['payment'], $order->total_amount, $billCode]]);
 
             return redirect()->route('checkout.qr');
         }
 
         return redirect()->route('checkout.confirmation');
+    }
+
+    /**
+     * `bill_code` has no DB-level unique constraint (existing schema,
+     * unowned by this migration), and 5-digit-no-repeat codes from a
+     * 9-digit pool (15120 possibilities) hit a non-trivial collision
+     * chance well before the codebase would otherwise need to care —
+     * checked against the table and regenerated on the rare collision
+     * instead of trusting str_shuffle alone.
+     */
+    private function generateUniqueBillCode(): string
+    {
+        for ($i = 0; $i < 10; $i++) {
+            $code = substr(str_shuffle('123456789'), 0, 5);
+            if (! Order::where('bill_code', $code)->exists()) {
+                return $code;
+            }
+        }
+
+        return substr(str_shuffle('123456789'), 0, 5).random_int(10, 99);
     }
 
     /** Renders the confirmation for the order just created (session-tracked id_bill). */

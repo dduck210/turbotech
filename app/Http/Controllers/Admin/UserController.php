@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Validation\Rule;
 
 /**
  * Ported from `Codemoi\Controller\Admin\UserController` (legacy
@@ -31,13 +32,21 @@ class UserController extends Controller
         $target = User::findOrFail($id);
 
         $data = $request->validate([
-            'user_name' => ['required', 'string'],
+            'user_name' => [
+                'required', 'string',
+                Rule::unique('user', 'user_name')->ignore($id, 'id_user'),
+            ],
             'full_name' => ['required', 'string'],
-            'email_user' => ['required', 'email'],
+            'email_user' => [
+                'required', 'email',
+                Rule::unique('user', 'email_user')->ignore($id, 'id_user'),
+            ],
             'role' => ['required', 'in:0,1'],
             'password' => ['nullable', 'string', 'min:6'],
         ], [
             'password.min' => 'Mật khẩu phải có ít nhất 6 ký tự !',
+            'user_name.unique' => 'Tên đăng nhập này đã được sử dụng.',
+            'email_user.unique' => 'Email này đã được sử dụng.',
         ]);
 
         if (! $request->user()->can('demote', [$target, (int) $data['role']])) {

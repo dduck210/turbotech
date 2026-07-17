@@ -75,10 +75,15 @@ class CouponService
     /**
      * Atomic — the `usage_limit` guard in the WHERE clause means this can
      * never push `used_count` past the cap even under concurrent checkouts.
+     * Returns the affected-row count so a caller running this inside its own
+     * order-creation transaction can tell a genuine race (limit hit by a
+     * concurrent checkout between validation and this call) from success,
+     * and back out of applying the discount rather than trust a check that
+     * was only true a moment ago.
      */
-    public function incrementUsage(int $idCoupon): void
+    public function incrementUsage(int $idCoupon): int
     {
-        Coupon::where('id_coupon', $idCoupon)
+        return Coupon::where('id_coupon', $idCoupon)
             ->where(function ($q) {
                 $q->where('usage_limit', 0)->orWhereColumn('used_count', '<', 'usage_limit');
             })

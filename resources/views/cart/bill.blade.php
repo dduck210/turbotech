@@ -28,7 +28,7 @@
         <div class="grid grid-cols-2 gap-3">
             <div>
                 <label class="mb-1 block text-sm font-medium text-ink-700">Số điện thoại</label>
-                <input type="text" name="phone" required pattern="[0-9]{10}" class="input-boutique">
+                <input type="text" name="phone" required pattern="(\+?84|0)\d{9,10}" title="Số điện thoại dạng 0xxxxxxxxx hoặc +84xxxxxxxxx" class="input-boutique">
             </div>
             <div>
                 <label class="mb-1 block text-sm font-medium text-ink-700">Email</label>

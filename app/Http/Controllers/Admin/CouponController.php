@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Coupon;
 use App\Models\Product;
 use Illuminate\Http\Request;
+use Illuminate\Validation\Rule;
 
 /**
  * Ported from `Codemoi\Controller\Admin\CouponController` (legacy
@@ -26,10 +27,13 @@ class CouponController extends Controller
         return view('admin.coupon.create', ['products' => Product::all()]);
     }
 
-    private function validated(Request $request): array
+    private function validated(Request $request, ?int $ignoreId = null): array
     {
         return $request->validate([
-            'code' => ['required', 'string'],
+            'code' => [
+                'required', 'string',
+                Rule::unique('coupons', 'code')->ignore($ignoreId, 'id_coupon'),
+            ],
             'discount_type' => ['required', 'in:1,2'],
             'discount_value' => ['required', 'integer', 'min:1'],
             'max_discount' => ['nullable', 'integer', 'min:0'],
@@ -39,6 +43,8 @@ class CouponController extends Controller
             'end_date' => ['required', 'date', 'after_or_equal:start_date'],
             'usage_limit' => ['nullable', 'integer', 'min:0'],
             'status' => ['required', 'in:0,1'],
+        ], [
+            'code.unique' => 'Mã giảm giá này đã tồn tại, vui lòng chọn mã khác.',
         ]);
     }
 
@@ -63,7 +69,7 @@ class CouponController extends Controller
 
     public function update(Request $request, int $id)
     {
-        $data = $this->validated($request);
+        $data = $this->validated($request, $id);
         $data['max_discount'] ??= 0;
         $data['min_order_value'] ??= 0;
         $data['product_id'] ??= 0;
