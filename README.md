@@ -15,7 +15,14 @@ php artisan storage:link
 ```
 
 Fill in `.env`: `DB_*` (MySQL), `MAIL_*` (SMTP, used for OTP password
-reset and admin question replies), `BANK_*` (VietQR checkout).
+reset and admin question replies), `BANK_*` (VietQR checkout). `DB_COLLATION`
+should stay `utf8mb4_general_ci` to match how the existing tables compare/sort
+Vietnamese text — Laravel's own default collation sorts slightly differently.
+
+`--seed` creates one default admin account: `admin` / `password`
+(`email_user: admin@example.com`). **Change this password immediately** on
+any real deployment — it's a fixed, publicly-known value meant only to get a
+fresh install into a usable state.
 
 This project has no dedicated Apache vhost — it's served from a
 subdirectory of a shared `htdocs/`. The project-root `.htaccess` forwards
