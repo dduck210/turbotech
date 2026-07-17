@@ -9,11 +9,6 @@ use App\Models\Order;
 use App\Models\Product;
 use App\Models\User;
 
-/**
- * Minimal placeholder — the full stats/charts version (matching legacy
- * `admin/view/dashboard.php`'s revenue/category charts) is built in
- * Phase 4 Group F alongside StatsController.
- */
 class DashboardController extends Controller
 {
     public function __invoke()
@@ -24,6 +19,8 @@ class DashboardController extends Controller
             'categoryCount' => Category::count(),
             'orderCount' => Order::count(),
             'commentCount' => Comment::count(),
+            'recentOrders' => Order::orderByDesc('order_date')->limit(5)->get(),
+            'lowStockProducts' => Product::where('stock', '<=', 5)->orderBy('stock')->limit(5)->get(),
         ]);
     }
 }
