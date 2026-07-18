@@ -14,6 +14,12 @@
         </div>
         <form action="{{ route('product.index') }}" method="get" class="space-y-2 border-t border-ink-200 pt-5">
             <h3 class="eyebrow mb-3">Khoảng giá</h3>
+            @if (request('kyw'))
+                <input type="hidden" name="kyw" value="{{ request('kyw') }}">
+            @endif
+            @if (request('idcate'))
+                <input type="hidden" name="idcate" value="{{ request('idcate') }}">
+            @endif
             <input type="number" name="min_price" placeholder="Từ" value="{{ request('min_price') }}" class="input-boutique">
             <input type="number" name="max_price" placeholder="Đến" value="{{ request('max_price') }}" class="input-boutique">
             <button type="submit" class="btn-boutique w-full rounded-md px-4 py-2.5 text-sm">Lọc</button>
