@@ -41,9 +41,9 @@ class QuestionController extends Controller
         $question->update(['reply' => $data['reply'], 'replied_at' => now()]);
 
         Mail::html(
-            '<p>Xin chào '.e($question->name).',</p>'.
-            '<p>Câu hỏi của bạn: <em>'.nl2br(e($question->contennt)).'</em></p>'.
-            '<p>Trả lời từ Turbotech:<br>'.nl2br(e($data['reply'])).'</p>',
+            '<p>Xin chào ' . e($question->name) . ',</p>' .
+                '<p>Câu hỏi của bạn: <em>' . nl2br(e($question->contennt)) . '</em></p>' .
+                '<p>Trả lời từ Turbotech:<br>' . nl2br(e($data['reply'])) . '</p>',
             function ($message) use ($question) {
                 $message->to($question->email)->subject('Turbotech đã trả lời câu hỏi của bạn');
             }

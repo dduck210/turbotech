@@ -33,12 +33,14 @@ class UserController extends Controller
 
         $data = $request->validate([
             'user_name' => [
-                'required', 'string',
+                'required',
+                'string',
                 Rule::unique('user', 'user_name')->ignore($id, 'id_user'),
             ],
             'full_name' => ['required', 'string'],
             'email_user' => [
-                'required', 'email',
+                'required',
+                'email',
                 Rule::unique('user', 'email_user')->ignore($id, 'id_user'),
             ],
             'role' => ['required', 'in:0,1'],

@@ -31,7 +31,8 @@ class CouponController extends Controller
     {
         return $request->validate([
             'code' => [
-                'required', 'string',
+                'required',
+                'string',
                 Rule::unique('coupons', 'code')->ignore($ignoreId, 'id_coupon'),
             ],
             'discount_type' => ['required', 'in:1,2'],

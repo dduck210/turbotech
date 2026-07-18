@@ -28,11 +28,11 @@ class ProductController extends Controller
         $categoryName = $idcate > 0 ? trim((string) (Category::find($idcate)?->name_cate)) : '';
 
         if ($keyword !== '') {
-            $metaTitle = 'Kết quả tìm kiếm "'.$keyword.'" - Turbotech';
-            $metaDescription = 'Kết quả tìm kiếm sản phẩm "'.$keyword.'" tại Turbotech - laptop gaming và PC hiệu năng cao chính hãng.';
+            $metaTitle = 'Kết quả tìm kiếm "' . $keyword . '" - Turbotech';
+            $metaDescription = 'Kết quả tìm kiếm sản phẩm "' . $keyword . '" tại Turbotech - laptop gaming và PC hiệu năng cao chính hãng.';
         } elseif ($idcate > 0 && $categoryName !== '') {
-            $metaTitle = 'Laptop '.$categoryName.' chính hãng, giá tốt - Turbotech';
-            $metaDescription = 'Danh sách laptop '.$categoryName.' chính hãng tại Turbotech - cấu hình mạnh mẽ, giá cạnh tranh, bảo hành 12 tháng.';
+            $metaTitle = 'Laptop ' . $categoryName . ' chính hãng, giá tốt - Turbotech';
+            $metaDescription = 'Danh sách laptop ' . $categoryName . ' chính hãng tại Turbotech - cấu hình mạnh mẽ, giá cạnh tranh, bảo hành 12 tháng.';
         } else {
             $metaTitle = 'Tất cả sản phẩm - Turbotech';
             $metaDescription = 'Toàn bộ laptop gaming và PC hiệu năng cao tại Turbotech - lọc theo danh mục, khoảng giá, tìm kiếm theo từ khóa.';
@@ -78,11 +78,11 @@ class ProductController extends Controller
             'comments' => $comments,
             'canReview' => $canReview,
             'alreadyReviewed' => $alreadyReviewed,
-            'metaTitle' => $product->name_pro.' - Giá '.number_format($product->price).'đ - Turbotech',
+            'metaTitle' => $product->name_pro . ' - Giá ' . number_format($product->price) . 'đ - Turbotech',
             'metaDescription' => $product->short_des ?: $product->name_pro,
         ]);
 
-        $sessionKey = 'post_'.$idpro;
+        $sessionKey = 'post_' . $idpro;
         if (! $request->session()->has($sessionKey)) {
             $request->session()->put($sessionKey, true);
             $product->increment('view');
@@ -127,7 +127,7 @@ class ProductController extends Controller
     {
         return \App\Models\OrderItem::where('id_user', $idUser)
             ->where('id_pro', $idPro)
-            ->whereHas('order', fn ($q) => $q->where('status', Order::STATUS_DELIVERED))
+            ->whereHas('order', fn($q) => $q->where('status', Order::STATUS_DELIVERED))
             ->exists();
     }
 }

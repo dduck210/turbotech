@@ -45,7 +45,7 @@ class CartController extends Controller
             return response()->json([
                 'success' => false,
                 'clampedTo' => $product->stock,
-                'message' => 'Chỉ còn '.$product->stock.' sản phẩm trong kho.',
+                'message' => 'Chỉ còn ' . $product->stock . ' sản phẩm trong kho.',
             ]);
         }
 

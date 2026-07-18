@@ -22,7 +22,7 @@ class AuthController extends Controller
     public function register(RegisterRequest $request)
     {
         $data = $request->validated();
-        $address = trim($data['address_detail']).', '.trim($data['ward']).', '.trim($data['province']);
+        $address = trim($data['address_detail']) . ', ' . trim($data['ward']) . ', ' . trim($data['province']);
 
         // Checked after format validation (so "invalid phone" still wins over
         // "phone taken") but before insert — mirrors the legacy priority

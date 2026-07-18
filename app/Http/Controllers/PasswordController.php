@@ -38,8 +38,8 @@ class PasswordController extends Controller
         $code = str_pad((string) random_int(0, 999999), 6, '0', STR_PAD_LEFT);
 
         Mail::html(
-            "<p>Xin chào, chúng tôi đã nhận được yêu cầu đặt lại mật khẩu Turbotech của bạn.<br>".
-            "Nhập mã sau đây để đặt lại mật khẩu: <span style='font-weight:600'>{$code}</span></p>",
+            "<p>Xin chào, chúng tôi đã nhận được yêu cầu đặt lại mật khẩu Turbotech của bạn.<br>" .
+                "Nhập mã sau đây để đặt lại mật khẩu: <span style='font-weight:600'>{$code}</span></p>",
             function ($message) use ($account) {
                 $message->to($account->email_user)->subject('Tìm lại mật khẩu của bạn');
             }
