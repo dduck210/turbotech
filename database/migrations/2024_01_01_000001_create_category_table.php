@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\Schema;
 /**
  * Describes the schema this project has always run on (originally created
  * outside Laravel's migration system) so a fresh environment can run
- * `php artisan migrate` instead of hand-importing Turbotech.sql. Not
+ * `php artisan migrate` instead of hand-importing a raw SQL dump. Not
  * applied against the live database — see the other 7 migrations in this
  * batch for the full picture, and app/Models/*.php for the Eloquent side
  * of each table (including the `$table`/`$primaryKey` overrides, since
