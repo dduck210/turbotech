@@ -6,70 +6,72 @@ frontend của nhóm đó), để ai cũng học được đủ cả hai phía v
 độc lập khi báo cáo. Cuối file có thêm phương án chia ngang (1 người backend / 1 người frontend /
 1 người hạ tầng) nếu nhóm thích cách đó hơn.
 
+**Dự án hiện đã chuyển sang Laravel 13** — đường dẫn file bên dưới đã cập nhật theo cấu trúc mới.
+
 ---
 
 ## Người 1 — Sản phẩm, Giỏ hàng & Thanh toán (Tuấn Anh)
 *Gợi ý Tuấn Anh nhận mảng này vì đã trực tiếp làm phần thanh toán QR VietQR trước đó.*
 
 **Backend:**
-- `src/Controller/ProductController.php`, `CartController.php`, `CheckoutController.php`
-- `src/Model/Product.php`, `Category.php`, `Cart.php`, `Coupon.php`, `Order.php`, `Payment.php`
-- `admin/model/product.php`, `admin/model/category.php`, `admin/model/coupon.php`
+- `app/Http/Controllers/ProductController.php`, `CartController.php`, `CheckoutController.php`
+- `app/Http/Controllers/Admin/ProductController.php`, `CategoryController.php`, `CouponController.php`
+- `app/Models/Product.php`, `Category.php`, `Coupon.php`, `Order.php`, `OrderItem.php`
+- `app/Services/CartService.php`, `CouponService.php`, `VietQrService.php`, `OrderCancellationService.php`
 
 **Frontend:**
-- `view/product/product-list.php`, `product-detail.php`
-- `view/cart/viewcart.php`, `cart-detail-table.php`, `bill.php`, `billconfirm.php`
-- `public/view/qr.php` (trang QR chuyển khoản)
-- `admin/view/{add,list,update}_product.php`, `{add,list,update}_category.php`, `{add,list,update}_coupon.php`
+- `resources/views/product/list.blade.php`, `detail.blade.php`
+- `resources/views/cart/view.blade.php`, `bill.blade.php`, `confirmation.blade.php`, `qr.blade.php`
+- `resources/views/admin/product/*`, `admin/category/*`, `admin/coupon/*`
 
 **Học được:** CRUD sản phẩm/danh mục, logic giỏ hàng, áp mã giảm giá, quy trình thanh toán, tích hợp
-API bên ngoài (VietQR).
+API bên ngoài (VietQR), Eloquent ORM.
 
 ---
 
 ## Người 2 — Tài khoản, Đăng nhập & Tương tác khách hàng
 
 **Backend:**
-- `src/Controller/AuthController.php`, `AccountController.php`, `PasswordController.php`, `QuestionController.php`
-- `src/Model/Auth.php`, `User.php`, `Comment.php`, `Question.php`
-- `src/Mail/Mailer.php`, `email/PHPMailer/*` (gửi email OTP/xác thực)
-- `admin/model/user.php`, `admin/model/comment.php`, `admin/model/question.php`
+- `app/Http/Controllers/AuthController.php`, `AccountController.php`, `PasswordController.php`, `QuestionController.php`
+- `app/Http/Requests/LoginRequest.php`, `RegisterRequest.php`
+- `app/Models/User.php`, `Comment.php`, `Question.php`
+- `app/Http/Controllers/Admin/UserController.php`, `CommentController.php`, `QuestionController.php`
 
 **Frontend:**
-- `view/user/login.php`, `register.php`, `myaccount.php`, `changePass.php`, `forgot-password.php`, `verification.php`
-- `view/qa/question.php`
-- `public/view/comment-form.php`
-- `admin/view/list_user.php`, `update_user.php`, `list_comment.php`, `list_question.php`
-- `public/assets/js/address-select.js`, `form-validate.js` (dùng nhiều nhất ở form đăng ký/tài khoản)
+- `resources/views/auth/*` (login, register, forgot-password, verification, change-password)
+- `resources/views/account/index.blade.php`
+- `resources/views/pages/question.blade.php`
+- `resources/views/admin/user/*`, `admin/comment/*`, `admin/question/*`
 
-**Học được:** xác thực người dùng, gửi email (SMTP), validate form, quản lý người dùng/bình luận
-phía admin.
+**Học được:** xác thực người dùng (Laravel Auth), gửi email (`Illuminate\Mail`), FormRequest
+validate, quản lý người dùng/bình luận phía admin.
 
 ---
 
 ## Người 3 — Quản trị, Hạ tầng & Bảo mật
 
 **Backend:**
-- `src/Core/*` (Router, Controller, Database, View, Config) — nền tảng MVC dùng chung
-- `public/index.php`, `public/admin/index.php` (2 điểm vào + định tuyến)
-- `admin/model/bill.php`, `admin/model/statistics.php`, `admin/model/pdo.php`
-- `admin/controller/controller.php`
+- `bootstrap/app.php`, `routes/web.php` — cấu hình ứng dụng + định tuyến
+- `app/Http/Middleware/EnsureUserIsAdmin.php`, `app/Policies/UserPolicy.php`
+- `app/Http/Controllers/Admin/BillController.php`, `StatsController.php`, `DashboardController.php`
+- `database/migrations/`, `database/seeders/DatabaseSeeder.php`
 
 **Frontend:**
-- `admin/view/dashboard.php` (biểu đồ thống kê), `login.php`, `nav.php`, `topbar.php`, `header.php`, `footer.php`
-- `admin/view/list_bill.php`, `update_bill.php`, `list_statistic.php`
-- Build Tailwind: `src/css/*`, `public/assets/css/*`
-- `public/assets/js/confirm-dialog.js`, `main.js`, `plugins.min.js` (JS dùng chung toàn site)
+- `resources/views/admin/layouts/*` (khung trang admin: sidebar, topbar)
+- `resources/views/admin/dashboard.blade.php`, `admin/bill/*`, `admin/stats/*`
+- Build Tailwind: `resources/css/*`, `public/assets/css/*`
+- `resources/views/vendor/pagination/tailwind.blade.php` (giao diện phân trang dùng chung)
 
-**Học được:** kiến trúc MVC, định tuyến, quản lý đơn hàng/thống kê, dashboard biểu đồ, cấu hình
-Tailwind, bảo mật triển khai (`.htaccess`, tách `public/` webroot), CSDL (`Turbotech.sql`).
+**Học được:** kiến trúc Laravel (routing, middleware, migration), quản lý đơn hàng/thống kê,
+dashboard, cấu hình Tailwind, bảo mật (CSRF, rate limiting, phân quyền admin), CSDL
+(`database/migrations/`).
 
 ---
 
 ## Việc dùng chung cả 3 người (không thuộc riêng ai)
-- `Turbotech.sql` — cấu trúc CSDL, cần cả 3 hiểu chung trước khi tách việc
-- `.env` / `Config.php` — cấu hình chung (SMTP, ngân hàng)
-- `.htaccess` (gốc + `public/`) — chặn truy cập trực tiếp ngoài `public/`
+- `database/migrations/` — cấu trúc CSDL, cần cả 3 hiểu chung trước khi tách việc
+- `.env` — cấu hình chung (DB, SMTP, ngân hàng)
+- `routes/web.php` — bảng định tuyến chung, tránh đè route của nhau khi thêm tính năng mới
 
 ---
 
@@ -78,9 +80,9 @@ Nếu nhóm thích rạch ròi backend riêng — frontend riêng thay vì chia 
 
 | Người | Phụ trách |
 |---|---|
-| Người 1 | Toàn bộ **backend Client** (`src/Controller`, `src/Model`, `src/Core`, `src/Mail`) |
-| Người 2 | Toàn bộ **backend Admin** (`public/admin/index.php`, `admin/model/*`, `admin/controller/*`) |
-| Người 3 | Toàn bộ **frontend** cả 2 bên (`view/*`, `admin/view/*`, `public/assets/css`, `public/assets/js`) + build Tailwind |
+| Người 1 | Toàn bộ **backend Client** (`app/Http/Controllers/*.php`, `app/Models`, `app/Services`) |
+| Người 2 | Toàn bộ **backend Admin** (`app/Http/Controllers/Admin/*.php`, `app/Policies`) |
+| Người 3 | Toàn bộ **frontend** cả 2 bên (`resources/views/*`) + build Tailwind |
 
 Cách này giúp mỗi người đào sâu một tầng, nhưng người 3 sẽ không đụng tới logic nghiệp vụ/CSDL —
 phù hợp nếu trong nhóm có bạn mạnh riêng về giao diện/UI và không cần học sâu PHP/SQL.
