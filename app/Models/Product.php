@@ -122,6 +122,11 @@ class Product extends Model
      * Keyword/category/price-range search. Mirrors `Product::search()` —
      * LIKE-escapes `\`, `%`, `_` in the keyword so a literal search for
      * e.g. "50%" searches for that literal substring, not a wildcard.
+     *
+     * min/max filter on the discounted (sale) price, not the list price —
+     * matching `getDiscountedPriceAttribute()` exactly — so a customer
+     * filtering "under 20tr" finds a 22tr product that's actually 17.6tr
+     * after its discount, instead of missing it.
      */
     public static function search(string $keyword = '', int $idcate = 0, int $min = 0, int $max = 0)
     {
@@ -135,10 +140,10 @@ class Product extends Model
             $query->where('idcate', $idcate);
         }
         if ($min > 0) {
-            $query->where('price', '>=', $min);
+            $query->whereRaw('ROUND(price - (price * discount / 100)) >= ?', [$min]);
         }
         if ($max > 0) {
-            $query->where('price', '<=', $max);
+            $query->whereRaw('ROUND(price - (price * discount / 100)) <= ?', [$max]);
         }
 
         return $query->orderByDesc('id_pro')->paginate(12);
