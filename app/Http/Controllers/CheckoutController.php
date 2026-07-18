@@ -12,7 +12,6 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;
-use Illuminate\Support\Str;
 
 /**
  * Ported from `Codemoi\Controller\CheckoutController` (legacy
@@ -112,7 +111,7 @@ class CheckoutController extends Controller
             'phone.regex' => 'Số điện thoại không đúng định dạng !',
         ]);
 
-        $address = trim($data['address_detail']).', '.trim($data['ward']).', '.trim($data['province']);
+        $address = trim($data['address_detail']) . ', ' . trim($data['ward']) . ', ' . trim($data['province']);
         $totalAmount = $this->cart->total();
 
         if ($totalAmount <= 0) {
@@ -126,7 +125,7 @@ class CheckoutController extends Controller
             $product = Product::find($line['id_pro']);
             if (! $product || ! $product->hasStock($line['quantity'])) {
                 return redirect()->route('cart.view')
-                    ->with('flash_error', 'Sản phẩm "'.$line['name_pro'].'" không đủ số lượng tồn kho, vui lòng cập nhật giỏ hàng!');
+                    ->with('flash_error', 'Sản phẩm "' . $line['name_pro'] . '" không đủ số lượng tồn kho, vui lòng cập nhật giỏ hàng!');
             }
         }
 
@@ -207,16 +206,16 @@ class CheckoutController extends Controller
         // react to by placing a duplicate one.
         try {
             Mail::html(
-                '<h3>Xin chào, cảm ơn quý khách đặt hàng tại Turbotech.<br></h3>'.
-                '<p>Tên khách hàng: '.e($data['full_name']).'</p>'.
-                '<p>Địa chỉ: '.e($address).'</p>'.
-                '<p>Tổng tiền: '.number_format($order->total_amount).'₫</p>',
+                '<h3>Xin chào, cảm ơn quý khách đặt hàng tại Turbotech.<br></h3>' .
+                    '<p>Tên khách hàng: ' . e($data['full_name']) . '</p>' .
+                    '<p>Địa chỉ: ' . e($address) . '</p>' .
+                    '<p>Tổng tiền: ' . number_format($order->total_amount) . '₫</p>',
                 function ($message) use ($data) {
                     $message->to($data['email'])->subject('Thông báo đặt hàng thành công!');
                 }
             );
         } catch (\Throwable $e) {
-            Log::error('Order confirmation email failed to send for bill '.$order->bill_code.': '.$e->getMessage());
+            Log::error('Order confirmation email failed to send for bill ' . $order->bill_code . ': ' . $e->getMessage());
         }
 
         $this->cart->clear();
@@ -248,7 +247,7 @@ class CheckoutController extends Controller
             }
         }
 
-        return substr(str_shuffle('123456789'), 0, 5).random_int(10, 99);
+        return substr(str_shuffle('123456789'), 0, 5) . random_int(10, 99);
     }
 
     /** Renders the confirmation for the order just created (session-tracked id_bill). */

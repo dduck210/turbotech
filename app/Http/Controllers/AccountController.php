@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Models\Order;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
 
@@ -40,7 +39,7 @@ class AccountController extends Controller
             'email_user.email' => 'Vui lòng nhập đầy đủ và đúng định dạng thông tin !',
         ]);
 
-        $address = trim($data['address_detail']).', '.trim($data['ward']).', '.trim($data['province']);
+        $address = trim($data['address_detail']) . ', ' . trim($data['ward']) . ', ' . trim($data['province']);
 
         $imgUser = $user->img_user;
         if ($request->hasFile('img_user')) {
@@ -54,7 +53,7 @@ class AccountController extends Controller
             $request->validate(['img_user' => ['image', 'mimes:jpg,jpeg,png,gif']]);
 
             $file = $request->file('img_user');
-            $storedName = 'user_'.Str::random(16).'.'.strtolower($file->getClientOriginalExtension());
+            $storedName = 'user_' . Str::random(16) . '.' . strtolower($file->getClientOriginalExtension());
             $file->move(storage_path('app/public/avatars'), $storedName);
             $imgUser = $storedName;
         }
@@ -117,7 +116,7 @@ class AccountController extends Controller
         // #account-orders so the page reopens on the Orders tab instead of
         // resetting to the dashboard — see the hash-handling script in
         // resources/views/account/index.blade.php.
-        return redirect(route('account.index').'#account-orders')
+        return redirect(route('account.index') . '#account-orders')
             ->with('cancelMessage', 'Đã hủy đơn hàng thành công.');
     }
 }
