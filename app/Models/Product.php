@@ -99,9 +99,17 @@ class Product extends Model
         // 5.7.5+ does for `product.*` + `GROUP BY product.id_pro` alone.
         return static::query()
             ->select([
-                'product.id_pro', 'product.name_pro', 'product.price', 'product.discount',
-                'product.img_pro', 'product.short_des', 'product.detail_des', 'product.view',
-                'product.stock', 'product.stock_message', 'product.idcate',
+                'product.id_pro',
+                'product.name_pro',
+                'product.price',
+                'product.discount',
+                'product.img_pro',
+                'product.short_des',
+                'product.detail_des',
+                'product.view',
+                'product.stock',
+                'product.stock_message',
+                'product.idcate',
             ])
             ->selectRaw('SUM(cart.quantity) as total_sale')
             ->join('cart', 'cart.id_pro', '=', 'product.id_pro')
@@ -109,9 +117,17 @@ class Product extends Model
             ->where('bill.status_pay', 1)
             ->where('bill.status', '!=', Order::STATUS_CANCELLED)
             ->groupBy([
-                'product.id_pro', 'product.name_pro', 'product.price', 'product.discount',
-                'product.img_pro', 'product.short_des', 'product.detail_des', 'product.view',
-                'product.stock', 'product.stock_message', 'product.idcate',
+                'product.id_pro',
+                'product.name_pro',
+                'product.price',
+                'product.discount',
+                'product.img_pro',
+                'product.short_des',
+                'product.detail_des',
+                'product.view',
+                'product.stock',
+                'product.stock_message',
+                'product.idcate',
             ])
             ->orderByDesc('total_sale')
             ->limit($limit)

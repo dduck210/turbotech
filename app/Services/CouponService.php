@@ -38,13 +38,14 @@ class CouponService
         if ($orderTotal < $coupon->min_order_value) {
             return [
                 'ok' => false,
-                'message' => 'Đơn hàng chưa đạt giá trị tối thiểu '.number_format($coupon->min_order_value).'đ để áp dụng mã này.',
-                'coupon' => null, 'discount' => 0,
+                'message' => 'Đơn hàng chưa đạt giá trị tối thiểu ' . number_format($coupon->min_order_value) . 'đ để áp dụng mã này.',
+                'coupon' => null,
+                'discount' => 0,
             ];
         }
 
         if ($coupon->product_id > 0) {
-            $hasProduct = collect($cartItems)->contains(fn ($line) => (int) $line['id_pro'] === (int) $coupon->product_id);
+            $hasProduct = collect($cartItems)->contains(fn($line) => (int) $line['id_pro'] === (int) $coupon->product_id);
             if (! $hasProduct) {
                 return ['ok' => false, 'message' => 'Mã giảm giá chỉ áp dụng cho một sản phẩm cụ thể không có trong giỏ hàng.', 'coupon' => null, 'discount' => 0];
             }

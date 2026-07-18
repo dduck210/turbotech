@@ -17,7 +17,7 @@ class VietQrService
 
     public function transferMemo(string $billCode): string
     {
-        return 'Thanh toan don'.self::MEMO_PREFIX.$billCode;
+        return 'Thanh toan don' . self::MEMO_PREFIX . $billCode;
     }
 
     public function qrUrl(int $amount, string $billCode): string
@@ -28,6 +28,6 @@ class VietQrService
         $memo = rawurlencode($this->transferMemo($billCode));
 
         return "https://img.vietqr.io/image/{$bankCode}-{$accountNo}-compact2.png"
-            ."?amount={$amount}&addInfo={$memo}&accountName={$accountName}";
+            . "?amount={$amount}&addInfo={$memo}&accountName={$accountName}";
     }
 }
