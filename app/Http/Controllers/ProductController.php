@@ -39,7 +39,7 @@ class ProductController extends Controller
         }
 
         return view('product.list', [
-            'listpro' => Product::search($keyword, $idcate, $min, $max),
+            'listpro' => Product::search($keyword, $idcate, $min, $max)->withQueryString(),
             'namecate' => $categoryName,
             'listcate' => Category::all(),
             'listTopsp' => Product::featured()->get(),

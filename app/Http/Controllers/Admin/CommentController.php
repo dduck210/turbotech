@@ -14,7 +14,7 @@ class CommentController extends Controller
     public function index()
     {
         return view('admin.comment.index', [
-            'comments' => Comment::with('product')->orderByDesc('id_cmt')->get(),
+            'comments' => Comment::with('product')->orderByDesc('id_cmt')->paginate(15),
         ]);
     }
 

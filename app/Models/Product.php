@@ -141,7 +141,7 @@ class Product extends Model
             $query->where('price', '<=', $max);
         }
 
-        return $query->orderByDesc('id_pro')->get();
+        return $query->orderByDesc('id_pro')->paginate(12);
     }
 
     /** Same category, excluding self. Mirrors `Product::similar()`. */

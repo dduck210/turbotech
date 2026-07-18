@@ -37,4 +37,7 @@
         </tbody>
     </table>
 </div>
+<div class="mt-6">
+    {{ $questions->links() }}
+</div>
 @endsection

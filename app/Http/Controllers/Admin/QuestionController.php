@@ -18,7 +18,7 @@ class QuestionController extends Controller
 {
     public function index()
     {
-        return view('admin.question.index', ['questions' => Question::orderByDesc('id_ques')->get()]);
+        return view('admin.question.index', ['questions' => Question::orderByDesc('id_ques')->paginate(15)]);
     }
 
     public function destroy(int $id)

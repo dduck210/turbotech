@@ -56,7 +56,7 @@ class BillController extends Controller
         }
 
         return view('admin.bill.index', [
-            'orders' => $query->orderByDesc('id_bill')->get(),
+            'orders' => $query->orderByDesc('id_bill')->paginate(15)->withQueryString(),
             'status' => $status,
             'keyword' => $keyword,
             'fromDate' => $fromDate,

@@ -50,6 +50,9 @@
                 <p class="col-span-full py-10 text-center text-ink-500">Không tìm thấy sản phẩm nào.</p>
             @endforelse
         </div>
+        <div class="mt-8">
+            {{ $listpro->links() }}
+        </div>
     </div>
 </div>
 @endsection

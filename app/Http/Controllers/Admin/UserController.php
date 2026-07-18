@@ -19,7 +19,7 @@ class UserController extends Controller
 {
     public function index()
     {
-        return view('admin.user.index', ['users' => User::orderByDesc('id_user')->get()]);
+        return view('admin.user.index', ['users' => User::orderByDesc('id_user')->paginate(15)]);
     }
 
     public function edit(int $id)

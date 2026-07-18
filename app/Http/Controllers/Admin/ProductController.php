@@ -24,7 +24,7 @@ class ProductController extends Controller
         }
 
         return view('admin.product.index', [
-            'products' => $query->orderByDesc('id_pro')->get(),
+            'products' => $query->orderByDesc('id_pro')->paginate(15)->withQueryString(),
             'categories' => Category::all(),
             'idcate' => $idcate,
         ]);

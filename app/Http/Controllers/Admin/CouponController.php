@@ -19,7 +19,7 @@ class CouponController extends Controller
 {
     public function index()
     {
-        return view('admin.coupon.index', ['coupons' => Coupon::orderByDesc('id_coupon')->get()]);
+        return view('admin.coupon.index', ['coupons' => Coupon::orderByDesc('id_coupon')->paginate(15)]);
     }
 
     public function create()

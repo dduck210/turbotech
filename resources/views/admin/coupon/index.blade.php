@@ -41,4 +41,7 @@
         </tbody>
     </table>
 </div>
+<div class="mt-6">
+    {{ $coupons->links() }}
+</div>
 @endsection
