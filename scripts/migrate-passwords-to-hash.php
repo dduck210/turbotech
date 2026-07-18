@@ -11,11 +11,11 @@
  * Take a backup first: mysqldump codemoi2 user > user_backup.sql
  */
 
-require __DIR__ . '/../vendor/autoload.php';
+require __DIR__.'/../vendor/autoload.php';
 
 use Codemoi\Core\Config;
 
-$dsn = 'mysql:host=' . Config::DB_HOST . ';dbname=' . Config::DB_NAME . ';charset=' . Config::CHARSET;
+$dsn = 'mysql:host='.Config::DB_HOST.';dbname='.Config::DB_NAME.';charset='.Config::CHARSET;
 $pdo = new PDO($dsn, Config::DB_USER, Config::DB_PASS);
 $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
@@ -32,6 +32,7 @@ foreach ($rows as $row) {
     if ($info['algo'] !== null && $info['algo'] !== 0) {
         // Already a real hash (e.g. a re-run) — leave it alone.
         $skipped++;
+
         continue;
     }
 
@@ -42,4 +43,4 @@ foreach ($rows as $row) {
 
 echo "Migrated: {$migrated}\n";
 echo "Already hashed (skipped): {$skipped}\n";
-echo "Total rows: " . count($rows) . "\n";
+echo 'Total rows: '.count($rows)."\n";
